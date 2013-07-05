@@ -75,3 +75,19 @@ We can put this somewhere else, just thought I'd store this here right now.
 12. Determine Medicaid Eligibility
 13. Determine Emergency Medicaid Eligibility and Eligibility for Former Foster Care
 14. Identify Medicaid Category – Refugee Medical Assistance
+
+# Demo
+
+For manual evaluation and access to documentation, rulesets are mapped onto URLs of the form:
+
+    http://localhost:3000/rulesets/path/to/class/file
+
+where `path/to/class/file` is the path to the Ruby class file in `app/models`. Thus,
+`Medicaidchip::Eligibility::Category::Child` is at
+
+    http://localhost:3000/rulesets/medicaidchip/eligibility/category/child
+
+To evaluate a specific ruleset on specific input / configs, POST the JSON to the above URL plus `/eval`. For example:
+
+    ~ $ curl -d '{"config": {"Option Young Adults": "N", "Child Age Threshold": 18}, "inputs":{"Person Birth Date": "2013-12-02"}}' http://localhost:3000/rulesets/medicaidchip/eligibility/category/child/eval --header "Content-Type: application/json" -H 'Accept: application/json'; echo
+    {"Applicant Child Category Indicator":"Y","Child Category Determination Date":"2013-07-05","Child Category Ineligibility Reason":999}
