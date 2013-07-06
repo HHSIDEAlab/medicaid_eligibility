@@ -29,6 +29,7 @@ Each rule set results in a determination. The output for the function for a rule
   - "N" => No
   - "X" => "N/A, Rule does not apply"
   - "T" => "Temporary" (Based on this particular rule set, could be yes or no, but cannot be fully determined until a later step)
+  - a few others
 - Determination date
 - Ineligibility reason code, explaining the reason for ineligibility if the determination for the rule set is No. I believe in most cases the code that should be given is provided in the documentation for the rule set. There are also a couple standard reasons that can be given by multiple rule sets:
   - 555 => "N/A, Rule does not apply"
