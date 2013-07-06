@@ -16,8 +16,8 @@ module Medicaidchip::Eligibility::Category
 
     # Outputs
     indicator "Applicant Pregnancy Category Indicator", %w(Y N)
-    date "Pregnancy Category Determination Date"
-    code "Pregnancy Category Ineligibility Reason", %w(999 124)
+    date      "Pregnancy Category Determination Date"
+    code      "Pregnancy Category Ineligibility Reason", %w(999 124)
 
     rule "Applicant is pregnant or in postpartum period" do
       if v("Applicant Pregnant Indicator") == 'Y' || v("Applicant Post Partum Period Indicator") == 'Y'

@@ -17,12 +17,12 @@ module Medicaidchip::Eligibility::Category
 
     config "Child Age Threshold", "System Configuration", "Integer", %w(19)
     config "Option Young Adults", "State Configuration", "Char(1)", %w(Y N)
-    config "Young Adult Age Threshold", "State Configuration", "Integer" %w(20 21)
+    config "Young Adult Age Threshold", "State Configuration", "Integer", %w(20 21)
 
     # Outputs
     indicator "Applicant Child Category Indicator", %w(Y N)
-    date "Child Category Determination Date"
-    code "Child Category Ineligibility Reason", %w(999 115 394)
+    date      "Child Category Determination Date"
+    code      "Child Category Ineligibility Reason", %w(999 115 394)
 
     rule "Child is under 19 years old" do
       if v("Applicant Age") < c("Child Age Threshold")
