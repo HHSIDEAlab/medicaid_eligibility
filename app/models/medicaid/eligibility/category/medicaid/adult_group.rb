@@ -10,7 +10,7 @@ module Medicaid::Eligibility::Category::Medicaid
 
     assumption  "Whether the State opts to cover the adult group at the higher FPL% (i.e., the Adult Group XX) will be handled by the applicable MAGI standard logic." 
 
-    input "Medicare Entitlement Indicator", "From the Hub", "Char(1)" %w(Y N) 
+    input "Medicare Entitlement Indicator", "From the Hub", "Char(1)", %w(Y N) 
     input "Applicant Pregnancy Category Indicator", "Output from the Pregnant Women Category Rule", "Char(1)", %w(Y N)
     input "Applicant Age", "From Child Category Rule", "Number"  
 
@@ -19,7 +19,7 @@ module Medicaid::Eligibility::Category::Medicaid
     # Outputs
     indicator "Applicant Adult Group Category Indicator", %w(Y N)
     date      "Adult Group Category Determination Date"  
-    code      "Adult Group Category Ineligibility Reason" %w(999 117 122 123)
+    code      "Adult Group Category Ineligibility Reason", %w(999 117 122 123)
     indicator "Applicant Adult Group XX Category Indicator", %w(Y N X)
     date      "Adult Group XX Category Determination Date"
     code      "Adult Group XX Category Ineligibility Reason", %w(999 122 123)
