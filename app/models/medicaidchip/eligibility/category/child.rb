@@ -15,7 +15,7 @@ module Medicaidchip::Eligibility::Category
 
     input "Applicant Age", "Calculated in Create Applicant Child List logic", "Number"
 
-    config "Child Age Threshold", "System Configuration", "Integer", %w(19)
+    config "Child Age Threshold", "System Configuration", "Integer", nil, 19
     config "Option Young Adults", "State Configuration", "Char(1)", %w(Y N)
     config "Young Adult Age Threshold", "State Configuration", "Integer", %w(20 21)
 
