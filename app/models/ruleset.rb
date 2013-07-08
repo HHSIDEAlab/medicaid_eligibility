@@ -30,8 +30,24 @@ class Ruleset
       @calculateds ||= []
     end
 
+    def inputs
+      @inputs ||= {}
+    end
+
+    def configs
+      @configs ||= {}
+    end
+
     def outputs
       @outputs ||= {}
+    end
+
+    def assumptions
+      @assumptions ||= []
+    end
+
+    def special_instructions
+      @special_instructions ||= []
     end
 
     def rule(rule_name, &blk)
@@ -40,6 +56,14 @@ class Ruleset
 
     def calculated(variable, &blk)
       self.calculateds << CalculatedVariable.new(variable, blk)
+    end
+
+    def name(text)
+      @name = text
+    end
+
+    def mandatory(text)
+      @mandatory = text
     end
 
     def references(text)
@@ -56,6 +80,22 @@ class Ruleset
 
     def description(text)
       @description = text
+    end
+
+    def assumption(text)
+      self.assumptions << text
+    end
+
+    def special_instruction(text)
+      self.special_instructions << text
+    end
+
+    def input(name, source, type, possible_values=nil)
+      self.inputs[name] = nil
+    end
+
+    def config(name, source, type, possible_values=nil)
+      self.configs[name] = nil
     end
 
     def indicator(name, valid_inputs=nil)
