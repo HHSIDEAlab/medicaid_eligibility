@@ -79,5 +79,7 @@ class Ruleset
     self.class.rules.each do |rule|
       rule.run(context)
     end
+
+    context
   end
 end
