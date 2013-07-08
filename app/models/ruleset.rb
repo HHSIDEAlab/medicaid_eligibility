@@ -90,11 +90,11 @@ class Ruleset
       self.special_instructions << text
     end
 
-    def input(name, source, type, possible_values=nil)
+    def input(name, source, type, possible_values=nil, default=nil)
       self.inputs[name] = nil
     end
 
-    def config(name, source, type, possible_values=nil)
+    def config(name, source, type, possible_values=nil, default=nil)
       self.configs[name] = nil
     end
 
