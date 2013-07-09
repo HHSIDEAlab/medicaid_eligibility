@@ -109,6 +109,10 @@ class Ruleset
     def code(name, valid_inputs=nil)
       self.outputs[name] = nil
     end
+
+    def output(name, type, valid_inputs=nil)
+      self.outputs[name] = nil
+    end
   end
 
   def run(context)
