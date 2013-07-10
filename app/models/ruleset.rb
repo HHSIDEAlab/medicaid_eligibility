@@ -90,8 +90,9 @@ class Ruleset
       self.special_instructions << text
     end
 
-    def input(name, source, type, possible_values=nil)
+    def input(name, source, type, possible_values=nil, options={})
       self.inputs[name] = nil
+      # options may include the type of element for list inputs
     end
 
     def config(name, source, type, possible_values=nil, default=nil)
@@ -110,10 +111,13 @@ class Ruleset
       self.outputs[name] = nil
     end
 
-    def output(name, type, valid_inputs=nil)
+    def output(name, type, valid_inputs=nil, options={})
       self.outputs[name] = nil
+      # options may include the type of element for list outputs
     end
   end
+
+  protected
 
   def run(context)
     self.class.calculateds.each do |cvar|
