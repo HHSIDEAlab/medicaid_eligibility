@@ -117,8 +117,6 @@ class Ruleset
     end
   end
 
-  protected
-
   def run(context)
     self.class.calculateds.each do |cvar|
       cvar.run(context)
