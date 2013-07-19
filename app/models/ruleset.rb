@@ -92,9 +92,9 @@ class Ruleset
 
     def input(name, source, type, possible_values=nil)
       self.inputs[name] = {
-        :name             => name,
-        :source           => source,
-        :type             => type
+        :name   => name,
+        :source => source,
+        :type   => type
       } 
 
       if possible_values
@@ -104,9 +104,9 @@ class Ruleset
 
     def config(name, source, type, possible_values=nil, default=nil)
       self.configs[name] = {
-        :name             => name,
-        :source           => source,
-        :type             => type
+        :name   => name,
+        :source => source,
+        :type   => type
       }
       
       if possible_values
@@ -119,8 +119,8 @@ class Ruleset
 
     def indicator(name, possible_values=nil)
       self.outputs[name] = {
-        :name             => name,
-        :type             => "Indicator"
+        :name => name,
+        :type => "Indicator"
       }
 
       if possible_values
@@ -137,8 +137,8 @@ class Ruleset
 
     def code(name, possible_values=nil)
       self.outputs[name] = {
-        :name             => name,
-        :type             => "Code"
+        :name => name,
+        :type => "Code"
       }
 
       if possible_values
@@ -148,8 +148,8 @@ class Ruleset
 
     def output(name, type, possible_values=nil)
       self.outputs[name] = {
-        :name             => name,
-        :type             => type
+        :name => name,
+        :type => type
       }
 
       if possible_values
