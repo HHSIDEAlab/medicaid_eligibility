@@ -7,9 +7,20 @@ namespace :specification do
 
     rulesets = Ruleset.subclasses
 
+    base_variables = {
+      "Applicant Number" => {
+        :name => "Applicant Number", 
+        :type => "Integer"
+      }, 
+      "State" => {
+        :name => "State", 
+        :type => "Char(2)"
+      }
+    }
+
     configs = rulesets.inject({}){|h, r| h.merge r.configs}
-    outputs = rulesets.inject({}){|h, r| h.merge r.outputs}
-    inputs = rulesets.inject({}){|h, r| h.merge r.inputs}.select{|k,_| !(outputs.member? k)}
+    outputs = base_variables.merge(rulesets.inject({}){|h, r| h.merge r.outputs})
+    inputs = base_variables.merge(rulesets.inject({}){|h, r| h.merge r.inputs}.select{|k,_| !(outputs.member? k)})
     
     default_configs = configs.select{|_,v| v.has_key? :default}.inject({}){|new_hash, (k,v)| new_hash.merge({k => v[:default]})}
 
