@@ -16,8 +16,8 @@ module Medicaid::Eligibility::Category
     input "Applicant Age", "From Child Category Rule", "Number"  
 
     config "Optional Targeted Low Income Child Group", "State configuration table", "Char(1)", %w(Y N)
-    config "Optional Targeted Low Income Child Age Low Threshold", "State configuration table", "Numeric", "Default 0"
-    config "Optional Targeted Low Income Child Age High Threshold", "State configuration table", "Numeric", "Default 19"
+    config "Optional Targeted Low Income Child Age Low Threshold", "State configuration table", "Numeric", nil, 0
+    config "Optional Targeted Low Income Child Age High Threshold", "State configuration table", "Numeric", nil, 19
 
     # Outputs 
     indicator "Applicant Optional Targeted Low Income Child Category Indicator", %w(Y N T X)

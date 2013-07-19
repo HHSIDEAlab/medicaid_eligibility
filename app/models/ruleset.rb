@@ -103,12 +103,13 @@ class Ruleset
       }
     end
 
-    def config(name, source, type, possible_values=nil)
+    def config(name, source, type, possible_values=nil, default=nil)
       self.configs[name] = {
         :name             => name,
         :source           => source,
         :type             => type,
-        :possible_values  => possible_values
+        :possible_values  => possible_values,
+        :default          => default
       }
     end
 
@@ -133,6 +134,10 @@ class Ruleset
         :type             => "Code",
         :possible_values  => possible_values
       }
+    end
+
+    def output(name, type, valid_inputs=nil)
+      self.outputs[name] = nil
     end
   end
 
