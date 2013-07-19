@@ -62,6 +62,10 @@ class Ruleset
       @name = text
     end
 
+    def print_name
+      @name
+    end
+
     def mandatory(text)
       @mandatory = text
     end
@@ -91,23 +95,44 @@ class Ruleset
     end
 
     def input(name, source, type, possible_values=nil)
-      self.inputs[name] = nil
+      self.inputs[name] = {
+        :name             => name,
+        :source           => source,
+        :type             => type,
+        :possible_values  => possible_values
+      }
     end
 
     def config(name, source, type, possible_values=nil)
-      self.configs[name] = nil
+      self.configs[name] = {
+        :name             => name,
+        :source           => source,
+        :type             => type,
+        :possible_values  => possible_values
+      }
     end
 
-    def indicator(name, valid_inputs=nil)
-      self.outputs[name] = nil
+    def indicator(name, possible_values=nil)
+      self.outputs[name] = {
+        :name             => name,
+        :type             => "Indicator",
+        :possible_values  => possible_values
+      }
     end
 
     def date(name)
-      self.outputs[name] = nil
+      self.outputs[name] = {
+        :name => name,
+        :type => "Date"
+      }
     end
 
-    def code(name, valid_inputs=nil)
-      self.outputs[name] = nil
+    def code(name, possible_values=nil)
+      self.outputs[name] = {
+        :name             => name,
+        :type             => "Code",
+        :possible_values  => possible_values
+      }
     end
   end
 
