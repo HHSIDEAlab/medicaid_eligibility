@@ -62,10 +62,6 @@ class Ruleset
       @name = text
     end
 
-    def print_name
-      @name
-    end
-
     def mandatory(text)
       @mandatory = text
     end
