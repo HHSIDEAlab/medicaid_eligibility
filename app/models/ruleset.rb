@@ -98,27 +98,38 @@ class Ruleset
       self.inputs[name] = {
         :name             => name,
         :source           => source,
-        :type             => type,
-        :possible_values  => possible_values
-      }
+        :type             => type
+      } 
+
+      if possible_values
+        self.inputs[name][:possible_values] = possible_values
+      end
     end
 
     def config(name, source, type, possible_values=nil, default=nil)
       self.configs[name] = {
         :name             => name,
         :source           => source,
-        :type             => type,
-        :possible_values  => possible_values,
-        :default          => default
+        :type             => type
       }
+      
+      if possible_values
+        self.configs[name][:possible_values] = possible_values
+      end
+      if default
+        self.configs[name][:default] = default
+      end
     end
 
     def indicator(name, possible_values=nil)
       self.outputs[name] = {
         :name             => name,
-        :type             => "Indicator",
-        :possible_values  => possible_values
+        :type             => "Indicator"
       }
+
+      if possible_values
+        self.outputs[name][:possible_values] = possible_values
+      end
     end
 
     def date(name)
@@ -131,13 +142,23 @@ class Ruleset
     def code(name, possible_values=nil)
       self.outputs[name] = {
         :name             => name,
-        :type             => "Code",
-        :possible_values  => possible_values
+        :type             => "Code"
       }
+
+      if possible_values
+        self.outputs[name][:possible_values] = possible_values
+      end
     end
 
-    def output(name, type, valid_inputs=nil)
-      self.outputs[name] = nil
+    def output(name, type, possible_values=nil)
+      self.outputs[name] = {
+        :name             => name,
+        :type             => type
+      }
+
+      if possible_values
+        self.outputs[name][:possible_values] = possible_values
+      end
     end
   end
 
