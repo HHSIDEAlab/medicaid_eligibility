@@ -92,3 +92,7 @@ To evaluate a specific ruleset on specific input / configs, POST the JSON to the
 
     ~ $ curl -d '{"config": {"Option Young Adults": "N", "Child Age Threshold": 18}, "inputs":{"Person Birth Date": "2013-12-02"}}' http://localhost:3000/rulesets/medicaidchip/eligibility/category/child/eval --header "Content-Type: application/json" -H 'Accept: application/json'; echo
     {"Applicant Child Category Indicator":"Y","Child Category Determination Date":"2013-07-05","Child Category Ineligibility Reason":999}
+
+To run an application through a full determination, POST an Account Transfer format XML (for example, the sample files that are up on Google Drive) blob to `http://localhost:3000/determinations/eval`:
+
+    ~ $ curl -d @myfile.xml http://localhost:3000/determinations/eval --header "Content-Type: application/xml" -H 'Accept: application/xml'
