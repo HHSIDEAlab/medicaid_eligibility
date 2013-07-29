@@ -1,7 +1,7 @@
 class DeterminationsController < ApplicationController
   def eval
-    determination = Determination.new(params['AccountTransferRequest'])
+    app = Application.new(request.raw_post)
 
-    render :xml => determination.result, :root => 'Response' 
+    render :xml => app.result
   end
 end
