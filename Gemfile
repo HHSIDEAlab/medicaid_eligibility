@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 gem 'rails', '3.2.12'
 
@@ -7,7 +7,7 @@ gem 'rails', '3.2.12'
 
 gem 'rails-api'
 
-gem 'sqlite3'
+gem 'activerecord-nulldb-adapter'
 
 gem "active_model_serializers"
 
