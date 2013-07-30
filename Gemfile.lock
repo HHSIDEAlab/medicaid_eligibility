@@ -59,6 +59,7 @@ GEM
     net-ssh (2.6.7)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
+    pg (0.14.0)
     polyglot (0.3.3)
     rack (1.4.5)
     rack-cache (1.2)
@@ -108,5 +109,6 @@ DEPENDENCIES
   active_model_serializers
   activerecord-nulldb-adapter
   capistrano
+  pg
   rails (= 3.2.12)
   rails-api
