@@ -1,6 +1,7 @@
 class Application
   def initialize(raw_application)
-    @raw_application = Nokogiri::XML(raw_application)
+    @raw_application = raw_application
+    @xml_application = Nokogiri::XML(raw_application)
   end
 
   def validate
@@ -8,7 +9,8 @@ class Application
   end
 
   def result
-    @raw_application
+    #@xml_application
+    get_value('/exch:AccountTransferRequest/hix-ee:InsuranceApplication/hix-ee:InsuranceApplicant').first
   end
 
   def to_rules_context
@@ -20,7 +22,7 @@ class Application
   end
 
   def get_value(xpath)
-
+    @xml_application.xpath(xpath)
   end
 
   def set_value(xpath, value)
