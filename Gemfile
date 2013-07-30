@@ -8,6 +8,7 @@ gem 'rails', '3.2.12'
 gem 'rails-api'
 
 gem 'activerecord-nulldb-adapter'
+gem 'pg'
 
 gem "active_model_serializers"
 
