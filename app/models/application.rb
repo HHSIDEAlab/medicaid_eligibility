@@ -34,7 +34,16 @@ class Application
   end
 
   def get_value(xpath)
-    @xml_application.xpath(xpath)
+    @xml_application.xpath(xpath, {
+          "exch"     => "http://at.dsh.cms.gov/exchange/1.0",
+          "s"        => "http://niem.gov/niem/structures/2.0", 
+          "ext"      => "http://at.dsh.cms.gov/extension/1.0",
+          "hix-core" => "http://hix.cms.gov/0.1/hix-core", 
+          "hix-ee"   => "http://hix.cms.gov/0.1/hix-ee",
+          "nc"       => "http://niem.gov/niem/niem-core/2.0", 
+          "hix-pm"   => "http://hix.cms.gov/0.1/hix-pm",
+          "scr"      => "http://niem.gov/niem/domains/screening/2.1"
+     } )
   end
 
   def set_value(xpath, value)
