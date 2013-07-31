@@ -95,4 +95,4 @@ To evaluate a specific ruleset on specific input / configs, POST the JSON to the
 
 To run an application through a full determination, POST an Account Transfer format XML blob (for example, the sample files that are up on Google Drive) to `http://localhost:3000/determinations/eval`:
 
-    ~ $ curl -d @myfile.xml http://localhost:3000/determinations/eval --header "Content-Type: application/xml" -H 'Accept: application/xml'
+    ~ $ curl -d @myfile.xml http://localhost:3000/determinations/eval --header "Content-Type: application/xml" -H 'Accept: application/xml' > result.xml
