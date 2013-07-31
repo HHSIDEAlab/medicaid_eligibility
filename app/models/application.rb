@@ -5,26 +5,32 @@ class Application
   end
 
   def validate
-
   end
 
   def result
     context = to_rules_context
     output = process_rules(context)
-
-    {
-      'config' => context.config,
-      'input' => context.input,
-      'output' => output
-    }
+    update_xml!(output)
   end
+
+  private
 
   def to_rules_context
     build_context
   end
 
-  def from_rules_context
+  def update_xml!(output)
+    for applicant in output["Applicants"]
+      xml_applicant = get_value("/exch:AccountTransferRequest/hix-ee:InsuranceApplication/hix-ee:InsuranceApplicant").find{
+        |app| app.attribute("id").value == applicant["id"]
+      }
 
+      for output_var, output_value in applicant.except("id")
+        xpath = output_variables[output_var][:xpath]
+        find_or_create_node(xml_applicant, xpath).content = output_value
+      end
+    end
+    @xml_application
   end
 
   def get_value(xpath)
@@ -33,8 +39,6 @@ class Application
 
   def set_value(xpath, value)
   end
-
-  private
 
   def build_context
     state = get_value("/exch:AccountTransferRequest/ext:TransferHeader/ext:TransferActivity/ext:RecipientTransferActivityStateCode").inner_text
@@ -68,7 +72,7 @@ class Application
         if app_raw_field
           app_data[app_var] = app_var_info[app_raw_field.value]
         elsif app_var_info[:required]
-          raise "Input xml missing variable #{app_var} for applicant #{app_id}"
+          raise "Input xml missing required variable #{app_var} for applicant #{app_id}"
         elsif app_var_info[:missing_val]
           app_data[app_var] = app_var_info[:missing_val]
         else
@@ -87,7 +91,7 @@ class Application
   end
 
   def applicant_variables
-    @applicant_values ||= {
+    @applicant_variables ||= {
       "Medicaid Residency Status Indicator" => {
         :group => :applicants,
         :xpath => "/hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIResidencyEligibilityBasis/hix-ee:StatusIndicator",
@@ -127,6 +131,20 @@ class Application
     }
   end
 
+  def output_variables
+    @output_variables ||= {
+      "Applicant Pregnancy Category Indicator" => {
+        :xpath => "/hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIPregnancyCategoryEligibilityBasis/hix-core:StatusIndicator"
+      },
+      "Pregnancy Category Determination Date" => {
+        :xpath => "/hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIPregnancyCategoryEligibilityBasis/hix-ee:EligibilityBasisDetermination/nc:ActivityDate/nc:DateTime"
+      },
+      "Pregnancy Category Ineligibility Reason" => {
+        :xpath => "/hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIPregnancyCategoryEligibilityBasis/hix-ee:EligibilityBasisIneligibilityReasonText"
+      }
+    }
+  end
+
   def process_rules(initial_context)
     final_output = {
       "Applicants" => []
@@ -153,5 +171,26 @@ class Application
     @ruleset_order ||= [
       Medicaidchip::Eligibility::Category::Pregnant
     ]
+  end
+
+  def find_or_create_node(node, xpath)
+    xpath.gsub!(/^\/+/,'')
+    if xpath.empty?
+      node
+    elsif node.at_xpath(xpath)
+      node.at_xpath(xpath)
+    else
+      xpath_list = xpath.split('/')
+      next_node = node.at_xpath(xpath_list.first)
+      if next_node
+        find_or_create_node(next_node, xpath_list[1..-1].join('/'))
+      else
+        Nokogiri::XML::Builder.with(node) do |xml|
+          xml.send(xpath_list.first)
+        end
+
+        find_or_create_node(node.at_xpath(xpath_list.first), xpath_list[1..-1].join('/'))
+      end
+    end
   end
 end
