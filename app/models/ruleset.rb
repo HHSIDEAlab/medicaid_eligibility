@@ -91,27 +91,70 @@ class Ruleset
     end
 
     def input(name, source, type, possible_values=nil)
-      self.inputs[name] = nil
+      self.inputs[name] = {
+        :name   => name,
+        :source => source,
+        :type   => type
+      } 
+
+      if possible_values
+        self.inputs[name][:possible_values] = possible_values
+      end
     end
 
     def config(name, source, type, possible_values=nil, default=nil)
-      self.configs[name] = nil
+      self.configs[name] = {
+        :name   => name,
+        :source => source,
+        :type   => type
+      }
+      
+      if possible_values
+        self.configs[name][:possible_values] = possible_values
+      end
+      if default
+        self.configs[name][:default] = default
+      end
     end
 
-    def indicator(name, valid_inputs=nil)
-      self.outputs[name] = nil
+    def indicator(name, possible_values=nil)
+      self.outputs[name] = {
+        :name => name,
+        :type => "Indicator"
+      }
+
+      if possible_values
+        self.outputs[name][:possible_values] = possible_values
+      end
     end
 
     def date(name)
-      self.outputs[name] = nil
+      self.outputs[name] = {
+        :name => name,
+        :type => "Date"
+      }
     end
 
-    def code(name, valid_inputs=nil)
-      self.outputs[name] = nil
+    def code(name, possible_values=nil)
+      self.outputs[name] = {
+        :name => name,
+        :type => "Code"
+      }
+
+      if possible_values
+        self.outputs[name][:possible_values] = possible_values
+      end
     end
 
-    def output(name, type, valid_inputs=nil)
-      self.outputs[name] = nil
+    def output(name, type, possible_values=nil)
+      self.outputs[name] = {
+        :name => name,
+        :type => type
+      }
+
+      if possible_values
+        self.outputs[name][:possible_values] = possible_values
+      end
     end
   end
 
