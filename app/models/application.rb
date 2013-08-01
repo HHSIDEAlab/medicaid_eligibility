@@ -1,7 +1,9 @@
-class Application
+ class Application
   def initialize(raw_application)
     @raw_application = raw_application
-    @xml_application = Nokogiri::XML(raw_application)
+    @xml_application = Nokogiri::XML(raw_application) do |config|
+     config.default_xml.noblanks
+    end
   end
 
   def validate
@@ -11,6 +13,7 @@ class Application
     context = to_rules_context
     output = process_rules(context)
     update_xml!(output)
+    
   end
 
   private
