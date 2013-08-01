@@ -23,6 +23,8 @@
   end
 
   def update_xml!(output)
+    @xml_application.xpath('//comment()').remove
+
     for applicant in output["Applicants"]
       xml_applicant = get_value("/exch:AccountTransferRequest/hix-ee:InsuranceApplication/hix-ee:InsuranceApplicant").find{
         |app| app.attribute("id").value == applicant["id"]
