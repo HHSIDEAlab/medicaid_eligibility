@@ -163,29 +163,98 @@
         :xpath => "PersonAge",
         :required => true,
         :type => :integer
+      },
+      "Medicare Entitlement Indicator" => {
+        :group => :applicants,
+        :xpath => "hix-ee:MedicaidNonMAGIEligibility/hix-ee:MedicaidNonMAGIMedicareEntitlementEligibilityBasis/hix-core:StatusIndicator",
+        :required => false,
+        :values => {
+          'Y' => 'Y',
+          'true' => 'Y',
+          'N' => 'N',
+          'false' => 'N'
+        },
+        :missing_val => 'N'
+      },
+      "Applicant Attest Disabled" => {
+        :group => :applicants,
+        :xpath => "hix-ee:InsuranceApplicantBlindnessOrDisabilityIndicator",
+        :required => false,
+        :values => {
+          'Y' => 'Y',
+          'true' => 'Y',
+          'N' => 'N',
+          'false' => 'N'
+        },
+        :missing_val => 'N'
+      },
+      "Applicant Attest Long Term Care" => {
+        :group => :applicants,
+        :xpath => "hix-ee:InsuranceApplicantLongTermCareIndicator",
+        :required => false,
+        :values => {
+          'Y' => 'Y',
+          'true' => 'Y',
+          'N' => 'N',
+          'false' => 'N'
+        },
+        :missing_val => 'N'
+      },
+      "Person Disabled Indicator" => {
+        :group => :applicants,
+        :xpath => "hix-ee:MedicaidNonMAGIEligibility/hix-ee:MedicaidNonMAGIBlindnessOrDisabilityEligibilityBasis/hix-ee:EligibilityBasisStatusIndicator",
+        :required => false,
+        :values => {
+          'Y' => 'Y',
+          'true' => 'Y',
+          'N' => 'N',
+          'false' => 'N'
+        },
+        :missing_val => 'N'
       }
     }
   end
 
   def output_variables
-    @output_variables ||= {
-      "Applicant Pregnancy Category Indicator" => {
-        :xpath => "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIPregnancyCategoryEligibilityBasis/hix-core:StatusIndicator"
+    @output_variables ||= generate_output_variables
+  end
+
+  def generate_output_variables
+    outputs = [
+      {name: "Pregnancy Category", eligibility: :MAGI},
+      {name: "Child Category", eligibility: :MAGI},
+      {name: "Adult Group Category", eligibility: :MAGI},
+      {name: "Adult Group XX Category", eligibility: :MAGI},
+      {name: "Optional Targeted Low Income Child", eligibility: :MAGI},
+      {name: "CHIP Targeted Low Income Child", eligibility: :CHIP}
+    ].reduce({}){|outputs, ruleset| outputs.merge(category_variable(ruleset[:name], ruleset[:eligibility]))}.merge({
+      "Applicant Medicaid Non-MAGI Referral Indicator" => {
+        :xpath => "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityIndicator"
       },
-      "Pregnancy Category Determination Date" => {
-        :xpath => "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIPregnancyCategoryEligibilityBasis/hix-ee:EligibilityBasisDetermination/nc:ActivityDate/nc:DateTime"
+      "Medicaid Non-MAGI Referral Determination Date" => {
+        :xpath => "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityDetermination/nc:ActivityDate/nc:DateTime"
       },
-      "Pregnancy Category Ineligibility Reason" => {
-        :xpath => "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIPregnancyCategoryEligibilityBasis/hix-ee:EligibilityBasisIneligibilityReasonText"
+      "Medicaid Non-MAGI Referral Ineligibility Reason" => {
+        :xpath => "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityReasonText"
+      }
+    })
+  end
+
+  def category_variable(name, eligibility) 
+    if eligibility == :MAGI
+      prefix = "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGI"
+    elsif eligibility == :CHIP
+      prefix = "hix-ee:CHIPEligibility/hix-ee:"
+    end
+    {
+      "Applicant #{name} Indicator" => {
+        :xpath => "#{prefix}#{name.gsub(/ +/,'')}EligibilityBasis/hix-ee:EligibilityBasisStatusIndicator"
       },
-      "Applicant Child Category Indicator" => {
-        :xpath => "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIChildCategoryEligibilityBasis/hix-core:StatusIndicator"
+      "#{name} Determination Date" => {
+        :xpath => "#{prefix}#{name.gsub(/ +/,'')}EligibilityBasis/hix-ee:EligibilityBasisDetermination/nc:ActivityDate/nc:DateTime"
       },
-      "Child Category Determination Date" => {
-        :xpath => "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIChildCategoryEligibilityBasis/hix-ee:EligibilityBasisDetermination/nc:ActivityDate/nc:DateTime"
-      },
-      "Child Category Ineligibility Reason" => {
-        :xpath => "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIChildCategoryEligibilityBasis/hix-ee:EligibilityBasisIneligibilityReasonText"
+      "#{name} Ineligibility Reason" => {
+        :xpath => "#{prefix}#{name.gsub(/ +/,'')}EligibilityBasis/hix-ee:EligibilityBasisIneligibilityReasonText"
       }
     }
   end
@@ -215,7 +284,11 @@
   def ruleset_order
     @ruleset_order ||= [
       Medicaidchip::Eligibility::Category::Pregnant,
-      Medicaidchip::Eligibility::Category::Child
+      Medicaidchip::Eligibility::Category::Child,
+      Medicaid::Eligibility::Category::Medicaid::AdultGroup,
+      Medicaid::Eligibility::Category::OptionalTargetedLowIncomeChildren,
+      Chip::Eligibility::Category::TargetedLowIncomeChildren,
+      Medicaid::Eligibility::ReferralType
     ]
   end
 

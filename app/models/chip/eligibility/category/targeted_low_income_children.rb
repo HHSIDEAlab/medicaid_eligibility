@@ -20,13 +20,13 @@ module Chip::Eligibility::Category
     config "CHIP Targeted Low Income Child Age High Threshold", "State configuration table", "Numeric", nil, 19
 
     # Outputs 
-    indicator "Applicant CHIP Targeted Low Income Child Category Indicator", %w(Y N T X)
+    indicator "Applicant CHIP Targeted Low Income Child Indicator", %w(Y N T X)
     date      "CHIP Targeted Low Income Child Determination Date"
     code      "CHIP Targeted Low Income Child Ineligibility Reason", %w(999 555 127)
 
     rule "State does not elect this option" do
       if c("CHIP Targeted Low Income Child Group") == 'N'
-        o["Applicant CHIP Targeted Low Income Child Category Indicator"] = 'X'
+        o["Applicant CHIP Targeted Low Income Child Indicator"] = 'X'
         o["CHIP Targeted Low Income Child Determination Date"] = current_date
         o["CHIP Targeted Low Income Child Ineligibility Reason"] = 555
       end
@@ -34,7 +34,7 @@ module Chip::Eligibility::Category
     
     rule "Child right age for this category" do
       if c("CHIP Targeted Low Income Child Group") == 'Y' && v("Applicant Age") >= c("CHIP Targeted Low Income Child Age Low Threshold") && v("Applicant Age") <= c("CHIP Targeted Low Income Child Age High Threshold")
-        o["Applicant CHIP Targeted Low Income Child Category Indicator"] = 'T'
+        o["Applicant CHIP Targeted Low Income Child Indicator"] = 'T'
         o["CHIP Targeted Low Income Child Determination Date"] = current_date
         o["CHIP Targeted Low Income Child Ineligibility Reason"] = 999
       end
@@ -42,7 +42,7 @@ module Chip::Eligibility::Category
     
     rule "Else - Child not the right age for this category" do 
       if c("CHIP Targeted Low Income Child Group") == 'Y' && (v("Applicant Age") < c("CHIP Targeted Low Income Child Age Low Threshold") || v("Applicant Age") > c("CHIP Targeted Low Income Child Age High Threshold"))
-        o["Applicant CHIP Targeted Low Income Child Category Indicator"] = 'N'
+        o["Applicant CHIP Targeted Low Income Child Indicator"] = 'N'
         o["CHIP Targeted Low Income Child Determination Date"] = current_date 
         o["CHIP Targeted Low Income Child Ineligibility Reason"] = 127
       end

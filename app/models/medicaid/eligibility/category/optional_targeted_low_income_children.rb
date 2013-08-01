@@ -20,13 +20,13 @@ module Medicaid::Eligibility::Category
     config "Optional Targeted Low Income Child Age High Threshold", "State configuration table", "Numeric", nil, 19
 
     # Outputs 
-    indicator "Applicant Optional Targeted Low Income Child Category Indicator", %w(Y N T X)
+    indicator "Applicant Optional Targeted Low Income Child Indicator", %w(Y N T X)
     date      "Optional Targeted Low Income Child Determination Date"
     code      "Optional Targeted Low Income Child Ineligibility Reason", %w(999 555 127)
 
     rule "State does not elect this option" do
       if c("Optional Targeted Low Income Child Group") == 'N'
-        o["Applicant Optional Targeted Low Income Child Category Indicator"] = 'X'
+        o["Applicant Optional Targeted Low Income Child Indicator"] = 'X'
         o["Optional Targeted Low Income Child Determination Date"] = current_date
         o["Optional Targeted Low Income Child Ineligibility Reason"] = 555
       end
@@ -34,7 +34,7 @@ module Medicaid::Eligibility::Category
 
     rule "Child right age for this category" do
       if c("Optional Targeted Low Income Child Group") == 'Y' && v("Applicant Age") >= c("Optional Targeted Low Income Child Age Low Threshold") && v("Applicant Age") <= c("Optional Targeted Low Income Child Age High Threshold")
-        o["Applicant Optional Targeted Low Income Child Category Indicator"] = 'T'
+        o["Applicant Optional Targeted Low Income Child Indicator"] = 'T'
         o["Optional Targeted Low Income Child Determination Date"] = current_date
         o["Optional Targeted Low Income Child Ineligibility Reason"] = 999
       end
@@ -42,7 +42,7 @@ module Medicaid::Eligibility::Category
 
     rule "Child not the right age for this category" do
       if c("Optional Targeted Low Income Child Group") == 'Y' && (v("Applicant Age") < c("Optional Targeted Low Income Child Age Low Threshold") || v("Applicant Age") > c("Optional Targeted Low Income Child Age High Threshold"))
-        o["Applicant Optional Targeted Low Income Child Category Indicator"] = 'N'
+        o["Applicant Optional Targeted Low Income Child Indicator"] = 'N'
         o["Optional Targeted Low Income Child Determination Date"] = current_date
         o["Optional Targeted Low Income Child Ineligibility Reason"] = 127
       end
