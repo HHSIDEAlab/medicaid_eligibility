@@ -1,0 +1,2 @@
+git needs a file in a directory, but this should be empty
+run rake specification:variables to populate
