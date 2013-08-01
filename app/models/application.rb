@@ -75,7 +75,7 @@
 
     applicants = get_value "/exch:AccountTransferRequest/hix-ee:InsuranceApplication/hix-ee:InsuranceApplicant"
     
-    for app, person in applicants
+    for app in applicants
       app_data = {}
       app_id = app.attribute('id').value
       app_data['id'] = app_id
@@ -86,15 +86,21 @@
       
       for app_var, app_var_info in applicant_variables
         if app_var_info[:group] == :applicants
-          app_raw_field = app.at_xpath(app_var_info[:xpath])
+          node = app.at_xpath(app_var_info[:xpath])
         elsif app_var_info[:group] == :people
-          app_raw_field = person.at_xpath(app_var_info[:xpath])
+          node = person.at_xpath(app_var_info[:xpath])
         else
           raise "No group listed for variable #{app_var}"
         end
 
-        if app_raw_field
-          app_data[app_var] = app_var_info[app_raw_field.value]
+        if node
+          if app_var_info[:values]
+            app_data[app_var] = app_var_info[:values][node.inner_text]
+          elsif app_var_info[:type] == :integer
+            app_data[app_var] = node.inner_text.to_i
+          else
+            app_data[app_var] = node.inner_text
+          end
         elsif app_var_info[:required]
           raise "Input xml missing required variable #{app_var} for applicant #{app_id}"
         elsif app_var_info[:missing_val]
@@ -118,7 +124,7 @@
     @applicant_variables ||= {
       "Medicaid Residency Status Indicator" => {
         :group => :applicants,
-        :xpath => "/hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIResidencyEligibilityBasis/hix-ee:StatusIndicator",
+        :xpath => "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIResidencyEligibilityBasis/hix-ee:StatusIndicator",
         :required => false,
         :values => {
           'Y' => 'Y',
@@ -130,7 +136,7 @@
       },
       "Applicant Medicaid Citizen Or Immigrant Status Indicator" => {
         :group => :applicants,
-        :xpath => "/hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGICitizenOrImmigrantEligibilityBasis/hix-ee:StatusIndicator",
+        :xpath => "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGICitizenOrImmigrantEligibilityBasis/hix-ee:StatusIndicator",
         :required => false,
         :values => {
           'Y' => 'Y',
@@ -142,7 +148,7 @@
       },
       "Applicant Pregnant Indicator" => {
         :group => :people,
-        :xpath => "/hix-core:PersonAugmentation/hix-core:PersonPregnancyStatus/hix-core:StatusIndicator",
+        :xpath => "hix-core:PersonAugmentation/hix-core:PersonPregnancyStatus/hix-core:StatusIndicator",
         :required => false,
         :values => {
           'Y' => 'Y',
@@ -151,6 +157,12 @@
           'false' => 'N'
         },
         :missing_val => 'N'
+      },
+      "Applicant Age" => {
+        :group => :people,
+        :xpath => "PersonAge",
+        :required => true,
+        :type => :integer
       }
     }
   end
@@ -158,13 +170,22 @@
   def output_variables
     @output_variables ||= {
       "Applicant Pregnancy Category Indicator" => {
-        :xpath => "/hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIPregnancyCategoryEligibilityBasis/hix-core:StatusIndicator"
+        :xpath => "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIPregnancyCategoryEligibilityBasis/hix-core:StatusIndicator"
       },
       "Pregnancy Category Determination Date" => {
-        :xpath => "/hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIPregnancyCategoryEligibilityBasis/hix-ee:EligibilityBasisDetermination/nc:ActivityDate/nc:DateTime"
+        :xpath => "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIPregnancyCategoryEligibilityBasis/hix-ee:EligibilityBasisDetermination/nc:ActivityDate/nc:DateTime"
       },
       "Pregnancy Category Ineligibility Reason" => {
-        :xpath => "/hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIPregnancyCategoryEligibilityBasis/hix-ee:EligibilityBasisIneligibilityReasonText"
+        :xpath => "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIPregnancyCategoryEligibilityBasis/hix-ee:EligibilityBasisIneligibilityReasonText"
+      },
+      "Applicant Child Category Indicator" => {
+        :xpath => "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIChildCategoryEligibilityBasis/hix-core:StatusIndicator"
+      },
+      "Child Category Determination Date" => {
+        :xpath => "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIChildCategoryEligibilityBasis/hix-ee:EligibilityBasisDetermination/nc:ActivityDate/nc:DateTime"
+      },
+      "Child Category Ineligibility Reason" => {
+        :xpath => "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIChildCategoryEligibilityBasis/hix-ee:EligibilityBasisIneligibilityReasonText"
       }
     }
   end
@@ -193,7 +214,8 @@
 
   def ruleset_order
     @ruleset_order ||= [
-      Medicaidchip::Eligibility::Category::Pregnant
+      Medicaidchip::Eligibility::Category::Pregnant,
+      Medicaidchip::Eligibility::Category::Child
     ]
   end
 
