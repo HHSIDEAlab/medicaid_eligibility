@@ -1,28 +1,40 @@
  class Application
-  def initialize(raw_application)
+  def initialize(raw_application, return_application)
     @raw_application = raw_application
     @xml_application = Nokogiri::XML(raw_application) do |config|
      config.default_xml.noblanks
     end
+    @return_application = return_application
   end
 
   def validate
   end
 
   def result
-    context = to_rules_context
+    context = build_context
     output = process_rules(context)
     update_xml!(output)
-    
   end
 
   private
 
-  def to_rules_context
-    build_context
+  def return_application?
+    @return_application
   end
 
   def update_xml!(output)
+    unless return_application?
+      node = get_value("exch:AccountTransferRequest").first
+      node.children.remove
+      Nokogiri::XML::Builder.with(node) do |xml|
+        xml.send("hix-ee:InsuranceApplication") {
+          output["Applicants"].each do |applicant|
+            xml.send("hix-ee:InsuranceApplicant",:id => applicant["id"])
+          end
+        }
+      end
+    end
+
     for applicant in output["Applicants"]
       xml_applicant = get_value("/exch:AccountTransferRequest/hix-ee:InsuranceApplication/hix-ee:InsuranceApplicant").find{
         |app| app.attribute("id").value == applicant["id"]
