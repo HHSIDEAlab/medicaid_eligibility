@@ -302,7 +302,7 @@
       Medicaid::Eligibility::Category::OptionalTargetedLowIncomeChildren,
       Chip::Eligibility::Category::TargetedLowIncomeChildren,
       Medicaid::Eligibility::ReferralType,
-      Medicaidchip::Eligibility::Category::Income
+      Medicaidchip::Eligibility::Income
     ]
   end
 
