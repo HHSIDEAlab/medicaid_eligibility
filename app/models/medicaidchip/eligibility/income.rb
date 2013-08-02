@@ -34,16 +34,16 @@ module Medicaidchip::Eligibility
     #code      "MAGI Income Eligibility Ineligibility Reason", %w()
 
     calculated "FPL" do
-      c("Base FPL") + v("Household Size").length * c("FPL Per Person")
+      c("Base FPL") + v("Household").length * c("FPL Per Person")
     end
 
-    calculated "Max Eligibile Income" do
+    calculated "Max Eligible Income" do
       eligible_categories = categories.select{|cat| v("Applicant #{cat} Indicator") == 'Y'}
       if eligible_categories.any?
         category = eligible_categories.max_by{|cat| c("Category->Percentage Mapping")[cat]}
         {
           :category => category,
-          :income   => v("FPL") * c("Category->Percentage Mapping")[cat]
+          :income   => v("FPL") * c("Category->Percentage Mapping")[category]
         }
       else
         nil
@@ -56,7 +56,7 @@ module Medicaidchip::Eligibility
         category = eligible_categories.max_by{|cat| c("Category->Percentage Mapping")[cat]}
         {
           :category => category,
-          :income   => v("FPL") * c("Category->Percentage Mapping")[cat]
+          :income   => v("FPL") * c("Category->Percentage Mapping")[category]
         }
       else
         nil
