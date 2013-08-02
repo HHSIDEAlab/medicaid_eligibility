@@ -13,6 +13,11 @@
   def result
     context = build_context
     output = process_rules(context)
+    # {
+    #    :config => context.config,
+    #    :input => context.input,
+    #    :output => output
+    # }
     update_xml!(output)
   end
 
@@ -40,7 +45,7 @@
         |app| app.attribute("id").value == applicant["id"]
       }
 
-      for output_var, output_value in applicant.except("id")
+      for output_var, output_value in applicant.except("id", "Category Used to Calculate Income")
         xpath = output_variables[output_var][:xpath]
         find_or_create_node(xml_applicant, xpath).content = output_value
       end
@@ -113,6 +118,9 @@
       # We need additional information passed to us, since we
       # don't have birthdates; this is just a quick fix for now
       app_data["Applicant Post Partum Period Indicator"] = 'N'
+      app_data["Household"] = get_value("/exch:AccountTransferRequest/ext:PhysicalHousehold/hix-ee:HouseholdMemberReference").map{
+        |p| p.attribute('ref').value
+      }
 
       input["Applicants"] << app_data
     end
@@ -211,6 +219,12 @@
           'false' => 'N'
         },
         :missing_val => 'N'
+      },
+      "Applicant Household Income" => {
+        :group => :people,
+        :xpath => "hix-core:PersonAugmentation/hix-core:PersonIncome/hix-core:IncomeAmount",
+        :required => true,
+        :type => :integer
       }
     }
   end
@@ -226,7 +240,8 @@
       {name: "Adult Group Category", eligibility: :MAGI},
       {name: "Adult Group XX Category", eligibility: :MAGI},
       {name: "Optional Targeted Low Income Child", eligibility: :MAGI},
-      {name: "CHIP Targeted Low Income Child", eligibility: :CHIP}
+      {name: "CHIP Targeted Low Income Child", eligibility: :CHIP},
+      {name: "Income", eligibility: :MAGI}
     ].reduce({}){|outputs, ruleset| outputs.merge(category_variable(ruleset[:name], ruleset[:eligibility]))}.merge({
       "Applicant Medicaid Non-MAGI Referral Indicator" => {
         :xpath => "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityIndicator"
@@ -236,6 +251,9 @@
       },
       "Medicaid Non-MAGI Referral Ineligibility Reason" => {
         :xpath => "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityReasonText"
+      },
+      "Category Used to Calculate Income" => {
+        :xpath => "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIIncomeEligibilityBasis/CategoryUsed"
       }
     })
   end
@@ -288,7 +306,8 @@
       Medicaid::Eligibility::Category::Medicaid::AdultGroup,
       Medicaid::Eligibility::Category::OptionalTargetedLowIncomeChildren,
       Chip::Eligibility::Category::TargetedLowIncomeChildren,
-      Medicaid::Eligibility::ReferralType
+      Medicaid::Eligibility::ReferralType,
+      Medicaidchip::Eligibility::Category::Income
     ]
   end
 
