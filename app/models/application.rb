@@ -13,11 +13,6 @@
   def result
     context = build_context
     output = process_rules(context)
-    # {
-    #    :config => context.config,
-    #    :input => context.input,
-    #    :output => output
-    # }
     update_xml!(output)
   end
 
