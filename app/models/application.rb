@@ -1,51 +1,143 @@
- class Application
+class Application
+  class Person
+    attr_reader :person_id, :person_attributes, :relationships
+
+    def initialize(person_id, person_attributes)
+      @person_id = person_id
+      @person_attributes = person_attributes
+    end
+  end
+
+  class Applicant < Person
+    attr_reader :applicant_id, :applicant_attributes
+
+    def initialize(person_id, person_attributes, applicant_id, applicant_attributes)
+      @person_id = person_id
+      @person_attributes = person_attributes
+      @applicant_id = applicant_id
+      @applicant_attributes = applicant_attributes
+    end
+  end
+
+  class Household
+    attr_reader :household_id, :people
+  end
+
+  attr_reader :state, :applicants, :people, :physical_households, :tax_households, :medicaid_households
+
+  PERSON_INPUTS = [
+    # {
+    #   :name       => "Applicant Age",
+    #   :type       => :integer,
+    #   :xml_group  => :undefined,
+    #   :xpath      => :undefined
+    # },
+    {
+      :name       => "Applicant Attest Disabled",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :xml_group  => :applicant,
+      :xpath      => "hix-ee:InsuranceApplicantBlindnessOrDisabilityIndicator"
+    },
+    {
+      :name       => "Applicant Attest Long Term Care",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :xml_group  => :applicant,
+      :xpath      => "hix-ee:InsuranceApplicantBlindnessOrDisabilityIndicator"
+    },
+    # {
+    #   :name       => "Applicant Household Income",
+    #   :type       => :integer,
+    #   :xml_group  => :undefined,
+    #   :xml_group  => :undefined
+    # },
+    {
+      :name       => "Applicant Medicaid Citizen Or Immigrant Status Indicator",
+      :type       => :flag,
+      :values     => %w(Y N D E H I P T),
+      :xml_group  => :applicant,
+      :xpath      => "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGICitizenOrImmigrantEligibilityBasis/hix-ee:StatusIndicator"
+    },
+    {
+      :name       => "Applicant Pregnant Indicator",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :xml_group  => :person,
+      :xpath      => "hix-core:PersonAugmentation/hix-core:PersonPregnancyStatus/hix-core:StatusIndicator"
+    },
+    {
+      :name       => "Medicare Entitlement Indicator",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :xml_group  => :applicant,
+      :xpath      => "hix-ee:MedicaidNonMAGIEligibility/hix-ee:MedicaidNonMAGIMedicareEntitlementEligibilityBasis/hix-core:StatusIndicator"
+    },
+    {
+      :name       => "Medicaid Residency Status Indicator",
+      :type       => :flag,
+      :values     => %w(Y N P),
+      :xml_group  => :applicant,
+      :xpath      => "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIResidencyEligibilityBasis/hix-ee:StatusIndicator"
+    },
+    {
+      :name       => "Person Disabled Indicator",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :xml_group  => :applicant,
+      :xpath      => "hix-ee:MedicaidNonMAGIEligibility/hix-ee:MedicaidNonMAGIBlindnessOrDisabilityEligibilityBasis/hix-ee:EligibilityBasisStatusIndicator"
+    }
+  ]
+
+  DETERMINATIONS = [
+    {name: "Pregnancy Category", eligibility: :MAGI},
+    {name: "Child Category", eligibility: :MAGI},
+    {name: "Adult Group Category", eligibility: :MAGI},
+    {name: "Adult Group XX Category", eligibility: :MAGI},
+    {name: "Optional Targeted Low Income Child", eligibility: :MAGI},
+    {name: "CHIP Targeted Low Income Child", eligibility: :CHIP},
+    {name: "Income", eligibility: :MAGI},
+    {
+      name: "Medicaid Non-MAGI Referral",
+      group: :other,
+      indicator_xpath: "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityIndicator",
+      date_xpath: "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityDetermination/nc:ActivityDate/nc:DateTime",
+      reason_xpath: "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityReasonText"
+    }
+  ]
+
+  OUTPUTS = [
+    {
+      :name   => "Category Used to Calculate Income",
+      :type   => :string,
+      :xpath  => :undefined
+    }
+  ]
+
   def initialize(raw_application, return_application)
     @raw_application = raw_application
     @xml_application = Nokogiri::XML(raw_application) do |config|
-     config.default_xml.noblanks
+      config.default_xml.noblanks
     end
     @return_application = return_application
   end
 
-  def validate
-  end
-
   def result
-    context = build_context
-    output = process_rules(context)
-    update_xml!(output)
+    from_xml
+    {
+      :state => @state, 
+      :applicants => @applicants.map{|a| {:app_id => a.applicant_id, :app_attrs => a.applicant_attributes, :person_id => a.person_id, :person_attrs => a.person_attributes}}, 
+      :people => @people.map{|p| {:person_id => p.person_id, :person_attrs => p.person_attributes}}#, :physical_households, :tax_households, :medicaid_households
+    }
+    #context = build_context
+    #output = process_rules(context)
+    #@determination_date = Date.today
+    #update_xml!(output)
   end
 
   private
 
-  def return_application?
-    @return_application
-  end
-
-  def update_xml!(output)
-    unless return_application?
-      node = get_value("exch:AccountTransferRequest").first
-      node.children.remove
-      Nokogiri::XML::Builder.with(node) do |xml|
-        xml.send("hix-ee:InsuranceApplication") {
-          output["Applicants"].each do |applicant|
-            xml.send("hix-ee:InsuranceApplicant",:id => applicant["id"])
-          end
-        }
-      end
-    end
-
-    for applicant in output["Applicants"]
-      xml_applicant = get_value("/exch:AccountTransferRequest/hix-ee:InsuranceApplication/hix-ee:InsuranceApplicant").find{
-        |app| app.attribute("id").value == applicant["id"]
-      }
-
-      for output_var, output_value in applicant.except("id", "Category Used to Calculate Income")
-        xpath = output_variables[output_var][:xpath]
-        find_or_create_node(xml_applicant, xpath).content = output_value
-      end
-    end
-    @xml_application
+  def validate
   end
 
   def get_value(xpath)
@@ -61,7 +153,109 @@
      } )
   end
 
-  def set_value(xpath, value)
+  def find_or_create_node(node, xpath)
+    xpath.gsub!(/^\/+/,'')
+    if xpath.empty?
+      node
+    elsif node.at_xpath(xpath)
+      node.at_xpath(xpath)
+    else
+      xpath_list = xpath.split('/')
+      next_node = node.at_xpath(xpath_list.first)
+      if next_node
+        find_or_create_node(next_node, xpath_list[1..-1].join('/'))
+      else
+        Nokogiri::XML::Builder.with(node) do |xml|
+          xml.send(xpath_list.first)
+        end
+
+        find_or_create_node(node.at_xpath(xpath_list.first), xpath_list[1..-1].join('/'))
+      end
+    end
+  end
+
+  def return_application?
+    @return_application
+  end
+
+  def from_xml
+    @people = []
+    @applicants = []
+    @state = get_value("/exch:AccountTransferRequest/ext:TransferHeader/ext:TransferActivity/ext:RecipientTransferActivityStateCode").inner_text
+    
+    xml_people = get_value "/exch:AccountTransferRequest/hix-core:Person"
+    
+    for xml_person in xml_people
+      person_id = xml_person.attribute('id').value
+      person_attributes = {}
+
+      xml_app = get_value("/exch:AccountTransferRequest/hix-ee:InsuranceApplication/hix-ee:InsuranceApplicant").find{
+        |x_app| x_app.at_xpath("hix-core:RoleOfPersonReference").attribute('ref').value == person_id
+      }
+      if xml_app
+        applicant_id = xml_app.attribute('id').value
+        applicant_attributes = {}
+      end
+      
+      for input in PERSON_INPUTS
+        if input[:xml_group] == :person
+          node = xml_person.at_xpath(input[:xpath])
+        elsif input[:xml_group] == :applicant
+          unless xml_app
+            next
+          end
+          node = xml_app.at_xpath(input[:xpath])
+        else
+          raise "Variable #{input[:name]} has unimplemented xml group #{input[:xml_group]}"
+        end
+
+        unless node
+          next # for testing
+          raise "Input xml missing variable #{input[:name]} for applicant #{applicant_id}"
+        end
+
+        if input[:type] == :integer
+          attr_value = node.inner_text.to_i
+        elsif input[:type] == :flag
+          if input[:values].include? node.inner_text
+            attr_value = node.inner_text
+          elsif node.inner_text == 'true'
+            attr_value = 'Y'
+          elsif node.inner_text == 'false'
+            attr_value = 'N'
+          else
+            raise "Invalid value #{node.inner_text} for variable #{input[:name]} for applicant #{applicant_id}"
+          end 
+        elsif input[:type] == :string
+          attr_value = node.inner_text
+        else
+          raise "Variable #{input[:name]} has unimplemented type #{input[:type]}"
+        end
+
+        if input[:xml_group] == :person
+          person_attributes[input[:name]] = attr_value
+        elsif input[:xml_group] == :applicant
+          applicant_attributes[input[:name]] = attr_value
+        else
+          raise "Variable #{input[:name]} has unimplemented xml group #{input[:xml_group]}"
+        end
+      end
+
+      if xml_app
+        person = Applicant.new(person_id, person_attributes, applicant_id, applicant_attributes)
+        @applicants << person
+      else
+        person = Person.new(person_id, person_attributes)
+      end
+      @people << person
+
+      # We need additional information passed to us, since we
+      # don't have birthdates; this is just a quick fix for now
+      # app_data["Applicant Post Partum Period Indicator"] = 'N'
+      # app_data["Household"] = get_value("/exch:AccountTransferRequest/ext:PhysicalHousehold/hix-ee:HouseholdMemberReference").map{
+      #   |p| p.attribute('ref').value
+      # }
+    end
   end
 
   def build_context
@@ -121,6 +315,66 @@
     end
 
     RuleContext.new(config, input)
+  end
+
+  def update_xml!(output)
+    unless return_application?
+      node = get_value("exch:AccountTransferRequest").first
+      node.children.remove
+      Nokogiri::XML::Builder.with(node) do |xml|
+        xml.send("hix-ee:InsuranceApplication") {
+          output["Applicants"].each do |applicant|
+            xml.send("hix-ee:InsuranceApplicant",:id => applicant["id"])
+          end
+        }
+      end
+    end
+
+    for applicant in output["Applicants"]
+      xml_applicant = get_value("/exch:AccountTransferRequest/hix-ee:InsuranceApplication/hix-ee:InsuranceApplicant").find{
+        |app| app.attribute("id").value == applicant["id"]
+      }
+
+      for output_var, output_value in applicant.except("id", "Category Used to Calculate Income")
+        xpath = output_variables[output_var][:xpath]
+        find_or_create_node(xml_applicant, xpath).content = output_value
+      end
+    end
+    @xml_application
+  end
+
+  def process_rules(initial_context)
+    final_output = {
+      "Applicants" => []
+    }
+
+    for applicant in initial_context.input["Applicants"]
+      applicant_context = RuleContext.new(initial_context.config, applicant)
+      applicant_output = {
+        "id" => applicant["id"]
+      }
+      for ruleset in ruleset_order
+        ruleset.new().run(applicant_context)
+        applicant_output.merge!(applicant_context.output)
+
+        applicant_context = RuleContext.new(applicant_context.config, applicant_context.input.merge(applicant_context.output))
+      end
+      final_output["Applicants"] << applicant_output
+    end
+
+    final_output
+  end
+
+  def ruleset_order
+    @ruleset_order ||= [
+      Medicaidchip::Eligibility::Category::Pregnant,
+      Medicaidchip::Eligibility::Category::Child,
+      Medicaid::Eligibility::Category::Medicaid::AdultGroup,
+      Medicaid::Eligibility::Category::OptionalTargetedLowIncomeChildren,
+      Chip::Eligibility::Category::TargetedLowIncomeChildren,
+      Medicaid::Eligibility::ReferralType,
+      Medicaidchip::Eligibility::Income
+    ]
   end
 
   def applicant_variables
@@ -270,60 +524,5 @@
         :xpath => "#{prefix}#{name.gsub(/ +/,'')}EligibilityBasis/hix-ee:EligibilityBasisIneligibilityReasonText"
       }
     }
-  end
-
-  def process_rules(initial_context)
-    final_output = {
-      "Applicants" => []
-    }
-
-    for applicant in initial_context.input["Applicants"]
-      applicant_context = RuleContext.new(initial_context.config, applicant)
-      applicant_output = {
-        "id" => applicant["id"]
-      }
-      for ruleset in ruleset_order
-        ruleset.new().run(applicant_context)
-        applicant_output.merge!(applicant_context.output)
-
-        applicant_context = RuleContext.new(applicant_context.config, applicant_context.input.merge(applicant_context.output))
-      end
-      final_output["Applicants"] << applicant_output
-    end
-
-    final_output
-  end
-
-  def ruleset_order
-    @ruleset_order ||= [
-      Medicaidchip::Eligibility::Category::Pregnant,
-      Medicaidchip::Eligibility::Category::Child,
-      Medicaid::Eligibility::Category::Medicaid::AdultGroup,
-      Medicaid::Eligibility::Category::OptionalTargetedLowIncomeChildren,
-      Chip::Eligibility::Category::TargetedLowIncomeChildren,
-      Medicaid::Eligibility::ReferralType,
-      Medicaidchip::Eligibility::Income
-    ]
-  end
-
-  def find_or_create_node(node, xpath)
-    xpath.gsub!(/^\/+/,'')
-    if xpath.empty?
-      node
-    elsif node.at_xpath(xpath)
-      node.at_xpath(xpath)
-    else
-      xpath_list = xpath.split('/')
-      next_node = node.at_xpath(xpath_list.first)
-      if next_node
-        find_or_create_node(next_node, xpath_list[1..-1].join('/'))
-      else
-        Nokogiri::XML::Builder.with(node) do |xml|
-          xml.send(xpath_list.first)
-        end
-
-        find_or_create_node(node.at_xpath(xpath_list.first), xpath_list[1..-1].join('/'))
-      end
-    end
   end
 end
