@@ -10,12 +10,14 @@ class Application
 
   class Applicant < Person
     attr_reader :applicant_id, :applicant_attributes
+    attr_accessor :outputs
 
     def initialize(person_id, person_attributes, applicant_id, applicant_attributes)
       @person_id = person_id
       @person_attributes = person_attributes
       @applicant_id = applicant_id
       @applicant_attributes = applicant_attributes
+      @outputs = {}
     end
   end
 
@@ -23,7 +25,7 @@ class Application
     attr_reader :household_id, :people
   end
 
-  attr_reader :state, :applicants, :people, :physical_households, :tax_households, :medicaid_households
+  attr_reader :state, :applicants, :people, :physical_households, :tax_households, :medicaid_households, :config
 
   PERSON_INPUTS = [
     # {
@@ -123,15 +125,22 @@ class Application
   end
 
   def result
+    #@determination_date = Date.today
     from_xml
+    read_configs
+    # {
+    #   :state => @state, 
+    #   :applicants => @applicants.map{|a| {:app_id => a.applicant_id, :app_attrs => a.applicant_attributes, :person_id => a.person_id, :person_attrs => a.person_attributes}}, 
+    #   :people => @people.map{|p| {:person_id => p.person_id, :person_attrs => p.person_attributes}}, #:physical_households, :tax_households, :medicaid_households,
+    #   :config => @config
+    # }
+    c = to_context(@applicants.first)
     {
-      :state => @state, 
-      :applicants => @applicants.map{|a| {:app_id => a.applicant_id, :app_attrs => a.applicant_attributes, :person_id => a.person_id, :person_attrs => a.person_attributes}}, 
-      :people => @people.map{|p| {:person_id => p.person_id, :person_attrs => p.person_attributes}}#, :physical_households, :tax_households, :medicaid_households
+      :config => c.config,
+      :input => c.input
     }
     #context = build_context
     #output = process_rules(context)
-    #@determination_date = Date.today
     #update_xml!(output)
   end
 
@@ -140,7 +149,7 @@ class Application
   def validate
   end
 
-  def get_value(xpath)
+  def get_value(xpath, start_node=@xml_application)
     @xml_application.xpath(xpath, {
           "exch"     => "http://at.dsh.cms.gov/exchange/1.0",
           "s"        => "http://niem.gov/niem/structures/2.0", 
@@ -176,6 +185,15 @@ class Application
 
   def return_application?
     @return_application
+  end
+
+  def read_configs
+    config = MedicaidEligibilityApi::Application.options[:config]
+    if config[@state]
+      @config = config[:default].merge(config[@state])
+    else
+      @config = config[:default]
+    end
   end
 
   def from_xml
@@ -256,6 +274,20 @@ class Application
       #   |p| p.attribute('ref').value
       # }
     end
+  end
+
+  def to_xml
+
+  end
+
+  def from_context(applicant, context)
+    applicant.outputs.merge!(context.output)
+  end
+
+  def to_context(applicant)
+    input = applicant.applicant_attributes.merge(applicant.person_attributes).merge(applicant.outputs)
+    config = @config
+    RuleContext.new(config, input)
   end
 
   def build_context
