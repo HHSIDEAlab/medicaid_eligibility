@@ -1,11 +1,11 @@
 module ApplicationVariables
   PERSON_INPUTS = [
-    # {
-    #   :name       => "Applicant Age",
-    #   :type       => :integer,
-    #   :xml_group  => :undefined,
-    #   :xpath      => :undefined
-    # },
+    {
+      :name       => "Applicant Age",
+      :type       => :integer,
+      :xml_group  => :person,
+      :xpath      => "PersonAge"
+    },
     {
       :name       => "Applicant Attest Disabled",
       :type       => :flag,
@@ -20,12 +20,12 @@ module ApplicationVariables
       :xml_group  => :applicant,
       :xpath      => "hix-ee:InsuranceApplicantBlindnessOrDisabilityIndicator"
     },
-    # {
-    #   :name       => "Applicant Household Income",
-    #   :type       => :integer,
-    #   :xml_group  => :undefined,
-    #   :xml_group  => :undefined
-    # },
+    {
+      :name       => "Applicant Household Income",
+      :type       => :integer,
+      :xml_group  => :person,
+      :xpath      => "PersonIncome"
+    },
     {
       :name       => "Applicant Medicaid Citizen Or Immigrant Status Indicator",
       :type       => :flag,
@@ -39,6 +39,13 @@ module ApplicationVariables
       :values     => %w(Y N),
       :xml_group  => :person,
       :xpath      => "hix-core:PersonAugmentation/hix-core:PersonPregnancyStatus/hix-core:StatusIndicator"
+    },
+    {
+      :name       => "Applicant Post Partum Period Indicator",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :xml_group  => :person,
+      :xpath      => "hix-core:PersonAugmentation/hix-core:PersonPostPartumPeriod/hix-core:StatusIndicator"
     },
     {
       :name       => "Medicare Entitlement Indicator",
