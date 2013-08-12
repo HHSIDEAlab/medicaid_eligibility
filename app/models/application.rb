@@ -205,11 +205,11 @@ class Application
 
           }
           @applicants.each do |applicant|
-            xml.send("hix-ee:InsuranceApplicant", {"s:id" => applicant.applicant_id}) {
-              ["Category Used to Calculate Income", "Applicant Income Indicator", "Income Determination Date","Income Ineligibility Reason"].map{|k| [k, applicant.outputs[k]]}.each do |output_name, output_value|
-                xml.send(output_name.gsub(/ +/,''), output_value) 
-              end
-            }
+            # xml.send("hix-ee:InsuranceApplicant", {"s:id" => applicant.applicant_id}) {
+            #   ["Category Used to Calculate Income", "Applicant Income Indicator", "Income Determination Date","Income Ineligibility Reason"].map{|k| [k, applicant.outputs[k]]}.each do |output_name, output_value|
+            #     xml.send(output_name.gsub(/ +/,''), output_value) 
+            #   end
+            # }
           end
         }
         if return_application?
@@ -259,32 +259,6 @@ class Application
     end
 
     income_ruleset = Medicaidchip::Eligibility::Income
-  end
-
-  def update_xml!(output)
-    unless return_application?
-      node = get_node "exch:AccountTransferRequest"
-      node.children.remove
-      Nokogiri::XML::Builder.with(node) do |xml|
-        xml.send("hix-ee:InsuranceApplication") {
-          output["Applicants"].each do |applicant|
-            xml.send("hix-ee:InsuranceApplicant",:id => applicant["id"])
-          end
-        }
-      end
-    end
-
-    for applicant in output["Applicants"]
-      xml_applicant = get_nodes("/exch:AccountTransferRequest/hix-ee:InsuranceApplication/hix-ee:InsuranceApplicant").find{
-        |app| app.attribute("id").value == applicant["id"]
-      }
-
-      for output_var, output_value in applicant.except("id", "Category Used to Calculate Income")
-        xpath = output_variables[output_var][:xpath]
-        find_or_create_node(xml_applicant, xpath).content = output_value
-      end
-    end
-    @xml_application
   end
 
   def category_variable(name, eligibility) 
