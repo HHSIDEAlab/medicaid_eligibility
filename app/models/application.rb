@@ -52,29 +52,6 @@ class Application
     read_configs!
     process_rules!
     to_xml
-    # {
-    #   :state => @state, 
-    #   :applicants => 
-    #     @applicants.map{|a| {
-    #       :app_id => a.applicant_id, 
-    #       :app_attrs => a.applicant_attributes, 
-    #       :person_id => a.person_id, 
-    #       :person_attrs => a.person_attributes, 
-    #       :outputs => a.outputs
-    #     }}, 
-    #   :people => 
-    #     @people.map{|p| {
-    #       :person_id => p.person_id, 
-    #       :person_attrs => p.person_attributes
-    #     }}, 
-    #   #:physical_households, :tax_households, :medicaid_households,
-    #   :config => @config
-    # }
-    # context = to_context(@applicants.first)
-    # {
-    #   :config => context.config,
-    #   :input => context.input
-    # }  
   end
 
   private
@@ -120,14 +97,14 @@ class Application
     if config[@state]
       @config = config[:default].merge(config[@state])
     else
-      @config = config[:default].merge(config["minimum"])
+      @config = config[:default]#.merge(config["minimum"])
     end
   end
 
   def read_xml!
     @people = []
     @applicants = []
-    @state = 'WV' #get_node("/exch:AccountTransferRequest/ext:TransferHeader/ext:TransferActivity/ext:RecipientTransferActivityStateCode").inner_text
+    @state = get_node("/exch:AccountTransferRequest/ext:TransferHeader/ext:TransferActivity/ext:RecipientTransferActivityStateCode").inner_text
     
     xml_people = get_nodes "/exch:AccountTransferRequest/hix-core:Person"
     
@@ -155,36 +132,29 @@ class Application
           raise "Variable #{input[:name]} has unimplemented xml group #{input[:xml_group]}"
         end
 
-        # unless node
-        #   next # for testing
-        #   raise "Input xml missing variable #{input[:name]} for applicant #{applicant_id}"
-        # end
-
-        if node
-          if input[:type] == :integer
-            attr_value = node.inner_text.to_i
-          elsif input[:type] == :flag
-            if input[:values].include? node.inner_text
-              attr_value = node.inner_text
-            elsif node.inner_text == 'true'
-              attr_value = 'Y'
-            elsif node.inner_text == 'false'
-              attr_value = 'N'
-            else
-              raise "Invalid value #{node.inner_text} for variable #{input[:name]} for applicant #{applicant_id}"
-            end 
-          elsif input[:type] == :string
-            attr_value = node.inner_text
-          else
-            raise "Variable #{input[:name]} has unimplemented type #{input[:type]}"
-          end
-        # For testing/demo
-        elsif input[:type] == :flag
-            attr_value = 'N'
-        else
-          raise "Input xml missing variable #{input[:name]} for applicant #{applicant_id}"  
+        unless node
+          # next # for testing
+          raise "Input xml missing variable #{input[:name]} for applicant #{applicant_id}"
         end
 
+        if input[:type] == :integer
+          attr_value = node.inner_text.to_i
+        elsif input[:type] == :flag
+          if input[:values].include? node.inner_text
+            attr_value = node.inner_text
+          elsif node.inner_text == 'true'
+            attr_value = 'Y'
+          elsif node.inner_text == 'false'
+            attr_value = 'N'
+          else
+            raise "Invalid value #{node.inner_text} for variable #{input[:name]} for applicant #{applicant_id}"
+          end 
+        elsif input[:type] == :string
+          attr_value = node.inner_text
+        else
+          raise "Variable #{input[:name]} has unimplemented type #{input[:type]}"
+        end
+        
         if input[:xml_group] == :person
           person_attributes[input[:name]] = attr_value
         elsif input[:xml_group] == :applicant
@@ -194,7 +164,7 @@ class Application
         end
       end
 
-      person_attributes["Household"] = [1,1,1,1]
+      # person_attributes["Household"] = [1,1,1,1]
       if xml_app
         person = Applicant.new(person_id, person_attributes, applicant_id, applicant_attributes)
         @applicants << person
@@ -277,8 +247,7 @@ class Application
       Medicaid::Eligibility::Category::Medicaid::AdultGroup,
       Medicaid::Eligibility::Category::OptionalTargetedLowIncomeChildren,
       Chip::Eligibility::Category::TargetedLowIncomeChildren,
-      Medicaid::Eligibility::ReferralType,
-      Medicaidchip::Eligibility::Income
+      Medicaid::Eligibility::ReferralType
     ].map{|ruleset_class| ruleset_class.new()}
 
     for applicant in @applicants
@@ -288,6 +257,8 @@ class Application
         from_context!(applicant, context)
       end
     end
+
+    income_ruleset = Medicaidchip::Eligibility::Income
   end
 
   def update_xml!(output)
