@@ -74,7 +74,7 @@ module Medicaid::Eligibility::Category::Medicaid
 
     rule "Adult Group XX Category - applicant meets all criteria for Adult XX  Group" do
       if c("Option Adult Group XX") == 'Y' && o["Applicant Adult Group Category Indicator"] == 'N' && v("Medicare Entitlement Indicator") == 'Y'
-        o["Applicant Adult Group XX Category Indicator"] = Y
+        o["Applicant Adult Group XX Category Indicator"] = 'Y'
         o["Adult Group XX Category Determination Date"] = current_date
         o["Adult Group XX Category Ineligibility Reason"] = 999
       end
