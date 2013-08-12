@@ -17,5 +17,5 @@
 /export-files
 
 /config/database.yml
-/config/config.json
+/config/*.json
 
