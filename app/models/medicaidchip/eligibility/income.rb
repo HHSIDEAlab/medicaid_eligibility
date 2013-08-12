@@ -74,7 +74,7 @@ module Medicaidchip::Eligibility
         o["Category Used to Calculate Income"] = "None"
         o["Applicant Income Indicator"] = "N"
         o["Income Determination Date"] = current_date
-        o["Income Ineligibility Reason"] = "777"
+        o["Income Ineligibility Reason"] = "Unimplemented"
       end
     end
 
@@ -83,7 +83,7 @@ module Medicaidchip::Eligibility
         o["Category Used to Calculate Income"] = v("Max Eligible Income")[:category] ? v("Max Eligible Income")[:category] : v("Max Temporary Income")[:category]
         o["Applicant Income Indicator"] = "N"
         o["Income Determination Date"] = current_date
-        o["Income Ineligibility Reason"] = "888"
+        o["Income Ineligibility Reason"] = "Unimplemented"
       end
     end
 
