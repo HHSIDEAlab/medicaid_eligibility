@@ -1,10 +1,12 @@
 class Application
   class Person
-    attr_reader :person_id, :person_attributes, :relationships
+    attr_reader :person_id, :person_attributes
+    attr_accessor :relationships
 
     def initialize(person_id, person_attributes)
       @person_id = person_id
       @person_attributes = person_attributes
+      @relationships = []
     end
   end
 
@@ -18,6 +20,15 @@ class Application
       @applicant_id = applicant_id
       @applicant_attributes = applicant_attributes
       @outputs = {}
+    end
+  end
+
+  class Relationship
+    attr_reader :person, :relationship
+
+    def initialize(person, relationship)
+      @person = person
+      @relationship = relationship
     end
   end
 
@@ -50,6 +61,7 @@ class Application
     @determination_date = Date.today
     read_xml!
     read_configs!
+
     process_rules!
     to_xml
   end
@@ -173,12 +185,25 @@ class Application
       end
       @people << person
 
-      # We need additional information passed to us, since we
-      # don't have birthdates; this is just a quick fix for now
-      # app_data["Applicant Post Partum Period Indicator"] = 'N'
       # app_data["Household"] = get_nodes("/exch:AccountTransferRequest/ext:PhysicalHousehold/hix-ee:HouseholdMemberReference").map{
       #   |p| p.attribute('ref').value
       # }
+    end
+
+    # get relationships
+    for person in @people
+      xml_person = get_nodes("/exch:AccountTransferRequest/hix-core:Person").find{
+        |x_person| x_person.attribute('id').value == person.person_id
+      }
+      relationships = get_nodes("hix-core:PersonAugmentation/hix-core:PersonAssociation", xml_person)
+
+      for relationship in relationships
+        other_id = get_node("nc:PersonReference", relationship).attribute('ref').value
+        relationship_code = get_node("hix-core:FamilyRelationshipCode").inner_text
+
+        other_person = @people.find{|p| p.person_id == other_id}
+        person.relationships << Relationship.new(other_person, relationship_code)
+      end
     end
   end
 
@@ -228,6 +253,10 @@ class Application
         end
       }
     end
+  end
+
+  def calculate_values!
+
   end
 
   def from_context!(applicant, context)
