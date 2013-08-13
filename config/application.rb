@@ -58,5 +58,19 @@ module MedicaidEligibilityApi
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    def options
+      self.class.options
+    end
+
+    def self.options
+      begin
+        @@options ||= {
+          :config => JSON.parse!(File.read(Rails.root.join('config/config.json')))
+        }.with_indifferent_access
+      rescue JSON::ParserError
+        raise JSON::ParserError, "failed to parse config file"
+      end
+    end
   end
 end

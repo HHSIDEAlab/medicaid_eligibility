@@ -9,10 +9,6 @@ module Medicaidchip::Eligibility::Category
     purpose     "Determine if child category applies."
     description "States are required to provide Medicaid to children under age 19.  At state option, individuals under age 20 (i.e., age 19) or under age 21 (i.e., ages 19 and 20) may also be covered under an optional group for this age range.  The income standard applicable in the state for each of three age ranges of children under 19 (under age 1, ages 1 – 5, and ages 6 – 18), as well as the income standard for optionally-covered 19 and 20 year olds may differ."
 
-    calculated "Applicant Age" do
-      (current_date - v("Person Birth Date"))/365.25
-    end
-
     input "Applicant Age", "Calculated in Create Applicant Child List logic", "Number"
 
     config "Child Age Threshold", "System Configuration", "Integer", nil, 19
