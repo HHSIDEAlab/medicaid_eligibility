@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 gem 'rails', '3.2.12'
 
@@ -7,9 +7,12 @@ gem 'rails', '3.2.12'
 
 gem 'rails-api'
 
-gem 'sqlite3'
+gem 'activerecord-nulldb-adapter'
+gem 'pg'
 
 gem "active_model_serializers"
+
+gem 'nokogiri'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
