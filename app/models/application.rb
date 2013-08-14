@@ -59,11 +59,11 @@ class Application
     @xml_application = Nokogiri::XML(raw_application) do |config|
       config.default_xml.noblanks
     end
+    @determination_date = Date.today
     @return_application = return_application
   end
 
   def result
-    @determination_date = Date.today
     read_xml!
     read_configs!
 
@@ -277,7 +277,7 @@ class Application
                 xml.send("hix-ee:EligibilityIndicator", applicant.outputs["Applicant #{det_name} Indicator"])
                 xml.send("hix-ee:EligibilityDetermination") {
                   xml.send("nc:ActivityDate") {
-                    xml.send("nc:DateTime", @determination_date.strftime("%Y-%m-%d"))
+                    xml.send("nc:DateTime", applicant.outputs["#{det_name} Determination Date"].strftime("%Y-%m-%d"))
                   }
                 }
                 xml.send("hix-ee:EligibilityReasonText", applicant.outputs["#{det_name} Ineligibility Reason"])
@@ -307,7 +307,7 @@ class Application
     xml.send("hix-ee:EligibilityBasisStatusIndicator", applicant.outputs["Applicant #{det_name} Indicator"])
     xml.send("hix-ee:EligibilityBasisDetermination") {
       xml.send("nc:ActivityDate") {
-        xml.send("nc:DateTime", @determination_date.strftime("%Y-%m-%d"))
+        xml.send("nc:DateTime", applicant.outputs["#{det_name} Determination Date"].strftime("%Y-%m-%d"))
       }
     }
     xml.send("hix-ee:EligibilityBasisIneligibilityReasonText", applicant.outputs["#{det_name} Ineligibility Reason"])
@@ -339,7 +339,7 @@ class Application
       "Physical Household" => @physical_households.find{|hh| hh.people.any?{|p| p.person_id == applicant.person_id}}
     })
     config = @config
-    RuleContext.new(config, input)
+    RuleContext.new(config, input, @determination_date)
   end
 
   def process_rules!
