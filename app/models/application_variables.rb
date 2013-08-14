@@ -89,7 +89,7 @@ module ApplicationVariables
     {name: "Income", eligibility: :MAGI},
     {
       name: "Medicaid Non-MAGI Referral",
-      group: :other,
+      eligibility: :MedicaidNonMAGI,
       indicator_xpath: "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityIndicator",
       date_xpath: "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityDetermination/nc:ActivityDate/nc:DateTime",
       reason_xpath: "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityReasonText"
@@ -100,7 +100,8 @@ module ApplicationVariables
     {
       :name   => "Category Used to Calculate Income",
       :type   => :string,
-      :xpath  => :undefined
+      :group  => :MAGI,
+      :xpath  => "CategoryUsedToCalculateIncome"
     }
   ].freeze
 
