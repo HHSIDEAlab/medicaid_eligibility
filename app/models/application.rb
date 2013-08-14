@@ -34,6 +34,11 @@ class Application
 
   class Household
     attr_reader :household_id, :people
+
+    def initialize(household_id, people)
+      @household_id = household_id
+      @people = people
+    end
   end
 
   attr_reader :state, :applicants, :people, :physical_households, :tax_households, :medicaid_households, :config
@@ -205,6 +210,15 @@ class Application
         person.relationships << Relationship.new(other_person, relationship_code)
       end
     end
+
+    # get physical households
+    @physical_households = []
+    xml_physical_households = get_nodes("/exch:AccountTransferRequest/ext:PhysicalHousehold")
+    for xml_household in xml_physical_households
+      person_references = get_nodes("hix-ee:HouseholdMemberReference" , xml_household).map{|node| node.attribute('ref').value}
+
+      @physical_households << Household.new(nil, person_references.map{|ref| @people.find{|p| p.person_id == ref}})
+    end
   end
 
   def to_xml
@@ -265,11 +279,18 @@ class Application
 
   def to_context(applicant)
     input = applicant.applicant_attributes.merge(applicant.person_attributes).merge(applicant.outputs)
+    input.merge!({
+      "Person List" => @people,
+      "Applicant Relationships" => applicant.relationships,
+      "Physical Household" => @physical_households.find{|hh| hh.people.any?{|p| p.person_id == applicant.person_id}}
+    })
     config = @config
     RuleContext.new(config, input)
   end
 
   def process_rules!
+    parent_ruleset = Medicaid::Eligibility::Category::ParentCaretakerRelative.new()
+
     magi_part_1 = [
       Medicaidchip::Eligibility::Category::Pregnant,
       Medicaidchip::Eligibility::Category::Child,
@@ -287,7 +308,7 @@ class Application
       end
     end
 
-    income_ruleset = Medicaidchip::Eligibility::Income
+    income_ruleset = Medicaidchip::Eligibility::Income.new()
   end
 
   def category_variable(name, eligibility) 

@@ -69,6 +69,13 @@ module ApplicationVariables
       :values     => %w(Y N),
       :xml_group  => :applicant,
       :xpath      => "hix-ee:MedicaidNonMAGIEligibility/hix-ee:MedicaidNonMAGIBlindnessOrDisabilityEligibilityBasis/hix-core:StatusIndicator"
+    },
+    {
+      :name       => "Student Indicator",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :xml_group  => :applicant,
+      :xpath      => "hix-ee:InsuranceApplicantStudentIndicator"
     }
   ].freeze
 

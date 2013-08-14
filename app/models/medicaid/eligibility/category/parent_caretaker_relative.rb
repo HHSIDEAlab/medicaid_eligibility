@@ -7,49 +7,62 @@ module Medicaid::Eligibility::Category
     references  "§435.4 and §435.110"
     applies_to  "Medicaid only"
     purpose     "Identify if an applicant is a caretaker relative or a parent of a dependent child."
-    description "*** Description is very long. Will be handled later ***"
+    #description "*** Description is very long. Will be handled later ***"
 
     assumption "States that elect the option to cover parent or caretaker relatives at an FPL% above 133% FPL will set the higher FPL% in their state configuration; the rule is otherwise unchanged to accommodate this option."
     assumption "One of the primary inputs to this rule is a list of children to be evaluated as to whether the applicant assumes primary responsibility for them.  This list is built outside the rule and consists of unique values for 1) children and stepchildren of the applicant and 2) children the applicant has claimed as a tax dependent and 3) any children for whom the applicant has attested to providing primary support.  The child is only added to the list if the applicant lives with the child. Before adding the child to the list because of the parent criteria, the rule will check if child was claimed as a tax dependent by someone other than the parent or if someone other than the parent attests to primary responsibility. If so, the child won’t be added to the list for the parent."
     assumption "A child must satisfy all four conditions (dependent child age, deprived of parental support, relationship and applicant assumes primary responsibility) in order for the applicant to qualify for the Parent Caretaker Relative category."
 
-    input "Applicant Child List", "System Logic", "List", nil, 
-      :element => {
-        "Person Birth Date" => {
-          :source => "Application",
-          :type => "Date"
-        },
-        "Student Indicator" => {
-          :source => "Application", 
-          :type => "Char(1)", 
-          :possible_values => %w(Y N)
-        },
-        "Relationship Code (Caretaker to Dependent Child)" => {
-          :source => "Application",
-          :type => "Char(2)",
-          :possible_values => %w(01 02 03 04 05 06 07 08 12 13 14 15 16 17 23 26 27 30)
-        },
-        "Lives With Child" => {
-          :source => "Application",
-          :type => "Char(1)",
-          :possible_values => %w(Y N)
-        }
-      }
+    # input "Applicant Child List", "System Logic", "List", nil, 
+    #   :element => {
+    #     "Person Birth Date" => {
+    #       :source => "Application",
+    #       :type => "Date"
+    #     },
+    #     "Student Indicator" => {
+    #       :source => "Application", 
+    #       :type => "Char(1)", 
+    #       :possible_values => %w(Y N)
+    #     },
+    #     "Relationship Code (Caretaker to Dependent Child)" => {
+    #       :source => "Application",
+    #       :type => "Char(2)",
+    #       :possible_values => %w(01 02 03 04 05 06 07 08 12 13 14 15 16 17 23 26 27 30)
+    #     },
+    #     "Lives With Child" => {
+    #       :source => "Application",
+    #       :type => "Char(1)",
+    #       :possible_values => %w(Y N)
+    #     }
+    #   }
+    input "Person List", "Application", "List"
+    input "Applicant Relationships", "Application", "List"
+    input "Applicant Age", "Application", "Integer"
+    input "Student Indicator", "Application", "Char(1)", %w(Y N)
+    input "Physical Household", "Application", "List"
     
     config "Dependent Age Threshold", "System Configuration", "Integer", nil, 18
     config "Option Dependent Student", "State Configuration", "Char(1)", %w(Y N)
     config "Deprivation Requirement Retained", "State Configuration", "Char(1)", %w(Y N)
     config "Option Caretaker Relative Relationship", "State Configuration", "Char(2)", %w(00 01 02 03 04)
 
-    def calculate_child_age(person_birth_date)
-      ((current_date - person_birth_date)/365.25).to_int
-    end
+    # def calculate_child_age(person_birth_date)
+    #   ((current_date - person_birth_date)/365.25).to_int
+    # end
 
     # Overwrite the Applicant Child List with the calculated ages appended for each child
+    # calculated "Applicant Child List" do
+    #   v("Applicant Child List").map{|child|
+    #     child["Dependent Child Age"] = calculate_child_age child["Person Birth Date"]
+    #     child
+    #   }
+    # end
+    
     calculated "Applicant Child List" do
-      v("Applicant Child List").map{|child|
-        child["Dependent Child Age"] = calculate_child_age child["Person Birth Date"]
-        child
+      v("Applicant Relationships").select{|relationship|
+        relationship.relationship_code == "03"
+      }.map{|relationship|
+        relationship.person
       }
     end
 
