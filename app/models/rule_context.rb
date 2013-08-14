@@ -2,21 +2,18 @@ class RuleContext
   include ActiveModel::SerializerSupport
   extend ActiveModel::Naming
 
-  attr_reader :config, :input, :output
+  attr_reader :config, :input, :output, :current_date
 
   class MissingVariableError < StandardError
   end
 
-  def initialize(config, input)
+  def initialize(config, input, current_date)
     @config = config
     @input = input
     @output = {}
+    @current_date = current_date
 
-    @input["Person Birth Date"] = Date.parse(@input['Person Birth Date']) if @input["Person Birth Date"]
-  end
-
-  def current_date
-    Date.today
+    #@input["Person Birth Date"] = Date.parse(@input['Person Birth Date']) if @input["Person Birth Date"]
   end
 
   def o

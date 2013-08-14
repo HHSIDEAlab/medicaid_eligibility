@@ -86,7 +86,7 @@ module ApplicationVariables
     {name: "Adult Group XX Category", eligibility: :MAGI},
     {name: "Optional Targeted Low Income Child", eligibility: :MAGI},
     {name: "CHIP Targeted Low Income Child", eligibility: :CHIP},
-    {name: "Income", eligibility: :MAGI},
+    #{name: "Income", eligibility: :MAGI},
     {
       name: "Medicaid Non-MAGI Referral",
       eligibility: :MedicaidNonMAGI,
