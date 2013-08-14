@@ -85,7 +85,7 @@ class Application
   end
 
   def find_or_create_node(node, xpath)
-    xpath.gsub!(/^\/+/,'')
+    xpath = xpath.gsub(/^\/+/,'')
     if xpath.empty?
       node
     elsif get_node(xpath, node)
@@ -225,30 +225,64 @@ class Application
     Nokogiri::XML::Builder.new(:encoding => 'UTF-8') do |xml|
       xml.send("exch:AccountTransferRequest", Hash[XML_NAMESPACES.map{|k, v| ["xmlns:#{k}", v]}]) {
         xml.send("ext:TransferHeader") {
-        
+          xml.send("ext:TransferActivity") {
+            xml.send("nc:ActivityIdentification") {
+              # Need Identification ID
+            }
+            xml.send("nc:ActivityDate") {
+              xml.send("nc:DateTime", Time.now.strftime("%Y-%m-%dT%H:%M:%S"))
+            }
+            xml.send("ext:TransferActivityReferralQuantity", @applicants.length)
+            xml.send("ext:RecipientTransferActivityCode", "MedicaidCHIP")
+            xml.send("ext:RecipientTransferActivityStateCode", @state)
+          }
         }
         xml.send("hix_core:Sender") {
-
+          # Need to figure out what to put here
         }
         xml.send("hix_core:Receiver") {
-
+          # Need to figure out what to put here
         }
         xml.send("hix-ee:InsuranceApplication") {
           xml.send("hix-core:ApplicationCreation") {
-
+            # Need to figure out what to put here
           }
           xml.send("hix-core:ApplicationSubmission") {
-
+            # Need to figure out what to put here
           }
-          xml.send("hix-core:ApplicationIdentification") {
-
-          }
+          # Do we want Application Identification?
           @applicants.each do |applicant|
-            # xml.send("hix-ee:InsuranceApplicant", {"s:id" => applicant.applicant_id}) {
-            #   ["Category Used to Calculate Income", "Applicant Income Indicator", "Income Determination Date","Income Ineligibility Reason"].map{|k| [k, applicant.outputs[k]]}.each do |output_name, output_value|
-            #     xml.send(output_name.gsub(/ +/,''), output_value) 
-            #   end
-            # }
+            xml.send("hix-ee:InsuranceApplicant", {"s:id" => applicant.applicant_id}) {
+              xml.send("hix-ee:MedicaidMAGIEligibility") {
+                ApplicationVariables::DETERMINATIONS.select{|det| det[:eligibility] == :MAGI}.each do |determination|
+                  det_name = determination[:name]
+                  xml.send("hix-ee:MedicaidMAGI#{det_name.gsub(/ +/,'')}EligibilityBasis") {
+                    build_determinations(xml, det_name, applicant)
+                  }
+                end
+                ApplicationVariables::OUTPUTS.select{|o| o[:group] == :MAGI}.each do |output|
+                  xml.send(output[:xpath], applicant.outputs[output[:name]])
+                end
+              }
+              xml.send("hix-ee:CHIPEligibility") {
+                ApplicationVariables::DETERMINATIONS.select{|det| det[:eligibility] == :CHIP}.each do |determination|
+                  det_name = determination[:name]
+                  xml.send("hix-ee:#{det_name.gsub(/ +/,'')}EligibilityBasis") {
+                    build_determinations(xml, det_name, applicant)
+                  }
+                end
+              }
+              xml.send("hix-ee:MedicaidNonMAGIEligibility") {
+                det_name = "Medicaid Non-MAGI Referral"
+                xml.send("hix-ee:EligibilityIndicator", applicant.outputs["Applicant #{det_name} Indicator"])
+                xml.send("hix-ee:EligibilityDetermination") {
+                  xml.send("nc:ActivityDate") {
+                    xml.send("nc:DateTime", @determination_date.strftime("%Y-%m-%d"))
+                  }
+                }
+                xml.send("hix-ee:EligibilityReasonText", applicant.outputs["#{det_name} Ineligibility Reason"])
+              }
+            }
           end
         }
         if return_application?
@@ -265,6 +299,26 @@ class Application
             }
           end
         end
+      }
+    end
+  end
+
+  def build_determinations(xml, det_name, applicant)
+    xml.send("hix-ee:EligibilityBasisStatusIndicator", applicant.outputs["Applicant #{det_name} Indicator"])
+    xml.send("hix-ee:EligibilityBasisDetermination") {
+      xml.send("nc:ActivityDate") {
+        xml.send("nc:DateTime", @determination_date.strftime("%Y-%m-%d"))
+      }
+    }
+    xml.send("hix-ee:EligibilityBasisIneligibilityReasonText", applicant.outputs["#{det_name} Ineligibility Reason"])
+  end
+
+  def build_xpath(xml, xpath)
+    xpath = xpath.gsub(/^\/+/,'')
+    unless xpath.empty?
+      xpath_list = xpath.split('/')
+      xml.send(xpath_list.first) {
+        build_path(xml, xpath_list[1..-1].join('/'))
       }
     end
   end
@@ -309,24 +363,5 @@ class Application
     end
 
     income_ruleset = Medicaidchip::Eligibility::Income.new()
-  end
-
-  def category_variable(name, eligibility) 
-    if eligibility == :MAGI
-      prefix = "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGI"
-    elsif eligibility == :CHIP
-      prefix = "hix-ee:CHIPEligibility/hix-ee:"
-    end
-    {
-      "Applicant #{name} Indicator" => {
-        :xpath => "#{prefix}#{name.gsub(/ +/,'')}EligibilityBasis/hix-ee:EligibilityBasisStatusIndicator"
-      },
-      "#{name} Determination Date" => {
-        :xpath => "#{prefix}#{name.gsub(/ +/,'')}EligibilityBasis/hix-ee:EligibilityBasisDetermination/nc:ActivityDate/nc:DateTime"
-      },
-      "#{name} Ineligibility Reason" => {
-        :xpath => "#{prefix}#{name.gsub(/ +/,'')}EligibilityBasis/hix-ee:EligibilityBasisIneligibilityReasonText"
-      }
-    }
   end
 end
