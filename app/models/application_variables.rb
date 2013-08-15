@@ -50,6 +50,14 @@ module ApplicationVariables
       :new_variable => true
     },
     {
+      :name       => "Attest Primary Responsibility",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :xml_group  => :relationship,
+      :xpath      => "PrimaryResponsibility",
+      :new_variable => true
+    },
+    {
       :name       => "Medicare Entitlement Indicator",
       :type       => :flag,
       :values     => %w(Y N),
