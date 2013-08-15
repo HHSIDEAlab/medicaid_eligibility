@@ -40,30 +40,25 @@ module Medicaid::Eligibility::Category
     input "Applicant Age", "Application", "Integer"
     input "Student Indicator", "Application", "Char(1)", %w(Y N)
     input "Physical Household", "Application", "List"
+    input "Tax Returns", "Application", "List"
     
     config "Dependent Age Threshold", "System Configuration", "Integer", nil, 18
     config "Option Dependent Student", "State Configuration", "Char(1)", %w(Y N)
     config "Deprivation Requirement Retained", "State Configuration", "Char(1)", %w(Y N)
     config "Option Caretaker Relative Relationship", "State Configuration", "Char(2)", %w(00 01 02 03 04)
 
-    # def calculate_child_age(person_birth_date)
-    #   ((current_date - person_birth_date)/365.25).to_int
-    # end
-
-    # Overwrite the Applicant Child List with the calculated ages appended for each child
-    # calculated "Applicant Child List" do
-    #   v("Applicant Child List").map{|child|
-    #     child["Dependent Child Age"] = calculate_child_age child["Person Birth Date"]
-    #     child
-    #   }
-    # end
-    
+    # Get children who (1) the applicant is the parent of, (2) the 
+    # applicant attests primary responsibility for, (3) the applicant
+    # claims as a dependent on their tax return
     calculated "Applicant Child List" do
       v("Applicant Relationships").select{|relationship|
-        relationship.relationship_code == "03"
+        relationship.relationship_code == "03" ||
+        relationship.relationship_attributes["Attest Primary Responsibility"] == 'Y'
       }.map{|relationship|
         relationship.person
-      }
+      }.concat(
+        v("Tax Returns").select{|tr| tr.filers.any?{|f| f.person.person_id == v("Person ID")}}.map{|tr| tr.dependents}.flatten
+      ).uniq
     end
 
     indicator "Applicant Parent Caretaker Category Indicator", %w(Y N T)

@@ -24,11 +24,12 @@ class Application
   end
 
   class Relationship
-    attr_reader :person, :relationship
+    attr_reader :person, :relationship, :relationship_attributes
 
-    def initialize(person, relationship)
+    def initialize(person, relationship, relationship_attributes)
       @person = person
       @relationship = relationship
+      @relationship_attributes = relationship_attributes
     end
   end
 
@@ -41,7 +42,24 @@ class Application
     end
   end
 
-  attr_reader :state, :applicants, :people, :physical_households, :tax_households, :medicaid_households, :config
+  class TaxReturn
+    attr_reader :filers, :dependents
+
+    def initialize(filers, dependents)
+      @filers = filers
+      @dependents = dependents
+    end
+  end
+
+  class TaxPerson
+    attr_reader :person
+
+    def initialize(person)
+      @person = person
+    end
+  end
+
+  attr_reader :state, :applicants, :people, :physical_households, :tax_households, :medicaid_households, :tax_returns, :config
 
   XML_NAMESPACES = {
     "exch"     => "http://at.dsh.cms.gov/exchange/1.0",
@@ -114,7 +132,7 @@ class Application
     if config[@state]
       @config = config[:default].merge(config[@state])
     else
-      @config = config[:default]#.merge(config["minimum"])
+      @config = config[:default]
     end
   end
 
@@ -145,43 +163,21 @@ class Application
             next
           end
           node = xml_app.at_xpath(input[:xpath])
+        elsif input[:xml_group] == :relationship
+          next
         else
           raise "Variable #{input[:name]} has unimplemented xml group #{input[:xml_group]}"
         end
 
-        unless node
-          # next # for testing
-          raise "Input xml missing variable #{input[:name]} for applicant #{applicant_id}"
-        end
-
-        if input[:type] == :integer
-          attr_value = node.inner_text.to_i
-        elsif input[:type] == :flag
-          if input[:values].include? node.inner_text
-            attr_value = node.inner_text
-          elsif node.inner_text == 'true'
-            attr_value = 'Y'
-          elsif node.inner_text == 'false'
-            attr_value = 'N'
-          else
-            raise "Invalid value #{node.inner_text} for variable #{input[:name]} for applicant #{applicant_id}"
-          end 
-        elsif input[:type] == :string
-          attr_value = node.inner_text
-        else
-          raise "Variable #{input[:name]} has unimplemented type #{input[:type]}"
-        end
+        attr_value = get_xml_variable(node, input, person_id)
         
         if input[:xml_group] == :person
           person_attributes[input[:name]] = attr_value
         elsif input[:xml_group] == :applicant
           applicant_attributes[input[:name]] = attr_value
-        else
-          raise "Variable #{input[:name]} has unimplemented xml group #{input[:xml_group]}"
         end
       end
 
-      # person_attributes["Household"] = [1,1,1,1]
       if xml_app
         person = Applicant.new(person_id, person_attributes, applicant_id, applicant_attributes)
         @applicants << person
@@ -189,10 +185,6 @@ class Application
         person = Person.new(person_id, person_attributes)
       end
       @people << person
-
-      # app_data["Household"] = get_nodes("/exch:AccountTransferRequest/ext:PhysicalHousehold/hix-ee:HouseholdMemberReference").map{
-      #   |p| p.attribute('ref').value
-      # }
     end
 
     # get relationships
@@ -204,20 +196,74 @@ class Application
 
       for relationship in relationships
         other_id = get_node("nc:PersonReference", relationship).attribute('ref').value
-        relationship_code = get_node("hix-core:FamilyRelationshipCode").inner_text
-
+        
         other_person = @people.find{|p| p.person_id == other_id}
-        person.relationships << Relationship.new(other_person, relationship_code)
+        relationship_code = get_node("hix-core:FamilyRelationshipCode", relationship).inner_text
+        relationship_attributes = {}
+        for input in ApplicationVariables::PERSON_INPUTS.select{|i| i.group == :relationship}
+          node = get_node(input[:xpath], relationship)
+
+          relationship_attributes[input[:name]] = get_xml_variable(node, input, person_id)
+        end
+
+        person.relationships << Relationship.new(other_person, relationship_code, relationship_attributes)
       end
+    end
+
+    # get tax returns
+    @tax_returns = []
+    xml_tax_returns = get_nodes("/exch:AccountTransferRequest/hix-ee:TaxReturn")
+    for xml_return in xml_tax_returns
+      filers = []
+      xml_filers = [
+        get_node("hix-ee:TaxHousehold/hix-ee:PrimaryTaxFiler", xml_return),
+        get_node("hix-ee:TaxHousehold/hix-ee:SpouseTaxFiler", xml_return)
+      ]
+
+      filers = xml_filers.select{|xf| xf}.map{|xf|
+        TaxPerson.new(
+          @people.find{|p| p.person_id == get_node("hix-core:RoleOfPersonReference", xf).attribute('ref').value}
+        )
+      }
+      
+      dependents = get_nodes("hix-ee:TaxHousehold/hix-ee:PrimaryTaxFiler/RoleOfPersonReference", xml_return).map{|node|
+        @people.find{|p| p.person_id == node.attribute('ref').value}
+      }
+
+      @tax_returns << TaxReturn.new(filers, dependents)
     end
 
     # get physical households
     @physical_households = []
     xml_physical_households = get_nodes("/exch:AccountTransferRequest/ext:PhysicalHousehold")
     for xml_household in xml_physical_households
-      person_references = get_nodes("hix-ee:HouseholdMemberReference" , xml_household).map{|node| node.attribute('ref').value}
+      person_references = get_nodes("hix-ee:HouseholdMemberReference", xml_household).map{|node| node.attribute('ref').value}
 
       @physical_households << Household.new(nil, person_references.map{|ref| @people.find{|p| p.person_id == ref}})
+    end
+  end
+
+  def get_xml_variable(node, input, person_id)
+    unless node
+      raise "Input xml missing variable #{input[:name]} for person #{person_id}"
+    end
+
+    if input[:type] == :integer
+      node.inner_text.to_i
+    elsif input[:type] == :flag
+      if input[:values].include? node.inner_text
+        node.inner_text
+      elsif node.inner_text == 'true'
+        'Y'
+      elsif node.inner_text == 'false'
+        'N'
+      else
+        raise "Invalid value #{node.inner_text} for variable #{input[:name]} for person #{person_id}"
+      end 
+    elsif input[:type] == :string
+      node.inner_text
+    else
+      raise "Variable #{input[:name]} has unimplemented type #{input[:type]}"
     end
   end
 
@@ -334,9 +380,12 @@ class Application
   def to_context(applicant)
     input = applicant.applicant_attributes.merge(applicant.person_attributes).merge(applicant.outputs)
     input.merge!({
+      "Applicant ID" => applicant.applicant_id,
+      "Person ID" => applicant.person_id,
       "Person List" => @people,
       "Applicant Relationships" => applicant.relationships,
-      "Physical Household" => @physical_households.find{|hh| hh.people.any?{|p| p.person_id == applicant.person_id}}
+      "Physical Household" => @physical_households.find{|hh| hh.people.any?{|p| p.person_id == applicant.person_id}},
+      "Tax Returns" => @tax_returns
     })
     config = @config
     RuleContext.new(config, input, @determination_date)

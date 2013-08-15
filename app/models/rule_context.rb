@@ -12,8 +12,6 @@ class RuleContext
     @input = input
     @output = {}
     @current_date = current_date
-
-    #@input["Person Birth Date"] = Date.parse(@input['Person Birth Date']) if @input["Person Birth Date"]
   end
 
   def o
