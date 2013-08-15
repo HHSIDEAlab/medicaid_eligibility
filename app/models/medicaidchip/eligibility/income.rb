@@ -43,7 +43,7 @@ module Medicaidchip::Eligibility
         category = eligible_categories.max_by{|cat| c("Category->Percentage Mapping")[cat]}
         {
           :category => category,
-          :income   => v("FPL") * c("Category->Percentage Mapping")[category]
+          :income   => v("FPL") * (c("Category->Percentage Mapping")[category] + .05)
         }
       else
         {
@@ -59,7 +59,7 @@ module Medicaidchip::Eligibility
         category = eligible_categories.max_by{|cat| c("Category->Percentage Mapping")[cat]}
         {
           :category => category,
-          :income   => v("FPL") * c("Category->Percentage Mapping")[category]
+          :income   => v("FPL") * (c("Category->Percentage Mapping")[category] + .05)
         }
       else
         {
