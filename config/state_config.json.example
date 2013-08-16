@@ -10,7 +10,7 @@
     "Optional Targeted Low Income Child Age Low Threshold": 0
   },
   "minimum": { 
-    "Category->Percentage Mapping": {
+    "Category-Percentage Mapping": {
       "Pregnancy Category": 2,
       "Child Category": 2,
       "Adult Group Category": 2,

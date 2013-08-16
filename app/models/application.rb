@@ -86,6 +86,7 @@ class Application
     read_configs!
 
     process_rules!
+    #to_hash
     to_xml
   end
 
@@ -383,13 +384,55 @@ class Application
     input.merge!({
       "Applicant ID" => applicant.applicant_id,
       "Person ID" => applicant.person_id,
-      "Person List" => @people,
+      "Applicant List" => @applicants,
       "Applicant Relationships" => applicant.relationships || [],
       "Physical Household" => @physical_households.find{|hh| hh.people.any?{|p| p.person_id == applicant.person_id}},
       "Tax Returns" => @tax_returns || []
     })
     config = @config
     RuleContext.new(config, input, @determination_date)
+  end
+
+  def to_hash()
+    {
+      :config => @config,
+      :applicants => @applicants.map{|a|
+        {
+          :id => a.applicant_id,
+          :person_id => a.person_id,
+          :attributes => a.applicant_attributes.merge(a.person_attributes),
+          :relationships => (a.relationships || []).map{|r|
+            {
+              :other_id => r.person.person_id,
+              :relationship => r.relationship,
+              :attributes => r.relationship_attributes
+            }
+          },
+          :outputs => a.outputs
+        }
+      },
+      :households => @physical_households.map{|ph|
+        ph.people.map{|p|
+          {
+            :person_id => p.person_id
+          }
+        }
+      },
+      :tax_returns => @tax_returns.map{|tr|
+        {
+          :filers => tr.filers.map{|f|
+            {
+              :person_id => f.person.person_id
+            }
+          },
+          :dependents => tr.dependents.map{|d|
+            {
+              :person_id => d.person_id
+            }
+          }
+        }
+      }
+    }
   end
 
   def process_rules!
