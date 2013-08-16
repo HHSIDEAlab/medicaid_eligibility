@@ -385,6 +385,7 @@ class Application
       "Applicant ID" => applicant.applicant_id,
       "Person ID" => applicant.person_id,
       "Applicant List" => @applicants,
+      "Person List" => @people,
       "Applicant Relationships" => applicant.relationships || [],
       "Physical Household" => @physical_households.find{|hh| hh.people.any?{|p| p.person_id == applicant.person_id}},
       "Tax Returns" => @tax_returns || []
