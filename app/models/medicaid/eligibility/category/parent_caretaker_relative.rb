@@ -14,6 +14,7 @@ module Medicaid::Eligibility::Category
     assumption "A child must satisfy all four conditions (dependent child age, deprived of parental support, relationship and applicant assumes primary responsibility) in order for the applicant to qualify for the Parent Caretaker Relative category."
 
     input "Applicant List", "Application", "List"
+    input "Person List", "Application", "List"
     input "Applicant Relationships", "Application", "List"
     input "Applicant Age", "Application", "Integer"
     input "Physical Household", "Application", "List"
@@ -35,8 +36,8 @@ module Medicaid::Eligibility::Category
         relationship.person
       }.concat(
         v("Tax Returns").select{|tr| tr.filers.any?{|f| f.person.person_id == v("Person ID")}}.map{|tr| tr.dependents}.flatten
-      ).uniq.select{
-        |person| defined?(person.applicant_attributes)
+      ).uniq.select{|person|
+        v("Applicant List").include? person
       }.map{|child|
         {
           "Person ID" => child.person_id,
