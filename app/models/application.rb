@@ -128,12 +128,13 @@ class Application
   end
 
   def read_configs!
-    config = MedicaidEligibilityApi::Application.options[:config]
+    config = MedicaidEligibilityApi::Application.options[:state_config]
     if config[@state]
       @config = config[:default].merge(config[@state])
     else
       @config = config[:default]
     end
+    @config.merge!(MedicaidEligibilityApi::Application.options[:system_config])
   end
 
   def read_xml!
@@ -383,18 +384,17 @@ class Application
       "Applicant ID" => applicant.applicant_id,
       "Person ID" => applicant.person_id,
       "Person List" => @people,
-      "Applicant Relationships" => applicant.relationships,
+      "Applicant Relationships" => applicant.relationships || [],
       "Physical Household" => @physical_households.find{|hh| hh.people.any?{|p| p.person_id == applicant.person_id}},
-      "Tax Returns" => @tax_returns
+      "Tax Returns" => @tax_returns || []
     })
     config = @config
     RuleContext.new(config, input, @determination_date)
   end
 
   def process_rules!
-    parent_ruleset = Medicaid::Eligibility::Category::ParentCaretakerRelative.new()
-
     magi_part_1 = [
+      Medicaid::Eligibility::Category::ParentCaretakerRelative,
       Medicaidchip::Eligibility::Category::Pregnant,
       Medicaidchip::Eligibility::Category::Child,
       Medicaid::Eligibility::Category::Medicaid::AdultGroup,
