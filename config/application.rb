@@ -66,7 +66,8 @@ module MedicaidEligibilityApi
     def self.options
       begin
         @@options ||= {
-          :config => JSON.parse!(File.read(Rails.root.join('config/config.json')))
+          :state_config => JSON.parse!(File.read(Rails.root.join('config/state_config.json'))),
+          :system_config => JSON.parse!(File.read(Rails.root.join('config/system_config.json')))
         }.with_indifferent_access
       rescue JSON::ParserError
         raise JSON::ParserError, "failed to parse config file"
