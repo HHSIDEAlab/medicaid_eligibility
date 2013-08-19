@@ -30,7 +30,7 @@ module Medicaid::Eligibility::Category
     # claims as a dependent on their tax return
     calculated "Applicant Child List" do
       v("Applicant Relationships").select{|relationship|
-        relationship.relationship_code == "03" ||
+        relationship.relationship == "03" ||
         relationship.relationship_attributes["Attest Primary Responsibility"] == 'Y'
       }.map{|relationship|
         relationship.person
@@ -41,7 +41,7 @@ module Medicaid::Eligibility::Category
       }.map{|child|
         {
           "Person ID" => child.person_id,
-          "Relationship Code" => v("Application Relationships").find{|r| child == r.person}.relationship
+          "Relationship Code" => v("Applicant Relationships").find{|r| child == r.person}.relationship
         }.merge(child.person_attributes).merge(child.applicant_attributes)
       }
     end
@@ -95,9 +95,9 @@ module Medicaid::Eligibility::Category
         cvar.run(context)
       end
 
-      context.o["Children List"] = context.v("Applicant Child List").map{|child| {"Person ID" => child["Person ID"]}}
+      children_list = context.v("Applicant Child List").map{|child| {"Person ID" => child["Person ID"]}}
       
-      for c_in, c_out in context.v("Applicant Child List").zip(context.o["Children List"])
+      for c_in, c_out in context.v("Applicant Child List").zip(children_list)
         
         context.input["Current Child"] = c_in
         self.class.rules[0..13].each do |rule|
@@ -108,6 +108,8 @@ module Medicaid::Eligibility::Category
         context.input.delete("Current Child")
         context.o.delete_if{|_| true}
       end
+
+      context.o["Children List"] = children_list
       
       self.class.rules[14..-1].each do |rule|
         rule.run(context)
@@ -119,7 +121,7 @@ module Medicaid::Eligibility::Category
     # per-child rules
 
     rule "Dependent Child Age Logic – Child under dependent age" do
-      if v("Current Child")["Dependent Child Age"] < c("Dependent Age Threshold")
+      if v("Current Child")["Applicant Age"] < c("Dependent Age Threshold")
         o["Child of Caretaker Dependent Age Indicator"] = 'Y' 
         o["Child of Caretaker Dependent Age Determination Date"] = current_date
         o["Child of Caretaker Dependent Age Ineligibility Reason"] = 999
@@ -127,7 +129,7 @@ module Medicaid::Eligibility::Category
     end
     
     rule "Dependent Child Age Logic – Child older than dependent age" do
-      if v("Current Child")["Dependent Child Age"] > c("Dependent Age Threshold")
+      if v("Current Child")["Applicant Age"] > c("Dependent Age Threshold")
         o["Child of Caretaker Dependent Age Indicator"] = 'N'
         o["Child of Caretaker Dependent Age Determination Date"] = current_date
         o["Child of Caretaker Dependent Age Ineligibility Reason"] = 147
@@ -135,7 +137,7 @@ module Medicaid::Eligibility::Category
     end
     
     rule "Dependent Child Age Logic – Child equal to dependent age and a student" do
-      if c("Option Dependent Student") == 'Y' && v("Current Child")["Dependent Child Age"] == c("Dependent Age Threshold") && v("Current Child")["Student Indicator"] == 'Y'
+      if c("Option Dependent Student") == 'Y' && v("Current Child")["Applicant Age"] == c("Dependent Age Threshold") && v("Current Child")["Student Indicator"] == 'Y'
         o["Child of Caretaker Dependent Age Indicator"] = 'Y'
         o["Child of Caretaker Dependent Age Determination Date"] = current_date
         o["Child of Caretaker Dependent Age Ineligibility Reason"] = 999
@@ -143,7 +145,7 @@ module Medicaid::Eligibility::Category
     end
 
     rule "Dependent Child Age Logic – Child is equal to dependent age but not a student" do
-      if c("Option Dependent Student") == 'Y' && v("Current Child")["Dependent Child Age"] == c("Dependent Age Threshold") && v("Current Child")["Student Indicator"] == 'N'
+      if c("Option Dependent Student") == 'Y' && v("Current Child")["Applicant Age"] == c("Dependent Age Threshold") && v("Current Child")["Student Indicator"] == 'N'
         o["Child of Caretaker Dependent Age Indicator"] = 'N'
         o["Child of Caretaker Dependent Age Determination Date"] = current_date
         o["Child of Caretaker Dependent Age Ineligibility Reason"] = 137
@@ -167,7 +169,7 @@ module Medicaid::Eligibility::Category
     end
     
     rule "Caretaker Relationship – Caretaker meets standard definition" do
-      if c("Option Caretaker Relative Relationship") == "00" && %w(03, 07, 12, 13, 14, 15, 16, 23).include?(v("Current Child")["Relationship Code"])
+      if c("Option Caretaker Relative Relationship") == "00" && %w(03 07 12 13 14 15 16 23).include?(v("Current Child")["Relationship Code"])
         o["Child of Caretaker Relationship Indicator"] = 'Y'
         o["Child of Caretaker Relationship Determination Date"] = current_date
         o["Child of Caretaker Relationship Ineligibility Reason"] = 999
@@ -175,7 +177,7 @@ module Medicaid::Eligibility::Category
     end
     
     rule "Caretaker Relationship – Caretaker does not meet standard definition" do
-      if c("Option Caretaker Relative Relationship") == "00" && !(%w(03, 07, 12, 13, 14, 15, 16, 23).include?(v("Current Child")["Relationship Code"]))
+      if c("Option Caretaker Relative Relationship") == "00" && !(%w(03 07 12 13 14 15 16 23).include?(v("Current Child")["Relationship Code"]))
         o["Child of Caretaker Relationship Indicator"] = 'N'
         o["Child of Caretaker Relationship Determination Date"] = current_date
         o["Child of Caretaker Relationship Ineligibility Reason"] = 132
@@ -183,7 +185,7 @@ module Medicaid::Eligibility::Category
     end
     
     rule "Caretaker Relationship – Caretaker meets any relative definition" do
-      if c("Option Caretaker Relative Relationship") == "01" && %w(03, 07, 12, 13, 14, 15, 16, 23, 27, 30).include?(v("Current Child")["Relationship Code"])
+      if c("Option Caretaker Relative Relationship") == "01" && %w(03 07 12 13 14 15 16 23 27 30).include?(v("Current Child")["Relationship Code"])
         o["Child of Caretaker Relationship Indicator"] = 'Y'
         o["Child of Caretaker Relationship Determination Date"] = current_date
         o["Child of Caretaker Relationship Ineligibility Reason"] = 999
@@ -191,7 +193,7 @@ module Medicaid::Eligibility::Category
     end
 
     rule "Caretaker Relationship – Caretaker does not meet any relative definition" do
-      if c("Option Caretaker Relative Relationship") == "01" && !(%w(03, 07, 12, 13, 14, 15, 16, 23, 27, 30).include?(v("Current Child")["Relationship Code"]))
+      if c("Option Caretaker Relative Relationship") == "01" && !(%w(03 07 12 13 14 15 16 23 27 30).include?(v("Current Child")["Relationship Code"]))
         o["Child of Caretaker Relationship Indicator"] = 'N'
         o["Child of Caretaker Relationship Determination Date"] = current_date
         o["Child of Caretaker Relationship Ineligibility Reason"] = 131
@@ -242,9 +244,9 @@ module Medicaid::Eligibility::Category
 
     rule "Child of Caretaker meets all criteria" do 
       o["Qualified Children List"] = o["Children List"].select{|child|
-        child("Child of Caretaker Dependent Age Indicator") == 'Y' &&
-        child("Child of Caretaker Relationship Indicator") == 'Y' &&
-        %w(X T).include?(child("Child of Caretaker Deprived Child Indicator"))
+        child["Child of Caretaker Dependent Age Indicator"] == 'Y' &&
+        child["Child of Caretaker Relationship Indicator"] == 'Y' &&
+        %w(X T).include?(child["Child of Caretaker Deprived Child Indicator"])
       }
     end
 

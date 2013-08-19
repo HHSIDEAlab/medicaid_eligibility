@@ -15,8 +15,7 @@ class Application
     attr_accessor :outputs
 
     def initialize(person_id, person_attributes, applicant_id, applicant_attributes)
-      @person_id = person_id
-      @person_attributes = person_attributes
+      super person_id, person_attributes
       @applicant_id = applicant_id
       @applicant_attributes = applicant_attributes
       @outputs = {}
@@ -202,7 +201,7 @@ class Application
         other_person = @people.find{|p| p.person_id == other_id}
         relationship_code = get_node("hix-core:FamilyRelationshipCode", relationship).inner_text
         relationship_attributes = {}
-        for input in ApplicationVariables::PERSON_INPUTS.select{|i| i.group == :relationship}
+        for input in ApplicationVariables::PERSON_INPUTS.select{|i| i[:group] == :relationship}
           node = get_node(input[:xpath], relationship)
 
           relationship_attributes[input[:name]] = get_xml_variable(node, input, person_id)
@@ -306,6 +305,21 @@ class Application
                   det_name = determination[:name]
                   xml.send("hix-ee:MedicaidMAGI#{det_name.gsub(/ +/,'')}EligibilityBasis") {
                     build_determinations(xml, det_name, applicant)
+                    if det_name == "Parent Caretaker Category"
+                      xml.send("ChildrenEligibilityBasis") {
+                        applicant.outputs["Children List"].each do |child|
+                          xml.send("Child", {"s:ref" => child["Person ID"]}) {
+                            ApplicationVariables::CHILD_OUTPUTS.each do |output|
+                              xml.send(output[:name].gsub(/ +/,'')) {
+                                xml.send("EligibilityBasisStatusIndicator", child["#{output[:name]} Indicator"])
+                                xml.send("DateTime", child["#{output[:name]} Determination Date"])
+                                xml.send("EligibilityBasisIneligibilityReasonText", child["#{output[:name]} Ineligibility Reason"])
+                              }
+                            end
+                          }
+                        end
+                      }
+                    end
                   }
                 end
                 ApplicationVariables::OUTPUTS.select{|o| o[:group] == :MAGI}.each do |output|
