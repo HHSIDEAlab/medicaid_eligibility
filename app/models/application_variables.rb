@@ -32,7 +32,7 @@ module ApplicationVariables
       :type       => :flag,
       :values     => %w(Y N D E H I P T),
       :xml_group  => :applicant,
-      :xpath      => "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGICitizenOrImmigrantEligibilityBasis/hix-ee:StatusIndicator"
+      :xpath      => "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGICitizenOrImmigrantEligibilityBasis/hix-core:StatusIndicator"
     },
     {
       :name       => "Applicant Pregnant Indicator",
@@ -88,6 +88,7 @@ module ApplicationVariables
   ].freeze
 
   DETERMINATIONS = [
+    {name: "Parent Caretaker Category", eligibility: :MAGI},
     {name: "Pregnancy Category", eligibility: :MAGI},
     {name: "Child Category", eligibility: :MAGI},
     {name: "Adult Group Category", eligibility: :MAGI},
@@ -102,6 +103,12 @@ module ApplicationVariables
       date_xpath: "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityDetermination/nc:ActivityDate/nc:DateTime",
       reason_xpath: "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityReasonText"
     }
+  ].freeze
+
+  CHILD_OUTPUTS = [
+    {name: "Child of Caretaker Dependent Age", type: :determination},
+    {name: "Child of Caretaker Deprived Child", type: :determination},
+    {name: "Child of Caretaker Relationship", type: :determination}
   ].freeze
 
   OUTPUTS = [
@@ -133,4 +140,25 @@ module ApplicationVariables
     "27" => "Former Spouse",
     "30" => "Mother-in-Law/Father-in-Law"
   }.freeze
+
+  CODE_REVERSE = {
+    "01" => "01",
+    "02" => "02",
+    "03" => "04",
+    "04" => "03",
+    "05" => "12",
+    "06" => "15",
+    "07" => "07",
+    "08" => "08",
+    "12" => "05",
+    "13" => "14",
+    "14" => "13",
+    "15" => "06",
+    "16" => "16",
+    #"17" => "Parent's Domestic Partner",
+    "23" => "23",
+    "26" => "30",
+    "27" => "27",
+    "30" => "26"
+  }
 end
