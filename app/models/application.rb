@@ -246,7 +246,11 @@ class Application
 
   def get_xml_variable(node, input, person_id)
     unless node
-      raise "Input xml missing variable #{input[:name]} for person #{person_id}"
+      if input[:type] == :flag
+        return 'N'
+      else
+        raise "Input xml missing variable #{input[:name]} for person #{person_id}"
+      end
     end
 
     if input[:type] == :integer
@@ -453,6 +457,7 @@ class Application
   def process_rules!
     magi_part_1 = [
       Medicaid::Eligibility::Category::ParentCaretakerRelative,
+      Medicaid::Eligibility::Category::ParentCaretakerRelativeSpouse,
       Medicaidchip::Eligibility::Category::Pregnant,
       Medicaidchip::Eligibility::Category::Child,
       Medicaid::Eligibility::Category::Medicaid::AdultGroup,
@@ -461,8 +466,8 @@ class Application
       Medicaid::Eligibility::ReferralType
     ].map{|ruleset_class| ruleset_class.new()}
 
-    for applicant in @applicants
-      for ruleset in magi_part_1
+    for ruleset in magi_part_1
+      for applicant in @applicants
         context = to_context(applicant)
         ruleset.run(context)
         from_context!(applicant, context)
