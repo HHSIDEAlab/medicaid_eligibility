@@ -246,11 +246,11 @@ class Application
 
   def get_xml_variable(node, input, person_id)
     unless node
-      if input[:type] == :flag
-        return 'N'
-      else
-        raise "Input xml missing variable #{input[:name]} for person #{person_id}"
-      end
+      # if input[:type] == :flag
+      #   return 'N'
+      # else
+      raise "Input xml missing variable #{input[:name]} for person #{person_id}"
+      # end
     end
 
     if input[:type] == :integer
