@@ -157,6 +157,10 @@ class Application
       end
       
       for input in ApplicationVariables::PERSON_INPUTS
+        if input[:xpath] == :unimplemented
+          raise "Variable #{input[:name]} has unimplemented xpath"
+        end
+
         if input[:xml_group] == :person
           node = xml_person.at_xpath(input[:xpath])
         elsif input[:xml_group] == :applicant
