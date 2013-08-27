@@ -1,255 +1,269 @@
 module ApplicationVariables
   PERSON_INPUTS = [
     {
-      :name       => "Age Left Foster Care",
-      :type       => :integer,
-      :xml_group  => :applicant,
-      :xpath      => :unimplemented
-    },
-    {
       :name       => "Applicant Age",
       :type       => :integer,
-      :xml_group  => :person,
+      :group      => :person,
       :xpath      => "PersonAge",
-      :new_variable => true
+      :required   => true
     },
     {
       :name       => "Applicant Attest Disabled",
       :type       => :flag,
       :values     => %w(Y N),
-      :xml_group  => :applicant,
-      :xpath      => "hix-ee:InsuranceApplicantBlindnessOrDisabilityIndicator"
+      :group      => :applicant,
+      :xpath      => "hix-ee:InsuranceApplicantBlindnessOrDisabilityIndicator",
+      :default    => "N"
     },
     {
       :name       => "Applicant Attest Long Term Care",
       :type       => :flag,
       :values     => %w(Y N),
-      :xml_group  => :applicant,
-      :xpath      => "hix-ee:InsuranceApplicantBlindnessOrDisabilityIndicator"
+      :group      => :applicant,
+      :xpath      => "hix-ee:InsuranceApplicantBlindnessOrDisabilityIndicator",
+      :default    => "N"
     },
-    # {
-    #   :name       => "Applicant Household Income",
-    #   :type       => :integer,
-    #   :xml_group  => :undefined,
-    #   :xpath      => :undefined
-    # },
     {
       :name       => "Applicant Has 40 Title II Work Quarters",
       :type       => :flag,
       :values     => %w(Y N),
-      :xml_group  => :applicant,
-      :xpath      => :unimplemented
-    },
-    {
-      :name       => "Applicant Medicaid Citizen Or Immigrant Status Indicator",
-      :type       => :flag,
-      :values     => %w(Y N D E H I P T),
-      :xml_group  => :applicant,
-      :xpath      => "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGICitizenOrImmigrantEligibilityBasis/hix-core:StatusIndicator"
-    },
-    {
-      :name       => "Applicant Pregnant Indicator",
-      :type       => :flag,
-      :values     => %w(Y N),
-      :xml_group  => :person,
-      :xpath      => "hix-core:PersonAugmentation/hix-core:PersonPregnancyStatus/hix-core:StatusIndicator"
-    },
-    {
-      :name       => "Applicant Post Partum Period Indicator",
-      :type       => :flag,
-      :values     => %w(Y N),
-      :xml_group  => :person,
-      :xpath      => "hix-core:PersonAugmentation/hix-core:PersonPostPartumPeriod/hix-core:StatusIndicator",
-      :new_variable => true
-    },
-    {
-      :name       => "Attest Primary Responsibility",
-      :type       => :flag,
-      :values     => %w(Y N),
-      :xml_group  => :relationship,
-      :xpath      => "PrimaryResponsibility",
-      :new_variable => true
-    },
-    {
-      :name       => "Five Year Bar Applies",
-      :type       => :flag,
-      :values     => %w(Y N),
-      :xml_group  => :applicant,
-      :xpath      => :unimplemented
-    },
-    {
-      :name       => "Five Year Bar Met",
-      :type       => :flag,
-      :values     => %w(Y N),
-      :xml_group  => :applicant,
-      :xpath      => :unimplemented
-    },
-    {
-      :name       => "Foster Care",
-      :type       => :flag,
-      :values     => %w(Y N),
-      :xml_group  => :applicant,
-      :xpath      => :unimplemented
-    },
-    {
-      :name       => "Foster Care State",
-      :type       => :string,
-      :xml_group  => :applicant,
-      :xpath      => :unimplemented
-    },
-    {
-      :name       => "Had Medicaid During Foster Care",
-      :type       => :flag,
-      :values     => %w(Y N),
-      :xml_group  => :applicant,
-      :xpath      => :unimplemented
+      :group      => :applicant,
+      :xpath      => :unimplemented,
+      :default    => "N"
     },
     {
       :name       => "Has Insurance",
       :type       => :flag,
       :values     => %w(Y N),
-      :xml_group  => :applicant,
-      :xpath      => :unimplemented
-    },
-    {
-      :name       => "Home State",
-      :type       => :string,
-      :xml_group  => :applicant,
+      :group      => :applicant,
       :xpath      => :unimplemented
     },
     {
       :name       => "Hours Worked Per Week",
       :type       => :integer,
-      :xml_group  => :person,
+      :group      => :person,
       :xpath      => :unimplemented
     },
     {
       :name       => "Incarceration Status",
       :type       => :flag,
       :values     => %w(Y N),
-      :xml_group  => :applicant,
-      :xpath      => :unimplemented
-    },
-    {
-      :name       => "Lawful Presence",
-      :type       => :flag,
-      :values     => %w(Y N),
-      :xml_group  => :applicant,
-      :xpath      => :unimplemented
-    },
-    {
-      :name       => "Legal Permanent Resident",
-      :type       => :flag,
-      :values     => %w(Y N),
-      :xml_group  => :applicant,
+      :group      => :applicant,
       :xpath      => :unimplemented
     },
     {
       :name       => "Medicare Entitlement Indicator",
       :type       => :flag,
       :values     => %w(Y N),
-      :xml_group  => :applicant,
+      :group      => :applicant,
       :xpath      => "hix-ee:MedicaidNonMAGIEligibility/hix-ee:MedicaidNonMAGIMedicareEntitlementEligibilityBasis/hix-core:StatusIndicator"
     },
     {
       :name       => "Medicaid Residency Status Indicator",
       :type       => :flag,
       :values     => %w(Y N P),
-      :xml_group  => :applicant,
-      :xpath      => "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIResidencyEligibilityBasis/hix-ee:StatusIndicator"
-    },
-    {
-      :name       => "Non-Citizen Deport Withheld Date",
-      :type       => :date,
-      :xml_group  => :applicant,
-      :xpath      => :unimplemented
-    },
-    {
-      :name       => "Non-Citizen Entry Date",
-      :type       => :date,
-      :xml_group  => :applicant,
-      :xpath      => :unimplemented
-    },
-    {
-      :name       => "Non-Citizen Status Grant Date",
-      :type       => :date,
-      :xml_group  => :applicant,
-      :xpath      => :unimplemented
+      :group      => :applicant,
+      :xpath      => "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIResidencyEligibilityBasis/hix-ee:StatusIndicator",
+      :required   => true
     },
     {
       :name       => "Person Disabled Indicator",
       :type       => :flag,
       :values     => %w(Y N),
-      :xml_group  => :applicant,
-      :xpath      => "hix-ee:MedicaidNonMAGIEligibility/hix-ee:MedicaidNonMAGIBlindnessOrDisabilityEligibilityBasis/hix-core:StatusIndicator"
+      :group      => :applicant,
+      :xpath      => "hix-ee:MedicaidNonMAGIEligibility/hix-ee:MedicaidNonMAGIBlindnessOrDisabilityEligibilityBasis/hix-core:StatusIndicator",
+      :default    => "N"
+    },
+    {
+      :name       => "Prior Insurance",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :applicant,
+      :xpath      => :unimplemented
     },
     {
       :name       => "Prior Insurance End Date",
       :type       => :date,
-      :xml_group  => :applicant,
-      :xpath      => :unimplemented
+      :group      => :applicant,
+      :xpath      => :unimplemented,
+      :required_if => "Prior Insurance",
+      :required_if_value => "Y"
     },
     {
-      :name       => "Refugee Medical Assistance Start Date",
-      :type       => :date,
-      :xml_group  => :applicant,
-      :xpath      => :unimplemented
-    },
-    {
-      :name       => "Refugee Status",
+      :name       => "Required to File Taxes",
       :type       => :flag,
       :values     => %w(Y N),
-      :xml_group  => :applicant,
-      :xpath      => :unimplemented
-    },
-    {
-      :name       => "Qualified Non-Citizen Status",
-      :type       => :flag,
-      :values     => %w(Y N),
-      :xml_group  => :applicant,
-      :xpath      => :unimplemented
-    },
-    {
-      :name       => "Seven Year Limit Applies",
-      :type       => :flag,
-      :values     => %w(Y N),
-      :xml_group  => :applicant,
-      :xpath      => :unimplemented
+      :group      => :person,
+      :xpath      => :unimplemented,
+      :required   => :true
     },
     {
       :name       => "State Health Benefits Through Public Employee",
       :type       => :flag,
       :values     => %w(Y N),
-      :xml_group  => :applicant,
+      :group      => :applicant,
       :xpath      => :unimplemented
     },
     {
       :name       => "Student Indicator",
       :type       => :flag,
       :values     => %w(Y N),
-      :xml_group  => :applicant,
+      :group      => :applicant,
       :xpath      => "hix-ee:InsuranceApplicantStudentIndicator"
     },
+    
+    # Pregnancy inputs
+    {
+      :name       => "Applicant Pregnant Indicator",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :person,
+      :xpath      => "hix-core:PersonAugmentation/hix-core:PersonPregnancyStatus/hix-core:StatusIndicator",
+      :default    => "N"
+    },
+    {
+      :name       => "Applicant Post Partum Period Indicator",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :person,
+      :xpath      => "hix-core:PersonAugmentation/hix-core:PersonPostPartumPeriod/hix-core:StatusIndicator",
+      :default    => "N"
+    },
+
+    # Foster Care inputs
+    {
+      :name       => "Former Foster Care",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :applicant,
+      :xpath      => :unimplemented
+    },
+    {
+      :name       => "Age Left Foster Care",
+      :type       => :integer,
+      :group      => :applicant,
+      :xpath      => :unimplemented,
+      :required_if => "Former Foster Care",
+      :required_if_value => "Y"
+    },
+    {
+      :name       => "Foster Care State",
+      :type       => :string,
+      :group      => :applicant,
+      :xpath      => :unimplemented,
+      :required_if => "Former Foster Care",
+      :required_if_value => "Y"
+    },
+    {
+      :name       => "Had Medicaid During Foster Care",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :applicant,
+      :xpath      => :unimplemented,
+      :required_if => "Former Foster Care",
+      :required_if_value => "Y"
+    },
+    
+    # Citizenship and Immigration Status inputs
     {
       :name       => "US Citizen Indicator",
       :type       => :flag,
       :values     => %w(Y N),
-      :xml_group  => :applicant,
+      :group      => :applicant,
+      :xpath      => :unimplemented,
+      :required   => true
+    },
+    {
+      :name       => "Five Year Bar Applies",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :applicant,
+      :xpath      => :unimplemented
+    },
+    {
+      :name       => "Five Year Bar Met",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :applicant,
+      :xpath      => :unimplemented,
+      :required_if => "Five Year Bar Applies",
+      :required_if_value => "Y"
+    },
+    {
+      :name       => "Lawful Presence Attested",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :applicant,
+      :xpath      => :unimplemented
+    },
+    {
+      :name       => "Non-Citizen Deport Withheld Date",
+      :type       => :date,
+      :group      => :applicant,
+      :xpath      => :unimplemented
+    },
+    {
+      :name       => "Non-Citizen Entry Date",
+      :type       => :date,
+      :group      => :applicant,
+      :xpath      => :unimplemented
+    },
+    {
+      :name       => "Non-Citizen Status Grant Date",
+      :type       => :date,
+      :group      => :applicant,
+      :xpath      => :unimplemented
+    },
+    {
+      :name       => "Qualified Non-Citizen Status",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :applicant,
+      :xpath      => :unimplemented
+    },
+    {
+      :name       => "Refugee Medical Assistance Start Date",
+      :type       => :date,
+      :group      => :applicant,
+      :xpath      => :unimplemented
+    },
+    {
+      :name       => "Refugee Status",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :applicant,
+      :xpath      => :unimplemented
+    },
+    {
+      :name       => "Seven Year Limit Applies",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :applicant,
       :xpath      => :unimplemented
     },
     {
       :name       => "Veteran Status",
       :type       => :flag,
       :values     => %w(Y N),
-      :xml_group  => :applicant,
+      :group      => :applicant,
       :xpath      => :unimplemented
     },
     {
       :name       => "Victim of Trafficking",
       :type       => :flag,
       :values     => %w(Y N),
-      :xml_group  => :applicant,
+      :group      => :applicant,
       :xpath      => :unimplemented
+    },
+    
+    # Relationship inputs
+    {
+      :name       => "Attest Primary Responsibility",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :relationship,
+      :xpath      => "PrimaryResponsibility",
+      :default    => "N"
     }
   ].freeze
 
