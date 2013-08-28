@@ -36,7 +36,7 @@ module Medicaid::Eligibility::Category
       }.map{|relationship|
         relationship.person
       }.concat(
-        v("Tax Returns").select{|tr| tr.filers.any?{|f| f.person.person_id == v("Person ID")}}.map{|tr| tr.dependents}.flatten
+        v("Tax Returns").select{|tr| tr.filers.any?{|f| f.person_id == v("Person ID")}}.map{|tr| tr.dependents}.flatten
       ).uniq.select{|person|
         v("Applicant List").include? person
       }.map{|child|
