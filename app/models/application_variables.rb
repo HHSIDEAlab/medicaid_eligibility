@@ -340,25 +340,46 @@ module ApplicationVariables
     }
   ].freeze
 
+  # RELATIONSHIP_CODES = {
+  #   "01" => "Self",
+  #   "02" => "Spouse of other relative within required degree of relation",
+  #   "03" => "Parent",
+  #   "04" => "Son/Daughter",
+  #   "05" => "Stepdaughter/Stepson",
+  #   "06" => "Grandchild",
+  #   "07" => "Sibling/Stepsibling",
+  #   "08" => "Domestic Partner of other relative within required degree of relation",
+  #   "12" => "Step-Parent",
+  #   "13" => "Uncle/Aunt",
+  #   "14" => "Nephew/Niece",
+  #   "15" => "Grandparent",
+  #   "16" => "First Cousin",
+  #   "17" => "Parent's Domestic Partner",
+  #   "23" => "Brother-in-Law/Sister-in-Law",
+  #   "26" => "Daughter-in-Law/Son-in-Law",
+  #   "27" => "Former Spouse",
+  #   "30" => "Mother-in-Law/Father-in-Law"
+  # }.freeze
+
   RELATIONSHIP_CODES = {
-    "01" => "Self",
-    "02" => "Spouse of other relative within required degree of relation",
-    "03" => "Parent",
-    "04" => "Son/Daughter",
-    "05" => "Stepdaughter/Stepson",
-    "06" => "Grandchild",
-    "07" => "Sibling/Stepsibling",
-    "08" => "Domestic Partner of other relative within required degree of relation",
-    "12" => "Step-Parent",
-    "13" => "Uncle/Aunt",
-    "14" => "Nephew/Niece",
-    "15" => "Grandparent",
-    "16" => "First Cousin",
-    "17" => "Parent's Domestic Partner",
-    "23" => "Brother-in-Law/Sister-in-Law",
-    "26" => "Daughter-in-Law/Son-in-Law",
-    "27" => "Former Spouse",
-    "30" => "Mother-in-Law/Father-in-Law"
+    "01" => :self,
+    "02" => :spouse,
+    "03" => :parent,
+    "04" => :child,
+    "05" => :stepchild,
+    "06" => :grandchild,
+    "07" => :sibling,
+    "08" => :domestic_partner,
+    "12" => :stepparent,
+    "13" => :uncle_aunt,
+    "14" => :nephew_niece,
+    "15" => :grandparent,
+    "16" => :cousin,
+    "17" => :parents_domestic_partner,
+    "23" => :sibling_in_law,
+    "26" => :child_in_law,
+    "27" => :former_spouse,
+    "30" => :parent_in_law
   }.freeze
 
   CODE_REVERSE = {

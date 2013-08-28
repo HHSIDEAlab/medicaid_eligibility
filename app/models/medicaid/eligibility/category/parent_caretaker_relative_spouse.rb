@@ -19,7 +19,7 @@ module Medicaid::Eligibility::Category
     code      "Parent Caretaker Category Ineligibility Reason", %w(999)
     
     calculated "Has Spouse/Domestic Partner" do
-      if v("Applicant Relationships").find{|rel| %w(02 08).include?(rel.relationship)}
+      if v("Applicant Relationships").find{|rel| [:spouse, :domestic_partner].include?(rel.relationship)}
         'Y'
       else
         'N'
@@ -28,7 +28,7 @@ module Medicaid::Eligibility::Category
 
     calculated "Spouse/Domestic Partner" do
       if v("Has Spouse/Domestic Partner") == 'Y'
-        v("Applicant Relationships").find{|rel| %w(02 08).include?(rel.relationship)}.person
+        v("Applicant Relationships").find{|rel| [:spouse, :domestic_partner].include?(rel.relationship)}.person
       else
         nil
       end
@@ -36,7 +36,7 @@ module Medicaid::Eligibility::Category
 
     calculated "Spouse/Domestic Partner Relationship" do
       if v("Has Spouse/Domestic Partner") == 'Y'
-        v("Applicant Relationships").find{|rel| %w(02 08).include?(rel.relationship)}.relationship
+        v("Applicant Relationships").find{|rel| [:spouse, :domestic_partner].include?(rel.relationship)}.relationship
       else
         '00'
       end
@@ -51,7 +51,7 @@ module Medicaid::Eligibility::Category
     end
 
     rule "Caretaker Relationship – Spouse meets criteria" do
-      if %w(N T).include?(v("Applicant Parent Caretaker Category Indicator")) && v("Has Spouse/Domestic Partner") == 'Y' && v("Spouse Domestic Partner Relationship") == '02' && v("Spouse/Domestic Partner").outputs["Applicant Parent Caretaker Category Indicator"] == 'Y' && v("Lives With Spouse/Domestic Partner") == 'Y'
+      if %w(N T).include?(v("Applicant Parent Caretaker Category Indicator")) && v("Has Spouse/Domestic Partner") == 'Y' && v("Spouse Domestic Partner Relationship") == :spouse && v("Spouse/Domestic Partner").outputs["Applicant Parent Caretaker Category Indicator"] == 'Y' && v("Lives With Spouse/Domestic Partner") == 'Y'
         o["Applicant Parent Caretaker Category Indicator"] = 'Y'
         o["Parent Caretaker Category Determination Date"] = current_date
         o["Parent Caretaker Category Ineligibility Reason"] = 999
@@ -59,7 +59,7 @@ module Medicaid::Eligibility::Category
     end
 
     rule "Caretaker Relationship – Domestic Partner meets criteria" do
-      if %w(N T).include?(v("Applicant Parent Caretaker Category Indicator")) && %w(02 03).include?(c("Option Caretaker Relative Relationship")) && v("Has Spouse/Domestic Partner") == 'Y' && v("Has Spouse Domestic Partner Relationship") == '08' && v("Spouse/Domestic Partner").outputs["Applicant Parent Caretaker Category Indicator"] == 'Y' && v("Lives With Spouse/Domestic Partner") == 'Y'
+      if %w(N T).include?(v("Applicant Parent Caretaker Category Indicator")) && %w(02 03).include?(c("Option Caretaker Relative Relationship")) && v("Has Spouse/Domestic Partner") == 'Y' && v("Has Spouse Domestic Partner Relationship") == :domestic_partner && v("Spouse/Domestic Partner").outputs["Applicant Parent Caretaker Category Indicator"] == 'Y' && v("Lives With Spouse/Domestic Partner") == 'Y'
         o["Applicant Parent Caretaker Category Indicator"] = 'Y'
         o["Parent Caretaker Category Determination Date"] = current_date
         o["Parent Caretaker Category Ineligibility Reason"] = 999

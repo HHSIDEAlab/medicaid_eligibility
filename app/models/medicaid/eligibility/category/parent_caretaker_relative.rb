@@ -14,6 +14,7 @@ module Medicaid::Eligibility::Category
     assumption "A child must satisfy all four conditions (dependent child age, deprived of parental support, relationship and applicant assumes primary responsibility) in order for the applicant to qualify for the Parent Caretaker Relative category."
 
     input "Applicant List", "Application", "List"
+    input "Person ID", "Application", "Integer"
     input "Person List", "Application", "List"
     input "Applicant Relationships", "Application", "List"
     input "Applicant Age", "Application", "Integer"
@@ -30,7 +31,7 @@ module Medicaid::Eligibility::Category
     # claims as a dependent on their tax return
     calculated "Applicant Child List" do
       v("Applicant Relationships").select{|relationship|
-        relationship.relationship == "03" ||
+        [:child, :stepchild].include?(relationship.relationship) ||
         relationship.relationship_attributes["Attest Primary Responsibility"] == 'Y'
       }.map{|relationship|
         relationship.person
@@ -41,7 +42,7 @@ module Medicaid::Eligibility::Category
       }.map{|child|
         {
           "Person ID" => child.person_id,
-          "Relationship Code" => v("Applicant Relationships").find{|r| child == r.person}.relationship
+          "Relationship" => child.relationships.find{|r| r.person.person_id == v("Person ID")}.relationship
         }.merge(child.person_attributes).merge(child.applicant_attributes)
       }
     end
@@ -98,7 +99,6 @@ module Medicaid::Eligibility::Category
       children_list = context.v("Applicant Child List").map{|child| {"Person ID" => child["Person ID"]}}
       
       for c_in, c_out in context.v("Applicant Child List").zip(children_list)
-        
         context.input["Current Child"] = c_in
         self.class.rules[0..13].each do |rule|
           rule.run(context)
@@ -169,7 +169,7 @@ module Medicaid::Eligibility::Category
     end
     
     rule "Caretaker Relationship – Caretaker meets standard definition" do
-      if c("Option Caretaker Relative Relationship") == "00" && %w(03 07 12 13 14 15 16 23).include?(v("Current Child")["Relationship Code"])
+      if c("Option Caretaker Relative Relationship") == "00" && [:parent, :sibling, :stepparent, :uncle_aunt, :grandparent, :cousin, :sibling_in_law].include?(v("Current Child")["Relationship"])
         o["Child of Caretaker Relationship Indicator"] = 'Y'
         o["Child of Caretaker Relationship Determination Date"] = current_date
         o["Child of Caretaker Relationship Ineligibility Reason"] = 999
@@ -177,7 +177,7 @@ module Medicaid::Eligibility::Category
     end
     
     rule "Caretaker Relationship – Caretaker does not meet standard definition" do
-      if c("Option Caretaker Relative Relationship") == "00" && !(%w(03 07 12 13 14 15 16 23).include?(v("Current Child")["Relationship Code"]))
+      if c("Option Caretaker Relative Relationship") == "00" && !([:parent, :sibling, :stepparent, :uncle_aunt, :grandparent, :cousin, :sibling_in_law].include?(v("Current Child")["Relationship"]))
         o["Child of Caretaker Relationship Indicator"] = 'N'
         o["Child of Caretaker Relationship Determination Date"] = current_date
         o["Child of Caretaker Relationship Ineligibility Reason"] = 132
@@ -185,7 +185,7 @@ module Medicaid::Eligibility::Category
     end
     
     rule "Caretaker Relationship – Caretaker meets any relative definition" do
-      if c("Option Caretaker Relative Relationship") == "01" && %w(03 07 12 13 14 15 16 23 27 30).include?(v("Current Child")["Relationship Code"])
+      if c("Option Caretaker Relative Relationship") == "01" && [:parent, :sibling, :stepparent, :uncle_aunt, :grandparent, :cousin, :sibling_in_law, :former_spouse, :parent_in_law].include?(v("Current Child")["Relationship"])
         o["Child of Caretaker Relationship Indicator"] = 'Y'
         o["Child of Caretaker Relationship Determination Date"] = current_date
         o["Child of Caretaker Relationship Ineligibility Reason"] = 999
@@ -193,7 +193,7 @@ module Medicaid::Eligibility::Category
     end
 
     rule "Caretaker Relationship – Caretaker does not meet any relative definition" do
-      if c("Option Caretaker Relative Relationship") == "01" && !(%w(03 07 12 13 14 15 16 23 27 30).include?(v("Current Child")["Relationship Code"]))
+      if c("Option Caretaker Relative Relationship") == "01" && !([:parent, :sibling, :stepparent, :uncle_aunt, :grandparent, :cousin, :sibling_in_law, :former_spouse, :parent_in_law].include?(v("Current Child")["Relationship"]))
         o["Child of Caretaker Relationship Indicator"] = 'N'
         o["Child of Caretaker Relationship Determination Date"] = current_date
         o["Child of Caretaker Relationship Ineligibility Reason"] = 131
@@ -217,7 +217,7 @@ module Medicaid::Eligibility::Category
     end
     
     rule "Caretaker Relationship – Domestic Partner – Individual is domestic partner" do
-      if c("Option Caretaker Relative Relationship") == "02" && v("Current Child")["Relationship Code"] == "17"
+      if c("Option Caretaker Relative Relationship") == "02" && v("Current Child")["Relationship"] == :parents_domestic_partner
         o["Child of Caretaker Relationship Indicator"] = 'Y'
         o["Child of Caretaker Relationship Determination Date"] = current_date
         o["Child of Caretaker Relationship Ineligibility Reason"] = 999
@@ -225,7 +225,7 @@ module Medicaid::Eligibility::Category
     end
 
     rule "Caretaker Relationship – Domestic Partner Individual is not the domestic partner" do
-      if c("Option Caretaker Relative Relationship") == "02" && v("Current Child")["Relationship Code"] != "17"
+      if c("Option Caretaker Relative Relationship") == "02" && v("Current Child")["Relationship"] != :parents_domestic_partner
         o["Child of Caretaker Relationship Indicator"] = 'N'
         o["Child of Caretaker Relationship Determination Date"] = current_date
         o["Child of Caretaker Relationship Ineligibility Reason"] = 389
