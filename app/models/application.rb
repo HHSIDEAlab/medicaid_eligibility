@@ -103,12 +103,12 @@ class Application
     compute_values!
 
     process_rules!
-    # to_hash
-    if return_type == :xml
-      to_xml
-    elsif return_type == :json
-      to_json
-    end
+    to_hash
+    # if return_type == :xml
+    #   to_xml
+    # elsif return_type == :json
+    #   to_json
+    # end
   end
 
   private
@@ -225,7 +225,7 @@ class Application
         other_id = get_node("nc:PersonReference", relationship).attribute('ref').value
         
         other_person = @people.find{|p| p.person_id == other_id}
-        relationship_code = get_node("hix-core:FamilyRelationshipCode", relationship).inner_text
+        relationship_code = ApplicationVariables::RELATIONSHIP_CODES[get_node("hix-core:FamilyRelationshipCode", relationship).inner_text]
         relationship_attributes = {}
         for input in ApplicationVariables::PERSON_INPUTS.select{|i| i[:group] == :relationship}
           node = get_node(input[:xpath], relationship)
@@ -457,7 +457,7 @@ class Application
         other_id = relationship["Other ID"]
         
         other_person = @people.find{|p| p.person_id == other_id}
-        relationship_code = relationship["Relationship Code"]
+        relationship_code = ApplicationVariables::RELATIONSHIP_CODES[relationship["Relationship Code"]]
         relationship_attributes = {}
         for input in ApplicationVariables::PERSON_INPUTS.select{|i| i[:group] == :relationship}
           relationship_attributes[input[:name]] = get_json_variable(relationship, input, person_attributes.merge(applicant_attributes))
@@ -550,21 +550,21 @@ class Application
         tax_return_people = []
       end
 
-      spouses = person.relationships.select{|r| r.relationship == "02" && physical_household.people.include?(r.person)}.map{|r| r.person}
+      spouses = person.relationships.select{|r| r.relationship == :spouse && physical_household.people.include?(r.person)}.map{|r| r.person}
 
       if is_child?(person)
-        siblings = person.relationships.select{|r| r.relationship == "07" && physical_household.people.include?(r.person) && is_child(r.person)}.map{|r| r.person}
+        siblings = person.relationships.select{|r| r.relationship == :sibling && physical_household.people.include?(r.person) && is_child(r.person)}.map{|r| r.person}
       else
         siblings = []
       end
 
       if is_child?(person)
-        parents = person.relationships.select{|r| r.relationship == "04" && physical_household.people.include?(r.person)}.map{|r| r.person}
+        parents = person.relationships.select{|r| [:parent, :stepparent].include?(r.relationship) && physical_household.people.include?(r.person)}.map{|r| r.person}
       else
         parents = []
       end
 
-      children = person.relationships.select{|r| r.relationship == "03" && physical_household.people.include?(r.person) && is_child?(r.person)}.map{|r| r.person}
+      children = person.relationships.select{|r| [:child, :stepchild].include?(r.relationship) && physical_household.people.include?(r.person) && is_child?(r.person)}.map{|r| r.person}
 
       med_household_members = (tax_return_people + spouses + siblings + parents + children).uniq
       income_counted = !((tax_return && tax_return.dependents.include?(person)) || parents.any?) || person.person_attributes["Required to File Taxes"] == 'Y'
@@ -612,8 +612,8 @@ class Application
       "Medicaid Household" => @medicaid_households.find{|mh| mh.people.include?(applicant)},
       "Physical Household" => @physical_households.find{|hh| hh.people.include?(applicant)},
       "Tax Returns" => @tax_returns || []
-    }).slice(ruleset.class.inputs.keys)
-    config = @config
+    }).slice(*(ruleset.class.inputs.keys))
+    config = @config.slice(*(ruleset.class.configs.keys))
     RuleContext.new(config, input, @determination_date)
   end
 

@@ -74,6 +74,12 @@ module Medicaidchip::Eligibility
       incomes.map{|i| i[:primary_income] + i[:other_income].inject(0){|sum, (name, amt)| sum + amt} - i[:deductions].inject(0){|sum, (name, amt)| sum + amt}}.inject(0){|sum, amt| sum + amt}
     end
 
+    def run(context)
+      super
+      context.o["Calculated Income"] = context.input["Applicant Household Income"]
+      context
+    end
+
     rule "Applicant does not meet the requirements for any category" do
       unless v("Max Eligible Income")[:category] || v("Max Temporary Income")[:category]
         o["Category Used to Calculate Income"] = "None"
