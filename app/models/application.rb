@@ -61,14 +61,6 @@ class Application
     end
   end
 
-  class TaxPerson
-    attr_reader :person
-
-    def initialize(person)
-      @person = person
-    end
-  end
-
   #attr_reader :state, :applicants, :people, :physical_households, :tax_households, :medicaid_households, :tax_returns, :config
 
   XML_NAMESPACES = {
@@ -248,9 +240,7 @@ class Application
       ]
 
       filers = xml_filers.select{|xf| xf}.map{|xf|
-        TaxPerson.new(
-          @people.find{|p| p.person_id == get_node("hix-core:RoleOfPersonReference", xf).attribute('ref').value}
-        )
+        @people.find{|p| p.person_id == get_node("hix-core:RoleOfPersonReference", xf).attribute('ref').value}
       }
       
       dependents = get_nodes("hix-ee:TaxHousehold/hix-ee:PrimaryTaxFiler/RoleOfPersonReference", xml_return).map{|node|
@@ -474,9 +464,7 @@ class Application
       json_filers = json_return["Filers"]
 
       filers = json_return["Filers"].map{|jf|
-        TaxPerson.new(
-          @people.find{|p| p.person_id == jf["Person ID"]}
-        )
+        @people.find{|p| p.person_id == jf["Person ID"]}
       }
       
       dependents = json_return["Dependents"].map{|jd|
@@ -567,11 +555,13 @@ class Application
       children = person.relationships.select{|r| [:child, :stepchild].include?(r.relationship) && physical_household.people.include?(r.person) && is_child?(r.person)}.map{|r| r.person}
 
       med_household_members = (tax_return_people + spouses + siblings + parents + children).uniq
+      med_household_members.delete(person)
+      
       income_counted = !((tax_return && tax_return.dependents.include?(person)) || parents.any?) || person.person_attributes["Required to File Taxes"] == 'Y'
 
       med_households = @medicaid_households.select{|mh| med_household_members.any?{|mhm| mh.people.include?(mhm)}}
 
-      if med_households = []
+      if med_households.empty?
         med_household = MedicaidHousehold.new(nil, [])
         @medicaid_households << med_household
       elsif med_households.length == 1
@@ -659,7 +649,7 @@ class Application
         {
           :filers => tr.filers.map{|f|
             {
-              :person_id => f.person.person_id
+              :person_id => f.person_id
             }
           },
           :dependents => tr.dependents.map{|d|
