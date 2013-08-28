@@ -14,16 +14,15 @@ module Medicaidchip::Eligibility
     mandatory   "Mandatory"
     applies_to  "Medicaid and CHIP"
     
-    input "Applicant Household Income", "Application", "Integer"
     input "Applicant Pregnancy Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
     input "Applicant Child Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
     input "Applicant Adult Group Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
     input "Applicant Adult Group XX Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N X)
     input "Applicant Optional Targeted Low Income Child Indicator", "From MAGI Part I", "Char(1)", %w(Y N T X)
     #input "Applicant CHIP Targeted Low Income Child Indicator", "From MAGI Part I", "Char(1)", %w(Y N T X)
-    input "Household", "Householding Logic", "Array"
+    input "Medicaid Household", "Householding Logic", "Array"
 
-    config "Category->Percentage Mapping", "State Configuration", "Hash" 
+    config "Category-Percentage Mapping", "State Configuration", "Hash" 
     config "Base FPL", "State Configuration", "Integer"
     config "FPL Per Person", "State Configuration", "Integer"
 
@@ -34,16 +33,16 @@ module Medicaidchip::Eligibility
     code      "Income Ineligibility Reason", %w(999 A B)
 
     calculated "FPL" do
-      c("Base FPL") + v("Household").length * c("FPL Per Person")
+      c("Base FPL") + v("Medicaid Household").people.length * c("FPL Per Person")
     end
 
     calculated "Max Eligible Income" do
       eligible_categories = categories.select{|cat| v("Applicant #{cat} Indicator") == 'Y'}
       if eligible_categories.any?
-        category = eligible_categories.max_by{|cat| c("Category->Percentage Mapping")[cat]}
+        category = eligible_categories.max_by{|cat| c("Category-Percentage Mapping")[cat]}
         {
           :category => category,
-          :income   => v("FPL") * (c("Category->Percentage Mapping")[category] + 0.05)
+          :income   => v("FPL") * (c("Category-Percentage Mapping")[category] + 0.05)
         }
       else
         {
@@ -56,10 +55,10 @@ module Medicaidchip::Eligibility
     calculated "Max Temporary Income" do
       eligible_categories = categories.select{|cat| v("Applicant #{cat} Indicator") == 'T'}
       if eligible_categories.any?
-        category = eligible_categories.max_by{|cat| c("Category->Percentage Mapping")[cat]}
+        category = eligible_categories.max_by{|cat| c("Category-Percentage Mapping")[cat]}
         {
           :category => category,
-          :income   => v("FPL") * (c("Category->Percentage Mapping")[category] + 0.05)
+          :income   => v("FPL") * (c("Category-Percentage Mapping")[category] + 0.05)
         }
       else
         {
@@ -67,6 +66,12 @@ module Medicaidchip::Eligibility
           :income   => nil
         }
       end
+    end
+
+    calculated "Applicant Household Income" do
+      incomes = v("Medicaid Household").income_people.map{|p| p.income}
+
+      incomes.map{|i| i[:primary_income] + i[:other_income].inject(0){|sum, (name, amt)| sum + amt} - i[:deductions].inject(0){|sum, (name, amt)| sum + amt}}.inject(0){|sum, amt| sum + amt}
     end
 
     rule "Applicant does not meet the requirements for any category" do

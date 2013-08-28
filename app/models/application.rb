@@ -103,7 +103,7 @@ class Application
     compute_values!
 
     process_rules!
-    #to_hash
+    # to_hash
     if return_type == :xml
       to_xml
     elsif return_type == :json
@@ -428,6 +428,7 @@ class Application
           for other_income in income_calculation[:other_income]
             income[:other_income][other_income] = (json_income[other_income] || 0).to_i
           end
+          income[:deductions] = {}
           for deduction in income_calculation[:deductions]
             income[:deductions][deduction] = (json_income[deduction] || 0).to_i
           end
@@ -600,7 +601,7 @@ class Application
     applicant.outputs.merge!(context.output)
   end
 
-  def to_context(applicant)
+  def to_context(ruleset, applicant)
     input = applicant.applicant_attributes.merge(applicant.person_attributes).merge(applicant.outputs)
     input.merge!({
       "Applicant ID" => applicant.applicant_id,
@@ -611,7 +612,7 @@ class Application
       "Medicaid Household" => @medicaid_households.find{|mh| mh.people.include?(applicant)},
       "Physical Household" => @physical_households.find{|hh| hh.people.include?(applicant)},
       "Tax Returns" => @tax_returns || []
-    })
+    }).slice(ruleset.class.inputs.keys)
     config = @config
     RuleContext.new(config, input, @determination_date)
   end
@@ -624,6 +625,11 @@ class Application
           :id => a.applicant_id,
           :person_id => a.person_id,
           :attributes => a.applicant_attributes.merge(a.person_attributes),
+          :income => {
+            :primary_income => a.income[:primary_income],
+            :other_income => a.income[:other_income],
+            :deductions => a.income[:deductions]
+          },
           :relationships => (a.relationships || []).map{|r|
             {
               :other_id => r.person.person_id,
@@ -667,7 +673,7 @@ class Application
   end
 
   def process_rules!
-    magi_part_1 = [
+    rulesets = [
       Medicaid::Eligibility::Category::ParentCaretakerRelative,
       Medicaid::Eligibility::Category::ParentCaretakerRelativeSpouse,
       Medicaidchip::Eligibility::Category::Pregnant,
@@ -675,17 +681,16 @@ class Application
       Medicaid::Eligibility::Category::Medicaid::AdultGroup,
       Medicaid::Eligibility::Category::OptionalTargetedLowIncomeChildren,
       Chip::Eligibility::Category::TargetedLowIncomeChildren,
-      Medicaid::Eligibility::ReferralType
+      Medicaid::Eligibility::ReferralType,
+      Medicaidchip::Eligibility::Income
     ].map{|ruleset_class| ruleset_class.new()}
 
-    for ruleset in magi_part_1
+    for ruleset in rulesets
       for applicant in @applicants
-        context = to_context(applicant)
+        context = to_context(ruleset, applicant)
         ruleset.run(context)
         from_context!(applicant, context)
       end
     end
-
-    income_ruleset = Medicaidchip::Eligibility::Income.new()
   end
 end
