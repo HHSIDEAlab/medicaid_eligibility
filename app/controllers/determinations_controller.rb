@@ -7,7 +7,7 @@ class DeterminationsController < ApplicationController
     if return_format == 'application/xml'
       render :xml => app.result(:xml)
     elsif return_format == 'application/json'
-      render :json => app.result(:json)
+      render :json => JSON.pretty_generate(app.result(:json))
     else
       render 'Specify a return format'
     end

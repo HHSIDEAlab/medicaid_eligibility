@@ -1,12 +1,13 @@
 class Application
   class Person
-    attr_reader :person_id, :person_attributes
+    attr_reader :person_id, :person_attributes, :income
     attr_accessor :relationships
 
-    def initialize(person_id, person_attributes)
+    def initialize(person_id, person_attributes, income)
       @person_id = person_id
       @person_attributes = person_attributes
       @relationships = []
+      @income = income
     end
   end
 
@@ -14,8 +15,8 @@ class Application
     attr_reader :applicant_id, :applicant_attributes
     attr_accessor :outputs
 
-    def initialize(person_id, person_attributes, applicant_id, applicant_attributes)
-      super person_id, person_attributes
+    def initialize(person_id, person_attributes, applicant_id, applicant_attributes, income)
+      super person_id, person_attributes, income
       @applicant_id = applicant_id
       @applicant_attributes = applicant_attributes
       @outputs = {}
@@ -33,11 +34,21 @@ class Application
   end
 
   class Household
-    attr_reader :household_id, :people
+    attr_accessor :people
+    attr_reader :household_id
 
     def initialize(household_id, people)
       @household_id = household_id
       @people = people
+    end
+  end
+
+  class MedicaidHousehold < Household
+    attr_accessor :income_people
+
+    def initialize(household_id, people)
+      super
+      @income_people = []
     end
   end
 
@@ -89,6 +100,7 @@ class Application
       read_json!
     end
     read_configs!
+    compute_values!
 
     process_rules!
     #to_hash
@@ -406,11 +418,31 @@ class Application
         end
       end
 
+      # get income
+      json_income = json_person["Income"]
+      income = {}
+      for income_calculation in ApplicationVariables::INCOME_INPUTS
+        if json_income[income_calculation[:primary_income]]
+          income[:primary_income] = json_income[income_calculation[:primary_income]].to_i
+          income[:other_income] = {}
+          for other_income in income_calculation[:other_income]
+            income[:other_income][other_income] = (json_income[other_income] || 0).to_i
+          end
+          for deduction in income_calculation[:deductions]
+            income[:deductions][deduction] = (json_income[deduction] || 0).to_i
+          end
+          break
+        end
+      end
+      if income.empty?
+        raise "No income for person #{person_id}"
+      end
+
       if is_applicant
-        person = Applicant.new(person_id, person_attributes, applicant_id, applicant_attributes)
+        person = Applicant.new(person_id, person_attributes, applicant_id, applicant_attributes, income)
         @applicants << person
       else
-        person = Person.new(person_id, person_attributes)
+        person = Person.new(person_id, person_attributes, income)
       end
       @people << person
     end
@@ -500,8 +532,68 @@ class Application
 
   end
 
-  def calculate_values!
+  def compute_values!
+    build_medicaid_households!
+  end
 
+  def build_medicaid_households!
+    @medicaid_households = []
+    
+    for person in @people
+      physical_household = @physical_households.find{|ph| ph.people.include? person}
+
+      tax_return = @tax_returns.find{|tr| tr.filers.include?(person) || tr.dependents.include?(person)}
+      if tax_return
+        tax_return_people = tax_return.filers + tax_return.dependents
+      else
+        tax_return_people = []
+      end
+
+      spouses = person.relationships.select{|r| r.relationship == "02" && physical_household.people.include?(r.person)}.map{|r| r.person}
+
+      if is_child?(person)
+        siblings = person.relationships.select{|r| r.relationship == "07" && physical_household.people.include?(r.person) && is_child(r.person)}.map{|r| r.person}
+      else
+        siblings = []
+      end
+
+      if is_child?(person)
+        parents = person.relationships.select{|r| r.relationship == "04" && physical_household.people.include?(r.person)}.map{|r| r.person}
+      else
+        parents = []
+      end
+
+      children = person.relationships.select{|r| r.relationship == "03" && physical_household.people.include?(r.person) && is_child?(r.person)}.map{|r| r.person}
+
+      med_household_members = (tax_return_people + spouses + siblings + parents + children).uniq
+      income_counted = !((tax_return && tax_return.dependents.include?(person)) || parents.any?) || person.person_attributes["Required to File Taxes"] == 'Y'
+
+      med_households = @medicaid_households.select{|mh| med_household_members.any?{|mhm| mh.people.include?(mhm)}}
+
+      if med_households = []
+        med_household = MedicaidHousehold.new(nil, [])
+        @medicaid_households << med_household
+      elsif med_households.length == 1
+        med_household = med_households.first
+      else
+        while med_households.length > 1
+          last_med_household = med_households.pop
+          @medicaid_households.delete(last_med_household)
+          med_households.first.people += last_med_household.people
+          med_households.first.income_people += last_med_household.income_people
+        end
+        med_household = med_households.first
+      end
+      
+      med_household.people << person
+      if income_counted
+        med_household.income_people << person
+      end
+    end    
+  end
+
+  def is_child?(person)
+    person.person_attributes["Applicant Age"] < @config["Child Age Threshold"] || (person.person_attributes["Student Indicator"] == "Y" && person.person_attributes["Applicant Age"] < @config["Student Age Threshold"])
   end
 
   def from_context!(applicant, context)
@@ -516,7 +608,8 @@ class Application
       "Applicant List" => @applicants,
       "Person List" => @people,
       "Applicant Relationships" => applicant.relationships || [],
-      "Physical Household" => @physical_households.find{|hh| hh.people.any?{|p| p.person_id == applicant.person_id}},
+      "Medicaid Household" => @medicaid_households.find{|mh| mh.people.include?(applicant)},
+      "Physical Household" => @physical_households.find{|hh| hh.people.include?(applicant)},
       "Tax Returns" => @tax_returns || []
     })
     config = @config
@@ -541,10 +634,18 @@ class Application
           :outputs => a.outputs
         }
       },
-      :households => @physical_households.map{|ph|
+      :physical_households => @physical_households.map{|ph|
         ph.people.map{|p|
           {
             :person_id => p.person_id
+          }
+        }
+      },
+      :medicaid_households => @medicaid_households.map{|mh|
+        mh.people.map{|p|
+          {
+            :person_id => p.person_id,
+            :income_counted => mh.income_people.include?(p)
           }
         }
       },
