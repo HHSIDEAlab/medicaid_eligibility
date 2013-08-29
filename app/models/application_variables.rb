@@ -275,14 +275,14 @@ module ApplicationVariables
     {name: "Adult Group XX Category", eligibility: :MAGI},
     {name: "Optional Targeted Low Income Child", eligibility: :MAGI},
     {name: "CHIP Targeted Low Income Child", eligibility: :CHIP},
-    #{name: "Income", eligibility: :MAGI},
     {
       name: "Medicaid Non-MAGI Referral",
       eligibility: :MedicaidNonMAGI,
       indicator_xpath: "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityIndicator",
       date_xpath: "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityDetermination/nc:ActivityDate/nc:DateTime",
       reason_xpath: "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityReasonText"
-    }
+    },
+    {name: "Income", eligibility: :MAGI}
   ].freeze
 
   INCOME_INPUTS = [
