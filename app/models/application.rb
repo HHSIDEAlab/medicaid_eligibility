@@ -95,12 +95,12 @@ class Application
     compute_values!
 
     process_rules!
-    to_hash
-    # if return_type == :xml
-    #   to_xml
-    # elsif return_type == :json
-    #   to_json
-    # end
+    # to_hash
+    if return_type == :xml
+      to_xml
+    elsif return_type == :json
+      to_json
+    end
   end
 
   private
@@ -518,7 +518,46 @@ class Application
   end
 
   def to_json
+    returned_json = {"Determination Date" => @determination_date, "Applicants" => []}
+    for app in @applicants
+      app_json = {}
+      app_json["Person ID"] = app.person_id
+      app_json["Determinations"] = {}
 
+      app_json["Determinations"]["Applicant Parent Caretaker Category Indicator"] = app.outputs["Applicant Parent Caretaker Category Indicator"]
+      ineligibility_reason = app.outputs["Parent Caretaker Category Ineligibility Reason"]
+      if ineligibility_reason != 999
+        app_json["Determinations"]["Parent Caretaker Category Ineligibility Reason"] = ineligibility_reason
+      end
+      app_json["Determinations"]["Qualified Children List"] = app.outputs["Qualified Children List"]
+
+      for det in ApplicationVariables::DETERMINATIONS.select{|d| !(["Parent Caretaker Category", "Income"].include?(d[:name]))}
+        app_json["Determinations"]["Applicant #{det[:name]} Indicator"] = app.outputs["Applicant #{det[:name]} Indicator"]
+        ineligibility_reason = app.outputs["#{det[:name]} Ineligibility Reason"]
+        if ineligibility_reason != 999
+          app_json["Determinations"]["#{det[:name]} Ineligibility Reason"] = ineligibility_reason
+        end
+      end
+
+      app_json["Determinations"]["Applicant Income Determination Indicator"] = app.outputs["Applicant Income Indicator"]
+      ineligibility_reason = app.outputs["Income Determination Date"]
+      if ineligibility_reason != 999
+        app_json["Determinations"]["Income Determination Date"] = ineligibility_reason
+      end
+      for output in ["Category Used to Calculate Income", "Calculated Income"]#, "Percentage Used", "FPL * Percentage + 5%"]
+        app_json["Determinations"][output] = app.outputs[output]
+      end
+
+      returned_json["Applicants"] << app_json
+    end
+
+    returned_json
+    # @applicants.map{|a|
+    #   {
+    #     "Person ID" => a.person_id,
+    #     "Determinations" => a.outputs
+    #   }
+    # }
   end
 
   def compute_values!

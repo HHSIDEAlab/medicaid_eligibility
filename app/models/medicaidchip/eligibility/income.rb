@@ -74,11 +74,17 @@ module Medicaidchip::Eligibility
       incomes.map{|i| i[:primary_income] + i[:other_income].inject(0){|sum, (name, amt)| sum + amt} - i[:deductions].inject(0){|sum, (name, amt)| sum + amt}}.inject(0){|sum, amt| sum + amt}
     end
 
-    def run(context)
-      super
-      context.o["Calculated Income"] = context.input["Applicant Household Income"]
-      context
+    rule "Set calculated income" do
+      o["Calculated Income"] = v("Applicant Household Income")
     end
+
+    # rule "Set percentage used" do
+    #   o["Percentage Used"] = c("Category-Percentage Mapping")[category]
+    # end
+
+    # rule "Set FPL + 5%" do
+    #   o["FPL * Percentage"] = v("FPL") * (c("Category-Percentage Mapping")[category] + 0.05)
+    # end
 
     rule "Applicant does not meet the requirements for any category" do
       unless v("Max Eligible Income")[:category] || v("Max Temporary Income")[:category]
