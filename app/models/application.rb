@@ -543,7 +543,7 @@ class Application
       for det in ApplicationVariables::DETERMINATIONS.select{|d| !(["Parent Caretaker Category", "Income"].include?(d[:name]))}
         app_json["Determinations"]["Applicant #{det[:name]} Indicator"] = app.outputs["Applicant #{det[:name]} Indicator"]
         ineligibility_reason = app.outputs["#{det[:name]} Ineligibility Reason"]
-        if ineligibility_reason && ineligibility_reason != 999
+        if ineligibility_reason != 999
           app_json["Determinations"]["#{det[:name]} Ineligibility Reason"] = ineligibility_reason
         end
       end
@@ -551,7 +551,7 @@ class Application
       app_json["Determinations"]["Applicant Income Determination Indicator"] = app.outputs["Applicant Income Indicator"]
       ineligibility_reason = app.outputs["Income Ineligibility Reason"]
       if ineligibility_reason != 999
-        #app_json["Determinations"]["Income Ineligibility Reason"] = ineligibility_reason
+        app_json["Determinations"]["Income Ineligibility Reason"] = ineligibility_reason
       end
       for output in ["Category Used to Calculate Income", "Percentage for Category Used", "FPL * Percentage", "Calculated Income"]
         app_json["Determinations"][output] = app.outputs[output]
@@ -561,12 +561,6 @@ class Application
     end
 
     returned_json
-    # @applicants.map{|a|
-    #   {
-    #     "Person ID" => a.person_id,
-    #     "Determinations" => a.outputs
-    #   }
-    # }
   end
 
   def compute_values!
