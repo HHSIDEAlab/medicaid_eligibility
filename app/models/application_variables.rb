@@ -298,7 +298,6 @@ module ApplicationVariables
         "IRA Deduction",
         "Student Loan Interest Deduction",
         "Tuition and Fees",
-        "Social Security Benefits Taxable Amount",
         "Tax-Exempt Interest",
         "Other MAGI-Eligible Income"
       ],

@@ -529,22 +529,31 @@ class Application
       if ineligibility_reason != 999
         app_json["Determinations"]["Parent Caretaker Category Ineligibility Reason"] = ineligibility_reason
       end
-      app_json["Determinations"]["Qualified Children List"] = app.outputs["Qualified Children List"]
+      app_json["Determinations"]["Qualified Children List"] = []
+      for qual_child in app.outputs["Qualified Children List"]
+        child_json = {}
+        for k in qual_child.keys
+          unless /Determination Date$/ =~ k || (/Ineligibility Reason$/ =~ k && qual_child[k] == 999)
+            child_json[k] = qual_child[k]
+          end
+        end
+        app_json["Determinations"]["Qualified Children List"] << child_json
+      end
 
       for det in ApplicationVariables::DETERMINATIONS.select{|d| !(["Parent Caretaker Category", "Income"].include?(d[:name]))}
         app_json["Determinations"]["Applicant #{det[:name]} Indicator"] = app.outputs["Applicant #{det[:name]} Indicator"]
         ineligibility_reason = app.outputs["#{det[:name]} Ineligibility Reason"]
-        if ineligibility_reason != 999
+        if ineligibility_reason && ineligibility_reason != 999
           app_json["Determinations"]["#{det[:name]} Ineligibility Reason"] = ineligibility_reason
         end
       end
 
       app_json["Determinations"]["Applicant Income Determination Indicator"] = app.outputs["Applicant Income Indicator"]
-      ineligibility_reason = app.outputs["Income Determination Date"]
+      ineligibility_reason = app.outputs["Income Ineligibility Reason"]
       if ineligibility_reason != 999
-        app_json["Determinations"]["Income Determination Date"] = ineligibility_reason
+        #app_json["Determinations"]["Income Ineligibility Reason"] = ineligibility_reason
       end
-      for output in ["Category Used to Calculate Income", "Calculated Income"]#, "Percentage Used", "FPL * Percentage + 5%"]
+      for output in ["Category Used to Calculate Income", "Percentage for Category Used", "FPL * Percentage", "Calculated Income"]
         app_json["Determinations"][output] = app.outputs[output]
       end
 
