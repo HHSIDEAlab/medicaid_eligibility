@@ -78,13 +78,13 @@ module MAGI
       o["Calculated Income"] = v("Applicant Household Income")
     end
 
-    # rule "Set percentage used" do
-    #   o["Percentage Used"] = c("Category-Percentage Mapping")[category]
-    # end
+    rule "Set percentage used" do
+      o["Percentage for Category Used"] = c("Category-Percentage Mapping")[v("Max Eligible Income")[:category]] * 100
+    end
 
-    # rule "Set FPL + 5%" do
-    #   o["FPL * Percentage"] = v("FPL") * (c("Category-Percentage Mapping")[category] + 0.05)
-    # end
+    rule "Set FPL + 5%" do
+      o["FPL * Percentage"] = v("FPL") * c("Category-Percentage Mapping")[v("Max Eligible Income")[:category]]
+    end
 
     rule "Applicant does not meet the requirements for any category" do
       unless v("Max Eligible Income")[:category] || v("Max Temporary Income")[:category]
