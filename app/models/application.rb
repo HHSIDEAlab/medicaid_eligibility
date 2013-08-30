@@ -703,15 +703,15 @@ class Application
 
   def process_rules!
     rulesets = [
-      Medicaid::Eligibility::Category::ParentCaretakerRelative,
-      Medicaid::Eligibility::Category::ParentCaretakerRelativeSpouse,
-      Medicaidchip::Eligibility::Category::Pregnant,
-      Medicaidchip::Eligibility::Category::Child,
-      Medicaid::Eligibility::Category::Medicaid::AdultGroup,
-      Medicaid::Eligibility::Category::OptionalTargetedLowIncomeChildren,
-      Chip::Eligibility::Category::TargetedLowIncomeChildren,
-      Medicaid::Eligibility::ReferralType,
-      Medicaidchip::Eligibility::Income
+      MAGI::ParentCaretakerRelative,
+      MAGI::ParentCaretakerRelativeSpouse,
+      MAGI::Pregnant,
+      MAGI::Child,
+      MAGI::AdultGroup,
+      MAGI::OptionalTargetedLowIncomeChildren,
+      MAGI::TargetedLowIncomeChildren,
+      MAGI::ReferralType,
+      MAGI::Income
     ].map{|ruleset_class| ruleset_class.new()}
 
     for ruleset in rulesets

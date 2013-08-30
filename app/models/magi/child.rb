@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-module Medicaidchip::Eligibility::Category
+module MAGI
   class Child < Ruleset
     name        "Identify Medicaid or CHIP Category - Child"
     mandatory   "Mandatory"

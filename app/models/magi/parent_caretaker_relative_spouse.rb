@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-module Medicaid::Eligibility::Category
+module MAGI
   class ParentCaretakerRelativeSpouse < Ruleset
     name        "Identify Medicaid Category – Parent or Caretaker Relative (Spouse logic moved to new ruleset)"
     mandatory   "Mandatory"

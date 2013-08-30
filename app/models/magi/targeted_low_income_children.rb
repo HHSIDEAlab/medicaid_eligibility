@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-module Chip::Eligibility::Category
+module MAGI
   class TargetedLowIncomeChildren < Ruleset
     name        "CHIP Targeted Low-Income Children"
     mandatory   "Optional"

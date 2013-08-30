@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-module Medicaid::Eligibility::Category::Medicaid
+module MAGI
   class AdultGroup < Ruleset
     name        "Identify Medicaid Category – Adult Group"
     references  "§435.119, 435.218 and §1902(a)(10)(A)(i)(VIII) & 1902(a)(10)(A)(ii)(XX) of the Social Security Act"
