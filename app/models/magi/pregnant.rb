@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-module Medicaidchip::Eligibility::Category
+module MAGI
   class Pregnant < Ruleset
     name        "Identify Medicaid or CHIP Category – Pregnant Women"
     mandatory   "Mandatory"

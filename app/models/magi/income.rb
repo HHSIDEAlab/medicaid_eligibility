@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-module Medicaidchip::Eligibility
+module MAGI
   class Income < Ruleset
     categories = [
       "Pregnancy Category",

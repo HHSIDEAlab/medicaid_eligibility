@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-module Medicaid::Eligibility
+module MAGI
   class ReferralType < Ruleset
     name        "Determine Non-MAGI Referral Type"
     mandatory   "Mandatory"

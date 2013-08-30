@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
-module Chip::Preliminary::Eligibility
-  class Determination < Ruleset
+module MAGI
+  class PreliminaryCHIPDetermination < Ruleset
     name        "Determine Preliminary CHIP Eligibility"
     applies_to  "CHIP"
     purpose     "Determine preliminary eligibility based on citizenship, immigration status, residency and income."

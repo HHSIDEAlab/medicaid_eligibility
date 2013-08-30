@@ -147,6 +147,10 @@ class Ruleset
       end
     end
 
+    def determination(name, possible_values=nil, ineligibility_codes = nil)
+      self.outputs[name] = {}
+    end
+
     def output(name, type, possible_values=nil, options={})
       # options may include the type of element for list outputs
       self.outputs[name] = {
