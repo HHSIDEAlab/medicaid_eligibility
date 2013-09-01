@@ -457,6 +457,8 @@ class Application
       end
     end
 
+    # Pass through and validate/compute other relationships
+
     # get tax returns
     @tax_returns = []
     for json_return in @json_application["Tax Returns"]
@@ -564,6 +566,7 @@ class Application
   end
 
   def compute_values!
+    # relationship validator/filler
     build_medicaid_households!
   end
 
@@ -583,7 +586,7 @@ class Application
       spouses = person.relationships.select{|r| r.relationship == :spouse && physical_household.people.include?(r.person)}.map{|r| r.person}
 
       if is_child?(person)
-        siblings = person.relationships.select{|r| r.relationship == :sibling && physical_household.people.include?(r.person) && is_child(r.person)}.map{|r| r.person}
+        siblings = person.relationships.select{|r| r.relationship == :sibling && physical_household.people.include?(r.person) && is_child?(r.person)}.map{|r| r.person}
       else
         siblings = []
       end
@@ -599,7 +602,7 @@ class Application
       med_household_members = (tax_return_people + spouses + siblings + parents + children).uniq
       med_household_members.delete(person)
       
-      income_counted = !((tax_return && tax_return.dependents.include?(person)) || parents.any?) || person.person_attributes["Required to File Taxes"] == 'Y'
+      income_counted = !(tax_return && tax_return.dependents.include?(person)) && parents.empty? || person.person_attributes["Required to File Taxes"] == 'Y'
 
       med_households = @medicaid_households.select{|mh| med_household_members.any?{|mhm| mh.people.include?(mhm)}}
 
