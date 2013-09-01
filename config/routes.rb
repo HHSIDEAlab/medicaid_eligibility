@@ -1,5 +1,5 @@
 MedicaidEligibilityApi::Application.routes.draw do
-  resources :determinations, defaults: {format: 'json'}, only: [] do
+  resources :determinations, only: [] do
     post 'eval', :on => :collection
   end
 

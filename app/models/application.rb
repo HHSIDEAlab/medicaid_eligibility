@@ -502,8 +502,6 @@ class Application
       end
     end
 
-    # Pass through and validate/compute other relationships
-
     # get tax returns
     @tax_returns = []
     for json_return in @json_application["Tax Returns"]
