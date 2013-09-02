@@ -85,7 +85,7 @@ class Application
     @raw_application = request.raw_post
     @content_type = request.content_type
     @determination_date = Date.today
-    @return_application = request.request_parameters[:return_application] || false
+    @return_application = request.query_parameters[:return_application] || false
     if @content_type == 'application/xml'
       @xml_application = Nokogiri::XML(@raw_application) do |config|
         config.default_xml.noblanks
@@ -98,6 +98,7 @@ class Application
     read_configs!
     compute_values!
     process_rules!
+    raise "raw_file: #{raw_application[0..10]}\nreturn_application: #{@return_application}"
   end
 
   def to_xml(options={})
@@ -534,8 +535,12 @@ class Application
     if value.blank?
       if input[:required] || (input[:required_if] && attributes[input[:required_if]] == input[:required_if_value])
         raise "Input missing required variable #{input[:name]}"
-      elsif input[:default]
-        return input[:default]
+      elsif input[:default] &&
+        if MedicaidEligibilityApi::Application.options[:system_config]["Allow Blank Booleans"] 
+          return input[:default]
+        else
+          raise "Input missing variable #{input[:name]}"
+        end
       else
         return nil
       end
