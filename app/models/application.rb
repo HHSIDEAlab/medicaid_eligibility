@@ -31,11 +31,11 @@ class Application
   end
 
   class Relationship
-    attr_reader :person, :relationship, :relationship_attributes
+    attr_reader :person, :relationship_type, :relationship_attributes
 
-    def initialize(person, relationship, relationship_attributes)
+    def initialize(person, relationship_type, relationship_attributes)
       @person = person
-      @relationship = relationship
+      @relationship = relationship_type
       @relationship_attributes = relationship_attributes
     end
   end
@@ -294,9 +294,9 @@ class Application
   end
 
   def read_xml!
+    @state = get_node("/exch:AccountTransferRequest/ext:TransferHeader/ext:TransferActivity/ext:RecipientTransferActivityStateCode").inner_text
     @people = []
     @applicants = []
-    @state = get_node("/exch:AccountTransferRequest/ext:TransferHeader/ext:TransferActivity/ext:RecipientTransferActivityStateCode").inner_text
     
     xml_people = get_nodes "/exch:AccountTransferRequest/hix-core:Person"
     
@@ -359,7 +359,7 @@ class Application
         other_id = get_node("nc:PersonReference", relationship).attribute('ref').value
         
         other_person = @people.find{|p| p.person_id == other_id}
-        relationship_code = ApplicationVariables::RELATIONSHIP_CODES[get_node("hix-core:FamilyRelationshipCode", relationship).inner_text]
+        relationship_type = ApplicationVariables::RELATIONSHIP_CODES[get_node("hix-core:FamilyRelationshipCode", relationship).inner_text]
         relationship_attributes = {}
         for input in ApplicationVariables::PERSON_INPUTS.select{|i| i[:group] == :relationship}
           node = get_node(input[:xpath], relationship)
@@ -367,7 +367,7 @@ class Application
           relationship_attributes[input[:name]] = get_xml_variable(node, input, person_attributes.merge(applicant_attributes))
         end
 
-        person.relationships << Relationship.new(other_person, relationship_code, relationship_attributes)
+        person.relationships << Relationship.new(other_person, relationship_type, relationship_attributes)
       end
     end
 
@@ -492,13 +492,13 @@ class Application
         other_id = relationship["Other ID"]
         
         other_person = @people.find{|p| p.person_id == other_id}
-        relationship_code = ApplicationVariables::RELATIONSHIP_CODES[relationship["Relationship Code"]]
+        relationship_type = ApplicationVariables::RELATIONSHIP_CODES[relationship["Relationship Code"]]
         relationship_attributes = {}
         for input in ApplicationVariables::PERSON_INPUTS.select{|i| i[:group] == :relationship}
           relationship_attributes[input[:name]] = get_json_variable(relationship, input, person_attributes.merge(applicant_attributes))
         end
 
-        person.relationships << Relationship.new(other_person, relationship_code, relationship_attributes)
+        person.relationships << Relationship.new(other_person, relationship_type, relationship_attributes)
       end
     end
 
@@ -584,25 +584,30 @@ class Application
         tax_return_people = []
       end
 
-      spouses = person.relationships.select{|r| r.relationship == :spouse && physical_household.people.include?(r.person)}.map{|r| r.person}
+      spouses = person.relationships.select{|r| r.relationship_type == :spouse && physical_household.people.include?(r.person)}.map{|r| r.person}
 
-      if is_child?(person)
-        siblings = person.relationships.select{|r| r.relationship == :sibling && physical_household.people.include?(r.person) && is_child?(r.person)}.map{|r| r.person}
+      if is_minor?(person)
+        siblings = person.relationships.select{|r| r.relationship_type == :sibling && physical_household.people.include?(r.person) && is_minor?(r.person)}.map{|r| r.person}
       else
         siblings = []
       end
 
-      if is_child?(person)
-        parents = person.relationships.select{|r| [:parent, :stepparent].include?(r.relationship) && physical_household.people.include?(r.person)}.map{|r| r.person}
+      if is_minor?(person)
+        parents = person.relationships.select{|r| [:parent, :stepparent].include?(r.relationship_type) && physical_household.people.include?(r.person)}.map{|r| r.person}
       else
         parents = []
       end
 
-      children = person.relationships.select{|r| [:child, :stepchild].include?(r.relationship) && physical_household.people.include?(r.person) && is_child?(r.person)}.map{|r| r.person}
+      children = person.relationships.select{|r| [:child, :stepchild].include?(r.relationship_type) && physical_household.people.include?(r.person) && is_minor?(r.person)}.map{|r| r.person}
 
       med_household_members = (tax_return_people + spouses + siblings + parents + children).uniq
       med_household_members.delete(person)
       
+      # Your income is NOT counted if you are claimed as a tax dependent
+      # on some tax return or if you are a minor and you have a parent 
+      # in the medicaid household (in which case parents is not empty). 
+      # Your income IS counted (overriding the above) if you are 
+      # required to file taxes.
       income_counted = !(tax_return && tax_return.dependents.include?(person)) && parents.empty? || person.person_attributes["Required to File Taxes"] == 'Y'
 
       med_households = @medicaid_households.select{|mh| med_household_members.any?{|mhm| mh.people.include?(mhm)}}
@@ -629,7 +634,7 @@ class Application
     end    
   end
 
-  def is_child?(person)
+  def is_minor?(person)
     person.person_attributes["Applicant Age"] < @config["Child Age Threshold"] || (person.person_attributes["Student Indicator"] == "Y" && person.person_attributes["Applicant Age"] < @config["Student Age Threshold"])
   end
 
@@ -644,10 +649,10 @@ class Application
       "Person ID" => applicant.person_id,
       "Applicant List" => @applicants,
       "Person List" => @people,
-      "Applicant Relationships" => applicant.relationships || [],
+      "Applicant Relationships" => applicant.relationships,
       "Medicaid Household" => @medicaid_households.find{|mh| mh.people.include?(applicant)},
       "Physical Household" => @physical_households.find{|hh| hh.people.include?(applicant)},
-      "Tax Returns" => @tax_returns || []
+      "Tax Returns" => @tax_returns
     }).slice(*(ruleset.class.inputs.keys))
     config = @config.slice(*(ruleset.class.configs.keys))
     RuleContext.new(config, input, @determination_date)
@@ -669,7 +674,7 @@ class Application
           :relationships => (a.relationships || []).map{|r|
             {
               :other_id => r.person.person_id,
-              :relationship => r.relationship,
+              :relationship_type => r.relationship_type,
               :attributes => r.relationship_attributes
             }
           },

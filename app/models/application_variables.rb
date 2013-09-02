@@ -339,27 +339,6 @@ module ApplicationVariables
     }
   ].freeze
 
-  # RELATIONSHIP_CODES = {
-  #   "01" => "Self",
-  #   "02" => "Spouse of other relative within required degree of relation",
-  #   "03" => "Parent",
-  #   "04" => "Son/Daughter",
-  #   "05" => "Stepdaughter/Stepson",
-  #   "06" => "Grandchild",
-  #   "07" => "Sibling/Stepsibling",
-  #   "08" => "Domestic Partner of other relative within required degree of relation",
-  #   "12" => "Step-Parent",
-  #   "13" => "Uncle/Aunt",
-  #   "14" => "Nephew/Niece",
-  #   "15" => "Grandparent",
-  #   "16" => "First Cousin",
-  #   "17" => "Parent's Domestic Partner",
-  #   "23" => "Brother-in-Law/Sister-in-Law",
-  #   "26" => "Daughter-in-Law/Son-in-Law",
-  #   "27" => "Former Spouse",
-  #   "30" => "Mother-in-Law/Father-in-Law"
-  # }.freeze
-
   RELATIONSHIP_CODES = {
     "01" => :self,
     "02" => :spouse,
