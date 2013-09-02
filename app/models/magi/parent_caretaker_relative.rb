@@ -31,7 +31,7 @@ module MAGI
     # claims as a dependent on their tax return
     calculated "Applicant Child List" do
       v("Applicant Relationships").select{|relationship|
-        [:child, :stepchild].include?(relationship.relationship) ||
+        [:child, :stepchild].include?(relationship.relationship_type) ||
         relationship.relationship_attributes["Attest Primary Responsibility"] == 'Y'
       }.map{|relationship|
         relationship.person
@@ -42,7 +42,7 @@ module MAGI
       }.map{|child|
         {
           "Person ID" => child.person_id,
-          "Relationship" => child.relationships.find{|r| r.person.person_id == v("Person ID")}.relationship
+          "Relationship" => child.relationships.find{|r| r.person.person_id == v("Person ID")}.relationship_type
         }.merge(child.person_attributes).merge(child.applicant_attributes)
       }
     end

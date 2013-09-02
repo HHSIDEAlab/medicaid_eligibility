@@ -19,7 +19,7 @@ module MAGI
     code      "Parent Caretaker Category Ineligibility Reason", %w(999)
     
     calculated "Has Spouse/Domestic Partner" do
-      if v("Applicant Relationships").find{|rel| [:spouse, :domestic_partner].include?(rel.relationship)}
+      if v("Applicant Relationships").find{|rel| [:spouse, :domestic_partner].include?(rel.relationship_type)}
         'Y'
       else
         'N'
@@ -28,7 +28,7 @@ module MAGI
 
     calculated "Spouse/Domestic Partner" do
       if v("Has Spouse/Domestic Partner") == 'Y'
-        v("Applicant Relationships").find{|rel| [:spouse, :domestic_partner].include?(rel.relationship)}.person
+        v("Applicant Relationships").find{|rel| [:spouse, :domestic_partner].include?(rel.relationship_type)}.person
       else
         nil
       end
@@ -36,7 +36,7 @@ module MAGI
 
     calculated "Spouse/Domestic Partner Relationship" do
       if v("Has Spouse/Domestic Partner") == 'Y'
-        v("Applicant Relationships").find{|rel| [:spouse, :domestic_partner].include?(rel.relationship)}.relationship
+        v("Applicant Relationships").find{|rel| [:spouse, :domestic_partner].include?(rel.relationship_type)}.relationship_type
       else
         '00'
       end
