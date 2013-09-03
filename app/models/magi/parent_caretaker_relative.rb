@@ -14,7 +14,7 @@ module MAGI
 
     input "Person ID", "Application", "Integer"
     input "Person List", "Application", "List"
-    input "Physical Household", "Application", "List"
+    input "Physical Household", "Application", "Household Object"
     input "Tax Returns", "Application", "List"
     input "Applicant Age", "Application", "Integer"
     input "Applicant Relationships", "Application", "List"
@@ -25,6 +25,7 @@ module MAGI
     config "Option Dependent Student", "State Configuration", "Char(1)", %w(Y N)
     config "Deprivation Requirement Retained", "State Configuration", "Char(1)", %w(Y N)
     config "Option Caretaker Relative Relationship", "State Configuration", "Char(2)", %w(00 01 02 03 04)
+    config "State Unemployed Standard", "State Configuration", "Integer", (100..744), 100
 
     calculated "Applicant Child List" do
       tax_return = v("Tax Returns").find{|tr| tr.filers.any?{|filer| filer.person_id == v("Person ID")}}
@@ -67,10 +68,12 @@ module MAGI
       child_list = []
       for child in children
         child_input = {
-          "Caretaker Age"     => v("Applicant Age"),
-          "Child Age"         => child.person_attributes["Applicant Age"],
-          "Relationship Type" => child.relationships.find{|r| r.person.person_id == v("Person ID")}.relationship_type,
-          "Student Indicator" => child.person_attributes["Applicant Age"]
+          "Caretaker Age"      => v("Applicant Age"),
+          "Child Age"          => child.person_attributes["Applicant Age"],
+          "Child Parents"      => child.relationships.select{|r| r.relationship_type == :parent}.map{|r| r.person},
+          "Physical Household" => v("Physical Household"),
+          "Relationship Type"  => child.relationships.find{|r| r.person.person_id == v("Person ID")}.relationship_type,
+          "Student Indicator"  => child.person_attributes["Applicant Age"]
         }
         
         context = RuleContext.new(config, child_input, current_date)
