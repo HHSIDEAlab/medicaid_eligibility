@@ -1,6 +1,6 @@
 module ApplicationProcessor
   include ApplicationComponents
-  
+
   def compute_values!
     # relationship validator/filler
     build_medicaid_households!
@@ -60,6 +60,7 @@ module ApplicationProcessor
     for person in @people
       physical_household = @physical_households.find{|ph| ph.people.include? person}
 
+      # Start with someone's tax return
       tax_return = @tax_returns.find{|tr| tr.filers.include?(person) || tr.dependents.include?(person)}
       if tax_return
         tax_return_people = tax_return.filers + tax_return.dependents
@@ -67,23 +68,27 @@ module ApplicationProcessor
         tax_return_people = []
       end
 
-      spouses = person.relationships.select{|r| r.relationship_type == :spouse && physical_household.people.include?(r.person)}.map{|r| r.person}
+      # Get all the person's relevant family members who live with the
+      # person
+      spouses = person.relationships.select{|r| r.relationship_type == :spouse}
 
       if is_minor?(person)
-        siblings = person.relationships.select{|r| r.relationship_type == :sibling && physical_household.people.include?(r.person) && is_minor?(r.person)}.map{|r| r.person}
+        siblings = person.relationships.select{|r| r.relationship_type == :sibling && is_minor?(r.person)}
       else
         siblings = []
       end
 
       if is_minor?(person)
-        parents = person.relationships.select{|r| [:parent, :stepparent].include?(r.relationship_type) && physical_household.people.include?(r.person)}.map{|r| r.person}
+        parents = person.relationships.select{|r| [:parent, :stepparent].include?(r.relationship_type)}
       else
         parents = []
       end
 
-      children = person.relationships.select{|r| [:child, :stepchild].include?(r.relationship_type) && physical_household.people.include?(r.person) && is_minor?(r.person)}.map{|r| r.person}
+      children = person.relationships.select{|r| [:child, :stepchild].include?(r.relationship_type) && is_minor?(r.person)}
 
-      med_household_members = (tax_return_people + spouses + siblings + parents + children).uniq
+      family_members = (spouse + siblings + parents).map{|r| r.person}.select{|p| physical_household.people.include?(p)}
+      
+      med_household_members = (tax_return_people + family_members).uniq
       med_household_members.delete(person)
       
       # Your income is NOT counted if you are claimed as a tax dependent
@@ -95,6 +100,8 @@ module ApplicationProcessor
 
       med_households = @medicaid_households.select{|mh| med_household_members.any?{|mhm| mh.people.include?(mhm)}}
 
+      # Place someone into the correct medicaid household, merging 
+      # households if necessary
       if med_households.empty?
         med_household = MedicaidHousehold.new(nil, [])
         @medicaid_households << med_household
