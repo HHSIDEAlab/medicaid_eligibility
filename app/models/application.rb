@@ -35,7 +35,7 @@ class Application
 
     def initialize(person, relationship_type, relationship_attributes)
       @person = person
-      @relationship = relationship_type
+      @relationship_type = relationship_type
       @relationship_attributes = relationship_attributes
     end
   end

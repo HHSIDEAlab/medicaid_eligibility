@@ -10,6 +10,7 @@
     "Optional Targeted Low Income Child Age Low Threshold": 0
   },
   "minimum": { 
+    "Age Limit for Primary Responsibility": 19,
     "Category-Percentage Mapping": {
       "Pregnancy Category": 2,
       "Child Category": 2,
