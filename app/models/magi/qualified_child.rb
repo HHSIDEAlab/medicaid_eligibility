@@ -1,0 +1,146 @@
+# encoding: UTF-8
+
+module MAGI
+  class QualifiedChild < Ruleset
+    name        "Identify Medicaid Category – Parent or Caretaker Relative, Qualified Child"
+    mandatory   "Mandatory"
+    references  "§435.4 and §435.110"
+    applies_to  "Medicaid only"
+    
+    assumption "A child must satisfy all four conditions (dependent child age, deprived of parental support, relationship and applicant assumes primary responsibility) in order for the applicant to qualify for the Parent Caretaker Relative category."
+
+    input "Caretaker Age", "Application", "Integer"
+    input "Child Age", "Application", "Integer"
+    input "Relationship Type", "Application", "Symbol"
+    input "Student Indicator", "Application", "Char(1)", %w(Y N)
+    
+    config "Child Age Threshold", "System Configuration", "Integer", nil, 19
+    config "Dependent Age Threshold", "System Configuration", "Integer", nil, 18
+    config "Option Dependent Student", "State Configuration", "Char(1)", %w(Y N)
+    config "Deprivation Requirement Retained", "State Configuration", "Char(1)", %w(Y N)
+    config "Option Caretaker Relative Relationship", "State Configuration", "Char(2)", %w(00 01 02 03 04)
+
+    # outputs
+    indicator "Child of Caretaker Dependent Age Indicator", %w(Y N)
+    date      "Child of Caretaker Dependent Age Determination Date"
+    code      "Child of Caretaker Dependent Age Ineligibility Reason", %w(999 137 147)
+    indicator "Child of Caretaker Deprived Child Indicator", %w(Y N T X)
+    date      "Child of Caretaker Deprived Child Determination Date"
+    code      "Child of Caretaker Deprived Child Ineligibility Reason", %w(999 555)
+    indicator "Child of Caretaker Relationship Indicator", %w(Y N)
+    date      "Child of Caretaker Relationship Determination Date"
+    code      "Child of Caretaker Relationship Ineligibility Reason", %w(999 130 131 132 389)
+
+    rule "Dependent Child Age Logic – Child under dependent age" do
+      if v("Child Age") < c("Dependent Age Threshold")
+        o["Child of Caretaker Dependent Age Indicator"] = 'Y' 
+        o["Child of Caretaker Dependent Age Determination Date"] = current_date
+        o["Child of Caretaker Dependent Age Ineligibility Reason"] = 999
+      end
+    end
+    
+    rule "Dependent Child Age Logic – Child older than dependent age" do
+      if v("Child Age") > c("Dependent Age Threshold")
+        o["Child of Caretaker Dependent Age Indicator"] = 'N'
+        o["Child of Caretaker Dependent Age Determination Date"] = current_date
+        o["Child of Caretaker Dependent Age Ineligibility Reason"] = 147
+      end
+    end
+    
+    rule "Dependent Child Age Logic – Child equal to dependent age and a student" do
+      if c("Option Dependent Student") == 'Y' && v("Child Age") == c("Dependent Age Threshold") && v("Student Indicator") == 'Y'
+        o["Child of Caretaker Dependent Age Indicator"] = 'Y'
+        o["Child of Caretaker Dependent Age Determination Date"] = current_date
+        o["Child of Caretaker Dependent Age Ineligibility Reason"] = 999
+      end
+    end
+
+    rule "Dependent Child Age Logic – Child is equal to dependent age but not a student" do
+      if c("Option Dependent Student") == 'Y' && v("Child Age") == c("Dependent Age Threshold") && v("Student Indicator") == 'N'
+        o["Child of Caretaker Dependent Age Indicator"] = 'N'
+        o["Child of Caretaker Dependent Age Determination Date"] = current_date
+        o["Child of Caretaker Dependent Age Ineligibility Reason"] = 137
+      end
+    end
+
+    rule "Dependent Deprived of Parental Support – Requirement not retained by state" do
+      if c("Deprivation Requirement Retained") == 'N' 
+        o["Child of Caretaker Deprived Child Indicator"] = 'X'
+        o["Child of Caretaker Deprived Child Determination Date"] = current_date
+        o["Child of Caretaker Deprived Child Ineligibility Reason"] = 555
+      end
+    end
+
+    rule "Dependent Deprived of Parental Support – Requirement retained by state" do
+      if c("Deprivation Requirement Retained") == 'Y' 
+        o["Child of Caretaker Deprived Child Indicator"] = 'T'
+        o["Child of Caretaker Deprived Child Determination Date"] = current_date
+        o["Child of Caretaker Deprived Child Ineligibility Reason"] = 999
+      end
+    end
+
+    rule "Caretaker Relationship – Caretaker meets standard definition" do
+      if c("Option Caretaker Relative Relationship") == "00" && [:parent, :sibling, :stepparent, :uncle_aunt, :grandparent, :cousin, :sibling_in_law].include?(v("Relationship Type"))
+        o["Child of Caretaker Relationship Indicator"] = 'Y'
+        o["Child of Caretaker Relationship Determination Date"] = current_date
+        o["Child of Caretaker Relationship Ineligibility Reason"] = 999
+      end
+    end
+    
+    rule "Caretaker Relationship – Caretaker does not meet standard definition" do
+      if c("Option Caretaker Relative Relationship") == "00" && !([:parent, :sibling, :stepparent, :uncle_aunt, :grandparent, :cousin, :sibling_in_law].include?(v("Relationship Type")))
+        o["Child of Caretaker Relationship Indicator"] = 'N'
+        o["Child of Caretaker Relationship Determination Date"] = current_date
+        o["Child of Caretaker Relationship Ineligibility Reason"] = 132
+      end
+    end
+    
+    rule "Caretaker Relationship – Caretaker meets any relative definition" do
+      if c("Option Caretaker Relative Relationship") == "01" && [:parent, :sibling, :stepparent, :uncle_aunt, :grandparent, :cousin, :sibling_in_law, :former_spouse, :parent_in_law].include?(v("Relationship Type"))
+        o["Child of Caretaker Relationship Indicator"] = 'Y'
+        o["Child of Caretaker Relationship Determination Date"] = current_date
+        o["Child of Caretaker Relationship Ineligibility Reason"] = 999
+      end
+    end
+
+    rule "Caretaker Relationship – Caretaker does not meet any relative definition" do
+      if c("Option Caretaker Relative Relationship") == "01" && !([:parent, :sibling, :stepparent, :uncle_aunt, :grandparent, :cousin, :sibling_in_law, :former_spouse, :parent_in_law].include?(v("Relationship Type")))
+        o["Child of Caretaker Relationship Indicator"] = 'N'
+        o["Child of Caretaker Relationship Determination Date"] = current_date
+        o["Child of Caretaker Relationship Ineligibility Reason"] = 131
+      end
+    end
+
+    rule "Caretaker Relationship – Any Adult – Caretaker is an adult" do
+      if c("Option Caretaker Relative Relationship") == "04" && v("Caretaker Age") >= c("Child Age Threshold")
+        o["Child of Caretaker Relationship Indicator"] = 'Y'
+        o["Child of Caretaker Relationship Determination Date"] = current_date
+        o["Child of Caretaker Relationship Ineligibility Reason"] = 999
+      end
+    end
+
+    rule "Caretaker Relationship – Any Adult – Caretaker is not an Adult" do
+      if c("Option Caretaker Relative Relationship") == "04" && v("Caretaker Age") < c("Child Age Threshold")
+        o["Child of Caretaker Relationship Indicator"] = 'N'
+        o["Child of Caretaker Relationship Determination Date"] = current_date
+        o["Child of Caretaker Relationship Ineligibility Reason"] = 130
+      end
+    end
+    
+    rule "Caretaker Relationship – Domestic Partner – Individual is domestic partner" do
+      if c("Option Caretaker Relative Relationship") == "02" && v("Relationship Type") == :parents_domestic_partner
+        o["Child of Caretaker Relationship Indicator"] = 'Y'
+        o["Child of Caretaker Relationship Determination Date"] = current_date
+        o["Child of Caretaker Relationship Ineligibility Reason"] = 999
+      end
+    end
+
+    rule "Caretaker Relationship – Domestic Partner Individual is not the domestic partner" do
+      if c("Option Caretaker Relative Relationship") == "02" && v("Relationship Type") != :parents_domestic_partner
+        o["Child of Caretaker Relationship Indicator"] = 'N'
+        o["Child of Caretaker Relationship Determination Date"] = current_date
+        o["Child of Caretaker Relationship Ineligibility Reason"] = 389
+      end
+    end
+  end
+end

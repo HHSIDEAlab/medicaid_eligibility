@@ -2,7 +2,7 @@
 
 module MAGI
   class ParentCaretakerRelativeSpouse < Ruleset
-    name        "Identify Medicaid Category – Parent or Caretaker Relative (Spouse logic moved to new ruleset)"
+    name        "Identify Medicaid Category – Parent or Caretaker Relative, Spouse"
     mandatory   "Mandatory"
     references  "§435.4 and §435.110"
     applies_to  "Medicaid only"
@@ -38,7 +38,7 @@ module MAGI
       if v("Has Spouse/Domestic Partner") == 'Y'
         v("Applicant Relationships").find{|rel| [:spouse, :domestic_partner].include?(rel.relationship_type)}.relationship_type
       else
-        '00'
+        :none
       end
     end
 
