@@ -11,6 +11,8 @@ module MAGI
 
     input "Caretaker Age", "Application", "Integer"
     input "Child Age", "Application", "Integer"
+    input "Child Parents", "Application", "List"
+    input "Physical Household", "Application", "Household Object"
     input "Relationship Type", "Application", "Symbol"
     input "Student Indicator", "Application", "Char(1)", %w(Y N)
     
@@ -19,6 +21,7 @@ module MAGI
     config "Option Dependent Student", "State Configuration", "Char(1)", %w(Y N)
     config "Deprivation Requirement Retained", "State Configuration", "Char(1)", %w(Y N)
     config "Option Caretaker Relative Relationship", "State Configuration", "Char(2)", %w(00 01 02 03 04)
+    config "State Unemployed Standard", "State Configuration", "Integer", (100..744), 100
 
     # outputs
     indicator "Child of Caretaker Dependent Age Indicator", %w(Y N)
@@ -30,6 +33,18 @@ module MAGI
     indicator "Child of Caretaker Relationship Indicator", %w(Y N)
     date      "Child of Caretaker Relationship Determination Date"
     code      "Child of Caretaker Relationship Ineligibility Reason", %w(999 130 131 132 389)
+
+    calculated "Number of Parents Living With" do
+      v("Child Parents").select{|parent| v("Physical Household").people.include?(parent)}.length
+    end
+
+    calculated "Parents Work 100 Hours Per Month" do
+      if v("Child Parents").all?{|parent| parent.person_attributes["Hours Worked Per Week"] >= c("State Unemployed Standard")}
+        'Y'
+      else
+        'N'
+      end
+    end
 
     rule "Dependent Child Age Logic – Child under dependent age" do
       if v("Child Age") < c("Dependent Age Threshold")
@@ -63,15 +78,23 @@ module MAGI
       end
     end
 
-    rule "Dependent Deprived of Parental Support – Requirement not retained by state" do
+    rule "Dependent Deprived of Parental Support" do
       if c("Deprivation Requirement Retained") == 'N' 
         o["Child of Caretaker Deprived Child Indicator"] = 'X'
         o["Child of Caretaker Deprived Child Determination Date"] = current_date
         o["Child of Caretaker Deprived Child Ineligibility Reason"] = 555
+      elsif v("Number of Parents Living With") < 2 || v("Parents Work 100 Hours Per Month") == 'N'
+        o["Child of Caretaker Deprived Child Indicator"] = 'Y'
+        o["Child of Caretaker Deprived Child Determination Date"] = current_date
+        o["Child of Caretaker Deprived Child Ineligibility Reason"] = 999
+      else
+        o["Child of Caretaker Deprived Child Indicator"] = 'N'
+        o["Child of Caretaker Deprived Child Determination Date"] = current_date
+        o["Child of Caretaker Deprived Child Ineligibility Reason"] = 129
       end
     end
 
-    rule "Dependent Deprived of Parental Support – Requirement retained by state" do
+    rule "Dependent Deprived of Parental Support – Child is not deprived" do
       if c("Deprivation Requirement Retained") == 'Y' 
         o["Child of Caretaker Deprived Child Indicator"] = 'T'
         o["Child of Caretaker Deprived Child Determination Date"] = current_date

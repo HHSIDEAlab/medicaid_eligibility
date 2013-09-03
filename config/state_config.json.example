@@ -7,7 +7,8 @@
     "FPL Per Person": 4020,    
     "Option Caretaker Relative Relationship": "00",
     "Optional Targeted Low Income Child Age High Threshold": 19,
-    "Optional Targeted Low Income Child Age Low Threshold": 0
+    "Optional Targeted Low Income Child Age Low Threshold": 0,
+    "State Unemployed Standard": 100
   },
   "minimum": { 
     "Age Limit for Primary Responsibility": 19,
