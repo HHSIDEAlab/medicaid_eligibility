@@ -85,7 +85,7 @@ module MAGI
       child_list
     end
 
-    indicator "Applicant Parent Caretaker Category Indicator", %w(Y N T)
+    indicator "Applicant Parent Caretaker Category Indicator", %w(Y N)
     date      "Parent Caretaker Category Determination Date"
     code      "Parent Caretaker Category Ineligibility Reason", %w(999 146)
     output    "Qualified Children List", "List"
@@ -102,20 +102,12 @@ module MAGI
       o["Qualified Children List"] = v("Applicant Child List").select{|child|
         child["Child of Caretaker Dependent Age Indicator"] == 'Y' &&
         child["Child of Caretaker Relationship Indicator"] == 'Y' &&
-        %w(X T).include?(child["Child of Caretaker Deprived Child Indicator"])
+        %w(Y X).include?(child["Child of Caretaker Deprived Child Indicator"])
       }
     end
 
-    rule "State retains deprivation requirement - awaiting deprivation logic" do
-      if o["Qualified Children List"].any? && c("Deprivation Requirement Retained") == 'Y'
-        o["Applicant Parent Caretaker Category Indicator"] = 'T'
-        o["Parent Caretaker Category Determination Date"] = current_date
-        o["Parent Caretaker Category Ineligibility Reason"] = 999
-      end
-    end
-
-    rule "State does not retain deprivation requirement" do
-      if o["Qualified Children List"].any? && c("Deprivation Requirement Retained") == 'N'
+    rule "Some children qualify" do
+      if o["Qualified Children List"].any?
         o["Applicant Parent Caretaker Category Indicator"] = 'Y'
         o["Parent Caretaker Category Determination Date"] = current_date
         o["Parent Caretaker Category Ineligibility Reason"] = 999

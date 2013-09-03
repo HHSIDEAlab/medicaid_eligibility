@@ -27,7 +27,7 @@ module MAGI
     indicator "Child of Caretaker Dependent Age Indicator", %w(Y N)
     date      "Child of Caretaker Dependent Age Determination Date"
     code      "Child of Caretaker Dependent Age Ineligibility Reason", %w(999 137 147)
-    indicator "Child of Caretaker Deprived Child Indicator", %w(Y N T X)
+    indicator "Child of Caretaker Deprived Child Indicator", %w(Y N X)
     date      "Child of Caretaker Deprived Child Determination Date"
     code      "Child of Caretaker Deprived Child Ineligibility Reason", %w(999 555)
     indicator "Child of Caretaker Relationship Indicator", %w(Y N)

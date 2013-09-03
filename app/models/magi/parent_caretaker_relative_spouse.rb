@@ -38,7 +38,7 @@ module MAGI
       if v("Has Spouse/Domestic Partner") == 'Y'
         v("Applicant Relationships").find{|rel| [:spouse, :domestic_partner].include?(rel.relationship_type)}.relationship_type
       else
-        :none
+        nil
       end
     end
 
@@ -50,19 +50,13 @@ module MAGI
       end
     end
 
-    rule "Caretaker Relationship – Spouse meets criteria" do
-      if %w(N T).include?(v("Applicant Parent Caretaker Category Indicator")) && v("Has Spouse/Domestic Partner") == 'Y' && v("Spouse Domestic Partner Relationship") == :spouse && v("Spouse/Domestic Partner").outputs["Applicant Parent Caretaker Category Indicator"] == 'Y' && v("Lives With Spouse/Domestic Partner") == 'Y'
-        o["Applicant Parent Caretaker Category Indicator"] = 'Y'
-        o["Parent Caretaker Category Determination Date"] = current_date
-        o["Parent Caretaker Category Ineligibility Reason"] = 999
-      end
-    end
-
-    rule "Caretaker Relationship – Domestic Partner meets criteria" do
-      if %w(N T).include?(v("Applicant Parent Caretaker Category Indicator")) && %w(02 03).include?(c("Option Caretaker Relative Relationship")) && v("Has Spouse/Domestic Partner") == 'Y' && v("Has Spouse Domestic Partner Relationship") == :domestic_partner && v("Spouse/Domestic Partner").outputs["Applicant Parent Caretaker Category Indicator"] == 'Y' && v("Lives With Spouse/Domestic Partner") == 'Y'
-        o["Applicant Parent Caretaker Category Indicator"] = 'Y'
-        o["Parent Caretaker Category Determination Date"] = current_date
-        o["Parent Caretaker Category Ineligibility Reason"] = 999
+    rule "Caretaker Relationship – Spouse/Domestic Partner meets criteria" do
+      if v("Applicant Parent Caretaker Category Indicator") == 'N' && v("Has Spouse/Domestic Partner") == 'Y' && v("Spouse/Domestic Partner").outputs["Applicant Parent Caretaker Category Indicator"] == 'Y' && v("Lives With Spouse/Domestic Partner") == 'Y'
+        if v("Spouse Domestic Partner Relationship") == :spouse || (%w(02 03).include?(c("Option Caretaker Relative Relationship")) && v("Has Spouse Domestic Partner Relationship") == :domestic_partner)
+          o["Applicant Parent Caretaker Category Indicator"] = 'Y'
+          o["Parent Caretaker Category Determination Date"] = current_date
+          o["Parent Caretaker Category Ineligibility Reason"] = 999
+        end
       end
     end
   end
