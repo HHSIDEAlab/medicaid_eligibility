@@ -6,4 +6,6 @@ MedicaidEligibilityApi::Application.routes.draw do
   resources :rulesets, defaults: {format: 'json'}, constraints: { :id => /.+?/ } do
     post 'eval', :on => :member
   end
+
+  root :to => 'determinations#eval'
 end

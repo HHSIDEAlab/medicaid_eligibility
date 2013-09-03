@@ -86,7 +86,7 @@ module ApplicationProcessor
 
       children = person.relationships.select{|r| [:child, :stepchild].include?(r.relationship_type) && is_minor?(r.person)}
 
-      family_members = (spouse + siblings + parents).map{|r| r.person}.select{|p| physical_household.people.include?(p)}
+      family_members = (spouses + siblings + parents).map{|r| r.person}.select{|p| physical_household.people.include?(p)}
       
       med_household_members = (tax_return_people + family_members).uniq
       med_household_members.delete(person)
