@@ -1,241 +1,136 @@
-<!DOCTYPE html>
 <html>
-  <head>
-    <title>Ruby on Rails: Welcome aboard</title>
-    <style type="text/css" media="screen">
-      body {
-        margin: 0;
-        margin-bottom: 25px;
-        padding: 0;
-        background-color: #f0f0f0;
-        font-family: "Lucida Grande", "Bitstream Vera Sans", "Verdana";
-        font-size: 13px;
-        color: #333;
-      }
+<head>
+	<title>Medicaid MAGI Eligibility</title>
+	<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">	
+	<link href="bootstrap/css/bootstrap-formhelpers.css" rel="stylesheet" media="screen">	
+	
+</head>
+<body>
+	<script src="http://code.jquery.com/jquery.js"></script>
+    <script src="bootstrap/js/bootstrap.js"></script>
+<h1>
+	Medicaid eligibility determination
+</h1>
+This form accepts medicaid application JSON and returns eligibility details.
 
-      h1 {
-        font-size: 28px;
-        color: #000;
-      }
+<form action="/determinations/eval.json" method="post">
+<textarea style="width: 80%; height: 80%;" name="json_request">
+	{
+	  "State": "MN",
+	  "People": [
+	    {
+	      "Person ID": "Person1",
+	      "Is Applicant": "Y",
+	      "Applicant Age": 41,
+	      "Applicant Attest Disabled": "N",
+	      "Applicant Attest Long Term Care": "N",
+	      "Has Insurance": "N",
+	      "Hours Worked Per Week": 10,
+	      "Incarceration Status": "N",
+	      "Medicare Entitlement Indicator": "N",
+	      "Medicaid Residency Status Indicator": "Y",
+	      "Person Disabled Indicator": "N",
+	      "Prior Insurance": "Y",
+	      "Prior Insurance End Date": "2012-01-01",
+	      "Required to File Taxes": "Y",
+	      "State Health Benefits Through Public Employee": "N",
+	      "Student Indicator": "N",
 
-      a  {color: #03c}
-      a:hover {
-        background-color: #03c;
-        color: white;
-        text-decoration: none;
-      }
+	      "Applicant Pregnant Indicator": "N",
+	      "Applicant Post Partum Period Indicator": "N",
 
+	      "Age Left Foster Care": 19,
+	      "Former Foster Care": "Y",
+	      "Foster Care State": "MN",
+	      "Had Medicaid During Foster Care": "Y",
 
-      #page {
-        background-color: #f0f0f0;
-        width: 750px;
-        margin: 0;
-        margin-left: auto;
-        margin-right: auto;
-      }
+	      "US Citizen Indicator": "N",
+	      "Applicant Has 40 Title II Work Quarters": "Y",
+	      "Five Year Bar Applies": "Y",
+	      "Five Year Bar Met": "N",
+	      "Lawful Presence Attested": "Y",
+	      "Non-Citizen Deport Withheld Date": "2011-10-10",
+	      "Non-Citizen Entry Date": "2011-10-10",
+	      "Non-Citizen Status Grant Date": "2011-10-10",
+	      "Refugee Medical Assistance Start Date": null,
+	      "Refugee Status": "N",
+	      "Qualified Non-Citizen Status": "N",
+	      "Seven Year Limit Applies": "Y",
+	      "Veteran Status": "N",
+	      "Victim of Trafficking": "Y",
 
-      #content {
-        float: left;
-        background-color: white;
-        border: 3px solid #aaa;
-        border-top: none;
-        padding: 25px;
-        width: 500px;
-      }
+	      "Income": {
+	        "MAGI": 10000
+	      },
 
-      #sidebar {
-        float: right;
-        width: 175px;
-      }
+	      "Relationships": [
+	        {
+	          "Other ID": "Person2",
+	          "Relationship Code": "03",
+	          "Attest Primary Responsibility": "Y"
+	        }
+	      ]
+	    },
+	    {
+	      "Person ID": "Person2",
+	      "Is Applicant": "Y",
+	      "Applicant Age": 14,
+	      "Applicant Attest Disabled": "N",
+	      "Applicant Attest Long Term Care": "N",
+	      "Has Insurance": "N",
+	      "Hours Worked Per Week": 0,
+	      "Incarceration Status": "N",
+	      "Medicare Entitlement Indicator": "N",
+	      "Medicaid Residency Status Indicator": "Y",
+	      "Person Disabled Indicator": "N",
+	      "Prior Insurance": "N",
+	      "Required to File Taxes": "N",
+	      "State Health Benefits Through Public Employee": "N",
+	      "Student Indicator": "Y",
 
-      #footer {
-        clear: both;
-      }
+	      "Applicant Pregnant Indicator": "N",
+	      "Applicant Post Partum Period Indicator": "N",
 
-      #header, #about, #getting-started {
-        padding-left: 75px;
-        padding-right: 30px;
-      }
+	      "Former Foster Care": "N",
 
+	      "US Citizen Indicator": "Y",
 
-      #header {
-        background-image: url("assets/rails.png");
-        background-repeat: no-repeat;
-        background-position: top left;
-        height: 64px;
-      }
-      #header h1, #header h2 {margin: 0}
-      #header h2 {
-        color: #888;
-        font-weight: normal;
-        font-size: 16px;
-      }
+	      "Income": {
+	        "MAGI": 0
+	      },
 
+	      "Relationships": [
+	        {
+	          "Other ID": "Person1",
+	          "Relationship Code": "04",
+	          "Attest Primary Responsibility": "N"
+	        }
+	      ]
+	    }
+	  ],
+	  "Tax Returns": [
+	    {
+	      "Filers": [
+	        {"Person ID": "Person1"}
+	      ],
+	      "Dependents": [
+	        {"Person ID": "Person2"}
+	      ]
+	    }
+	  ],
+	  "Physical Households": [
+	    {
+	      "Household ID": "Household1",
+	      "People": [
+	        {"Person ID": "Person1"},
+	        {"Person ID": "Person2"}
+	      ]
+	    }
+	  ]
+	}	
+</textarea><br/>
+<input type = "submit" value="Submit">
 
-      #about h3 {
-        margin: 0;
-        margin-bottom: 10px;
-        font-size: 14px;
-      }
-
-      #about-content {
-        background-color: #ffd;
-        border: 1px solid #fc0;
-        margin-left: -55px;
-        margin-right: -10px;
-      }
-      #about-content table {
-        margin-top: 10px;
-        margin-bottom: 10px;
-        font-size: 11px;
-        border-collapse: collapse;
-      }
-      #about-content td {
-        padding: 10px;
-        padding-top: 3px;
-        padding-bottom: 3px;
-      }
-      #about-content td.name  {color: #555}
-      #about-content td.value {color: #000}
-
-      #about-content ul {
-        padding: 0;
-        list-style-type: none;
-      }
-
-      #about-content.failure {
-        background-color: #fcc;
-        border: 1px solid #f00;
-      }
-      #about-content.failure p {
-        margin: 0;
-        padding: 10px;
-      }
-
-
-      #getting-started {
-        border-top: 1px solid #ccc;
-        margin-top: 25px;
-        padding-top: 15px;
-      }
-      #getting-started h1 {
-        margin: 0;
-        font-size: 20px;
-      }
-      #getting-started h2 {
-        margin: 0;
-        font-size: 14px;
-        font-weight: normal;
-        color: #333;
-        margin-bottom: 25px;
-      }
-      #getting-started ol {
-        margin-left: 0;
-        padding-left: 0;
-      }
-      #getting-started li {
-        font-size: 18px;
-        color: #888;
-        margin-bottom: 25px;
-      }
-      #getting-started li h2 {
-        margin: 0;
-        font-weight: normal;
-        font-size: 18px;
-        color: #333;
-      }
-      #getting-started li p {
-        color: #555;
-        font-size: 13px;
-      }
-
-
-      #sidebar ul {
-        margin-left: 0;
-        padding-left: 0;
-      }
-      #sidebar ul h3 {
-        margin-top: 25px;
-        font-size: 16px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid #ccc;
-      }
-      #sidebar li {
-        list-style-type: none;
-      }
-      #sidebar ul.links li {
-        margin-bottom: 5px;
-      }
-
-      .filename {
-        font-style: italic;
-      }
-    </style>
-    <script type="text/javascript">
-      function about() {
-        info = document.getElementById('about-content');
-        if (window.XMLHttpRequest)
-          { xhr = new XMLHttpRequest(); }
-        else
-          { xhr = new ActiveXObject("Microsoft.XMLHTTP"); }
-        xhr.open("GET","rails/info/properties",false);
-        xhr.send("");
-        info.innerHTML = xhr.responseText;
-        info.style.display = 'block'
-      }
-    </script>
-  </head>
-  <body>
-    <div id="page">
-      <div id="sidebar">
-        <ul id="sidebar-items">
-          <li>
-            <h3>Browse the documentation</h3>
-            <ul class="links">
-              <li><a href="http://guides.rubyonrails.org/">Rails Guides</a></li>
-              <li><a href="http://api.rubyonrails.org/">Rails API</a></li>
-              <li><a href="http://www.ruby-doc.org/core/">Ruby core</a></li>
-              <li><a href="http://www.ruby-doc.org/stdlib/">Ruby standard library</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-
-      <div id="content">
-        <div id="header">
-          <h1>Welcome aboard</h1>
-          <h2>You&rsquo;re riding Ruby on Rails!</h2>
-        </div>
-
-        <div id="about">
-          <h3><a href="rails/info/properties" onclick="about(); return false">About your application&rsquo;s environment</a></h3>
-          <div id="about-content" style="display: none"></div>
-        </div>
-
-        <div id="getting-started">
-          <h1>Getting started</h1>
-          <h2>Here&rsquo;s how to get rolling:</h2>
-
-          <ol>
-            <li>
-              <h2>Use <code>rails generate</code> to create your models and controllers</h2>
-              <p>To see all available options, run it without parameters.</p>
-            </li>
-
-            <li>
-              <h2>Set up a default route and remove <span class="filename">public/index.html</span></h2>
-              <p>Routes are set up in <span class="filename">config/routes.rb</span>.</p>
-            </li>
-
-            <li>
-              <h2>Create your database</h2>
-              <p>Run <code>rake db:create</code> to create your database. If you're not using SQLite (the default), edit <span class="filename">config/database.yml</span> with your username and password.</p>
-            </li>
-          </ol>
-        </div>
-      </div>
-
-      <div id="footer">&nbsp;</div>
-    </div>
-  </body>
+</form>
+</body>
 </html>
