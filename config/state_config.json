@@ -1,0 +1,30 @@
+{
+  "default": {
+    "Base FPL": 7470,
+    "CHIP Targeted Low Income Child Age High Threshold": 19,
+    "CHIP Targeted Low Income Child Age Low Threshold": 0,
+    "Foster Care Age Threshold": 18,
+    "FPL Per Person": 4020,    
+    "Option Caretaker Relative Relationship": "00",
+    "Optional Targeted Low Income Child Age High Threshold": 19,
+    "Optional Targeted Low Income Child Age Low Threshold": 0,
+    "Option Dependent Student": "Y",
+    "Deprivation Requirement Retained": "Y",
+    "CHIP Targeted Low Income Child Group": "Y",
+    "Deprivation Requirement Retained": "N",
+    "In-state Foster Care Required": "N",
+    "Option Adult Group XX": "Y",
+    "Option Dependent Student": "Y",
+    "Option Young Adults": "Y",
+    "Optional Targeted Low Income Child Group": "Y",
+    "Young Adult Age Threshold": 21,
+    "Category-Percentage Mapping": {
+      "Pregnancy Category": 2,
+      "Child Category": 2,
+      "Adult Group Category": 2,
+      "Adult Group XX Category": 2,
+      "Optional Targeted Low Income Child": 2
+    }
+  }
+
+}
