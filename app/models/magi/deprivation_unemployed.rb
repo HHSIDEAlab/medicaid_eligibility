@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-module Medicaid::Eligibility::ParentCaretakerRelative
+module MAGI
   class DeprivationUnemployed < Ruleset
     # name        "Dependent Deprived of Parental Support – Unemployed"
     # mandatory   "Optional"

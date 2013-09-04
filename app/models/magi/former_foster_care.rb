@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-module Medicaid::Eligibility::Category
+module MAGI
   class FormerFosterCare < Ruleset
     name        "Former Foster Care Children"
     mandatory   "Mandatory" 

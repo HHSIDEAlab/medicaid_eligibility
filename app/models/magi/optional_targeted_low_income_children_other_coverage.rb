@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-module Medicaid::Eligibility::Category
+module MAGI
   class OptionalTargetedLowIncomeChildrenOtherCoverage < Ruleset
     name        "Optional, Targeted Low-Income Children- Other Coverage"
     mandatory   "Optional"

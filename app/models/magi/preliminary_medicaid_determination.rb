@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-module Medicaid::Preliminary::Eligibility
+module MAGI
   class Determination < Ruleset
     name        "Determine Preliminary Medicaid Eligibility"
     mandatory   "Mandatory"
