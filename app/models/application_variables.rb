@@ -67,14 +67,6 @@ module ApplicationVariables
       :required   => true
     },
     {
-      :name       => "Person Disabled Indicator",
-      :type       => :flag,
-      :values     => %w(Y N),
-      :group      => :applicant,
-      :xpath      => "hix-ee:MedicaidNonMAGIEligibility/hix-ee:MedicaidNonMAGIBlindnessOrDisabilityEligibilityBasis/hix-core:StatusIndicator",
-      :default    => "N"
-    },
-    {
       :name       => "Prior Insurance",
       :type       => :flag,
       :values     => %w(Y N),

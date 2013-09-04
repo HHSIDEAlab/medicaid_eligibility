@@ -14,7 +14,7 @@ module MAGI
     assumption "This rule can only set a temporary indicator for inclusion in this group as the question regarding whether the child has other coverage is not asked until after this logic is run.  In MAGI Part 3, a rule is run to check whether the child has other health insurance coverage and reset this indicator to yes or no.  If the child is not eligible for this category and it was used as the basis for the applicant’s applicable FPL standard, the applicable standard is re-determined and the income eligibility logic is re-run."
 
     input "Applicant Age", "From Child Category Rule", "Number"
-    input "Has Insurance", "Application", "Char(1)"
+    input "Has Insurance", "Application", "Char(1)", %w(Y N)
 
     config "Optional Targeted Low Income Child Group", "State configuration table", "Char(1)", %w(Y N)
     config "Optional Targeted Low Income Child Age Low Threshold", "State configuration table", "Numeric", nil, 0
