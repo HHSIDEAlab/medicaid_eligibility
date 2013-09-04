@@ -94,14 +94,6 @@ module MAGI
       end
     end
 
-    rule "Dependent Deprived of Parental Support – Child is not deprived" do
-      if c("Deprivation Requirement Retained") == 'Y' 
-        o["Child of Caretaker Deprived Child Indicator"] = 'T'
-        o["Child of Caretaker Deprived Child Determination Date"] = current_date
-        o["Child of Caretaker Deprived Child Ineligibility Reason"] = 999
-      end
-    end
-
     rule "Caretaker Relationship – Caretaker meets standard definition" do
       if c("Option Caretaker Relative Relationship") == "00" && [:parent, :sibling, :stepparent, :uncle_aunt, :grandparent, :cousin, :sibling_in_law].include?(v("Relationship Type"))
         o["Child of Caretaker Relationship Indicator"] = 'Y'
