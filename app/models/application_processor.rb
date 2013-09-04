@@ -4,6 +4,7 @@ module ApplicationProcessor
   def compute_values!
     # relationship validator/filler
     build_medicaid_households!
+    calculate_household_income!
   end
 
   def process_rules!
@@ -122,5 +123,9 @@ module ApplicationProcessor
         med_household.income_people << person
       end
     end    
+  end
+
+  def calculate_household_income!
+
   end
 end
