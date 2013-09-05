@@ -26,7 +26,10 @@ class Application
     @content_type = request.content_type
     @determination_date = Date.today
     @return_application = request.query_parameters[:return_application] == 'true'
-    if @content_type == 'application/xml'
+    if(request.params.has_key?(:json_request)) 
+      @json_application = JSON.parse(request.params[:json_request])
+      read_json!
+    elsif @content_type == 'application/xml'
       @xml_application = Nokogiri::XML(@raw_application) do |config|
         config.default_xml.noblanks
       end
