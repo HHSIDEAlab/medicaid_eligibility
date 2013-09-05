@@ -15,119 +15,202 @@ This form accepts medicaid application JSON and returns eligibility details.
 
 <form action="/determinations/eval.json" method="post">
 <textarea style="width: 80%; height: 80%;" name="json_request">
-	{
-	  "State": "MN",
-	  "People": [
-	    {
-	      "Person ID": "Person1",
-	      "Is Applicant": "Y",
-	      "Applicant Age": 41,
-	      "Applicant Attest Disabled": "N",
-	      "Applicant Attest Long Term Care": "N",
-	      "Has Insurance": "N",
-	      "Hours Worked Per Week": 10,
-	      "Incarceration Status": "N",
-	      "Medicare Entitlement Indicator": "N",
-	      "Medicaid Residency Status Indicator": "Y",
-	      "Person Disabled Indicator": "N",
-	      "Prior Insurance": "Y",
-	      "Prior Insurance End Date": "2012-01-01",
-	      "Required to File Taxes": "Y",
-	      "State Health Benefits Through Public Employee": "N",
-	      "Student Indicator": "N",
+{
+  "State": "WV",
+  "People": [
+    {
+      "Person ID": "Father",
+      "Is Applicant": "Y",
+      "Applicant Age": 30,
+      "Has Insurance": "N",
+      "Hours Worked Per Week": 30,
+      "Incarceration Status": "N",
+      "Medicare Entitlement Indicator": "N",
+      "Medicaid Residency Indicator": "Y",
+      "Prior Insurance": "N",
+      "Required to File Taxes": "Y",
+      "Student Indicator": "N",
 
-	      "Applicant Pregnant Indicator": "N",
-	      "Applicant Post Partum Period Indicator": "N",
+      "Former Foster Care": "N",
+      
+      "US Citizen Indicator": "Y",
 
-	      "Age Left Foster Care": 19,
-	      "Former Foster Care": "Y",
-	      "Foster Care State": "MN",
-	      "Had Medicaid During Foster Care": "Y",
+      "Refugee Status": "N",
+      
+      "Income": {
+        "Wages, Salaries, Tips": 8000
+      },
+      
+      "Relationships": [
+        {
+          "Other ID": "Mother",
+          "Relationship Code": "02"
+        },
+        {
+          "Other ID": "Child",
+          "Relationship Code": "04"
+        },
+        {
+          "Other ID": "Grandfather",
+          "Relationship Code": "03"
+        }
+      ]
+    },
+    {
+      "Person ID": "Mother",
+      "Is Applicant": "Y",
+      "Applicant Age": 30,
+      "Has Insurance": "N",
+      "Hours Worked Per Week": 30,
+      "Incarceration Status": "N",
+      "Medicare Entitlement Indicator": "N",
+      "Medicaid Residency Indicator": "Y",
+      "Prior Insurance": "N",
+      "Required to File Taxes": "Y",
+      "Student Indicator": "N",
 
-	      "US Citizen Indicator": "N",
-	      "Applicant Has 40 Title II Work Quarters": "Y",
-	      "Five Year Bar Applies": "Y",
-	      "Five Year Bar Met": "N",
-	      "Lawful Presence Attested": "Y",
-	      "Non-Citizen Deport Withheld Date": "2011-10-10",
-	      "Non-Citizen Entry Date": "2011-10-10",
-	      "Non-Citizen Status Grant Date": "2011-10-10",
-	      "Refugee Medical Assistance Start Date": null,
-	      "Refugee Status": "N",
-	      "Qualified Non-Citizen Status": "N",
-	      "Seven Year Limit Applies": "Y",
-	      "Veteran Status": "N",
-	      "Victim of Trafficking": "Y",
+      "Applicant Pregnant Indicator": "Y",
 
-	      "Income": {
-	        "MAGI": 10000
-	      },
+      "Former Foster Care": "N",
+      
+      "US Citizen Indicator": "Y",
 
-	      "Relationships": [
-	        {
-	          "Other ID": "Person2",
-	          "Relationship Code": "03",
-	          "Attest Primary Responsibility": "Y"
-	        }
-	      ]
-	    },
-	    {
-	      "Person ID": "Person2",
-	      "Is Applicant": "Y",
-	      "Applicant Age": 14,
-	      "Applicant Attest Disabled": "N",
-	      "Applicant Attest Long Term Care": "N",
-	      "Has Insurance": "N",
-	      "Hours Worked Per Week": 0,
-	      "Incarceration Status": "N",
-	      "Medicare Entitlement Indicator": "N",
-	      "Medicaid Residency Status Indicator": "Y",
-	      "Person Disabled Indicator": "N",
-	      "Prior Insurance": "N",
-	      "Required to File Taxes": "N",
-	      "State Health Benefits Through Public Employee": "N",
-	      "Student Indicator": "Y",
+      "Refugee Status": "N",
+      
+      "Income": {
+        "Wages, Salaries, Tips": 15000
+      },
+      
+      "Relationships": [
+        {
+          "Other ID": "Father",
+          "Relationship Code": "02"
+        },
+        {
+          "Other ID": "Child",
+          "Relationship Code": "04"
+        },
+        {
+          "Other ID": "Grandfather",
+          "Relationship Code": "30"
+        }
+      ]
+    },
+    {
+      "Person ID": "Child",
+      "Is Applicant": "Y",
+      "Applicant Age": 5,
+      "Has Insurance": "N",
+      "Hours Worked Per Week": 0,
+      "Incarceration Status": "N",
+      "Medicare Entitlement Indicator": "N",
+      "Medicaid Residency Indicator": "Y",
+      "Prior Insurance": "N",
+      "Required to File Taxes": "Y",
+      "Student Indicator": "Y",
 
-	      "Applicant Pregnant Indicator": "N",
-	      "Applicant Post Partum Period Indicator": "N",
+      "Former Foster Care": "N",
+      
+      "US Citizen Indicator": "Y",
 
-	      "Former Foster Care": "N",
+      "Refugee Status": "N",
+      
+      "Income": {
+        "MAGI": 0
+      },
+      
+      "Relationships": [
+        {
+          "Other ID": "Father",
+          "Relationship Code": "03"
+        },
+        {
+          "Other ID": "Mother",
+          "Relationship Code": "03"
+        },
+        {
+          "Other ID": "Grandfather",
+          "Relationship Code": "15"
+        }
+      ]
+    },
+    {
+      "Person ID": "Grandfather",
+      "Is Applicant": "Y",
+      "Applicant Age": 63,
+      "Applicant Attest Disabled": "Y",
+      "Has Insurance": "N",
+      "Hours Worked Per Week": 40,
+      "Incarceration Status": "N",
+      "Medicare Entitlement Indicator": "N",
+      "Medicaid Residency Indicator": "Y",
+      "Prior Insurance": "N",
+      "Required to File Taxes": "Y",
+      "Student Indicator": "N",
 
-	      "US Citizen Indicator": "Y",
+      "Former Foster Care": "N",
+      
+      "US Citizen Indicator": "N",
+      "Applicant Has 40 Title II Work Quarters": "Y",
+      "Five Year Bar Applies": "N",
+      "Immigrant Status": "12",
+      "Lawful Presence Attested": "Y",
+      "Qualified Non-Citizen Status": "Y",
+      "Veteran Status": "Y",
+      
+      "Refugee Status": "N",
 
-	      "Income": {
-	        "MAGI": 0
-	      },
+      "Income": {
+        "AGI": 50000,
+        "Social Security Benefits Taxable Amount": 10000
+      },
+      
+      "Relationships": [
+        {
+          "Other ID": "Father",
+          "Relationship Code": "04"
+        },
+        {
+          "Other ID": "Mother",
+          "Relationship Code": "26"
+        },
+        {
+          "Other ID": "Child",
+          "Relationship Code": "06"
+        }
+      ]
+    }
+  ],
+  "Tax Returns": [
+    {
+      "Filers": [
+        {"Person ID": "Father"},
+        {"Person ID": "Mother"}
+      ],
+      "Dependents": [
+        {"Person ID": "Child"}
+      ]
+    },
+    {
+      "Filers": [
+        {"Person ID": "Grandfather"}
+      ],
+      "Dependents": []
+    }
+  ],
+  "Physical Households": [
+    {
+      "Household ID": "Household1",
+      "People": [
+        {"Person ID": "Father"},
+        {"Person ID": "Mother"},
+        {"Person ID": "Child"},
+        {"Person ID": "Grandfather"}
+      ]
+    }
+  ]
+}
 
-	      "Relationships": [
-	        {
-	          "Other ID": "Person1",
-	          "Relationship Code": "04",
-	          "Attest Primary Responsibility": "N"
-	        }
-	      ]
-	    }
-	  ],
-	  "Tax Returns": [
-	    {
-	      "Filers": [
-	        {"Person ID": "Person1"}
-	      ],
-	      "Dependents": [
-	        {"Person ID": "Person2"}
-	      ]
-	    }
-	  ],
-	  "Physical Households": [
-	    {
-	      "Household ID": "Household1",
-	      "People": [
-	        {"Person ID": "Person1"},
-	        {"Person ID": "Person2"}
-	      ]
-	    }
-	  ]
-	}	
 </textarea><br/>
 <input type = "submit" value="Submit">
 
