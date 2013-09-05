@@ -27,5 +27,12 @@
     "Option Young Adults": "Y",
     "Optional Targeted Low Income Child Group": "Y",
     "Young Adult Age Threshold": 21
+
+    "Option CHIPRA 214 Applicable Program": "01",
+    "Option CHIPRA 214 Child Age Threshold": 21,
+    "Option CHIPRA 214 Applies To": "01",
+    "Option CHIPRA 214 CHIP Applies To": "01",
+    "Option Require Work Quarters": "N",
+    "State Applies Seven Year Limit": "N"
   }
 }

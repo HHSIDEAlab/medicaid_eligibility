@@ -28,9 +28,9 @@ module MAGI
 
     # Outputs
     output    "Category Used to Calculate Income", "String", categories
-    indicator "Applicant Income Indicator", %w(Y N T)
-    date      "Income Determination Date"
-    code      "Income Ineligibility Reason", %w(999 A B)
+    indicator "Applicant Income Medicaid Eligible Indicator", %w(Y N T)
+    date      "Income Medicaid Eligible Determination Date"
+    code      "Income Medicaid Eligible Ineligibility Reason", %w(999 A B)
 
     calculated "FPL" do
       c("Base FPL") + v("Medicaid Household").people.length * c("FPL Per Person")
@@ -89,36 +89,36 @@ module MAGI
     rule "Applicant does not meet the requirements for any category" do
       unless v("Max Eligible Income")[:category] || v("Max Temporary Income")[:category]
         o["Category Used to Calculate Income"] = "None"
-        o["Applicant Income Indicator"] = "N"
-        o["Income Determination Date"] = current_date
-        o["Income Ineligibility Reason"] = "Unimplemented"
+        o["Applicant Income Medicaid Eligible Indicator"] = "N"
+        o["Income Medicaid Eligible Determination Date"] = current_date
+        o["Income Medicaid Eligible Ineligibility Reason"] = "Unimplemented"
       end
     end
 
     rule "Applicant does not meet the income requirements for any qualified category" do
       if (v("Max Eligible Income")[:category] || v("Max Temporary Income")[:category]) && (v("Max Eligible Income")[:category].nil? || v("Applicant Household Income") > v("Max Eligible Income")[:income]) && (v("Max Temporary Income")[:category].nil? || v("Applicant Household Income") > v("Max Temporary Income")[:income])
         o["Category Used to Calculate Income"] = v("Max Eligible Income")[:category] ? v("Max Eligible Income")[:category] : v("Max Temporary Income")[:category]
-        o["Applicant Income Indicator"] = "N"
-        o["Income Determination Date"] = current_date
-        o["Income Ineligibility Reason"] = "Unimplemented"
+        o["Applicant Income Medicaid Eligible Indicator"] = "N"
+        o["Income Medicaid Eligible Determination Date"] = current_date
+        o["Income Medicaid Eligible Ineligibility Reason"] = "Unimplemented"
       end
     end
 
     rule "Applicant meets the income requirements for a qualified category" do
       if v("Max Eligible Income")[:category] && v("Applicant Household Income") <= v("Max Eligible Income")[:income]
         o["Category Used to Calculate Income"] = v("Max Eligible Income")[:category]
-        o["Applicant Income Indicator"] = "Y"
-        o["Income Determination Date"] = current_date
-        o["Income Ineligibility Reason"] = 999
+        o["Applicant Income Medicaid Eligible Indicator"] = "Y"
+        o["Income Medicaid Eligible Determination Date"] = current_date
+        o["Income Medicaid Eligible Ineligibility Reason"] = 999
       end
     end
 
     rule "Applicant meets the income requirements for a temporarily qualified category" do
       if (v("Max Eligible Income")[:category].nil? || v("Applicant Household Income") > v("Max Eligible Income")[:income]) && v("Max Temporary Income")[:category] && v("Applicant Household Income") <= v("Max Temporary Income")[:income]
         o["Category Used to Calculate Income"] = v("Max Temporary Income")[:category]
-        o["Applicant Income Indicator"] = "T"
-        o["Income Determination Date"] = current_date
-        o["Income Ineligibility Reason"] = 999
+        o["Applicant Income Medicaid Eligible Indicator"] = "T"
+        o["Income Medicaid Eligible Determination Date"] = current_date
+        o["Income Medicaid Eligible Ineligibility Reason"] = 999
       end
     end
   end
