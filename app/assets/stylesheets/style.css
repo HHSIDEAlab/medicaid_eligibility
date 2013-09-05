@@ -111,6 +111,10 @@ label {
   display: block;
 }
 
+.first-applicant.last-applicant .last-applicant-only {
+  display: none;
+}
+
 .cf:before,
 .cf:after {
     content: " ";
