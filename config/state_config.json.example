@@ -38,6 +38,12 @@
     "State Applies Seven Year Limit": "N",
 
     "Option Cover Unborn Child": "Y",
-    "Percent CHIP FPL Unborn Child": 100
+    "Percent CHIP FPL Unborn Child": 100,
+    "CHIP for State Health Benefits": "01",
+    "State Health Benefits FPL Standard": 1,
+    "State CHIP Waiting Period": 0,
+
+    "State Offers Refugee Medical Assistance": "Y",
+    "Percent FPL Refugee Medical Assistance": 1
   }
 }
