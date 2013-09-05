@@ -17,22 +17,27 @@
       "Child Category": 2,
       "Adult Group Category": 2,
       "Adult Group XX Category": 2,
-      "Optional Targeted Low Income Child": 2
+      "Optional Targeted Low Income Child": 2,
+      "CHIP Targeted Low Income Child": 2,
+      "Unborn Child Category": 2
     },
     "CHIP Targeted Low Income Child Group": "Y",
     "Deprivation Requirement Retained": "N",
-    "In-state Foster Care Required": "N",
+    "In-State Foster Care Required": "N",
     "Option Adult Group XX": "Y",
     "Option Dependent Student": "Y",
     "Option Young Adults": "Y",
     "Optional Targeted Low Income Child Group": "Y",
-    "Young Adult Age Threshold": 21
+    "Young Adult Age Threshold": 21,
 
     "Option CHIPRA 214 Applicable Program": "01",
     "Option CHIPRA 214 Child Age Threshold": 21,
     "Option CHIPRA 214 Applies To": "01",
     "Option CHIPRA 214 CHIP Applies To": "01",
     "Option Require Work Quarters": "N",
-    "State Applies Seven Year Limit": "N"
+    "State Applies Seven Year Limit": "N",
+
+    "Option Cover Unborn Child": "Y",
+    "Percent CHIP FPL Unborn Child": 100
   }
 }

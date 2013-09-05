@@ -59,7 +59,7 @@ module ApplicationVariables
       :xpath      => "hix-ee:MedicaidNonMAGIEligibility/hix-ee:MedicaidNonMAGIMedicareEntitlementEligibilityBasis/hix-core:StatusIndicator"
     },
     {
-      :name       => "Medicaid Residency Status Indicator",
+      :name       => "Medicaid Residency Indicator",
       :type       => :flag,
       :values     => %w(Y N P),
       :group      => :applicant,
@@ -281,6 +281,7 @@ module ApplicationVariables
     {name: "Adult Group XX Category", eligibility: :MAGI},
     {name: "Optional Targeted Low Income Child", eligibility: :MAGI},
     {name: "CHIP Targeted Low Income Child", eligibility: :CHIP},
+    {name: "Unborn Child"},
     {
       name: "Medicaid Non-MAGI Referral",
       eligibility: :MedicaidNonMAGI,
@@ -295,7 +296,9 @@ module ApplicationVariables
     {name: "Seven Year Limit"},
     {name: "Five Year Bar"},
     {name: "Title II Work Quarters Met"},
-    {name: "Medicaid Citizen Or Immigrant"}
+    {name: "Medicaid Citizen Or Immigrant"},
+    {name: "Former Foster Care Category"},
+    {name: "Work Quarters Override Income"}
   ].freeze
 
   INCOME_INPUTS = [

@@ -18,7 +18,12 @@ module ApplicationProcessor
       MAGI::TargetedLowIncomeChildren,
       MAGI::ReferralType,
       MAGI::Income,
-      MAGI::Immigration
+      MAGI::Immigration,
+      MAGI::PreliminaryMedicaid,
+      MAGI::PreliminaryCHIP,
+      MAGI::FormerFosterCare,
+      MAGI::IncomeOverride,
+      MAGI::OptionalUnbornChild
     ].map{|ruleset_class| ruleset_class.new()}
 
     for ruleset in rulesets
@@ -43,6 +48,7 @@ module ApplicationProcessor
   def to_context(ruleset, applicant)
     input = applicant.applicant_attributes.merge(applicant.person_attributes).merge(applicant.outputs)
     input.merge!({
+      "State" => @state,
       "Applicant ID" => applicant.applicant_id,
       "Person ID" => applicant.person_id,
       "Applicant List" => @applicants,

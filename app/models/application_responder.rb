@@ -42,6 +42,10 @@ module ApplicationResponder
         app_json["Determinations"][output] = app.outputs[output]
       end
 
+      if app.outputs["APTC Referral Indicator"]
+        app_json["Determinations"]["APTC Referral Indicator"] = app.outputs["APTC Referral Indicator"]
+      end
+
       returned_json["Applicants"] << app_json
     end
 
