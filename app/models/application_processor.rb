@@ -23,7 +23,15 @@ module ApplicationProcessor
       MAGI::PreliminaryCHIP,
       MAGI::FormerFosterCare,
       MAGI::IncomeOverride,
-      MAGI::OptionalUnbornChild
+      MAGI::OptionalUnbornChild,
+      MAGI::PublicEmployeesBenefits,
+      MAGI::CHIPWaitingPeriod,
+      MAGI::DenyCHIPIncarcerated,
+      MAGI::CHIPEligibility,
+      MAGI::DependentChildCovered,
+      MAGI::MedicaidEligibility,
+      MAGI::EmergencyMedicaid,
+      MAGI::RefugeeAssistance
     ].map{|ruleset_class| ruleset_class.new()}
 
     for ruleset in rulesets

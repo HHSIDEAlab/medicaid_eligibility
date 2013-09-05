@@ -5,6 +5,8 @@ module ApplicationResponder
     for app in @applicants
       app_json = {}
       app_json["Person ID"] = app.person_id
+      app_json["Medicaid Eligible"] = app.outputs["Applicant Medicaid Indicator"]
+      app_json["CHIP Eligible"] = app.outputs["Applicant CHIP Indicator"]
       app_json["Determinations"] = {}
 
       app_json["Determinations"]["Applicant Parent Caretaker Category Indicator"] = app.outputs["Applicant Parent Caretaker Category Indicator"]

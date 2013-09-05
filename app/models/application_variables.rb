@@ -282,6 +282,23 @@ module ApplicationVariables
     {name: "Optional Targeted Low Income Child", eligibility: :MAGI},
     {name: "CHIP Targeted Low Income Child", eligibility: :CHIP},
     {name: "Unborn Child"},
+
+    {name: "Income Medicaid Eligible", eligibility: :MAGI},
+    
+    {name: "CHIPRA 214"},
+    {name: "Trafficking Victim"},
+    {name: "Seven Year Limit"},
+    {name: "Five Year Bar"},
+    {name: "Title II Work Quarters Met"},
+    {name: "Medicaid Citizen Or Immigrant"},
+    
+    {name: "Former Foster Care Category"},
+    {name: "Work Quarters Override Income"},
+    {name: "State Health Benefits CHIP"},
+    {name: "CHIP Waiting Period Satisfied"},
+    {name: "CHIP Incarceration"},
+    {name: "Dependent Child Covered"},
+
     {
       name: "Medicaid Non-MAGI Referral",
       eligibility: :MedicaidNonMAGI,
@@ -289,16 +306,12 @@ module ApplicationVariables
       date_xpath: "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityDetermination/nc:ActivityDate/nc:DateTime",
       reason_xpath: "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityReasonText"
     },
-    {name: "Income Medicaid Eligible", eligibility: :MAGI},
-    {name: "Medicaid Citizen Or Immigrant"},
-    {name: "CHIPRA 214"},
-    {name: "Trafficking Victim"},
-    {name: "Seven Year Limit"},
-    {name: "Five Year Bar"},
-    {name: "Title II Work Quarters Met"},
-    {name: "Medicaid Citizen Or Immigrant"},
-    {name: "Former Foster Care Category"},
-    {name: "Work Quarters Override Income"}
+    {name: "APTC Referral"},
+
+    {name: "CHIP"},
+    {name: "Medicaid"},
+    {name: "Emergency Medicaid"},
+    {name: "Refugee Medical Assistance"}
   ].freeze
 
   INCOME_INPUTS = [
