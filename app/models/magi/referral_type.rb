@@ -12,7 +12,6 @@ module MAGI
     input "Applicant Age", "From Child Category Rule", "Number"
     input "Applicant Attest Disabled", "From application", "Char(1)", %w(Y N)
     input "Applicant Attest Long Term Care", "From application", "Char(1)", %w(Y N)
-    input "Person Disabled Indicator", "From SSA via Hub", "Char(1)", %w(Y N)
     input "Medicare Entitlement Indicator", "From SSA via Hub", "Char(1)", %w(Y N)
 
     # Outputs 
@@ -21,7 +20,7 @@ module MAGI
     code      "Medicaid Non-MAGI Referral Ineligibility Reason", %w(999 108)
 
     rule "Applicant's account should be referred for Non-MAGI eligibility determination" do
-      if v("Person Disabled Indicator") == 'Y' || v("Applicant Age") >= 65 || v("Applicant Attest Disabled") == 'Y' || v("Applicant Attest Long Term Care") == 'Y' || v("Medicare Entitlement Indicator") == 'Y'
+      if v("Applicant Age") >= 65 || v("Applicant Attest Disabled") == 'Y' || v("Applicant Attest Long Term Care") == 'Y' || v("Medicare Entitlement Indicator") == 'Y'
         o["Applicant Medicaid Non-MAGI Referral Indicator"] = 'Y'
         o["Medicaid Non-MAGI Referral Determination Date"] = current_date
         o["Medicaid Non-Magi Referral Ineligibility Reason"] = 999
@@ -29,7 +28,7 @@ module MAGI
     end
 
     rule "Applicant's account should not be referred for Non-MAGI eligibility determination" do
-      if v("Person Disabled Indicator") == 'N' && v("Applicant Age") < 65 && v("Applicant Attest Disabled") == 'N' && v("Applicant Attest Long Term Care") == 'N' && v("Medicare Entitlement Indicator") == 'N'
+      if v("Applicant Age") < 65 && v("Applicant Attest Disabled") == 'N' && v("Applicant Attest Long Term Care") == 'N' && v("Medicare Entitlement Indicator") == 'N'
         o["Applicant Medicaid Non-MAGI Referral Indicator"] = 'N'
         o["Medicaid Non-MAGI Referral Determination Date"] = current_date
         o["Medicaid Non-MAGI Referral Ineligibility Reason"] = 108
