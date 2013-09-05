@@ -1,3 +1,8 @@
+/*
+  Common colors:
+    94% gray: #f0f1f2
+*/
+
 body, button {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 500;
@@ -21,13 +26,16 @@ h1 {
 
 fieldset {
   border: none;
+  margin-top: 50px;
   padding: 0;
+  position: relative;
 }
 
 legend {
   border-bottom: 2px solid #c5c9cb;
   font-size: 18px;
   font-weight: bold;
+  margin-bottom: 50px;
   text-transform: uppercase;
   width: 100%;
 }
@@ -44,13 +52,17 @@ label {
   padding: 30px 22px;
 }
 
+.form-row, .form-half-field {
+  padding: 10px 0;
+}
+
 .form-row {
-  margin: 20px 0;
+  clear: both;
 }
 
 .form-half-field {
   float: left;
-  margin-bottom: 20px;
+  margin-right: 50px;
 }
 
 .add-applicant {
@@ -66,4 +78,49 @@ label {
 
 .add-applicant:before {
   content: '+ ';
+}
+
+.remove-applicant {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.form-row-expandable {
+  -webkit-transition: all 0.4s ease-out;
+     -moz-transition: all 0.4s ease-out;
+       -o-transition: all 0.4s ease-out;
+          transition: all 0.4s ease-out;
+}
+
+.form-row-expandable.form-row-expanded {
+  background: #f0f1f2;
+  padding: 20px 0 10px;
+  margin: 10px 0;
+}
+
+.form-row-expandable-fields {
+  display: none;
+}
+
+.last-applicant-only {
+  display: none;
+}
+
+.last-applicant .last-applicant-only {
+  display: block;
+}
+
+.cf:before,
+.cf:after {
+    content: " ";
+    display: table;
+}
+
+.cf:after {
+    clear: both;
+}
+
+.cf {
+    *zoom: 1;
 }
