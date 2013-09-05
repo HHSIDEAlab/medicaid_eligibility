@@ -1,15 +1,106 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Application</title>
-    <link href="/assets/style.css" rel="stylesheet">
-    <meta charset="utf-8">
-  </head>
-  <body>
-    <form method="post">
-    </form>
-    <script src="/assets/jquery.js"></script>
-    <script src="/assets/jquery.validate.js"></script>
-    <script src="/assets/script.js"></script>
-  </body>
+<head>
+  <title>Application</title>
+  <link href="/assets/normalize.css" rel="stylesheet">
+  <link href="/assets/style.css" rel="stylesheet">
+  <meta charset="utf-8">
+</head>
+<body>
+<form method="post">
+  <h1>Magi In A Box</h1>
+  <div class="form-fields-area">
+    <div class="form-row">
+      <label for="state">State</label>
+      <select id="state">
+      </select>
+    </div>
+    <div class="form-row">
+      <label for="id">Application Name or ID</label>
+      <input type="text" id="id">
+    </div>
+    <fieldset>
+      <legend>Applicant 1</legend>
+      <div class="form-row">
+        <label for="applicant_1_id">Applicant Name or ID</label>
+        <input type="text" id="applicant_1_id">
+      </div>
+      <div class="form-row">
+        <label for="applicant_1_age">Age</label>
+        <input type="number" id="applicant_1_age">
+      </div>
+      <div class="form-row">
+        <label for="applicant_1_hours">Hours worked per week</label>
+        <input type="number" id="applicant_1_hours">
+      </div>
+      <div class="form-half-field">
+        <label for="applicant_1_disabled">Disabled</label>
+        <input type="checkbox" id="applicant_1_disabled">
+      </div>
+      <div class="form-half-field">
+        <label for="applicant_1_student">Student</label>
+        <input type="checkbox" id="applicant_1_student">
+      </div>
+      <div class="form-half-field">
+        <label for="applicant_1_eligible">Eligible for Medicare</label>
+        <input type="checkbox" id="applicant_1_eligible">
+      </div>
+      <div class="form-half-field">
+        <label for="applicant_1_incarcerated">Incarcerated</label>
+        <input type="checkbox" id="applicant_1_incarcerated">
+      </div>
+      <div class="form-half-field">
+        <label for="applicant_1_has_insurance">Has insurance</label>
+        <input type="checkbox" id="applicant_1_has_insurance">
+      </div>
+      <div class="form-half-field">
+        <label for="applicant_1_long_term_care">In long-term care</label>
+        <input type="checkbox" id="applicant_1_long_term_care">
+      </div>
+      <div class="form-row">
+        <label for="applicant_1_prior_insurance">Prior insurance</label>
+        <input type="checkbox" id="applicant_1_prior_insurance">
+      </div>
+      <div class="form-row">
+        <label for="applicant_1_pregnant">Pregnant</label>
+        <input type="checkbox" id="applicant_1_pregnant">
+      </div>
+      <div class="form-row">
+        <label for="applicant_1_foster_care">Formerly in foster care</label>
+        <input type="checkbox" id="applicant_1_foster_care">
+        <div class="hidden-fields">
+          <div class="form-row">
+            <label for="applicant_1_foster_care_had_medicaid">Had Medicaid during foster
+              care</label>
+            <input type="checkbox" id="applicant_1_foster_care_had_medicaid">
+          </div>
+          <div class="form-row">
+            <label for="applicant_1_foster_care_age_left">Age left foster care</label>
+            <input type="checkbox" id="applicant_1_foster_care_age_left">
+          </div>
+          <div class="form-row">
+            <label for="applicant_1_foster_care_state">Foster care state</label>
+            <select id="applicant_1_foster_care_state">
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="applicant_1_income_taxes_required">Required to file income
+          taxes</label>
+        <input type="checkbox" id="applicant_1_income_taxes_required">
+      </div>
+      <div class="form-row">
+        <label for="applicant_1_citizen">US citizen</label>
+        <input type="checkbox" id="applicant_1_citizen">
+      </div>
+    </fieldset>
+  </div>
+  <button type="button" class="add-applicant">Add Another Applicant</button>
+  <button type="submit">Check Eligibility</button>
+</form>
+<script src="/assets/jquery.js"></script>
+<script src="/assets/jquery.validate.js"></script>
+<script src="/assets/script.js"></script>
+</body>
 </html>
