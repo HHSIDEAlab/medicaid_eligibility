@@ -182,6 +182,14 @@ module ApplicationVariables
       :required_if_value => "Y"
     },
     {
+      :name       => "Immigrant Status",
+      :type       => :string,
+      :group      => :applicant,
+      :xpath      => :unimplemented,
+      :required_if => "US Citizen Indicator",
+      :required_if_value => "N"
+    },
+    {
       :name       => "Lawful Presence Attested",
       :type       => :flag,
       :values     => %w(Y N),
@@ -234,6 +242,12 @@ module ApplicationVariables
       :xpath      => :unimplemented
     },
     {
+      :name       => "Seven Year Limit Start Date",
+      :type       => :date,
+      :group      => :applicant,
+      :xpath      => :unimplemented
+    },
+    {
       :name       => "Veteran Status",
       :type       => :flag,
       :values     => %w(Y N),
@@ -274,7 +288,14 @@ module ApplicationVariables
       date_xpath: "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityDetermination/nc:ActivityDate/nc:DateTime",
       reason_xpath: "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityReasonText"
     },
-    {name: "Income", eligibility: :MAGI}
+    {name: "Income Medicaid Eligible", eligibility: :MAGI},
+    {name: "Medicaid Citizen Or Immigrant"},
+    {name: "CHIPRA 214"},
+    {name: "Trafficking Victim"},
+    {name: "Seven Year Limit"},
+    {name: "Five Year Bar"},
+    {name: "Title II Work Quarters Met"},
+    {name: "Medicaid Citizen Or Immigrant"}
   ].freeze
 
   INCOME_INPUTS = [

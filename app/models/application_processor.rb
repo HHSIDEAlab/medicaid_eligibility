@@ -17,7 +17,8 @@ module ApplicationProcessor
       MAGI::OptionalTargetedLowIncomeChildren,
       MAGI::TargetedLowIncomeChildren,
       MAGI::ReferralType,
-      MAGI::Income
+      MAGI::Income,
+      MAGI::Immigration
     ].map{|ruleset_class| ruleset_class.new()}
 
     for ruleset in rulesets

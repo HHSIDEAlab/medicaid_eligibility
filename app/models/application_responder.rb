@@ -24,17 +24,19 @@ module ApplicationResponder
       end
 
       for det in ApplicationVariables::DETERMINATIONS.select{|d| !(["Parent Caretaker Category", "Income"].include?(d[:name]))}
-        app_json["Determinations"]["Applicant #{det[:name]} Indicator"] = app.outputs["Applicant #{det[:name]} Indicator"]
+        indicator = app.outputs["Applicant #{det[:name]} Indicator"]
+        app_json["Determinations"]["Applicant #{det[:name]} Indicator"] = indicator
         ineligibility_reason = app.outputs["#{det[:name]} Ineligibility Reason"]
-        if ineligibility_reason != 999
+        unless %w(Y X).include? indicator
           app_json["Determinations"]["#{det[:name]} Ineligibility Reason"] = ineligibility_reason
         end
       end
 
-      app_json["Determinations"]["Applicant Income Determination Indicator"] = app.outputs["Applicant Income Indicator"]
-      ineligibility_reason = app.outputs["Income Ineligibility Reason"]
-      if ineligibility_reason != 999
-        app_json["Determinations"]["Income Ineligibility Reason"] = ineligibility_reason
+      indicator = app.outputs["Applicant Income Medicaid Eligible Indicator"]
+      app_json["Determinations"]["Applicant Income Medicaid Eligible Determination Indicator"] = indicator
+      ineligibility_reason = app.outputs["Income Medicaid Eligible Ineligibility Reason"]
+      unless %w(Y X).include? indicator
+        app_json["Determinations"]["Income Medicaid Eligible Ineligibility Reason"] = ineligibility_reason
       end
       for output in ["Category Used to Calculate Income", "Percentage for Category Used", "FPL * Percentage", "Calculated Income"]
         app_json["Determinations"][output] = app.outputs[output]
