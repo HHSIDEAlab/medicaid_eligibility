@@ -13,38 +13,35 @@ module MAGI
     assumption "The low and high age thresholds are inclusive of children who meet the requirements for this category."
     assumption "This rule can only set a temporary indicator for inclusion in this group as the question regarding whether the child has other coverage is not asked until after this logic is run.  In MAGI Part 3, a rule is run to check whether the child has other health insurance coverage and reset this indicator to yes or no.  If the child is not eligible for this category and it was used as the basis for the applicant’s applicable FPL standard, the applicable standard is re-determined and the income eligibility logic is re-run."
 
-    input "Applicant Age", "From Child Category Rule", "Number"  
+    input "Applicant Age", "From Child Category Rule", "Number"
+    input "Has Insurance", "Application", "Char(1)", %w(Y N)
 
     config "Optional Targeted Low Income Child Group", "State configuration table", "Char(1)", %w(Y N)
     config "Optional Targeted Low Income Child Age Low Threshold", "State configuration table", "Numeric", nil, 0
     config "Optional Targeted Low Income Child Age High Threshold", "State configuration table", "Numeric", nil, 19
 
     # Outputs 
-    indicator "Applicant Optional Targeted Low Income Child Indicator", %w(Y N T X)
+    indicator "Applicant Optional Targeted Low Income Child Indicator", %w(Y N X)
     date      "Optional Targeted Low Income Child Determination Date"
-    code      "Optional Targeted Low Income Child Ineligibility Reason", %w(999 555 127)
+    code      "Optional Targeted Low Income Child Ineligibility Reason", %w(999 555 114 127)
 
-    rule "State does not elect this option" do
+    rule "Determine Optional Targeted Low Income Child eligibility" do
       if c("Optional Targeted Low Income Child Group") == 'N'
         o["Applicant Optional Targeted Low Income Child Indicator"] = 'X'
         o["Optional Targeted Low Income Child Determination Date"] = current_date
         o["Optional Targeted Low Income Child Ineligibility Reason"] = 555
-      end
-    end
-
-    rule "Child right age for this category" do
-      if c("Optional Targeted Low Income Child Group") == 'Y' && v("Applicant Age") >= c("Optional Targeted Low Income Child Age Low Threshold") && v("Applicant Age") <= c("Optional Targeted Low Income Child Age High Threshold")
-        o["Applicant Optional Targeted Low Income Child Indicator"] = 'T'
-        o["Optional Targeted Low Income Child Determination Date"] = current_date
-        o["Optional Targeted Low Income Child Ineligibility Reason"] = 999
-      end
-    end
-
-    rule "Child not the right age for this category" do
-      if c("Optional Targeted Low Income Child Group") == 'Y' && (v("Applicant Age") < c("Optional Targeted Low Income Child Age Low Threshold") || v("Applicant Age") > c("Optional Targeted Low Income Child Age High Threshold"))
+      elsif v("Applicant Age") < c("Optional Targeted Low Income Child Age Low Threshold") || v("Applicant Age") > c("Optional Targeted Low Income Child Age High Threshold")
         o["Applicant Optional Targeted Low Income Child Indicator"] = 'N'
         o["Optional Targeted Low Income Child Determination Date"] = current_date
         o["Optional Targeted Low Income Child Ineligibility Reason"] = 127
+      elsif v("Has Insurance") == 'Y'
+        o["Applicant Optional Targeted Low Income Child Indicator"] = 'N'
+        o["Optional Targeted Low Income Child Determination Date"] = current_date
+        o["Optional Targeted Low Income Child Ineligibility Reason"] = 114
+      else
+        o["Applicant Optional Targeted Low Income Child Indicator"] = 'Y'
+        o["Optional Targeted Low Income Child Determination Date"] = current_date
+        o["Optional Targeted Low Income Child Ineligibility Reason"] = 999
       end
     end
   end

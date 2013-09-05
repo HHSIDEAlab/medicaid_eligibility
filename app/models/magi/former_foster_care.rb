@@ -12,30 +12,25 @@ module MAGI
     assumption "FFE will accept self-attestation without further verification as to whether the applicant was in foster care on the date of attaining 18 years of age (or such higher age as the State has elected) and whether he or she received Medicaid while on foster care."
     assumption "There is no income limit for these individuals."
     
-    input "Medicaid Residency Status Indicator", "From Residency Logic", "Char(1)", %w(Y N P)
-    input "Applicant Medicaid Citizen Or Immigrant Status Indicator", "From Immigration Status rule in MAGI Part 2", "Char(1)", %w(Y N D E H I P T)
-    input "Applicant Age", "Child Category rule", "Number"  
-    input "Age Left Foster Care", "Application", "Numeric" 
-    input "Had Medicaid during Foster Care Indicator", "Application", "Char(1)", %w(Y N)
-    input "Foster Care State", "Application", "Char"  
-    input "Home State", "Application", "Char"  
+    input "Medicaid Residency Indicator", "From Residency Logic", "Char(1)", %w(Y N)
+    input "Applicant Medicaid Citizen Or Immigrant Indicator", "From Immigration Status rule in MAGI Part 2", "Char(1)", %w(Y N)
+    input "Applicant Age", "Child Category rule", "Number"
+    input "Former Foster Care", "Application", "Char(1)", %w(Y N) 
+    input "Age Left Foster Care", "Application", "Numeric"
+    input "Had Medicaid During Foster Care", "Application", "Char(1)", %w(Y N)
+    input "Foster Care State", "Application", "Char(2)"
+    input "State", "Application", "Char(2)"
 
     config "Foster Care Age Threshold", "State Configuration Table", "Numeric", nil, 18
-    config "In-state Foster Care Required", "State Configuration Table", "Char(1)", %w(Y N)
+    config "In-State Foster Care Required", "State Configuration Table", "Char(1)", %w(Y N)
 
     # Outputs 
-    indicator "Applicant Former Foster Care Category Indicator", %w(Y N)
-    date      "Former Foster Care Category Determination Date"
-    code      "Former Foster Care Category Ineligibility Reason", %w(999 101 102 103 125 126 380)
-    indicator "Applicant Medicaid Prelim Eligible Status Indicator", %w(Y)
-    date      "Medicaid Prelim Eligible Determination Date"
-    code      "Medicaid Prelim Eligible Ineligibility Reason", %w(999)
-    indicator "Applicant CHIP Prelim Eligible Status Indicator", %w(N)
-    date      "CHIP Prelim Eligible Determination Date"
-    code      "CHIP Prelim Eligible Ineligibility Reason", %w(380)
+    determination "Former Foster Care Category", %w(Y N), %w(999 101 102 103 125 126 380)
+    determination "Medicaid Prelim", %w(Y N), %w(999)
+    determination "CHIP Prelim", %w(Y N), %w(380)
 
     rule "Applicant does not meet residency or immigration status criteria" do
-      if v("Medicaid Residency Status Indicator") != 'Y' || !(%w(Y I T D E H).include?(v("Applicant Medicaid Citizen Or Immigrant Status Indicator")))
+      if v("Medicaid Residency Indicator") != 'Y' || v("Applicant Medicaid Citizen Or Immigrant Indicator") != 'Y'
         o["Applicant Former Foster Care Category Indicator"] = 'N'
         o["Former Foster Care Category Determination Date"] = current_date
         o["Former Foster Care Category Ineligibility Reason"] = 101
@@ -51,7 +46,7 @@ module MAGI
     end
 
     rule "State requires in-state foster care record- child received out-of state foster care" do
-      if c("In-state Foster Care Required") == 'Y' && v("Foster Care State") != v("Home State")
+      if c("In-State Foster Care Required") == 'Y' && v("Foster Care State") != v("State")
         o["Applicant Former Foster Care Category Indicator"] = 'N'
         o["Former Foster Care Category Determination Date"] = current_date
         o["Former Foster Care Category Ineligibility Reason"] = 102
@@ -67,7 +62,7 @@ module MAGI
     end
 
     rule "Applicant did not receive Medicaid while receiving foster care" do
-      if v("Had Medicaid during Foster Care Indicator") == 'N'
+      if v("Had Medicaid During Foster Care") == 'N'
         o["Applicant Former Foster Care Category Indicator"] = 'N'
         o["Former Foster Care Category Determination Date"] = current_date
         o["Former Foster Care Category Ineligibility Reason"] = 103
@@ -75,16 +70,16 @@ module MAGI
     end
 
     rule "Applicant meets all criteria for former foster care" do
-      if v("Applicant Age") < 26 && v("Age Left Foster Care") == c("Foster Care Age Threshold") && v("Had Medicaid during Foster Care Indicator") == 'Y' && ((c("In-state Foster Care Required") == 'Y' && v("Foster Care State") == v("Home State")) || c("In-state Foster Care Required") == 'N') && v("Medicaid Residency Status Indicator") == 'Y' && %w(Y I T D E H).include?(v("Applicant Medicaid Citizen Or Immigrant Status Indicator"))
+      if v("Applicant Age") < 26 && v("Age Left Foster Care") == c("Foster Care Age Threshold") && v("Had Medicaid During Foster Care") == 'Y' && ((c("In-State Foster Care Required") == 'Y' && v("Foster Care State") == v("State")) || c("In-State Foster Care Required") == 'N') && v("Medicaid Residency Indicator") == 'Y' && v("Applicant Medicaid Citizen Or Immigrant Indicator") == 'Y'
         o["Applicant Former Foster Care Category Indicator"] = 'Y'
         o["Former Foster Care Category Determination Date"] = current_date
         o["Former Foster Care Category Ineligibility Reason"] = 999
-        o["Applicant Medicaid Prelim Eligible Status Indicator"] = 'Y'
-        o["Medicaid Prelim Eligible Determination Date"] = current_date
-        o["Medicaid Prelim Eligible Ineligibility Reason"] = 999
-        o["Applicant CHIP Prelim Eligible Status Indicator"] = 'N'
-        o["CHIP Prelim Eligible Determination Date"] = current_date
-        o["CHIP Prelim Eligible Ineligibility Reason"] = 380
+        o["Applicant Medicaid Prelim Indicator"] = 'Y'
+        o["Medicaid Prelim Determination Date"] = current_date
+        o["Medicaid Prelim Ineligibility Reason"] = 999
+        o["Applicant CHIP Prelim Indicator"] = 'N'
+        o["CHIP Prelim Determination Date"] = current_date
+        o["CHIP Prelim Ineligibility Reason"] = 380
       end
     end
   end
