@@ -35,9 +35,14 @@ var resetForm = function ($form) {
 $(document).on('change', '[type=checkbox]', function () {
   var $this = $(this),
     checked = $(this).is(':checked'),
-    $parent = $this.parent('.form-row-expandable');
+    $parent = $this.parent('.form-row-expandable'),
+    exclusive = $this.data('exclusive');
   $parent.toggleClass('form-row-expanded', checked);
   $parent.find('.form-row-expandable-fields').slideToggle(checked);
+  if (exclusive) {
+    $this.closest('fieldset').find('input[data-exclusive=' + exclusive + ']').not($this)
+      .attr('checked', !checked);
+  }
 }).on('click', '.add-applicant', function () {
   var $fieldsets = $('fieldset'),
     $newFieldset = $fieldsets.first().clone();
@@ -46,6 +51,8 @@ $(document).on('change', '[type=checkbox]', function () {
   $fieldsets.last().after($newFieldset);
   countFieldsets();
 }).on('click', '.remove-applicant', function () {
-  $(this).closest('fieldset').remove();
-  countFieldsets();
+  if ($('fieldset').length > 1) {
+    $(this).closest('fieldset').remove();
+    countFieldsets();
+  }
 });

@@ -3,8 +3,11 @@
     94% gray: #f0f1f2
 */
 
-body, button {
+body, button, input {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+body, button {
   font-weight: 500;
   font-size: 14px;
 }
@@ -40,11 +43,38 @@ legend {
   width: 100%;
 }
 
+label, input {
+  vertical-align: middle;
+}
+
 label {
   display: inline-block;
   padding: 0 20px;
   width: 160px;
   text-align: right;
+}
+
+input {
+  background: #f0f1f2;
+  border: 2px solid #c5c9cb;
+  font-size: 18px;
+  line-height: 20px;
+  padding: 10px;
+}
+
+input[type=number] {
+  text-align: right;
+  width: 40px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=text] {
+  width: 280px;
 }
 
 .form-fields-area {
