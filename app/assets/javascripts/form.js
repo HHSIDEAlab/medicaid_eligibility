@@ -2,8 +2,6 @@ var MAGI = {};
 
 (function (ns) {
 
-  var people = {};
-
   var DataMapper = function (nameMangler) {
     this.map = function (data, fields, context, params) {
       var value;
@@ -16,41 +14,20 @@ var MAGI = {};
     }
   };
 
-
   applicantScopedDataMapper = new DataMapper(function (name, params) {
     return "applicant_" + params.applicant_num + "_" + name;
   })
 
-
   plainDataMapper = new DataMapper(function (name) {
     return name;
   });
-
-
-  var mapFieldsForApplicant = function (applicant_num, data, fields, context) {
-    var value;
-    _.each(fields, function (element, index, list) {
-      value = data[_.template(element.name)({id: applicant_num})]
-      if (value) {
-        context[element.json] = value;
-      }
-    }, context);
-  }
-
-  var mapFields = function (data, fields, context) {
-    _.each(fields, function (element, index, list) {
-      if (data[element.name]) {
-        context[element.json] = data[element.name];
-      }
-    }, context);
-  };
 
   var application_fields = [
     {name: 'state', json: 'State'}
   ]
 
   var person_fields = [
-    {name: 'person_id', json: "Person ID", required: true},
+    {name: 'id', json: "Person ID", required: true},
     {name: 'foo', json: 'Applicant Age', required: true},
     {name: 'bar', json: 'Applicant Attest Disabled'},
     {name: 'baz', json: 'Applicant Attest Long Term Care'} /*,
@@ -90,7 +67,6 @@ var MAGI = {};
     */
   ];
 
-
   var agi_income_fields = [
     {name: 'AGI', json: 'AGI'},
     {name: '', json: 'Deductible Part of Self-Employment Tax'},
@@ -126,18 +102,14 @@ var MAGI = {};
   }
 
   var Application = function (data, num_applicants) {
-    var People, Person, person_map, that = this;
+    var People, Person, person_map;
 
     Person = function (applicant_num) {
       var Income, Relationship, relationships;
 
-      this.exists = function () {
-        return true;
-        //return this["Person ID"] != undefined
-      }
-
       Income = function () {
-        // TODO In the future which fields to use will be conditional on reporting methd
+        // TODO In the future which fields to use will be conditional on reporting method
+        // read the income fields from the data into the Income object
         applicantScopedDataMapper.map(data, payroll_income_fields, this, {applicant_num: applicant_num})
       }
 
@@ -147,18 +119,20 @@ var MAGI = {};
       };
 
       relationships = function () {
+        // create a relationsip with each previous applicant
         _.times(applicant_num - 1, function (n) {
-          return new Relationship(n);
+          return new Relationship(n + 1);
         });
       }
 
+      // read the person fields into the application
       applicantScopedDataMapper.map(data, person_fields, this, {applicant_num: applicant_num})
-      if (this.exists()) {
-        people[applicant_num] = this;
-        this.Income = new Income();
-        this.Relationships = relationships();
-      }
+
+      this.Income = new Income();
+      this.Relationships = relationships();
+
     }
+
     People = function () {
       _.times(num_applicants, function (n) {
         this[n + 1] = new Person(n + 1)
