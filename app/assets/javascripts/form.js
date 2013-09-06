@@ -25,8 +25,9 @@ var resetForm = function ($form) {
           }
         });
       });
-      $(el).toggleClass('last-applicant', i === $fieldsets.length - 1)
+      $(el).toggleClass('last-applicant', i === $fieldsets.length - 1);
     });
+    $('.filer-2-row').toggle($fieldsets.length > 1);
   },
   uniform = function () {
     $('input[type=checkbox], select').uniform({selectAutoWidth: false});
@@ -55,15 +56,27 @@ $(document).on('change', '[type=checkbox]', function () {
   $fieldsets.last().after($newFieldset);
   $newFieldset.slideDown();
   countFieldsets();
+  $('.filer').append('<option value="' + $fieldsets.length +'"></option>');
   uniform();
 }).on('click', '.remove-applicant', function () {
   var $fieldset = $(this).closest('fieldset');
   if ($('fieldset').length > 1) {
     $fieldset.slideUp(function () {
       $fieldset.remove();
+      countFieldsets();
+      $('.filer').each(function () {
+        $('option', this).last().remove();
+        $.uniform.update(this);
+      });
     });
-    countFieldsets();
   }
+}).on('keyup', '.applicant-id-field', function () {
+  var $field = $(this),
+    index = $('.applicant-id-field').index($field);
+  $('.filer').each(function () {
+    $('option', this).eq(index + 1).text($field.val());
+    $.uniform.update(this);
+  });
 }).on('submit', '#application_form', function() {
   event.preventDefault();
   var application = new MAGI.Application($(this).serializeObject(), $('fieldset').length);
