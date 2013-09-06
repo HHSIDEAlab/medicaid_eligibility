@@ -59,7 +59,7 @@ $(document).on('change', '[type=checkbox]', function () {
   $fieldsets.last().after($newFieldset);
   $newFieldset.slideDown();
   countFieldsets();
-  $filers.append('<option value="' + ($fieldsets.length + 1) +'"></option>');
+  $filers.append('<option value=""></option>');
   $newDependent = $(dependentTemplate({num: $fieldsets.length}));
   $newDependent.find('select').append($filers.first().clone().children());
   $('.dependent-fields').append($newDependent);
@@ -81,7 +81,8 @@ $(document).on('change', '[type=checkbox]', function () {
   var $field = $(this),
     index = $('.applicant-id-field').index($field);
   $('.filer').each(function () {
-    $('option', this).eq(index + 1).text($field.val());
+    var val = $field.val()
+    $('option', this).eq(index + 1).val(val).text(val);
     $.uniform.update(this);
   });
 }).on('submit', '#application_form', function() {
