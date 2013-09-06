@@ -63,7 +63,7 @@ label {
   display: inline-block;
   line-height: 1em;
   padding: 0 20px;
-  width: 160px;
+  width: 156px;
   text-align: right;
 }
 
@@ -88,6 +88,10 @@ input[type=number] {
   width: 40px;
 }
 
+.long-number[type=number] {
+  width: 100px;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     margin: 0;
@@ -99,7 +103,7 @@ input[type=text] {
 
 fieldset, .form-fields-area {
   background: white;
-  padding: 30px 22px;
+  padding: 30px 21px;
 }
 
 fieldset {
@@ -116,7 +120,8 @@ fieldset {
 
 .form-half-field {
   float: left;
-  margin-right: 50px;
+  margin-right: 27px;
+  width: 321px;
 }
 
 .add-applicant {
@@ -152,13 +157,21 @@ fieldset {
   position: relative;
 }
 
+.form-row-expandable-fields.expanded {
+  display: block;
+}
+
+.form-row-expandable-fields label {
+  width: 155px;
+}
+
 .form-row-expandable-fields:before {
   background: #fff url('/assets/tail.png') no-repeat 0 0;
   bottom: 100%;
   content: '';
   display: block;
   height: 12px;
-  left: 203px;
+  left: 199px;
   position: absolute;
   width: 22px;
 }
@@ -169,7 +182,15 @@ fieldset {
 }
 
 .form-row-expandable-fields .form-row-expandable-fields label {
-  width: 138px;
+  width: 132px;
+}
+
+.form-row-expandable-fields .form-row-expandable-fields:before {
+  left: 177px;
+}
+
+.date[type=text] {
+  width: 120px;
 }
 
 .last-applicant-only {

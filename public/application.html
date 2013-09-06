@@ -117,8 +117,10 @@
           <label for="applicant_1_prior_insurance">Prior insurance</label>
           <input type="checkbox" id="applicant_1_prior_insurance" name="applicant_1_prior_insurance">
           <div class="form-row-expandable-fields">
-            <label for="applicant_1_prior_insurance_end_date">Prior insurance end date</label>
-            <input type="text" id="applicant_1_prior_insurance_end_date" name="applicant_1_prior_insurance_end_date">
+            <div class="form-row">
+              <label for="applicant_1_prior_insurance_end_date">Prior insurance end date</label>
+              <input type="text" id="applicant_1_prior_insurance_end_date" name="applicant_1_prior_insurance_end_date" class="date" placeholder="mm / dd / yyyy">
+            </div>
           </div>
         </div>
         <div class="form-row">
@@ -255,7 +257,7 @@
         <div class="form-row form-row-expandable">
           <label for="applicant_1_citizen">US citizen</label>
           <input type="checkbox" id="applicant_1_citizen" name="applicant_1_citizen">
-          <div class="form-row-expandable-fields">
+          <div class="form-row-expandable-fields expanded">
             <div class="form-half-field">
               <label for="applicant_1_citizen_lawful">Lawful resident</label>
               <input type="checkbox" id="applicant_1_citizen_lawful" name="applicant_1_citizen_lawful">
@@ -278,7 +280,7 @@
             </div>
             <div class="form-row">
               <label for="applicant_1_citizen_refugee_assistance_start_date">Refugee medical assistance start date</label>
-              <input type="checkbox" id="applicant_1_citizen_refugee_assistance_start_date" name="applicant_1_citizen_refugee_assistance_start_date">
+              <input type="text" id="applicant_1_citizen_refugee_assistance_start_date" name="applicant_1_citizen_refugee_assistance_start_date" class="date" placeholder="mm / dd / yyyy">
             </div>
             <div class="form-row form-row-expandable">
               <label for="applicant_1_citizen_human_trafficking">Victim of human trafficking</label>
@@ -290,15 +292,15 @@
                 </div>
                 <div class="form-row">
                   <label for="applicant_1_citizen_human_trafficking_deport_withheld_date">Non-citizen deport withheld date</label>
-                  <input type="text" id="applicant_1_citizen_human_trafficking_deport_withheld_date" name="applicant_1_citizen_human_trafficking_deport_withheld_date">
+                  <input type="text" id="applicant_1_citizen_human_trafficking_deport_withheld_date" name="applicant_1_citizen_human_trafficking_deport_withheld_date" class="date" placeholder="mm / dd / yyyy">
                 </div>
                 <div class="form-row">
                   <label for="applicant_1_citizen_human_trafficking_entry_date">Non-citizen entry date</label>
-                  <input type="text" id="applicant_1_citizen_human_trafficking_entry_date" name="applicant_1_citizen_human_trafficking_entry_date">
+                  <input type="text" id="applicant_1_citizen_human_trafficking_entry_date" name="applicant_1_citizen_human_trafficking_entry_date" class="date" placeholder="mm / dd / yyyy">
                 </div>
                 <div class="form-row">
                   <label for="applicant_1_citizen_human_trafficking_status_grant_date">Non-citizen status grant date</label>
-                  <input type="text" id="applicant_1_citizen_human_trafficking_status_grant_date" name="applicant_1_citizen_human_trafficking_status_grant_date">
+                  <input type="text" id="applicant_1_citizen_human_trafficking_status_grant_date" name="applicant_1_citizen_human_trafficking_status_grant_date" class="date" placeholder="mm / dd / yyyy">
                 </div>
               </div>
             </div>
@@ -343,6 +345,7 @@
     <script src="/assets/jquery.js"></script>
     <script src="/assets/jquery.validate.js"></script>
     <script src="/assets/jquery.uniform.js"></script>
+    <script src="/assets/jquery.maskedinput.js"></script>
     <script src="/assets/jquery.serializeObject.js"></script>
     <script src="/assets/script.js"></script>
     <script src="/assets/form.js"></script>  
