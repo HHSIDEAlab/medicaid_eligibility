@@ -1,54 +1,84 @@
 module ApplicationResponder
   def to_json(options={})
     @raw_application
-    returned_json = {"Determination Date" => @determination_date, "Applicants" => []}
-    for app in @applicants
-      app_json = {}
-      app_json["Person ID"] = app.person_id
-      app_json["Medicaid Eligible"] = app.outputs["Applicant Medicaid Indicator"]
-      app_json["CHIP Eligible"] = app.outputs["Applicant CHIP Indicator"]
-      app_json["Determinations"] = {}
-
-      app_json["Determinations"]["Applicant Parent Caretaker Category Indicator"] = app.outputs["Applicant Parent Caretaker Category Indicator"]
-      ineligibility_reason = app.outputs["Parent Caretaker Category Ineligibility Reason"]
-      if ineligibility_reason != 999
-        app_json["Determinations"]["Parent Caretaker Category Ineligibility Reason"] = ineligibility_reason
+    returned_json = {"Determination Date" => @determination_date, "Medicaid Households" => []}
+    for household in @medicaid_households
+      hh_json = {}
+      hh_applicants = household.people.select{|p| @applicants.include? p}
+      unless hh_applicants
+        next
       end
-      app_json["Determinations"]["Qualified Children List"] = []
-      for qual_child in app.outputs["Qualified Children List"]
-        child_json = {}
-        for k in qual_child.keys
-          unless /Determination Date$/ =~ k || (/Ineligibility Reason$/ =~ k && qual_child[k] == 999)
-            child_json[k] = qual_child[k]
+      hh_json["MAGI"] = hh_applicants.first.outputs["Calculated Income"]
+
+      hh_json["Applicants"] = []
+      for app in @applicants
+        app_json = {}
+        app_json["Person ID"] = app.person_id
+        app_json["Medicaid Eligible"] = app.outputs["Applicant Medicaid Indicator"]
+        app_json["CHIP Eligible"] = app.outputs["Applicant CHIP Indicator"]
+        app_json["Non-MAGI Referral"] = app.outputs["Applicant Medicaid Non-MAGI Referral Indicator"]
+        app_json["Category"] = app.outputs["Category Used to Calculate Income"]
+        app_json["Category Threshold"] = app.outputs["FPL * Percentage"]
+
+        app_json["Determinations"] = {}
+
+        for det in ApplicationVariables::DETERMINATIONS
+          det_json = {
+            "Indicator" => app.outputs["Applicant #{det[:name]} Indicator"],
+            "Ineligibility Code" => app.outputs["#{det[:name]} Ineligibility Reason"]
+          }
+          app_json["Determinations"][det[:name]] = det_json
+        end
+
+        # app_json["Determinations"]["Applicant Parent Caretaker Category Indicator"] = app.outputs["Applicant Parent Caretaker Category Indicator"]
+        # ineligibility_reason = app.outputs["Parent Caretaker Category Ineligibility Reason"]
+        # if ineligibility_reason != 999
+        #   app_json["Determinations"]["Parent Caretaker Category Ineligibility Reason"] = ineligibility_reason
+        # end
+
+        app_json["Other Outputs"] = {}
+        app_json["Other Outputs"]["Qualified Children List"] = []
+        for qual_child in app.outputs["Qualified Children List"]
+          child_json = {
+            "Person ID" => qual_child["Person ID"],
+            "Determinations" => {}
+          }
+          for det_name in ["Dependent Age", "Deprived Child", "Relationship"]
+            det_json = {
+            "Indicator" => qual_child["Child of Caretaker #{det_name} Indicator"],
+            "Ineligibility Code" => qual_child["Child of Caretaker #{det_name} Ineligibility Reason"]
+            }
+            child_json["Determinations"][det_name] = det_json
           end
+          app_json["Other Outputs"]["Qualified Children List"] << child_json
         end
-        app_json["Determinations"]["Qualified Children List"] << child_json
-      end
 
-      for det in ApplicationVariables::DETERMINATIONS.select{|d| !(["Parent Caretaker Category", "Income"].include?(d[:name]))}
-        indicator = app.outputs["Applicant #{det[:name]} Indicator"]
-        app_json["Determinations"]["Applicant #{det[:name]} Indicator"] = indicator
-        ineligibility_reason = app.outputs["#{det[:name]} Ineligibility Reason"]
-        unless %w(Y X).include? indicator
-          app_json["Determinations"]["#{det[:name]} Ineligibility Reason"] = ineligibility_reason
-        end
-      end
+        # for det in ApplicationVariables::DETERMINATIONS.select{|d| !(["Parent Caretaker Category", "Income"].include?(d[:name]))}
+        #   indicator = app.outputs["Applicant #{det[:name]} Indicator"]
+        #   app_json["Determinations"]["Applicant #{det[:name]} Indicator"] = indicator
+        #   ineligibility_reason = app.outputs["#{det[:name]} Ineligibility Reason"]
+        #   unless %w(Y X).include? indicator
+        #     app_json["Determinations"]["#{det[:name]} Ineligibility Reason"] = ineligibility_reason
+        #   end
+        # end
 
-      indicator = app.outputs["Applicant Income Medicaid Eligible Indicator"]
-      app_json["Determinations"]["Applicant Income Medicaid Eligible Determination Indicator"] = indicator
-      ineligibility_reason = app.outputs["Income Medicaid Eligible Ineligibility Reason"]
-      unless %w(Y X).include? indicator
-        app_json["Determinations"]["Income Medicaid Eligible Ineligibility Reason"] = ineligibility_reason
-      end
-      for output in ["Category Used to Calculate Income", "Percentage for Category Used", "FPL * Percentage", "Calculated Income"]
-        app_json["Determinations"][output] = app.outputs[output]
-      end
+        # indicator = app.outputs["Applicant Income Medicaid Eligible Indicator"]
+        # app_json["Determinations"]["Applicant Income Medicaid Eligible Determination Indicator"] = indicator
+        # ineligibility_reason = app.outputs["Income Medicaid Eligible Ineligibility Reason"]
+        # unless %w(Y X).include? indicator
+        #   app_json["Determinations"]["Income Medicaid Eligible Ineligibility Reason"] = ineligibility_reason
+        # end
+        # for output in ["Category Used to Calculate Income", "Percentage for Category Used", "FPL * Percentage", "Calculated Income"]
+        #   app_json["Determinations"][output] = app.outputs[output]
+        # end
 
-      if app.outputs["APTC Referral Indicator"]
-        app_json["Determinations"]["APTC Referral Indicator"] = app.outputs["APTC Referral Indicator"]
-      end
+        # if app.outputs["APTC Referral Indicator"]
+        #   app_json["Determinations"]["APTC Referral Indicator"] = app.outputs["APTC Referral Indicator"]
+        # end
 
-      returned_json["Applicants"] << app_json
+        hh_json["Applicants"] << app_json
+      end
+      returned_json["Medicaid Households"] << hh_json
     end
 
     JSON.pretty_generate(returned_json)
