@@ -43,7 +43,7 @@ fieldset {
   position: relative;
 }
 
-legend, .add-applicant {
+legend, .add-applicant, h2 {
   color: #61708c;
   font-weight: bold;
   text-transform: uppercase;
@@ -110,6 +110,11 @@ fieldset {
   padding-top: 80px;
 }
 
+h2 {
+  font-size: 1em;
+  margin-top: 0;
+}
+
 .form-row, .form-half-field {
   padding: 10px 0;
 }
@@ -121,7 +126,7 @@ fieldset {
 .form-half-field {
   float: left;
   margin-right: 27px;
-  width: 321px;
+  width: 255px;
 }
 
 .add-applicant {
@@ -176,6 +181,10 @@ fieldset {
   width: 22px;
 }
 
+.form-row-expandable-fields .form-half-field {
+  width: 321px;
+}
+
 .form-row-expandable-fields .form-row-expandable-fields {
   margin-left: 22px;
   margin-right: 22px;
@@ -187,6 +196,10 @@ fieldset {
 
 .form-row-expandable-fields .form-row-expandable-fields:before {
   left: 177px;
+}
+
+.filer-2-row {
+  display: none;
 }
 
 .date[type=text] {
