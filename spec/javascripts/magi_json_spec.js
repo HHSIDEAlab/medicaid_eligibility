@@ -3,19 +3,20 @@ describe("MAGI.Application", function() {
   var header, firstApplicant, secondApplicant, thirdApplicant;
 
   beforeEach(function() {
-    header = {'state': 'CA', 'id': '12345'}
+    header = {'state': 'CA', 'id': '12345'};
+    tax_returns = {'filer_1': 'ABCD', 'filer_2': 'EFGH', 'dependent_1': 'IJKL'};
     firstApplicant = {
       'applicant_1_id': 'ABCD',
-      'applicant_1_wages': 10
+      'applicant_1_income_taxes_required_wages': 10
     }
     secondApplicant = {
       'applicant_2_id': 'EFGH',
-      'applicant_2_wages': 20,
+      'applicant_2_income_taxes_required_wages': 20,
       'applicant_2_relationship_to_1': 4
     }
     thirdApplicant = {
       'applicant_3_id': 'IJKL',
-      'applicant_3_wages': 30,
+      'applicant_3_income_taxes_required_wages': 30,
       'applicant_3_relationship_to_1': 3,
       'applicant_3_relationship_to_2': 15
     }
@@ -68,6 +69,20 @@ describe("MAGI.Application", function() {
 
     expect(application.People[2].Relationships[0]["Other ID"]).toBe("ABCD");
     expect(application.People[2].Relationships[1]["Other ID"]).toBe("EFGH");
-  })
+  });
+
+  it('creates a tax return', function() {
+    var testData = _.extend({}, header, firstApplicant, secondApplicant, thirdApplicant, tax_returns);
+    var application = new MAGI.Application(testData, 3);
+    expect(application['Tax Returns'][0]).not.toBe(null);
+    expect(application['Tax Returns'][0].Dependents.length).toBe(1);
+    expect(application['Tax Returns'][0].Filers.length).toBe(2);
+  });
+
+  it ('creates a household', function() {
+    var testData = _.extend({}, header, firstApplicant, secondApplicant, thirdApplicant, tax_returns);
+    var application = new MAGI.Application(testData, 3);
+    expect(application['Physical Households'][0]).not.toBe(null);
+  });
 
 })

@@ -15,6 +15,9 @@ src_files:
   - assets/jquery.js
   - assets/jquery.uniform.js
   - assets/jquery.serializeObject.js
+  - assets/jquery.maskedinput.js
+  - assets/json2html.js
+  - assets/jquery.json2html.js
   - assets/underscore.js
   - assets/form.js
   - assets/magi_application.js
