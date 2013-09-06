@@ -89,9 +89,7 @@ module ApplicationProcessor
   def build_medicaid_households!
     @medicaid_households = []
     
-    for person in @people
-      physical_household = @physical_households.find{|ph| ph.people.include? person}
-
+    for person in @people      
       # Start with someone's tax return
       tax_return = @tax_returns.find{|tr| tr.filers.include?(person) || tr.dependents.include?(person)}
       if tax_return
@@ -118,7 +116,9 @@ module ApplicationProcessor
 
       children = person.relationships.select{|r| [:child, :stepchild].include?(r.relationship_type) && is_minor?(r.person)}
 
-      family_members = (spouses + siblings + parents).map{|r| r.person}.select{|p| physical_household.people.include?(p)}
+      physical_household = @physical_households.find{|ph| ph.people.include? person}
+
+      family_members = (spouses + siblings + parents + children).map{|r| r.person}.select{|p| physical_household.people.include?(p)}
       
       med_household_members = (tax_return_people + family_members).uniq
       med_household_members.delete(person)
