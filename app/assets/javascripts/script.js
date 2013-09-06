@@ -51,18 +51,23 @@ $(document).on('change', '[type=checkbox]', function () {
   $newFieldset = $fieldsets.first().clone();
   $newFieldset.removeClass('first-applicant');
   resetForm($newFieldset);
+  $newFieldset.hide();
   $fieldsets.last().after($newFieldset);
+  $newFieldset.slideDown();
   countFieldsets();
   uniform();
 }).on('click', '.remove-applicant', function () {
+  var $fieldset = $(this).closest('fieldset');
   if ($('fieldset').length > 1) {
-    $(this).closest('fieldset').remove();
+    $fieldset.slideUp(function () {
+      $fieldset.remove();
+    });
     countFieldsets();
   }
 }).on('submit', '#application_form', function() {
-    event.preventDefault();
-    var application = new MAGI.Application($(this).serializeObject(), $('fieldset').length);
-    return false;
+  event.preventDefault();
+  var application = new MAGI.Application($(this).serializeObject(), $('fieldset').length);
+  return false;
 });
 
 $(uniform);
