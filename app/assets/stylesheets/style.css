@@ -3,7 +3,8 @@
     94% gray: #f0f1f2
 */
 
-body, button, input {
+body, button, input, div.selector span {
+  color: #231f20;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
@@ -29,18 +30,16 @@ h1 {
 
 fieldset {
   border: none;
-  margin-top: 50px;
-  padding: 0;
+  margin: 2px 0 0;
   position: relative;
 }
 
 legend {
-  border-bottom: 2px solid #c5c9cb;
-  font-size: 18px;
+  color: #61708c;
   font-weight: bold;
-  margin-bottom: 50px;
+  position: absolute;
   text-transform: uppercase;
-  width: 100%;
+  top: 30px;
 }
 
 label, input {
@@ -48,17 +47,23 @@ label, input {
 }
 
 label {
+  color: #58585b;
   display: inline-block;
   padding: 0 20px;
   width: 160px;
   text-align: right;
 }
 
-input {
+input, div.checker span, div.selector span {
   background: #f0f1f2;
-  border: 2px solid #c5c9cb;
+  border: 1px solid #c5c9cb;
   font-size: 18px;
   line-height: 20px;
+}
+
+input, div.selector span {
+  font-weight: 400;
+  height: 20px;
   padding: 10px;
 }
 
@@ -77,9 +82,13 @@ input[type=text] {
   width: 280px;
 }
 
-.form-fields-area {
+fieldset, .form-fields-area {
   background: white;
   padding: 30px 22px;
+}
+
+fieldset {
+  padding-top: 80px;
 }
 
 .form-row, .form-half-field {
@@ -112,8 +121,8 @@ input[type=text] {
 
 .remove-applicant {
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 22px;
+  top: 30px;
 }
 
 .form-row-expandable {
@@ -143,6 +152,38 @@ input[type=text] {
 
 .first-applicant.last-applicant .last-applicant-only {
   display: none;
+}
+
+div.selector {
+  height: 42px;
+  padding: 0;
+}
+
+div.selector.fixedWidth {
+  width: 302px;
+}
+
+div.selector.fixedWidth span {
+  width: 280px;
+}
+
+div.selector span {
+  height: 20px;
+  text-shadow: none;
+}
+
+div.selector select {
+  height: 40px;
+}
+
+div.checker span.checked, div.checker span.checked:hover {
+  background-image: url('/assets/check.png');
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+
+div.checker input {
+  vertical-align: top;
 }
 
 .cf:before,
