@@ -1,5 +1,14 @@
-body, button {
+/*
+  Common colors:
+    94% gray: #f0f1f2
+*/
+
+body, button, input, div.selector span {
+  color: #231f20;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+body, button {
   font-weight: 500;
   font-size: 14px;
 }
@@ -21,36 +30,78 @@ h1 {
 
 fieldset {
   border: none;
-  padding: 0;
+  margin: 2px 0 0;
+  position: relative;
 }
 
 legend {
-  border-bottom: 2px solid #c5c9cb;
-  font-size: 18px;
+  color: #61708c;
   font-weight: bold;
+  position: absolute;
   text-transform: uppercase;
-  width: 100%;
+  top: 30px;
+}
+
+label, input {
+  vertical-align: middle;
 }
 
 label {
+  color: #58585b;
   display: inline-block;
   padding: 0 20px;
   width: 160px;
   text-align: right;
 }
 
-.form-fields-area {
+input, div.checker span, div.selector span {
+  background: #f0f1f2;
+  border: 1px solid #c5c9cb;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+input, div.selector span {
+  font-weight: 400;
+  height: 20px;
+  padding: 10px;
+}
+
+input[type=number] {
+  text-align: right;
+  width: 40px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=text] {
+  width: 280px;
+}
+
+fieldset, .form-fields-area {
   background: white;
   padding: 30px 22px;
 }
 
+fieldset {
+  padding-top: 80px;
+}
+
+.form-row, .form-half-field {
+  padding: 10px 0;
+}
+
 .form-row {
-  margin: 20px 0;
+  clear: both;
 }
 
 .form-half-field {
   float: left;
-  margin-bottom: 20px;
+  margin-right: 50px;
 }
 
 .add-applicant {
@@ -66,4 +117,85 @@ label {
 
 .add-applicant:before {
   content: '+ ';
+}
+
+.remove-applicant {
+  position: absolute;
+  right: 22px;
+  top: 30px;
+}
+
+.form-row-expandable {
+  -webkit-transition: all 0.4s ease-out;
+     -moz-transition: all 0.4s ease-out;
+       -o-transition: all 0.4s ease-out;
+          transition: all 0.4s ease-out;
+}
+
+.form-row-expandable.form-row-expanded {
+  background: #f0f1f2;
+  padding: 20px 0 10px;
+  margin: 10px 0;
+}
+
+.form-row-expandable-fields {
+  display: none;
+}
+
+.last-applicant-only {
+  display: none;
+}
+
+.last-applicant .last-applicant-only {
+  display: block;
+}
+
+.first-applicant.last-applicant .last-applicant-only {
+  display: none;
+}
+
+div.selector {
+  height: 42px;
+  padding: 0;
+}
+
+div.selector.fixedWidth {
+  width: 302px;
+}
+
+div.selector.fixedWidth span {
+  width: 280px;
+}
+
+div.selector span {
+  height: 20px;
+  text-shadow: none;
+}
+
+div.selector select {
+  height: 40px;
+}
+
+div.checker span.checked, div.checker span.checked:hover {
+  background-image: url('/assets/check.png');
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+
+div.checker input {
+  vertical-align: top;
+}
+
+.cf:before,
+.cf:after {
+    content: " ";
+    display: table;
+}
+
+.cf:after {
+    clear: both;
+}
+
+.cf {
+    *zoom: 1;
 }
