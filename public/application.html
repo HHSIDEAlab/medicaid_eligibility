@@ -8,12 +8,12 @@
     <meta charset="utf-8">
   </head>
   <body>
-    <form method="post">
+    <form id="application_form" method="post">
       <h1>MAGI In A Box</h1>
       <div class="form-fields-area">
         <div class="form-row">
           <label for="state">State</label>
-          <select id="state">
+          <select id="state" name="state">
             <option value=""></option>
             <option value="AL">Alabama</option>
             <option value="AK">Alaska</option>
@@ -70,7 +70,7 @@
         </div>
         <div class="form-row">
           <label for="id">Application Name or ID</label>
-          <input type="text" id="id">
+          <input type="text" id="id" name="id">
         </div>
       </div>
       <fieldset class="first-applicant">
@@ -79,7 +79,7 @@
         </div>
         <div class="form-row">
           <label for="applicant_1_id">Applicant Name or ID</label>
-          <input type="text" id="applicant_1_id">
+          <input type="text" id="applicant_1_id" name="applicant_1_id">
         </div>
         <div class="form-row">
           <label for="applicant_1_age">Age</label>
@@ -245,6 +245,7 @@
     <script src="/assets/jquery.js"></script>
     <script src="/assets/jquery.validate.js"></script>
     <script src="/assets/jquery.uniform.js"></script>
+    <script src="/assets/jquery.serializeObject.js"></script>
     <script src="/assets/script.js"></script>
     <script src="/assets/form.js"></script>  
   </body>
