@@ -79,7 +79,7 @@
         </div>
         <div class="form-row">
           <label for="applicant_1_id">Applicant Name or ID</label>
-          <input type="text" id="applicant_1_id" name="applicant_1_id">
+          <input type="text" id="applicant_1_id" name="applicant_1_id" class="applicant-id-field">
         </div>
         <div class="form-row">
           <label for="applicant_1_age">Age</label>
@@ -317,6 +317,24 @@
         <button type="button" class="remove-applicant last-applicant-only">Remove This Applicant</button>
       </fieldset>
       <button type="button" class="add-applicant">Add Another Applicant</button>
+      <div class="form-fields-area">
+        <h2>Tax Returns</h2>
+        <div class="form-row">
+          <label for="filer_1">Filer 1</label>
+          <select id="filer_1" name="filer_1" class="filer">
+            <option value=""></option>
+            <option value="1"></option>
+          </select>
+        </div>
+        <div class="form-row filer-2-row">
+          <label for="filer_2">Filer 2</label>
+          <select id="filer_2" name="filer_2" class="filer">
+            <option value=""></option>
+            <option value="1"></option>
+          </select>
+        </div>
+        <div class="dependent-fields"></div>
+      </div>
       <button type="submit">Check Eligibility</button>
     </form>
     <script id="relationship_template" type="text/template">
@@ -341,6 +359,14 @@
           <option value="26">Child-in-law</option>
           <option value="27">Former spouse</option>
           <option value="30">Parent-in-law</option>
+        </select>
+      </div>
+    </script>
+    <script id="dependent_template" type="text/template">
+      <div class="form-row">
+        <label for="dependent_{{num}}">Dependent 1</label>
+        <select id="dependent_{{num}}" name="dependent_{{num}}" class="filer">
+          <option value=""></option>
         </select>
       </div>
     </script>
