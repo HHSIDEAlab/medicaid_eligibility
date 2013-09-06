@@ -22,7 +22,8 @@ var MAGI = {};
   })
 
 
-  plainDataMapper = new DataMapper(function () {
+  plainDataMapper = new DataMapper(function (name) {
+    return name;
   });
 
 
@@ -44,10 +45,15 @@ var MAGI = {};
     }, context);
   };
 
+  var application_fields = [
+    {name: 'state', json: 'State'}
+  ]
+
   var person_fields = [
+    {name: 'person_id', json: "Person ID", required: true},
     {name: 'foo', json: 'Applicant Age', required: true},
     {name: 'bar', json: 'Applicant Attest Disabled'},
-    {name: 'baz', json: 'Applicant Attest Long Term Care'},
+    {name: 'baz', json: 'Applicant Attest Long Term Care'} /*,
     {name: '', json: 'Applicant Has 40 Title II Work Quarters'},
     {name: '', json: 'Has Insurance'},
     {name: '', json: 'Hours Worked Per Week'},
@@ -81,6 +87,7 @@ var MAGI = {};
     {name: '', json: 'Veteran Status'},
     {name: '', json: 'Victim of Trafficking'},
     {name: '', json: 'Attest Primary Responsibility'}
+    */
   ];
 
 
@@ -99,7 +106,8 @@ var MAGI = {};
   ]
 
   var payroll_income_fields = [
-    {name: 'wages', json: 'Wages, Salaries, Tips'},
+    {name: 'wages', json: 'Wages, Salaries, Tips'}
+    /*,
     {name: '', json: 'Taxable Interest'},
     {name: '', json: 'Tax-Exempt Interest'},
     {name: '', json: 'Taxable Refunds, Credits, or Offsets of State and Local Income Taxes'},
@@ -110,40 +118,60 @@ var MAGI = {};
     {name: '', json: 'Unemployment Compensation'},
     {name: '', json: 'Other Income'},
     {name: '', json: 'MAGI Deductions'}
+    */
   ];
 
   var relationship_field = {
     name: 'applicant_{{ id }}_relationship_to_{{ other }}', json: 'RelationshipCode'
   }
 
-  var Person = function (data, applicant_num) {
-    var Income, Relationship, relationships;
+  var Application = function (data, num_applicants) {
+    var People, Person, person_map, that = this;
 
-    Income = function () {
-      // TODO In the future which fields to use will be conditional on reporting methd
-      applicantScopedDataMapper.map(data, payroll_income_fields, this, {applicant_num: applicant_num})
-    }
+    Person = function (applicant_num) {
+      var Income, Relationship, relationships;
 
-    Relationship = function (other_num) {
-      this["Other ID"] = people[other_num]["Person ID"];
-      this["Relationship Code"] = data["applicant_" + applicant_num + "_relationship_to_" + other_num];
-    };
+      this.exists = function () {
+        return true;
+        //return this["Person ID"] != undefined
+      }
 
-    relationships = function () {
-      _.times(applicant_num - 1, function(n) {
-        return new Relationship(n);
+      Income = function () {
+        // TODO In the future which fields to use will be conditional on reporting methd
+        applicantScopedDataMapper.map(data, payroll_income_fields, this, {applicant_num: applicant_num})
+      }
+
+      Relationship = function (other_num) {
+        this["Other ID"] = person_map[other_num]["Person ID"];
+        this["Relationship Code"] = data["applicant_" + applicant_num + "_relationship_to_" + other_num];
+      };
+
+      relationships = function () {
+        _.times(applicant_num - 1, function (n) {
+          return new Relationship(n);
+        });
+      }
+
+      applicantScopedDataMapper.map(data, person_fields, this, {applicant_num: applicant_num})
+      if (this.exists()) {
+        people[applicant_num] = this;
+        this.Income = new Income();
+        this.Relationships = relationships();
       }
     }
+    People = function () {
+      _.times(num_applicants, function (n) {
+        this[n + 1] = new Person(n + 1)
+      }, this)
+    }
 
-    applicantScopedDataMapper.map(data, person_fields, this, {applicant_num: applicant_num})
-    people[applicant_num] = this;
-    this.Income = new Income();
-    this.Relationships = relationships();
+    plainDataMapper.map(data, application_fields, this);
+    person_map = new People();
+    this.People = _.map(person_map, function(value) {
+      return value;
+    });
   }
 
-  var People = function(data) {
-    
-  }
+  ns.Application = Application;
 
-  ns.Person = Person;
 }(MAGI));
