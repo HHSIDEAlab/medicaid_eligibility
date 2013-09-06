@@ -65,9 +65,15 @@ $(document).on('change', '[type=checkbox]', function () {
     countFieldsets();
   }
 }).on('submit', '#application_form', function() {
-  event.preventDefault();
-  var application = new MAGI.Application($(this).serializeObject(), $('fieldset').length);
-  return false;
+    event.preventDefault();
+    var application = new MAGI.Application($(this).serializeObject(), $('fieldset').length);
+    var endpoint = new MAGI.Endpoint("/");
+    endpoint.submit(application, function(response) {
+      $("#application_form").hide();
+      $("body").append(response)
+      console.log(response);
+    });
+    return false;
 });
 
 $(function () {
