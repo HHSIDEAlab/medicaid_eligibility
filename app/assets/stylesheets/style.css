@@ -19,6 +19,15 @@ body {
   width: 740px;
 }
 
+button[type=submit], input::-webkit-outer-spin-button, input::-webkit-inner-spin-button, .add-applicant, .remove-applicant {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+button[type=submit], .add-applicant, .remove-applicant {
+  border: none;
+}
+
 h1 {
   background: #414958;
   color: #fff;
@@ -34,12 +43,15 @@ fieldset {
   position: relative;
 }
 
-legend {
+legend, .add-applicant {
   color: #61708c;
   font-weight: bold;
-  position: absolute;
   text-transform: uppercase;
-  top: 30px;
+}
+
+legend {
+  position: absolute;
+  top: 22px;
 }
 
 label, input {
@@ -54,9 +66,12 @@ label {
   text-align: right;
 }
 
+input, div.checker span, div.selector span, .form-row-expandable-fields {
+  border: 1px solid #c5c9cb;
+}
+
 input, div.checker span, div.selector span {
   background: #f0f1f2;
-  border: 1px solid #c5c9cb;
   font-size: 18px;
   line-height: 20px;
 }
@@ -74,7 +89,6 @@ input[type=number] {
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
     margin: 0;
 }
 
@@ -106,12 +120,10 @@ fieldset {
 
 .add-applicant {
   background: #f0f1f2;
-  border: none;
-  -webkit-appearance: none;
-  appearance: none;
   display: block;
-  font-size: 18px;
   line-height: 80px;
+  padding: 0 22px;
+  text-align: left;
   width: 100%;
 }
 
@@ -120,26 +132,34 @@ fieldset {
 }
 
 .remove-applicant {
+  background: url('/assets/close.png') no-repeat 0 0;
+  height: 30px;
+  overflow: hidden;
+  padding: 0;
   position: absolute;
-  right: 22px;
-  top: 30px;
-}
-
-.form-row-expandable {
-  -webkit-transition: all 0.4s ease-out;
-     -moz-transition: all 0.4s ease-out;
-       -o-transition: all 0.4s ease-out;
-          transition: all 0.4s ease-out;
-}
-
-.form-row-expandable.form-row-expanded {
-  background: #f0f1f2;
-  padding: 20px 0 10px;
-  margin: 10px 0;
+  right: 21px;
+  text-indent: 100%;
+  top: 16px;
+  white-space: nowrap;
+  width: 30px;
 }
 
 .form-row-expandable-fields {
   display: none;
+  margin-top: 18px;
+  padding: 10px 0;
+  position: relative;
+}
+
+.form-row-expandable-fields:before {
+  background: #fff url('/assets/tail.png') no-repeat 0 0;
+  bottom: 100%;
+  content: '';
+  display: block;
+  height: 12px;
+  left: 203px;
+  position: absolute;
+  width: 22px;
 }
 
 .last-applicant-only {
@@ -152,6 +172,20 @@ fieldset {
 
 .first-applicant.last-applicant .last-applicant-only {
   display: none;
+}
+
+button[type=submit] {
+  background: #24bbbe;
+  -webkit-border-radius: 5px;
+          border-radius: 5px;
+  background-clip: padding-box;
+  color: #fff;
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 20px 85px;
+  margin: 40px auto 0;
+  text-align: center;
 }
 
 div.selector {
@@ -167,7 +201,10 @@ div.selector.fixedWidth span {
   width: 280px;
 }
 
-div.selector span {
+div.selector span, div.selector.hover span, div.selector.focus span, div.selector.focus.active span {
+  background-image: url('/assets/arrow.png');
+  background-position: 100% 0;
+  background-repeat: no-repeat;
   height: 20px;
   text-shadow: none;
 }
