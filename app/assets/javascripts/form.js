@@ -1,4 +1,6 @@
-var resetForm = function ($form) {
+var relationshipTemplate = _.template($('#relationship_template').html()),
+  dependentTemplate = _.template($('#dependent_template').html()),
+  resetForm = function ($form) {
     $form.find('input:text, input:password, input:file, select, textarea').val('');
     $form.find('input:radio, input:checkbox')
       .removeAttr('checked').removeAttr('selected');
@@ -7,8 +9,7 @@ var resetForm = function ($form) {
     var $fieldsets = $('fieldset');
     $fieldsets.each(function (i, el) {
       var rI,
-        $applicantRelationshipFields = $('.applicant-relationship-fields', el),
-        relationshipTemplate = _.template($('#relationship_template').html());
+        $applicantRelationshipFields = $('.applicant-relationship-fields', el);
       $('.applicant-number', el).text(i + 1);
       for (rI = 0; rI < i; rI += 1) {
         if ($applicantRelationshipFields.find('.form-row').length < i) {
@@ -47,7 +48,9 @@ $(document).on('change', '[type=checkbox]', function () {
   $.uniform.update();
 }).on('click', '.add-applicant', function () {
   var $fieldsets = $('fieldset'),
-    $newFieldset;
+    $filers = $('.filer'),
+    $newFieldset,
+    $newDependent;
   $.uniform.restore('input[type=checkbox], select');
   $newFieldset = $fieldsets.first().clone();
   $newFieldset.removeClass('first-applicant');
@@ -56,7 +59,10 @@ $(document).on('change', '[type=checkbox]', function () {
   $fieldsets.last().after($newFieldset);
   $newFieldset.slideDown();
   countFieldsets();
-  $('.filer').append('<option value="' + $fieldsets.length +'"></option>');
+  $filers.append('<option value="' + ($fieldsets.length + 1) +'"></option>');
+  $newDependent = $(dependentTemplate({num: $fieldsets.length}));
+  $newDependent.find('select').append($filers.first().clone().children());
+  $('.dependent-fields').append($newDependent);
   uniform();
 }).on('click', '.remove-applicant', function () {
   var $fieldset = $(this).closest('fieldset');
@@ -66,6 +72,7 @@ $(document).on('change', '[type=checkbox]', function () {
       countFieldsets();
       $('.filer').each(function () {
         $('option', this).last().remove();
+        $('.dependent-fields .form-row').last().remove();
         $.uniform.update(this);
       });
     });
