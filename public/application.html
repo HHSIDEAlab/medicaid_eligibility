@@ -113,6 +113,14 @@
           <label for="applicant_1_long_term_care">In long-term care</label>
           <input type="checkbox" id="applicant_1_long_term_care" name="applicant_1_long_term_care">
         </div>
+        <div class="form-row form-row-expandable clear">
+          <label for="applicant_1_prior_insurance">Prior insurance</label>
+          <input type="checkbox" id="applicant_1_prior_insurance" name="applicant_1_prior_insurance">
+          <div class="form-row-expandable-fields">
+            <label for="applicant_1_prior_insurance_end_date">Prior insurance end date</label>
+            <input type="text" id="applicant_1_prior_insurance_end_date" name="applicant_1_prior_insurance_end_date">
+          </div>
+        </div>
         <div class="form-row">
           <label for="applicant_1_pregnant">Pregnant</label>
           <input type="checkbox" id="applicant_1_pregnant" name="applicant_1_pregnant" data-exclusive="pregnant">
@@ -120,10 +128,6 @@
         <div class="form-row">
           <label for="applicant_1_pregnant_three_months">Pregnant within the last 3 months</label>
           <input type="checkbox" id="applicant_1_pregnant_three_months" name="applicant_1_pregnant_three_months" data-exclusive="pregnant">
-        </div>
-        <div class="form-row clear">
-          <label for="applicant_1_prior_insurance">Prior insurance</label>
-          <input type="checkbox" id="applicant_1_prior_insurance" name="applicant_1_prior_insurance">
         </div>
         <div class="form-row form-row-expandable">
           <label for="applicant_1_foster_care">Formerly in foster care</label>
@@ -197,14 +201,108 @@
             </div>
           </div>
         </div>
-        <div class="form-row">
+        <div class="form-row form-row-expandable">
           <label for="applicant_1_income_taxes_required">Required to file income
             taxes</label>
           <input type="checkbox" id="applicant_1_income_taxes_required" name="applicant_1_income_taxes_required">
+          <div class="form-row-expandable-fields cf">
+            <div class="form-half-field">
+              <label for="applicant_1_income_taxes_required_wages">Wages, salaries, tips</label>
+              <input type="number" id="applicant_1_income_taxes_required_wages" name="applicant_1_income_taxes_required_wages" class="long-number">
+            </div>
+            <div class="form-half-field">
+              <label for="applicant_1_income_taxes_required_capital_gains">Capital gains or loss</label>
+              <input type="number" id="applicant_1_income_taxes_required_capital_gains" name="applicant_1_income_taxes_required_capital_gains" class="long-number">
+            </div>
+            <div class="form-half-field">
+              <label for="applicant_1_income_taxes_required_taxable_interest">Taxable interest</label>
+              <input type="number" id="applicant_1_income_taxes_required_taxable_interest" name="applicant_1_income_taxes_required_taxable_interest" class="long-number">
+            </div>
+            <div class="form-half-field">
+              <label for="applicant_1_income_taxes_required_pensions">Pensions and annuities taxable amount</label>
+              <input type="number" id="applicant_1_income_taxes_required_pensions" name="applicant_1_income_taxes_required_pensions" class="long-number">
+            </div>
+            <div class="form-half-field">
+              <label for="applicant_1_income_taxes_required_tax_exempt_interest">Tax-exempt interest</label>
+              <input type="number" id="applicant_1_income_taxes_required_tax_exempt_interest" name="applicant_1_income_taxes_required_tax_exempt_interest" class="long-number">
+            </div>
+            <div class="form-half-field">
+              <label for="applicant_1_income_taxes_required_farm_income">Farm income or loss</label>
+              <input type="number" id="applicant_1_income_taxes_required_farm_income" name="applicant_1_income_taxes_required_farm_income" class="long-number">
+            </div>
+            <div class="form-half-field">
+              <label for="applicant_1_income_taxes_required_taxable_refunds">Taxable refunds, credits, or offsets of state and local income taxes</label>
+              <input type="number" id="applicant_1_income_taxes_required_taxable_refunds" name="applicant_1_income_taxes_required_taxable_refunds" class="long-number">
+            </div>
+            <div class="form-half-field">
+              <label for="applicant_1_income_taxes_required_unemployment">Unemployment compensation</label>
+              <input type="number" id="applicant_1_income_taxes_required_unemployment" name="applicant_1_income_taxes_required_unemployment" class="long-number">
+            </div>
+            <div class="form-half-field clear">
+              <label for="applicant_1_income_taxes_required_alimony">Alimony</label>
+              <input type="number" id="applicant_1_income_taxes_required_alimony" name="applicant_1_income_taxes_required_alimony" class="long-number">
+            </div>
+            <div class="form-half-field">
+              <label for="applicant_1_income_taxes_required_other">Other</label>
+              <input type="number" id="applicant_1_income_taxes_required_other" name="applicant_1_income_taxes_required_other" class="long-number">
+            </div>
+            <div class="form-half-field">
+              <label for="applicant_1_income_taxes_required_deductions">Other</label>
+              <input type="number" id="applicant_1_income_taxes_required_deductions" name="applicant_1_income_taxes_required_deductions" class="long-number">
+            </div>
+          </div>
         </div>
-        <div class="form-row">
+        <div class="form-row form-row-expandable">
           <label for="applicant_1_citizen">US citizen</label>
           <input type="checkbox" id="applicant_1_citizen" name="applicant_1_citizen">
+          <div class="form-row-expandable-fields">
+            <div class="form-half-field">
+              <label for="applicant_1_citizen_lawful">Lawful resident</label>
+              <input type="checkbox" id="applicant_1_citizen_lawful" name="applicant_1_citizen_lawful">
+            </div>
+            <div class="form-half-field">
+              <label for="applicant_1_citizen_five_year_bar">Subject to a 5 year bar</label>
+              <input type="checkbox" id="applicant_1_citizen_five_year_bar" name="applicant_1_citizen_five_year_bar">
+            </div>
+            <div class="form-half-field">
+              <label for="applicant_1_citizen_forty_quarters">Worked in the US for 40 quarters (120 months)</label>
+              <input type="checkbox" id="applicant_1_citizen_forty_quarters" name="applicant_1_citizen_forty_quarters">
+            </div>
+            <div class="form-half-field">
+              <label for="applicant_1_citizen_five_year_bar_met">5 year bar met</label>
+              <input type="checkbox" id="applicant_1_citizen_five_year_bar_met" name="applicant_1_citizen_five_year_bar_met">
+            </div>
+            <div class="form-row">
+              <label for="applicant_1_citizen_refugee_assistance">Eligible for refugee medical assistance</label>
+              <input type="checkbox" id="applicant_1_citizen_refugee_assistance" name="applicant_1_citizen_refugee_assistance">
+            </div>
+            <div class="form-row">
+              <label for="applicant_1_citizen_refugee_assistance_start_date">Refugee medical assistance start date</label>
+              <input type="checkbox" id="applicant_1_citizen_refugee_assistance_start_date" name="applicant_1_citizen_refugee_assistance_start_date">
+            </div>
+            <div class="form-row form-row-expandable">
+              <label for="applicant_1_citizen_human_trafficking">Victim of human trafficking</label>
+              <input type="checkbox" id="applicant_1_citizen_human_trafficking" name="applicant_1_citizen_human_trafficking">
+              <div class="form-row-expandable-fields">
+                <div class="form-row">
+                  <label for="applicant_1_citizen_human_trafficking_non_citizen">Qualified non-citizen</label>
+                  <input type="checkbox" id="applicant_1_citizen_human_trafficking_non_citizen" name="applicant_1_citizen_human_trafficking_non_citizen">
+                </div>
+                <div class="form-row">
+                  <label for="applicant_1_citizen_human_trafficking_deport_withheld_date">Non-citizen deport withheld date</label>
+                  <input type="text" id="applicant_1_citizen_human_trafficking_deport_withheld_date" name="applicant_1_citizen_human_trafficking_deport_withheld_date">
+                </div>
+                <div class="form-row">
+                  <label for="applicant_1_citizen_human_trafficking_entry_date">Non-citizen entry date</label>
+                  <input type="text" id="applicant_1_citizen_human_trafficking_entry_date" name="applicant_1_citizen_human_trafficking_entry_date">
+                </div>
+                <div class="form-row">
+                  <label for="applicant_1_citizen_human_trafficking_status_grant_date">Non-citizen status grant date</label>
+                  <input type="text" id="applicant_1_citizen_human_trafficking_status_grant_date" name="applicant_1_citizen_human_trafficking_status_grant_date">
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <button type="button" class="remove-applicant last-applicant-only">Remove This Applicant</button>
       </fieldset>
