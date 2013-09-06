@@ -38,7 +38,7 @@ $(document).on('change', '[type=checkbox]', function () {
     $parent = $this.closest('.checker').parent('.form-row-expandable'),
     exclusive = $this.data('exclusive');
   $parent.toggleClass('form-row-expanded', checked);
-  $parent.find('.form-row-expandable-fields').slideToggle(checked);
+  $parent.children('.form-row-expandable-fields').slideToggle(checked);
   if (exclusive) {
     $this.closest('fieldset').find('input[data-exclusive=' + exclusive + ']:checked').not($this)
       .attr('checked', false);

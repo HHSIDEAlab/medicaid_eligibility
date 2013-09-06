@@ -163,6 +163,15 @@ fieldset {
   width: 22px;
 }
 
+.form-row-expandable-fields .form-row-expandable-fields {
+  margin-left: 22px;
+  margin-right: 22px;
+}
+
+.form-row-expandable-fields .form-row-expandable-fields label {
+  width: 138px;
+}
+
 .last-applicant-only {
   display: none;
 }
