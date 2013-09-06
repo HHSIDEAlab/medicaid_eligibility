@@ -70,4 +70,8 @@ $(document).on('change', '[type=checkbox]', function () {
   return false;
 });
 
-$(uniform);
+$(function () {
+  $('.date').mask('99 / 99 / 9999');
+
+  uniform();
+});
