@@ -59,6 +59,10 @@ $(document).on('change', '[type=checkbox]', function () {
     $(this).closest('fieldset').remove();
     countFieldsets();
   }
+}).on('submit', '#application_form', function() {
+    event.preventDefault();
+    var application = new MAGI.Application($(this).serializeObject(), $('fieldset').length);
+    return false;
 });
 
 $(uniform);
