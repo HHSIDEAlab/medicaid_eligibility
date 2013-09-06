@@ -79,7 +79,7 @@
         </div>
         <div class="form-row">
           <label for="applicant_1_id">Applicant Name or ID</label>
-          <input type="text" id="applicant_1_id" name="applicant_1_id">
+          <input type="text" id="applicant_1_id" name="applicant_1_id" class="applicant-id-field">
         </div>
         <div class="form-row">
           <label for="applicant_1_age">Age</label>
@@ -106,14 +106,22 @@
           <input type="checkbox" id="applicant_1_incarcerated" name="applicant_1_incarcerated">
         </div>
         <div class="form-half-field">
-          <label for="applicant_1_has_insurance">Has insurance</label>
-          <input type="checkbox" id="applicant_1_has_insurance" name="applicant_1_has_insurance">
+          <label for="applicant_1_state_residency">Meets state residency status requirements</label>
+          <input type="checkbox" id="applicant_1_state_residency" name="applicant_1_state_residency">
         </div>
         <div class="form-half-field">
           <label for="applicant_1_long_term_care">In long-term care</label>
           <input type="checkbox" id="applicant_1_long_term_care" name="applicant_1_long_term_care">
         </div>
-        <div class="form-row form-row-expandable clear">
+        <div class="form-half-field clear">
+          <label for="applicant_1_has_insurance">Has insurance</label>
+          <input type="checkbox" id="applicant_1_has_insurance" name="applicant_1_has_insurance">
+        </div>
+        <div class="form-half-field">
+          <label for="applicant_1_state_employee_health_benefits">Received state employee health benefits</label>
+          <input type="checkbox" id="applicant_1_state_employee_health_benefits" name="applicant_1_state_employee_health_benefits">
+        </div>
+        <div class="form-row form-row-expandable">
           <label for="applicant_1_prior_insurance">Prior insurance</label>
           <input type="checkbox" id="applicant_1_prior_insurance" name="applicant_1_prior_insurance">
           <div class="form-row-expandable-fields">
@@ -245,11 +253,11 @@
               <input type="number" id="applicant_1_income_taxes_required_alimony" name="applicant_1_income_taxes_required_alimony" class="long-number">
             </div>
             <div class="form-half-field">
-              <label for="applicant_1_income_taxes_required_other">Other</label>
+              <label for="applicant_1_income_taxes_required_other">Other income</label>
               <input type="number" id="applicant_1_income_taxes_required_other" name="applicant_1_income_taxes_required_other" class="long-number">
             </div>
             <div class="form-half-field">
-              <label for="applicant_1_income_taxes_required_deductions">Other</label>
+              <label for="applicant_1_income_taxes_required_deductions">MAGI deductions</label>
               <input type="number" id="applicant_1_income_taxes_required_deductions" name="applicant_1_income_taxes_required_deductions" class="long-number">
             </div>
           </div>
@@ -309,6 +317,24 @@
         <button type="button" class="remove-applicant last-applicant-only">Remove This Applicant</button>
       </fieldset>
       <button type="button" class="add-applicant">Add Another Applicant</button>
+      <div class="form-fields-area">
+        <h2>Tax Returns</h2>
+        <div class="form-row">
+          <label for="filer_1">Filer 1</label>
+          <select id="filer_1" name="filer_1" class="filer">
+            <option value=""></option>
+            <option value="1"></option>
+          </select>
+        </div>
+        <div class="form-row filer-2-row">
+          <label for="filer_2">Filer 2</label>
+          <select id="filer_2" name="filer_2" class="filer">
+            <option value=""></option>
+            <option value="1"></option>
+          </select>
+        </div>
+        <div class="dependent-fields"></div>
+      </div>
       <button type="submit">Check Eligibility</button>
     </form>
     <script id="relationship_template" type="text/template">
@@ -333,6 +359,14 @@
           <option value="26">Child-in-law</option>
           <option value="27">Former spouse</option>
           <option value="30">Parent-in-law</option>
+        </select>
+      </div>
+    </script>
+    <script id="dependent_template" type="text/template">
+      <div class="form-row">
+        <label for="dependent_{{num}}">Dependent 1</label>
+        <select id="dependent_{{num}}" name="dependent_{{num}}" class="filer">
+          <option value=""></option>
         </select>
       </div>
     </script>
