@@ -13,11 +13,11 @@
 src_files:
   #- assets/application.js
   - assets/jquery.js
-  - assets/jquery.uniform.js"
+  - assets/jquery.uniform.js
   - assets/jquery.serializeObject.js
   - assets/underscore.js
-  - assets/script.js
   - assets/form.js
+  - assets/magi_application.js
 
 # stylesheets
 #
