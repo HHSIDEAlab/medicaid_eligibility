@@ -18,15 +18,16 @@ module ApplicationResponder
         app_json["CHIP Eligible"] = app.outputs["Applicant CHIP Indicator"]
         app_json["Non-MAGI Referral"] = app.outputs["Applicant Medicaid Non-MAGI Referral Indicator"]
         app_json["Category"] = app.outputs["Category Used to Calculate Income"]
-        app_json["Category Threshold"] = app.outputs["FPL * Percentage"]
+        app_json["Category Threshold"] = app.outputs["FPL * Percentage"].to_i
 
         app_json["Determinations"] = {}
 
         for det in ApplicationVariables::DETERMINATIONS
-          det_json = {
-            "Indicator" => app.outputs["Applicant #{det[:name]} Indicator"],
-            "Ineligibility Code" => app.outputs["#{det[:name]} Ineligibility Reason"]
-          }
+          det_json = {}
+          det_json["Indicator"] = app.outputs["Applicant #{det[:name]} Indicator"]
+          if app.outputs["Applicant #{det[:name]} Indicator"] == 'N'
+            det_json["Ineligibility Code"] = app.outputs["#{det[:name]} Ineligibility Reason"]
+          end
           app_json["Determinations"][det[:name]] = det_json
         end
 
@@ -44,10 +45,11 @@ module ApplicationResponder
             "Determinations" => {}
           }
           for det_name in ["Dependent Age", "Deprived Child", "Relationship"]
-            det_json = {
-            "Indicator" => qual_child["Child of Caretaker #{det_name} Indicator"],
-            "Ineligibility Code" => qual_child["Child of Caretaker #{det_name} Ineligibility Reason"]
-            }
+            det_json = {}
+            det_json["Indicator"] = qual_child["Child of Caretaker #{det_name} Indicator"]
+            if qual_child["Child of Caretaker #{det_name} Indicator"] == 'N'
+              det_json["Ineligibility Code"] = qual_child["Child of Caretaker #{det_name} Ineligibility Reason"]
+            end
             child_json["Determinations"][det_name] = det_json
           end
           app_json["Other Outputs"]["Qualified Children List"] << child_json
