@@ -427,27 +427,29 @@ module ApplicationVariables
     "23" => :sibling_in_law,
     "26" => :child_in_law,
     "27" => :former_spouse,
-    "30" => :parent_in_law
+    "30" => :parent_in_law,
+    "88" => :other
   }.freeze
 
-  CODE_REVERSE = {
-    "01" => "01",
-    "02" => "02",
-    "03" => "04",
-    "04" => "03",
-    "05" => "12",
-    "06" => "15",
-    "07" => "07",
-    "08" => "08",
-    "12" => "05",
-    "13" => "14",
-    "14" => "13",
-    "15" => "06",
-    "16" => "16",
-    #"17" => "Parent's Domestic Partner",
-    "23" => "23",
-    "26" => "30",
-    "27" => "27",
-    "30" => "26"
+  RELATIONSHIP_INVERSE = {
+    :self => :self,
+    :spouse => :spouse,
+    :parent => :child,
+    :child => :parent,
+    :stepchild => :stepparent,
+    :grandchild => :grandparent,
+    :sibling => :sibling,
+    :domestic_partner => :domestic_partner,
+    :stepparent => :stepchild,
+    :uncle_aunt => :nephew_niece,
+    :nephew_niece => :uncle_aunt,
+    :grandparent => :grandchild,
+    :cousin => :cousin,
+    :parents_domestic_partner => :other,
+    :sibling_in_law => :sibling_in_law,
+    :child_in_law => :parent_in_law,
+    :former_spouse => :former_spouse,
+    :parent_in_law => :child_in_law,
+    :other => :other
   }
 end

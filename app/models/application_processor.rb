@@ -2,7 +2,8 @@ module ApplicationProcessor
   include ApplicationComponents
 
   def compute_values!
-    # relationship validator/filler
+    # relationship validator
+    compute_relationships!
     build_medicaid_households!
     calculate_household_income!
   end
@@ -68,6 +69,21 @@ module ApplicationProcessor
     }).slice(*(ruleset.class.inputs.keys))
     config = @config.slice(*(ruleset.class.configs.keys))
     RuleContext.new(config, input, @determination_date)
+  end
+
+  def compute_relationships!
+    for person in @people
+      for rel in person.relationships
+        inverse_relationship = rel.person.relationships.find{|rel| rel.person == person}
+        if inverse_relationship
+          unless inverse_relationship.relationship_type == ApplicationVariables::RELATIONSHIP_INVERSE[rel.relationship_type]
+            raise "Inconsistent relationships between #{person.person_id} and #{rel.person.person_id}"
+          end
+        else
+          rel.person.relationships << Relationship.new(person, ApplicationVariables::RELATIONSHIP_INVERSE[rel.relationship_type], {})
+        end
+      end
+    end
   end
 
   def build_medicaid_households!
