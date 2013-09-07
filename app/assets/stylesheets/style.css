@@ -428,3 +428,7 @@ h3.name {
 .determinations li {
   margin-bottom: 6px;
 }
+
+#results {
+  display: none;
+}

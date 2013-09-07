@@ -92,7 +92,10 @@ $(document).on('change', '[type=checkbox]', function () {
     var endpoint = new MAGI.Endpoint("/determinations/eval.json");
     endpoint.submit(application, function(response) {
       $("#application_form").hide();
-      $("body").append(response)
+      $("#results").show();
+      Results = response;
+      refreshResults();
+//      $("body").append(response)
       console.log(response);
     });
     return false;
