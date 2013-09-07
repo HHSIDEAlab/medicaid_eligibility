@@ -16,7 +16,24 @@ module ApplicationResponder
         app_json["Person ID"] = app.person_id
         app_json["Medicaid Eligible"] = app.outputs["Applicant Medicaid Indicator"]
         app_json["CHIP Eligible"] = app.outputs["Applicant CHIP Indicator"]
-        app_json["Non-MAGI Referral"] = app.outputs["Applicant Medicaid Non-MAGI Referral Indicator"]
+        
+        if app.outputs["Applicant Medicaid Indicator"] == 'N' && app.outputs["Applicant CHIP Indicator"] == 'N'
+          ineligibility_reason = "Applicant ineligible for the following reasons:"
+          if app.applicant_attributes["Medicaid Residency Indicator"] == 'N'
+            ineligibility_reason += "\nApplicant did not meet residency requirements"
+          end
+          if app.outputs["Applicant Medicaid Citizen Or Immigrant Indicator"] == 'N'
+            ineligibility_reason += "\nApplicant did not meet citizenship/immigration requirements"
+          end
+          if app.outputs["Category Used to Calculate Income"] == "None"
+            ineligibility_reason += "\nApplicant did not meet the requirements for any eligibility category"
+          elsif app.outputs["Applicant Income Medicaid Eligible Indicator"] == 'N'
+            ineligibility_reason += "\nApplicant did not meet the income requirements for any category qualified for"            
+          end
+          app_json["Ineligibility Reason"] = ineligibility_reason
+          app_json["Non-MAGI Referral"] = app.outputs["Applicant Medicaid Non-MAGI Referral Indicator"]
+        end
+        
         app_json["Category"] = app.outputs["Category Used to Calculate Income"]
         app_json["Category Threshold"] = app.outputs["FPL * Percentage"].to_i
 
@@ -30,12 +47,6 @@ module ApplicationResponder
           end
           app_json["Determinations"][det[:name]] = det_json
         end
-
-        # app_json["Determinations"]["Applicant Parent Caretaker Category Indicator"] = app.outputs["Applicant Parent Caretaker Category Indicator"]
-        # ineligibility_reason = app.outputs["Parent Caretaker Category Ineligibility Reason"]
-        # if ineligibility_reason != 999
-        #   app_json["Determinations"]["Parent Caretaker Category Ineligibility Reason"] = ineligibility_reason
-        # end
 
         app_json["Other Outputs"] = {}
         app_json["Other Outputs"]["Qualified Children List"] = []
@@ -55,31 +66,9 @@ module ApplicationResponder
           app_json["Other Outputs"]["Qualified Children List"] << child_json
         end
 
-        # for det in ApplicationVariables::DETERMINATIONS.select{|d| !(["Parent Caretaker Category", "Income"].include?(d[:name]))}
-        #   indicator = app.outputs["Applicant #{det[:name]} Indicator"]
-        #   app_json["Determinations"]["Applicant #{det[:name]} Indicator"] = indicator
-        #   ineligibility_reason = app.outputs["#{det[:name]} Ineligibility Reason"]
-        #   unless %w(Y X).include? indicator
-        #     app_json["Determinations"]["#{det[:name]} Ineligibility Reason"] = ineligibility_reason
-        #   end
-        # end
-
-        # indicator = app.outputs["Applicant Income Medicaid Eligible Indicator"]
-        # app_json["Determinations"]["Applicant Income Medicaid Eligible Determination Indicator"] = indicator
-        # ineligibility_reason = app.outputs["Income Medicaid Eligible Ineligibility Reason"]
-        # unless %w(Y X).include? indicator
-        #   app_json["Determinations"]["Income Medicaid Eligible Ineligibility Reason"] = ineligibility_reason
-        # end
-        # for output in ["Category Used to Calculate Income", "Percentage for Category Used", "FPL * Percentage", "Calculated Income"]
-        #   app_json["Determinations"][output] = app.outputs[output]
-        # end
-
-        # if app.outputs["APTC Referral Indicator"]
-        #   app_json["Determinations"]["APTC Referral Indicator"] = app.outputs["APTC Referral Indicator"]
-        # end
-
         hh_json["Applicants"] << app_json
       end
+      hh_json["Non-Applicants"] = household.people.select{|p| !(@applicants.include?(p))}.map{|p| {"Person ID" => p.person_id}}
       returned_json["Medicaid Households"] << hh_json
     end
 
