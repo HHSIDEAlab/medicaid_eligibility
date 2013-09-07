@@ -18,18 +18,6 @@ var relationshipTemplate = _.template($('#relationship_template').html()),
             .append(relationshipTemplate({self: i + 1, relation: rI + 1}));
         }
       }
-      /*
-      $('label, input', el).each(function (j, formEl) {
-        var $formEl = $(formEl);
-        _.each(['for', 'id', 'name'], function (at) {
-          var val = $formEl.attr(at);
-          if (val) {
-            $formEl.attr(at, val.replace(/^applicant_[0-9]+/, 'applicant_' + (i + 1)));
-          }
-        });
-      });
-
-      */
       $(el).toggleClass('last-applicant', i === $fieldsets.length - 1);
     });
     $('.filer-2-row').toggle($fieldsets.length > 1);
@@ -56,10 +44,7 @@ $(document).on('change', '[type=checkbox]', function () {
     $newFieldset,
     $newDependent;
   $.uniform.restore('input[type=checkbox], select');
-  //$newFieldset = $fieldsets.first().clone();
   $newFieldset = $(formTemplate({num: $fieldsets.length + 1, 'applicant_class': 'last-applicant'}));
-  //$newFieldset.removeClass('first-applicant');
-  //resetForm($newFieldset);
   $newFieldset.hide();
   $fieldsets.last().after($newFieldset);
   $newFieldset.slideDown();
@@ -104,13 +89,13 @@ $(document).on('change', '[type=checkbox]', function () {
         $("#results").show();
         Results = response;
         refreshResults();
-  //      $("body").append(response)
         console.log(response);
       }
   });
     return false;
 }).ready(function() {
-    $('.add-applicant').before(formTemplate({num: 1, 'applicant_class': 'first_applicant'}))
+    $('.add-applicant').before(formTemplate({num: 1, 'applicant_class': 'first_applicant'}));
+    $('#application_form').validate();
   });
 
 $(function () {
