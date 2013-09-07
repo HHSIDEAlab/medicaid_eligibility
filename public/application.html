@@ -8,339 +8,93 @@
     <meta charset="utf-8">
   </head>
   <body>
-    <form id="application_form" method="post">
-      <h1>MAGI In A Box</h1>
-      <div class="form-fields-area">
-        <div class="form-row">
-          <label for="state">State</label>
-          <select id="state" name="state">
-            <option value=""></option>
-            <option value="AL">Alabama</option>
-            <option value="AK">Alaska</option>
-            <option value="AZ">Arizona</option>
-            <option value="AR">Arkansas</option>
-            <option value="CA">California</option>
-            <option value="CO">Colorado</option>
-            <option value="CT">Connecticut</option>
-            <option value="DE">Delaware</option>
-            <option value="DC">District Of Columbia</option>
-            <option value="FL">Florida</option>
-            <option value="GA">Georgia</option>
-            <option value="HI">Hawaii</option>
-            <option value="ID">Idaho</option>
-            <option value="IL">Illinois</option>
-            <option value="IN">Indiana</option>
-            <option value="IA">Iowa</option>
-            <option value="KS">Kansas</option>
-            <option value="KY">Kentucky</option>
-            <option value="LA">Louisiana</option>
-            <option value="ME">Maine</option>
-            <option value="MD">Maryland</option>
-            <option value="MA">Massachusetts</option>
-            <option value="MI">Michigan</option>
-            <option value="MN">Minnesota</option>
-            <option value="MS">Mississippi</option>
-            <option value="MO">Missouri</option>
-            <option value="MT">Montana</option>
-            <option value="NE">Nebraska</option>
-            <option value="NV">Nevada</option>
-            <option value="NH">New Hampshire</option>
-            <option value="NJ">New Jersey</option>
-            <option value="NM">New Mexico</option>
-            <option value="NY">New York</option>
-            <option value="NC">North Carolina</option>
-            <option value="ND">North Dakota</option>
-            <option value="OH">Ohio</option>
-            <option value="OK">Oklahoma</option>
-            <option value="OR">Oregon</option>
-            <option value="PA">Pennsylvania</option>
-            <option value="RI">Rhode Island</option>
-            <option value="SC">South Carolina</option>
-            <option value="SD">South Dakota</option>
-            <option value="TN">Tennessee</option>
-            <option value="TX">Texas</option>
-            <option value="UT">Utah</option>
-            <option value="VT">Vermont</option>
-            <option value="VA">Virginia</option>
-            <option value="WA">Washington</option>
-            <option value="WV">West Virginia</option>
-            <option value="WI">Wisconsin</option>
-            <option value="WY">Wyoming</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <label for="id">Application Name or ID</label>
-          <input type="text" id="id" name="id">
-        </div>
+<!-- form goes here -->
+<form id="application_form" method="post">
+  <h1>MAGI In A Box</h1>
+  <div class="form-fields-area">
+    <div class="form-row">
+      <label for="state">State</label>
+      <select id="state" name="state">
+        <option value=""></option>
+        <option value="AL">Alabama</option>
+        <option value="AK">Alaska</option>
+        <option value="AZ">Arizona</option>
+        <option value="AR">Arkansas</option>
+        <option value="CA">California</option>
+        <option value="CO">Colorado</option>
+        <option value="CT">Connecticut</option>
+        <option value="DE">Delaware</option>
+        <option value="DC">District Of Columbia</option>
+        <option value="FL">Florida</option>
+        <option value="GA">Georgia</option>
+        <option value="HI">Hawaii</option>
+        <option value="ID">Idaho</option>
+        <option value="IL">Illinois</option>
+        <option value="IN">Indiana</option>
+        <option value="IA">Iowa</option>
+        <option value="KS">Kansas</option>
+        <option value="KY">Kentucky</option>
+        <option value="LA">Louisiana</option>
+        <option value="ME">Maine</option>
+        <option value="MD">Maryland</option>
+        <option value="MA">Massachusetts</option>
+        <option value="MI">Michigan</option>
+        <option value="MN">Minnesota</option>
+        <option value="MS">Mississippi</option>
+        <option value="MO">Missouri</option>
+        <option value="MT">Montana</option>
+        <option value="NE">Nebraska</option>
+        <option value="NV">Nevada</option>
+        <option value="NH">New Hampshire</option>
+        <option value="NJ">New Jersey</option>
+        <option value="NM">New Mexico</option>
+        <option value="NY">New York</option>
+        <option value="NC">North Carolina</option>
+        <option value="ND">North Dakota</option>
+        <option value="OH">Ohio</option>
+        <option value="OK">Oklahoma</option>
+        <option value="OR">Oregon</option>
+        <option value="PA">Pennsylvania</option>
+        <option value="RI">Rhode Island</option>
+        <option value="SC">South Carolina</option>
+        <option value="SD">South Dakota</option>
+        <option value="TN">Tennessee</option>
+        <option value="TX">Texas</option>
+        <option value="UT">Utah</option>
+        <option value="VT">Vermont</option>
+        <option value="VA">Virginia</option>
+        <option value="WA">Washington</option>
+        <option value="WV">West Virginia</option>
+        <option value="WI">Wisconsin</option>
+        <option value="WY">Wyoming</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label for="id">Application Name or ID</label>
+      <input type="text" id="id" name="id">
+    </div>
+  </div>
+    <button type="button" class="add-applicant">Add Another Applicant</button>
+    <div class="form-fields-area tax-returns-area">
+      <h2>Tax Returns</h2>
+      <div class="form-row">
+        <label for="filer_1">Filer 1</label>
+        <select id="filer_1" name="filer_1" class="filer">
+          <option value=""></option>
+          <option value=""></option>
+        </select>
       </div>
-      <fieldset class="first-applicant">
-        <legend>Applicant <span class="applicant-number">1</span></legend>
-        <div class="applicant-relationship-fields">
-        </div>
-        <div class="form-row">
-          <label for="applicant_1_id">Applicant Name or ID</label>
-          <input type="text" id="applicant_1_id" name="applicant_1_id" class="applicant-id-field">
-        </div>
-        <div class="form-row">
-            <label for="applicant_1_is_applicant">Is this individual applying for insurance?</label>
-            <input type="checkbox" id="applicant_1_is_applicant" name="applicant_1_is_applicant" checked>
-        </div>
-        <div class="form-row">
-          <label for="applicant_1_age">Age</label>
-          <input type="number" id="applicant_1_age" name="applicant_1_age">
-        </div>
-        <div class="form-row">
-          <label for="applicant_1_hours">Hours worked per week</label>
-          <input type="number" id="applicant_1_hours" name="applicant_1_hours">
-        </div>
-        <div class="form-half-field">
-          <label for="applicant_1_disabled">Disabled</label>
-          <input type="checkbox" id="applicant_1_disabled" name="applicant_1_disabled">
-        </div>
-        <div class="form-half-field">
-          <label for="applicant_1_student">Student</label>
-          <input type="checkbox" id="applicant_1_student" name="applicant_1_student">
-        </div>
-        <div class="form-half-field">
-          <label for="applicant_1_eligible">Eligible for Medicare</label>
-          <input type="checkbox" id="applicant_1_eligible" name="applicant_1_eligible">
-        </div>
-        <div class="form-half-field">
-          <label for="applicant_1_incarcerated">Incarcerated</label>
-          <input type="checkbox" id="applicant_1_incarcerated" name="applicant_1_incarcerated">
-        </div>
-        <div class="form-half-field">
-          <label for="applicant_1_state_residency">Meets state residency status requirements</label>
-          <input type="checkbox" id="applicant_1_state_residency" name="applicant_1_state_residency">
-        </div>
-        <div class="form-half-field">
-          <label for="applicant_1_long_term_care">In long-term care</label>
-          <input type="checkbox" id="applicant_1_long_term_care" name="applicant_1_long_term_care">
-        </div>
-        <div class="form-half-field clear">
-          <label for="applicant_1_has_insurance">Has insurance</label>
-          <input type="checkbox" id="applicant_1_has_insurance" name="applicant_1_has_insurance">
-        </div>
-        <div class="form-half-field">
-          <label for="applicant_1_state_employee_health_benefits">Received state employee health benefits</label>
-          <input type="checkbox" id="applicant_1_state_employee_health_benefits" name="applicant_1_state_employee_health_benefits">
-        </div>
-        <div class="form-row form-row-expandable">
-          <label for="applicant_1_prior_insurance">Prior insurance</label>
-          <input type="checkbox" id="applicant_1_prior_insurance" name="applicant_1_prior_insurance">
-          <div class="form-row-expandable-fields">
-            <div class="form-row">
-              <label for="applicant_1_prior_insurance_end_date">Prior insurance end date</label>
-              <input type="text" id="applicant_1_prior_insurance_end_date" name="applicant_1_prior_insurance_end_date" class="date" placeholder="mm / dd / yyyy">
-            </div>
-          </div>
-        </div>
-        <div class="form-row">
-          <label for="applicant_1_pregnant">Pregnant</label>
-          <input type="checkbox" id="applicant_1_pregnant" name="applicant_1_pregnant" data-exclusive="pregnant">
-        </div>
-        <div class="form-row">
-          <label for="applicant_1_pregnant_three_months">Pregnant within the last 3 months</label>
-          <input type="checkbox" id="applicant_1_pregnant_three_months" name="applicant_1_pregnant_three_months" data-exclusive="pregnant">
-        </div>
-        <div class="form-row form-row-expandable">
-          <label for="applicant_1_foster_care">Formerly in foster care</label>
-          <input type="checkbox" id="applicant_1_foster_care" name="applicant_1_foster_care">
-          <div class="form-row-expandable-fields">
-            <div class="form-row">
-              <label for="applicant_1_foster_care_had_medicaid">Had Medicaid during foster
-                care</label>
-              <input type="checkbox" id="applicant_1_foster_care_had_medicaid" name="applicant_1_foster_care_had_medicaid">
-            </div>
-            <div class="form-row">
-              <label for="applicant_1_foster_care_age_left">Age left foster care</label>
-              <input type="number" id="applicant_1_foster_care_age_left" name="applicant_1_foster_care_age_left">
-            </div>
-            <div class="form-row">
-              <label for="applicant_1_foster_care_state">Foster care state</label>
-              <select id="applicant_1_foster_care_state" name="applicant_1_foster_care_state">
-                <option value=""></option>
-                <option value="AL">Alabama</option>
-                <option value="AK">Alaska</option>
-                <option value="AZ">Arizona</option>
-                <option value="AR">Arkansas</option>
-                <option value="CA">California</option>
-                <option value="CO">Colorado</option>
-                <option value="CT">Connecticut</option>
-                <option value="DE">Delaware</option>
-                <option value="DC">District Of Columbia</option>
-                <option value="FL">Florida</option>
-                <option value="GA">Georgia</option>
-                <option value="HI">Hawaii</option>
-                <option value="ID">Idaho</option>
-                <option value="IL">Illinois</option>
-                <option value="IN">Indiana</option>
-                <option value="IA">Iowa</option>
-                <option value="KS">Kansas</option>
-                <option value="KY">Kentucky</option>
-                <option value="LA">Louisiana</option>
-                <option value="ME">Maine</option>
-                <option value="MD">Maryland</option>
-                <option value="MA">Massachusetts</option>
-                <option value="MI">Michigan</option>
-                <option value="MN">Minnesota</option>
-                <option value="MS">Mississippi</option>
-                <option value="MO">Missouri</option>
-                <option value="MT">Montana</option>
-                <option value="NE">Nebraska</option>
-                <option value="NV">Nevada</option>
-                <option value="NH">New Hampshire</option>
-                <option value="NJ">New Jersey</option>
-                <option value="NM">New Mexico</option>
-                <option value="NY">New York</option>
-                <option value="NC">North Carolina</option>
-                <option value="ND">North Dakota</option>
-                <option value="OH">Ohio</option>
-                <option value="OK">Oklahoma</option>
-                <option value="OR">Oregon</option>
-                <option value="PA">Pennsylvania</option>
-                <option value="RI">Rhode Island</option>
-                <option value="SC">South Carolina</option>
-                <option value="SD">South Dakota</option>
-                <option value="TN">Tennessee</option>
-                <option value="TX">Texas</option>
-                <option value="UT">Utah</option>
-                <option value="VT">Vermont</option>
-                <option value="VA">Virginia</option>
-                <option value="WA">Washington</option>
-                <option value="WV">West Virginia</option>
-                <option value="WI">Wisconsin</option>
-                <option value="WY">Wyoming</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-row form-row-expandable">
-          <label for="applicant_1_income_taxes_required">Required to file income
-            taxes</label>
-          <input type="checkbox" id="applicant_1_income_taxes_required" name="applicant_1_income_taxes_required">
-          <div class="form-row-expandable-fields cf">
-            <div class="form-half-field">
-              <label for="applicant_1_income_taxes_required_wages">Wages, salaries, tips</label>
-              <input type="number" id="applicant_1_income_taxes_required_wages" name="applicant_1_income_taxes_required_wages" class="long-number">
-            </div>
-            <div class="form-half-field">
-              <label for="applicant_1_income_taxes_required_capital_gains">Capital gains or loss</label>
-              <input type="number" id="applicant_1_income_taxes_required_capital_gains" name="applicant_1_income_taxes_required_capital_gains" class="long-number">
-            </div>
-            <div class="form-half-field">
-              <label for="applicant_1_income_taxes_required_taxable_interest">Taxable interest</label>
-              <input type="number" id="applicant_1_income_taxes_required_taxable_interest" name="applicant_1_income_taxes_required_taxable_interest" class="long-number">
-            </div>
-            <div class="form-half-field">
-              <label for="applicant_1_income_taxes_required_pensions">Pensions and annuities taxable amount</label>
-              <input type="number" id="applicant_1_income_taxes_required_pensions" name="applicant_1_income_taxes_required_pensions" class="long-number">
-            </div>
-            <div class="form-half-field">
-              <label for="applicant_1_income_taxes_required_tax_exempt_interest">Tax-exempt interest</label>
-              <input type="number" id="applicant_1_income_taxes_required_tax_exempt_interest" name="applicant_1_income_taxes_required_tax_exempt_interest" class="long-number">
-            </div>
-            <div class="form-half-field">
-              <label for="applicant_1_income_taxes_required_farm_income">Farm income or loss</label>
-              <input type="number" id="applicant_1_income_taxes_required_farm_income" name="applicant_1_income_taxes_required_farm_income" class="long-number">
-            </div>
-            <div class="form-half-field">
-              <label for="applicant_1_income_taxes_required_taxable_refunds">Taxable refunds, credits, or offsets of state and local income taxes</label>
-              <input type="number" id="applicant_1_income_taxes_required_taxable_refunds" name="applicant_1_income_taxes_required_taxable_refunds" class="long-number">
-            </div>
-            <div class="form-half-field">
-              <label for="applicant_1_income_taxes_required_unemployment">Unemployment compensation</label>
-              <input type="number" id="applicant_1_income_taxes_required_unemployment" name="applicant_1_income_taxes_required_unemployment" class="long-number">
-            </div>
-            <div class="form-half-field clear">
-              <label for="applicant_1_income_taxes_required_alimony">Alimony</label>
-              <input type="number" id="applicant_1_income_taxes_required_alimony" name="applicant_1_income_taxes_required_alimony" class="long-number">
-            </div>
-            <div class="form-half-field">
-              <label for="applicant_1_income_taxes_required_other">Other income</label>
-              <input type="number" id="applicant_1_income_taxes_required_other" name="applicant_1_income_taxes_required_other" class="long-number">
-            </div>
-            <div class="form-half-field">
-              <label for="applicant_1_income_taxes_required_deductions">MAGI deductions</label>
-              <input type="number" id="applicant_1_income_taxes_required_deductions" name="applicant_1_income_taxes_required_deductions" class="long-number">
-            </div>
-          </div>
-        </div>
-        <div class="form-row form-row-expandable">
-          <label for="applicant_1_citizen">US citizen</label>
-          <input type="checkbox" id="applicant_1_citizen" name="applicant_1_citizen">
-          <div class="form-row-expandable-fields expanded">
-            <div class="form-half-field">
-              <label for="applicant_1_citizen_lawful">Lawful resident</label>
-              <input type="checkbox" id="applicant_1_citizen_lawful" name="applicant_1_citizen_lawful">
-            </div>
-            <div class="form-half-field">
-              <label for="applicant_1_citizen_five_year_bar">Subject to a 5 year bar</label>
-              <input type="checkbox" id="applicant_1_citizen_five_year_bar" name="applicant_1_citizen_five_year_bar">
-            </div>
-            <div class="form-half-field">
-              <label for="applicant_1_citizen_forty_quarters">Worked in the US for 40 quarters (120 months)</label>
-              <input type="checkbox" id="applicant_1_citizen_forty_quarters" name="applicant_1_citizen_forty_quarters">
-            </div>
-            <div class="form-half-field">
-              <label for="applicant_1_citizen_five_year_bar_met">5 year bar met</label>
-              <input type="checkbox" id="applicant_1_citizen_five_year_bar_met" name="applicant_1_citizen_five_year_bar_met">
-            </div>
-            <div class="form-row">
-              <label for="applicant_1_citizen_refugee_assistance">Eligible for refugee medical assistance</label>
-              <input type="checkbox" id="applicant_1_citizen_refugee_assistance" name="applicant_1_citizen_refugee_assistance">
-            </div>
-            <div class="form-row">
-              <label for="applicant_1_citizen_refugee_assistance_start_date">Refugee medical assistance start date</label>
-              <input type="text" id="applicant_1_citizen_refugee_assistance_start_date" name="applicant_1_citizen_refugee_assistance_start_date" class="date" placeholder="mm / dd / yyyy">
-            </div>
-            <div class="form-row form-row-expandable">
-              <label for="applicant_1_citizen_human_trafficking">Victim of human trafficking</label>
-              <input type="checkbox" id="applicant_1_citizen_human_trafficking" name="applicant_1_citizen_human_trafficking">
-              <div class="form-row-expandable-fields">
-                <div class="form-row">
-                  <label for="applicant_1_citizen_human_trafficking_non_citizen">Qualified non-citizen</label>
-                  <input type="checkbox" id="applicant_1_citizen_human_trafficking_non_citizen" name="applicant_1_citizen_human_trafficking_non_citizen">
-                </div>
-                <div class="form-row">
-                  <label for="applicant_1_citizen_human_trafficking_deport_withheld_date">Non-citizen deport withheld date</label>
-                  <input type="text" id="applicant_1_citizen_human_trafficking_deport_withheld_date" name="applicant_1_citizen_human_trafficking_deport_withheld_date" class="date" placeholder="mm / dd / yyyy">
-                </div>
-                <div class="form-row">
-                  <label for="applicant_1_citizen_human_trafficking_entry_date">Non-citizen entry date</label>
-                  <input type="text" id="applicant_1_citizen_human_trafficking_entry_date" name="applicant_1_citizen_human_trafficking_entry_date" class="date" placeholder="mm / dd / yyyy">
-                </div>
-                <div class="form-row">
-                  <label for="applicant_1_citizen_human_trafficking_status_grant_date">Non-citizen status grant date</label>
-                  <input type="text" id="applicant_1_citizen_human_trafficking_status_grant_date" name="applicant_1_citizen_human_trafficking_status_grant_date" class="date" placeholder="mm / dd / yyyy">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <button type="button" class="remove-applicant last-applicant-only">Remove This Applicant</button>
-      </fieldset>
-      <button type="button" class="add-applicant">Add Another Applicant</button>
-      <div class="form-fields-area">
-        <h2>Tax Returns</h2>
-        <div class="form-row">
-          <label for="filer_1">Filer 1</label>
-          <select id="filer_1" name="filer_1" class="filer">
-            <option value=""></option>
-            <option value=""></option>
-          </select>
-        </div>
-        <div class="form-row filer-2-row">
-          <label for="filer_2">Filer 2</label>
-          <select id="filer_2" name="filer_2" class="filer">
-            <option value=""></option>
-            <option value=""></option>
-          </select>
-        </div>
-        <div class="dependent-fields"></div>
+      <div class="form-row filer-2-row">
+        <label for="filer_2">Filer 2</label>
+        <select id="filer_2" name="filer_2" class="filer">
+          <option value=""></option>
+          <option value=""></option>
+        </select>
       </div>
-      <button type="submit">Check Eligibility</button>
-    </form>
+      <div class="dependent-fields"></div>
+    </div>
+    <button type="submit">Check Eligibility</button>
+</form>
     <div id="results">
         <div id="sidebar">
     <div class="household">
@@ -398,6 +152,257 @@
       
     </div>
     </div>
+    
+    <script id="form_template" type="text/template">
+      <fieldset class="<%= applicant_class %>">
+        <legend>Applicant <span class="applicant-number">1</span></legend>
+        <div class="applicant-relationship-fields">
+        </div>
+        <div class="form-row">
+          <label for="applicant_<%= num %>_id">Applicant Name or ID</label>
+          <input type="text" id="applicant_<%= num %>_id" name="applicant_<%= num %>_id" class="applicant-id-field">
+        </div>
+        <div class="form-row">
+            <label for="applicant_<%= num %>_is_applicant">Is this individual applying for insurance?</label>
+            <input type="checkbox" id="applicant_<%= num %>_is_applicant" name="applicant_<%= num %>_is_applicant" checked>
+        </div>
+        <div class="form-row">
+          <label for="applicant_<%= num %>_age">Age</label>
+          <input type="number" id="applicant_<%= num %>_age" name="applicant_<%= num %>_age">
+        </div>
+        <div class="form-row">
+          <label for="applicant_<%= num %>_hours">Hours worked per week</label>
+          <input type="number" id="applicant_<%= num %>_hours" name="applicant_<%= num %>_hours">
+        </div>
+        <div class="form-half-field">
+          <label for="applicant_<%= num %>_disabled">Disabled</label>
+          <input type="checkbox" id="applicant_<%= num %>_disabled" name="applicant_<%= num %>_disabled">
+        </div>
+        <div class="form-half-field">
+          <label for="applicant_<%= num %>_student">Student</label>
+          <input type="checkbox" id="applicant_<%= num %>_student" name="applicant_<%= num %>_student">
+        </div>
+        <div class="form-half-field">
+          <label for="applicant_<%= num %>_eligible">Eligible for Medicare</label>
+          <input type="checkbox" id="applicant_<%= num %>_eligible" name="applicant_<%= num %>_eligible">
+        </div>
+        <div class="form-half-field">
+          <label for="applicant_<%= num %>_incarcerated">Incarcerated</label>
+          <input type="checkbox" id="applicant_<%= num %>_incarcerated" name="applicant_<%= num %>_incarcerated">
+        </div>
+        <div class="form-half-field">
+          <label for="applicant_<%= num %>_state_residency">Meets state residency status requirements</label>
+          <input type="checkbox" id="applicant_<%= num %>_state_residency" name="applicant_<%= num %>_state_residency">
+        </div>
+        <div class="form-half-field">
+          <label for="applicant_<%= num %>_long_term_care">In long-term care</label>
+          <input type="checkbox" id="applicant_<%= num %>_long_term_care" name="applicant_<%= num %>_long_term_care">
+        </div>
+        <div class="form-half-field clear">
+          <label for="applicant_<%= num %>_has_insurance">Has insurance</label>
+          <input type="checkbox" id="applicant_<%= num %>_has_insurance" name="applicant_<%= num %>_has_insurance">
+        </div>
+        <div class="form-half-field">
+          <label for="applicant_<%= num %>_state_employee_health_benefits">Received state employee health benefits</label>
+          <input type="checkbox" id="applicant_<%= num %>_state_employee_health_benefits" name="applicant_<%= num %>_state_employee_health_benefits">
+        </div>
+        <div class="form-row form-row-expandable">
+          <label for="applicant_<%= num %>_prior_insurance">Prior insurance</label>
+          <input type="checkbox" id="applicant_<%= num %>_prior_insurance" name="applicant_<%= num %>_prior_insurance">
+          <div class="form-row-expandable-fields">
+            <div class="form-row">
+              <label for="applicant_<%= num %>_prior_insurance_end_date">Prior insurance end date</label>
+              <input type="text" id="applicant_<%= num %>_prior_insurance_end_date" name="applicant_<%= num %>_prior_insurance_end_date" class="date" placeholder="mm / dd / yyyy">
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <label for="applicant_<%= num %>_pregnant">Pregnant</label>
+          <input type="checkbox" id="applicant_<%= num %>_pregnant" name="applicant_<%= num %>_pregnant" data-exclusive="pregnant">
+        </div>
+        <div class="form-row">
+          <label for="applicant_<%= num %>_pregnant_three_months">Pregnant within the last 3 months</label>
+          <input type="checkbox" id="applicant_<%= num %>_pregnant_three_months" name="applicant_<%= num %>_pregnant_three_months" data-exclusive="pregnant">
+        </div>
+        <div class="form-row form-row-expandable">
+          <label for="applicant_<%= num %>_foster_care">Formerly in foster care</label>
+          <input type="checkbox" id="applicant_<%= num %>_foster_care" name="applicant_<%= num %>_foster_care">
+          <div class="form-row-expandable-fields">
+            <div class="form-row">
+              <label for="applicant_<%= num %>_foster_care_had_medicaid">Had Medicaid during foster
+                care</label>
+              <input type="checkbox" id="applicant_<%= num %>_foster_care_had_medicaid" name="applicant_<%= num %>_foster_care_had_medicaid">
+            </div>
+            <div class="form-row">
+              <label for="applicant_<%= num %>_foster_care_age_left">Age left foster care</label>
+              <input type="number" id="applicant_<%= num %>_foster_care_age_left" name="applicant_<%= num %>_foster_care_age_left">
+            </div>
+            <div class="form-row">
+              <label for="applicant_<%= num %>_foster_care_state">Foster care state</label>
+              <select id="applicant_<%= num %>_foster_care_state" name="applicant_<%= num %>_foster_care_state">
+                <option value=""></option>
+                <option value="AL">Alabama</option>
+                <option value="AK">Alaska</option>
+                <option value="AZ">Arizona</option>
+                <option value="AR">Arkansas</option>
+                <option value="CA">California</option>
+                <option value="CO">Colorado</option>
+                <option value="CT">Connecticut</option>
+                <option value="DE">Delaware</option>
+                <option value="DC">District Of Columbia</option>
+                <option value="FL">Florida</option>
+                <option value="GA">Georgia</option>
+                <option value="HI">Hawaii</option>
+                <option value="ID">Idaho</option>
+                <option value="IL">Illinois</option>
+                <option value="IN">Indiana</option>
+                <option value="IA">Iowa</option>
+                <option value="KS">Kansas</option>
+                <option value="KY">Kentucky</option>
+                <option value="LA">Louisiana</option>
+                <option value="ME">Maine</option>
+                <option value="MD">Maryland</option>
+                <option value="MA">Massachusetts</option>
+                <option value="MI">Michigan</option>
+                <option value="MN">Minnesota</option>
+                <option value="MS">Mississippi</option>
+                <option value="MO">Missouri</option>
+                <option value="MT">Montana</option>
+                <option value="NE">Nebraska</option>
+                <option value="NV">Nevada</option>
+                <option value="NH">New Hampshire</option>
+                <option value="NJ">New Jersey</option>
+                <option value="NM">New Mexico</option>
+                <option value="NY">New York</option>
+                <option value="NC">North Carolina</option>
+                <option value="ND">North Dakota</option>
+                <option value="OH">Ohio</option>
+                <option value="OK">Oklahoma</option>
+                <option value="OR">Oregon</option>
+                <option value="PA">Pennsylvania</option>
+                <option value="RI">Rhode Island</option>
+                <option value="SC">South Carolina</option>
+                <option value="SD">South Dakota</option>
+                <option value="TN">Tennessee</option>
+                <option value="TX">Texas</option>
+                <option value="UT">Utah</option>
+                <option value="VT">Vermont</option>
+                <option value="VA">Virginia</option>
+                <option value="WA">Washington</option>
+                <option value="WV">West Virginia</option>
+                <option value="WI">Wisconsin</option>
+                <option value="WY">Wyoming</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-row form-row-expandable">
+          <label for="applicant_<%= num %>_income_taxes_required">Required to file income
+            taxes</label>
+          <input type="checkbox" id="applicant_<%= num %>_income_taxes_required" name="applicant_<%= num %>_income_taxes_required">
+          <div class="form-row-expandable-fields cf">
+            <div class="form-half-field">
+              <label for="applicant_<%= num %>_income_taxes_required_wages">Wages, salaries, tips</label>
+              <input type="number" id="applicant_<%= num %>_income_taxes_required_wages" name="applicant_<%= num %>_income_taxes_required_wages" class="long-number">
+            </div>
+            <div class="form-half-field">
+              <label for="applicant_<%= num %>_income_taxes_required_capital_gains">Capital gains or loss</label>
+              <input type="number" id="applicant_<%= num %>_income_taxes_required_capital_gains" name="applicant_<%= num %>_income_taxes_required_capital_gains" class="long-number">
+            </div>
+            <div class="form-half-field">
+              <label for="applicant_<%= num %>_income_taxes_required_taxable_interest">Taxable interest</label>
+              <input type="number" id="applicant_<%= num %>_income_taxes_required_taxable_interest" name="applicant_<%= num %>_income_taxes_required_taxable_interest" class="long-number">
+            </div>
+            <div class="form-half-field">
+              <label for="applicant_<%= num %>_income_taxes_required_pensions">Pensions and annuities taxable amount</label>
+              <input type="number" id="applicant_<%= num %>_income_taxes_required_pensions" name="applicant_<%= num %>_income_taxes_required_pensions" class="long-number">
+            </div>
+            <div class="form-half-field">
+              <label for="applicant_<%= num %>_income_taxes_required_tax_exempt_interest">Tax-exempt interest</label>
+              <input type="number" id="applicant_<%= num %>_income_taxes_required_tax_exempt_interest" name="applicant_<%= num %>_income_taxes_required_tax_exempt_interest" class="long-number">
+            </div>
+            <div class="form-half-field">
+              <label for="applicant_<%= num %>_income_taxes_required_farm_income">Farm income or loss</label>
+              <input type="number" id="applicant_<%= num %>_income_taxes_required_farm_income" name="applicant_<%= num %>_income_taxes_required_farm_income" class="long-number">
+            </div>
+            <div class="form-half-field">
+              <label for="applicant_<%= num %>_income_taxes_required_taxable_refunds">Taxable refunds, credits, or offsets of state and local income taxes</label>
+              <input type="number" id="applicant_<%= num %>_income_taxes_required_taxable_refunds" name="applicant_<%= num %>_income_taxes_required_taxable_refunds" class="long-number">
+            </div>
+            <div class="form-half-field">
+              <label for="applicant_<%= num %>_income_taxes_required_unemployment">Unemployment compensation</label>
+              <input type="number" id="applicant_<%= num %>_income_taxes_required_unemployment" name="applicant_<%= num %>_income_taxes_required_unemployment" class="long-number">
+            </div>
+            <div class="form-half-field clear">
+              <label for="applicant_<%= num %>_income_taxes_required_alimony">Alimony</label>
+              <input type="number" id="applicant_<%= num %>_income_taxes_required_alimony" name="applicant_<%= num %>_income_taxes_required_alimony" class="long-number">
+            </div>
+            <div class="form-half-field">
+              <label for="applicant_<%= num %>_income_taxes_required_other">Other income</label>
+              <input type="number" id="applicant_<%= num %>_income_taxes_required_other" name="applicant_<%= num %>_income_taxes_required_other" class="long-number">
+            </div>
+            <div class="form-half-field">
+              <label for="applicant_<%= num %>_income_taxes_required_deductions">MAGI deductions</label>
+              <input type="number" id="applicant_<%= num %>_income_taxes_required_deductions" name="applicant_<%= num %>_income_taxes_required_deductions" class="long-number">
+            </div>
+          </div>
+        </div>
+        <div class="form-row form-row-expandable">
+          <label for="applicant_<%= num %>_citizen">US citizen</label>
+          <input type="checkbox" id="applicant_<%= num %>_citizen" name="applicant_<%= num %>_citizen">
+          <div class="form-row-expandable-fields expanded">
+            <div class="form-half-field">
+              <label for="applicant_<%= num %>_citizen_lawful">Lawful resident</label>
+              <input type="checkbox" id="applicant_<%= num %>_citizen_lawful" name="applicant_<%= num %>_citizen_lawful">
+            </div>
+            <div class="form-half-field">
+              <label for="applicant_<%= num %>_citizen_five_year_bar">Subject to a 5 year bar</label>
+              <input type="checkbox" id="applicant_<%= num %>_citizen_five_year_bar" name="applicant_<%= num %>_citizen_five_year_bar">
+            </div>
+            <div class="form-half-field">
+              <label for="applicant_<%= num %>_citizen_forty_quarters">Worked in the US for 40 quarters (120 months)</label>
+              <input type="checkbox" id="applicant_<%= num %>_citizen_forty_quarters" name="applicant_<%= num %>_citizen_forty_quarters">
+            </div>
+            <div class="form-half-field">
+              <label for="applicant_<%= num %>_citizen_five_year_bar_met">5 year bar met</label>
+              <input type="checkbox" id="applicant_<%= num %>_citizen_five_year_bar_met" name="applicant_<%= num %>_citizen_five_year_bar_met">
+            </div>
+            <div class="form-row">
+              <label for="applicant_<%= num %>_citizen_refugee_assistance">Eligible for refugee medical assistance</label>
+              <input type="checkbox" id="applicant_<%= num %>_citizen_refugee_assistance" name="applicant_<%= num %>_citizen_refugee_assistance">
+            </div>
+            <div class="form-row">
+              <label for="applicant_<%= num %>_citizen_refugee_assistance_start_date">Refugee medical assistance start date</label>
+              <input type="text" id="applicant_<%= num %>_citizen_refugee_assistance_start_date" name="applicant_<%= num %>_citizen_refugee_assistance_start_date" class="date" placeholder="mm / dd / yyyy">
+            </div>
+            <div class="form-row form-row-expandable">
+              <label for="applicant_<%= num %>_citizen_human_trafficking">Victim of human trafficking</label>
+              <input type="checkbox" id="applicant_<%= num %>_citizen_human_trafficking" name="applicant_<%= num %>_citizen_human_trafficking">
+              <div class="form-row-expandable-fields">
+                <div class="form-row">
+                  <label for="applicant_<%= num %>_citizen_human_trafficking_non_citizen">Qualified non-citizen</label>
+                  <input type="checkbox" id="applicant_<%= num %>_citizen_human_trafficking_non_citizen" name="applicant_<%= num %>_citizen_human_trafficking_non_citizen">
+                </div>
+                <div class="form-row">
+                  <label for="applicant_<%= num %>_citizen_human_trafficking_deport_withheld_date">Non-citizen deport withheld date</label>
+                  <input type="text" id="applicant_<%= num %>_citizen_human_trafficking_deport_withheld_date" name="applicant_<%= num %>_citizen_human_trafficking_deport_withheld_date" class="date" placeholder="mm / dd / yyyy">
+                </div>
+                <div class="form-row">
+                  <label for="applicant_<%= num %>_citizen_human_trafficking_entry_date">Non-citizen entry date</label>
+                  <input type="text" id="applicant_<%= num %>_citizen_human_trafficking_entry_date" name="applicant_<%= num %>_citizen_human_trafficking_entry_date" class="date" placeholder="mm / dd / yyyy">
+                </div>
+                <div class="form-row">
+                  <label for="applicant_<%= num %>_citizen_human_trafficking_status_grant_date">Non-citizen status grant date</label>
+                  <input type="text" id="applicant_<%= num %>_citizen_human_trafficking_status_grant_date" name="applicant_<%= num %>_citizen_human_trafficking_status_grant_date" class="date" placeholder="mm / dd / yyyy">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="remove-applicant last-applicant-only">Remove This Applicant</button>
+      </fieldset>
+    </script>
+    
     <script id="relationship_template" type="text/template">
       <div class="form-row">
         <label for="applicant_<%= self %>_relationship_to_<%= relation %>">Relationship to Applicant <%= relation %></label>
