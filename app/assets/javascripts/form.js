@@ -1,7 +1,7 @@
 var relationshipTemplate = _.template($('#relationship_template').html()),
   dependentTemplate = _.template($('#dependent_template').html()),
   resetForm = function ($form) {
-    $form.find('input:text, input:password, input:file, input:number, select, textarea').val('');
+    $form.find('input:text, input:password, input:file, input[type="number"], select, textarea').val('');
     $form.find('input:radio, input:checkbox')
       .removeAttr('checked').removeAttr('selected');
   },
