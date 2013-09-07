@@ -111,6 +111,7 @@ $(document).on('change', '[type=checkbox]', function () {
     return false;
 }).ready(function() {
     $('.add-applicant').before(formTemplate({num: 1, 'applicant_class': 'first_applicant'}))
+    $("#application_form").validate();
   });
 
 $(function () {
