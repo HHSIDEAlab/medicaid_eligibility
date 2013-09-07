@@ -80,7 +80,8 @@ $(document).on('change', '[type=checkbox]', function () {
 }).on('submit', '#application_form', function() {
     event.preventDefault();
     var application = new MAGI.Application($(this).serializeObject(), $('fieldset').length);
-    var endpoint = new MAGI.Endpoint("/");
+    console.log(JSON.stringify(application, undefined, 2));
+    var endpoint = new MAGI.Endpoint("/determinations/eval.json");
     endpoint.submit(application, function(response) {
       $("#application_form").hide();
       $("body").append(response)
