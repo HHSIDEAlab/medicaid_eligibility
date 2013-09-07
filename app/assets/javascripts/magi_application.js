@@ -116,6 +116,7 @@ var MAGI = {};
     TaxReturn = function() {
       function createDependents() {
         var value;
+        // this 20 is a hack
         var list = _.times(20, function(n) {
           value = data['dependent_' + (n+1)];
           if (value) {
@@ -126,14 +127,17 @@ var MAGI = {};
           return value != undefined;
         });
       }
-
+      // dry this up
       function createFilers() {
         var value;
-        return _.times(2, function(n) {
+        var list = _.times(2, function(n) {
           value = data['filer_' + (n+1)];
           if (value) {
             return {"Person ID": value}
           }
+        });
+        return _.filter(list, function(value) {
+          return value != undefined;
         });
       }
 
