@@ -43,7 +43,8 @@ var MAGI = {};
     {name: 'xxx', json: 'Seven Year Limit Start Date'},
     {name: 'xxx', json: 'Veteran Status'},
     {name: 'citizen_human_trafficking', json: 'Victim of Trafficking'},
-    {name: 'xxx', json: 'Attest Primary Responsibility'}
+    {name: 'xxx', json: 'Attest Primary Responsibility'},
+    {name: 'is_applicant', json: 'Is Applicant'}  
   ];
 
   var agi_income_fields = [
@@ -206,7 +207,8 @@ var MAGI = {};
         data: JSON.stringify(application),
         type: 'POST',
         dataType: 'json',
-      }).done(function(data) {
+        contentType: 'application/json'  
+    }).done(function(data) {
         complete.call(that, data);
         that.response = data;
       }).fail(function(data) {
