@@ -341,10 +341,67 @@
       </div>
       <button type="submit">Check Eligibility</button>
     </form>
+    <div id="results">
+        <div id="sidebar">
+    <div class="household">
+      <h2>Household MAGI: 50,000</h2>
+        <table>
+      <tr>
+        <th>Father</th>
+        <td><div class="eligibility eligible"><i class="icon-ok"></i>Medicaid Eligible</div>
+        </td>
+        <td><div class="eligibility ineligible"><i class="icon-remove"></i>Not Chip Eligible</div>
+        </td>
+      </tr>
+      <tr>
+        <th>Mother</th>
+        <td><div class="eligibility ineligible"><i class="icon-remove"></i>Not Medicaid Eligible</div>
+        </td><td><div class="eligibility ineligible"><i class="icon-remove"></i>Not Chip Eligible</div>
+        </td>
+      </tr>
+      </table>
+
+    </div>
+      <div class="household">
+      <h2>Household MAGI: 25,000</h2>
+      <table>
+      <tr>
+        <th>Father</th>
+        <td><div class="eligibility eligible"><i class="icon-ok"></i>Medicaid Eligible</div>
+        </td>
+        <td><div class="eligibility ineligible"><i class="icon-remove"></i>Not Chip Eligible</div>
+        </td>
+      </tr>
+      <tr>
+        <th>Mother</th>
+        <td><div class="eligibility ineligible"><i class="icon-remove"></i>Not Medicaid Eligible</div>
+        </td><td><div class="eligibility ineligible"><i class="icon-remove"></i>Not Chip Eligible</div>
+        </td>
+      </tr>
+      </table>
+
+    </div>
+    </div>
+    <div id="person">
+      <h2>Category</h2>
+      <p>Adult Group Category</p>
+      <h2>Determinations</h2>
+      <div class="determinations">
+      <h3>Yes</h3>
+      </div>
+      <div class="determinations">
+        <h3>No</h3>
+      </div>
+      <div class="determinations">
+        <h3>Not Applicable</h3>
+      </div>
+      
+    </div>
+    </div>
     <script id="relationship_template" type="text/template">
       <div class="form-row">
-        <label for="applicant_{{self}}_relationship_to_{{relation}}">Relationship to Applicant {{relation}}</label>
-        <select id="applicant_{{self}}_relationship_to_{{relation}}">
+        <label for="applicant_<%= self %>_relationship_to_<%= relation %>">Relationship to Applicant <%= relation %></label>
+        <select id="applicant_<%= self %>_relationship_to_<%= relation %>">
           <option value=""></option>
           <option value="02">Spouse</option>
           <option value="03">Parent</option>
@@ -368,23 +425,108 @@
     </script>
     <script id="dependent_template" type="text/template">
       <div class="form-row">
-        <label for="dependent_{{num}}">Dependent {{num}}</label>
-        <select id="dependent_{{num}}" name="dependent_{{num}}" class="filer">
+        <label for="dependent_<%= num %>">Dependent <%= num %></label>
+        <select id="dependent_<%= num %>" name="dependent_<%= num %>" class="filer">
         </select>
       </div>
     </script>
-    <script src="/assets/underscore.js"></script>
-    <script>
-      _.templateSettings = {
-        interpolate : /\{\{(.+?)\}\}/g
-      };
+        <script type="text/html" id="household_template">
+      <% _.each(households, function(household, index){ %>
+        <div class="household" data-household-index="<%= index %>">
+        <h2>Household MAGI:  <%= household["MAGI"] %></h2>
+        <table>
+        <% _.each(household["Applicants"], function(applicant, index){ %>
+        <tr data-applicant-index="<%= index %>" >
+          <th><%= applicant["Person ID"] %></th>
+          <% if(applicant["Medicaid Eligible"] == "Y"){ %>
+          <td><div class="eligibility eligible"><i class="icon-ok"></i>Medicaid Eligible</div>
+          </td>
+          <% } else { %>
+          <td><div class="eligibility ineligible"><i class="icon-remove"></i>Not Medicaid Eligible</div>
+          </td>
+          <% } %>
+          <% if(applicant["CHIP Eligible"] == "Y"){ %>
+            <td><div class="eligibility eligible"><i class="icon-ok"></i>CHIP Eligible</div>
+            </td>
+          <% } else { %>
+            <td><div class="eligibility ineligible"><i class="icon-remove"></i>Not CHIP Eligible</div>
+            </td>
+          <% } %>
+        </tr>
+        <% }); %>
+        </table>
+      </div>
+    <% }); %>
     </script>
+    <script type="text/html" id="person_template">
+      <h1><%= person["Person ID"] %>
+      <h2>Category</h2>
+      <p><%= person["Category"] %></p>
+      <h3>Category MAGI Threshold</h3>
+      <p><%= person["Category Threshold"] %></p>
+      <h2>Determinations</h2>
+      <div class="determinations">
+      <h3>Yes</h3>
+      <ul>
+      <%
+        _.chain(person["Determinations"])
+          .pairs()
+          .filter(function(item){
+            return item[1]["Indicator"]=="Y";
+          })
+          .map(function(item){
+            return item[0];
+          }).each(function(yes){
+      %>
+      <li><%= yes %></li>
+      <% }); %>
+      </ul>
+      </div>
+      <div class="determinations">
+        <h3>No</h3>
+        <table>
+      <%
+        _.chain(person["Determinations"])
+          .pairs()
+          .filter(function(item){
+            return item[1]["Indicator"]=="N";
+          })
+          .map(function(item){
+            return {item: item[0], code: item[1]["Ineligibility Code"]};
+          }).each(function(no){
+      %>
+      <tr><td><%= no.item %></td><td><%= no.code %></td>
+      </tr>
+      <% }); %>
+      </table>
+      </div>
+      <div class="determinations">
+        <h3>Not Applicable</h3>
+        <ul>
+      <%
+        _.chain(person["Determinations"])
+          .pairs()
+          .filter(function(item){
+            return item[1]["Indicator"]=="X";
+          })
+          .map(function(item){
+            return item[0];
+          }).each(function(na){
+      %>
+      <li><%= na %></li>
+      <% }); %>
+      </ul>
+      </div>
+    </script>
+
+    <script src="/assets/underscore.js"></script>
     <script src="/assets/jquery.js"></script>
     <script src="/assets/jquery.validate.js"></script>
     <script src="/assets/jquery.uniform.js"></script>
     <script src="/assets/jquery.maskedinput.js"></script>
     <script src="/assets/jquery.serializeObject.js"></script>
     <script src="/assets/form.js"></script>
+    <script src="/assets/results.js"></script>
     <script src="/assets/magi_application.js"></script>
   </body>
 </html>
