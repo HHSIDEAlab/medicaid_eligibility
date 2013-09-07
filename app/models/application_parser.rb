@@ -52,7 +52,10 @@ module ApplicationParser
         end
       end
       if income.empty?
-        raise "No income for person #{person_id}"
+        income[:primary_income] = 0
+        income[:other_income] = {}
+        income[:deductions] = {}        
+#        raise "No income for person #{person_id}"
       end
 
       if is_applicant
