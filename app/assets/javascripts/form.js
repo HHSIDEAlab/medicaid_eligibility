@@ -1,3 +1,12 @@
+var addUniquenessValidator = function(name, selector) {
+  $.validator.addMethod(name, function(value) {
+    var count = _.filter($(selector), function($el) {
+      return $el.value = value;
+    }).length;
+    return count == 1;
+  }, "Applicant ID must be unique");
+};
+
 var relationshipTemplate = _.template($('#relationship_template').html()),
   dependentTemplate = _.template($('#dependent_template').html()),
   formTemplate = _.template($('#form_template').html()),
@@ -94,6 +103,7 @@ $(document).on('change', '[type=checkbox]', function () {
   });
     return false;
 }).ready(function() {
+    addUniquenessValidator('applicant_id_unique', '.applicant-id-field')
     $('.add-applicant').before(formTemplate({num: 1, 'applicant_class': 'first_applicant'}));
     $('#application_form').validate();
   });
