@@ -199,3 +199,147 @@ div.checker input {
 .cf {
     *zoom: 1;
 }
+
+.household table th {
+  text-align: left;
+}
+
+.household table td {
+  text-align: left;
+  padding: 1px 3px 1px 3px;
+}
+
+
+.household {
+  background-color: #fff;
+  padding: 0px;
+  margin: 10px 0;
+  border-top: 1px solid #999;
+}
+
+.household .people {
+  list-style-type: none;
+}
+
+.household h2 {
+  margin-left: 10px;
+}
+
+.household .people>li {
+  margin: 15px;
+  border-left: 2px solid #999;
+}
+
+.household .people {
+  padding: 0;
+}
+
+.household .name {
+  font-weight: bold;
+}
+
+.eligibility {
+  border-radius: 5px;
+  border: 3px solid;
+  margin: 2px;
+  padding: 2px;
+}
+
+.eligibility i {
+  margin-right: 3px;
+}
+
+.eligibility.eligible {
+  background-color: rgb(223, 240, 216);
+  border-color: rgb(214, 233, 198);
+  color: rgb(70, 136, 71);
+}
+
+.eligibility.ineligible {
+  background-color: rgb(242, 222, 222);
+  border-color: rgb(238, 211, 215);
+  color: rgb(185, 74, 72);
+}
+
+.eligibility {
+  border-radius: 5px;
+  border: 1px solid;
+}
+
+#sidebar {
+  width: 400px;
+  float: left;
+}
+
+.household table {
+  width: 100%;
+}
+
+.household th {
+  padding-left: 10px;
+}
+
+
+.household tr {
+  border-top: 1px solid #999;
+  width: 100%;
+}
+
+.household tr.selected td, .household tr.selected th{
+  background-color: rgb(65, 73, 88);
+}
+
+.household tr.selected th {
+  color: white;
+}
+
+.household tr:hover td, .household tr:hover th{
+  background-color: #efefef;
+  cursor: pointer; 
+}
+
+.household tr:hover th{
+  color: black;
+}
+
+h3.name {
+  font-size: 18px;
+  display: inline-block;
+}
+
+#person {
+  width: 540px;
+  background-color: white;
+  float: left;
+  margin: 10px;
+  padding: 10px;
+}
+
+#person tr{
+  width: 100%;
+}
+
+#person td{
+  padding: 0 0 6px 0;
+  vertical-align:top;
+}
+
+.determinations {
+  width: 170px;
+  float: left;
+  margin-right: 10px;
+}
+
+.determinations h3{
+  margin-top: 0;
+}
+
+.determinations ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.determinations li {
+  margin-bottom: 6px;
+}

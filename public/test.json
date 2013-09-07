@@ -1,0 +1,921 @@
+{
+  "Determination Date": "2013-09-06",
+  "Medicaid Households": [
+    {
+      "MAGI": 23000,
+      "Applicants": [
+        {
+          "Person ID": "Father",
+          "Medicaid Eligible": "N",
+          "CHIP Eligible": "Y",
+          "Non-MAGI Referral": "N",
+          "Category": "Adult Group Category",
+          "Category Threshold": 40036,
+          "Determinations": {
+            "Parent Caretaker Category": {
+              "Indicator": "Y"
+            },
+            "Pregnancy Category": {
+              "Indicator": "N",
+              "Ineligibility Code": 124
+            },
+            "Child Category": {
+              "Indicator": "N",
+              "Ineligibility Code": 394
+            },
+            "Adult Group Category": {
+              "Indicator": "Y"
+            },
+            "Adult Group XX Category": {
+              "Indicator": "Y"
+            },
+            "Optional Targeted Low Income Child": {
+              "Indicator": "N",
+              "Ineligibility Code": 127
+            },
+            "CHIP Targeted Low Income Child": {
+              "Indicator": "N",
+              "Ineligibility Code": 127
+            },
+            "Unborn Child": {
+              "Indicator": "X"
+            },
+            "Income Medicaid Eligible": {
+              "Indicator": "Y"
+            },
+            "CHIPRA 214": {
+              "Indicator": "X"
+            },
+            "Trafficking Victim": {
+              "Indicator": "X"
+            },
+            "Seven Year Limit": {
+              "Indicator": "X"
+            },
+            "Five Year Bar": {
+              "Indicator": "X"
+            },
+            "Title II Work Quarters Met": {
+              "Indicator": "X"
+            },
+            "Medicaid Citizen Or Immigrant": {
+              "Indicator": "Y"
+            },
+            "Former Foster Care Category": {
+              "Indicator": "N",
+              "Ineligibility Code": 125
+            },
+            "Work Quarters Override Income": {
+              "Indicator": "N",
+              "Ineligibility Code": 340
+            },
+            "State Health Benefits CHIP": {
+              "Indicator": "X"
+            },
+            "CHIP Waiting Period Satisfied": {
+              "Indicator": "X"
+            },
+            "CHIP Incarceration": {
+              "Indicator": "N",
+              "Ineligibility Code": 999
+            },
+            "Dependent Child Covered": {
+              "Indicator": "N",
+              "Ineligibility Code": 128
+            },
+            "Medicaid Non-MAGI Referral": {
+              "Indicator": "N",
+              "Ineligibility Code": 108
+            },
+            "APTC Referral": {
+              "Indicator": null
+            },
+            "CHIP": {
+              "Indicator": "Y"
+            },
+            "Medicaid": {
+              "Indicator": "N",
+              "Ineligibility Code": 128
+            },
+            "Emergency Medicaid": {
+              "Indicator": "N",
+              "Ineligibility Code": 109
+            },
+            "Refugee Medical Assistance": {
+              "Indicator": "X"
+            }
+          },
+          "Other Outputs": {
+            "Qualified Children List": [
+              {
+                "Person ID": "Child",
+                "Determinations": {
+                  "Dependent Age": {
+                    "Indicator": "Y"
+                  },
+                  "Deprived Child": {
+                    "Indicator": "X"
+                  },
+                  "Relationship": {
+                    "Indicator": "Y"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "Person ID": "Mother",
+          "Medicaid Eligible": "N",
+          "CHIP Eligible": "Y",
+          "Non-MAGI Referral": "N",
+          "Category": "Pregnancy Category",
+          "Category Threshold": 40036,
+          "Determinations": {
+            "Parent Caretaker Category": {
+              "Indicator": "Y"
+            },
+            "Pregnancy Category": {
+              "Indicator": "Y"
+            },
+            "Child Category": {
+              "Indicator": "N",
+              "Ineligibility Code": 394
+            },
+            "Adult Group Category": {
+              "Indicator": "Y"
+            },
+            "Adult Group XX Category": {
+              "Indicator": "Y"
+            },
+            "Optional Targeted Low Income Child": {
+              "Indicator": "N",
+              "Ineligibility Code": 127
+            },
+            "CHIP Targeted Low Income Child": {
+              "Indicator": "N",
+              "Ineligibility Code": 127
+            },
+            "Unborn Child": {
+              "Indicator": "N",
+              "Ineligibility Code": 151
+            },
+            "Income Medicaid Eligible": {
+              "Indicator": "Y"
+            },
+            "CHIPRA 214": {
+              "Indicator": "X"
+            },
+            "Trafficking Victim": {
+              "Indicator": "X"
+            },
+            "Seven Year Limit": {
+              "Indicator": "X"
+            },
+            "Five Year Bar": {
+              "Indicator": "X"
+            },
+            "Title II Work Quarters Met": {
+              "Indicator": "X"
+            },
+            "Medicaid Citizen Or Immigrant": {
+              "Indicator": "Y"
+            },
+            "Former Foster Care Category": {
+              "Indicator": "N",
+              "Ineligibility Code": 125
+            },
+            "Work Quarters Override Income": {
+              "Indicator": "N",
+              "Ineligibility Code": 340
+            },
+            "State Health Benefits CHIP": {
+              "Indicator": "X"
+            },
+            "CHIP Waiting Period Satisfied": {
+              "Indicator": "X"
+            },
+            "CHIP Incarceration": {
+              "Indicator": "N",
+              "Ineligibility Code": 999
+            },
+            "Dependent Child Covered": {
+              "Indicator": "N",
+              "Ineligibility Code": 128
+            },
+            "Medicaid Non-MAGI Referral": {
+              "Indicator": "N",
+              "Ineligibility Code": 108
+            },
+            "APTC Referral": {
+              "Indicator": null
+            },
+            "CHIP": {
+              "Indicator": "Y"
+            },
+            "Medicaid": {
+              "Indicator": "N",
+              "Ineligibility Code": 128
+            },
+            "Emergency Medicaid": {
+              "Indicator": "N",
+              "Ineligibility Code": 109
+            },
+            "Refugee Medical Assistance": {
+              "Indicator": "X"
+            }
+          },
+          "Other Outputs": {
+            "Qualified Children List": [
+              {
+                "Person ID": "Child",
+                "Determinations": {
+                  "Dependent Age": {
+                    "Indicator": "Y"
+                  },
+                  "Deprived Child": {
+                    "Indicator": "X"
+                  },
+                  "Relationship": {
+                    "Indicator": "Y"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "Person ID": "Child",
+          "Medicaid Eligible": "Y",
+          "CHIP Eligible": "Y",
+          "Non-MAGI Referral": "N",
+          "Category": "Child Category",
+          "Category Threshold": 40036,
+          "Determinations": {
+            "Parent Caretaker Category": {
+              "Indicator": "N",
+              "Ineligibility Code": 146
+            },
+            "Pregnancy Category": {
+              "Indicator": "N",
+              "Ineligibility Code": 124
+            },
+            "Child Category": {
+              "Indicator": "Y"
+            },
+            "Adult Group Category": {
+              "Indicator": "Y"
+            },
+            "Adult Group XX Category": {
+              "Indicator": "Y"
+            },
+            "Optional Targeted Low Income Child": {
+              "Indicator": "Y"
+            },
+            "CHIP Targeted Low Income Child": {
+              "Indicator": "Y"
+            },
+            "Unborn Child": {
+              "Indicator": "X"
+            },
+            "Income Medicaid Eligible": {
+              "Indicator": "Y"
+            },
+            "CHIPRA 214": {
+              "Indicator": "X"
+            },
+            "Trafficking Victim": {
+              "Indicator": "X"
+            },
+            "Seven Year Limit": {
+              "Indicator": "X"
+            },
+            "Five Year Bar": {
+              "Indicator": "X"
+            },
+            "Title II Work Quarters Met": {
+              "Indicator": "X"
+            },
+            "Medicaid Citizen Or Immigrant": {
+              "Indicator": "Y"
+            },
+            "Former Foster Care Category": {
+              "Indicator": "N",
+              "Ineligibility Code": 125
+            },
+            "Work Quarters Override Income": {
+              "Indicator": "N",
+              "Ineligibility Code": 340
+            },
+            "State Health Benefits CHIP": {
+              "Indicator": "X"
+            },
+            "CHIP Waiting Period Satisfied": {
+              "Indicator": "X"
+            },
+            "CHIP Incarceration": {
+              "Indicator": "N",
+              "Ineligibility Code": 999
+            },
+            "Dependent Child Covered": {
+              "Indicator": "X"
+            },
+            "Medicaid Non-MAGI Referral": {
+              "Indicator": "N",
+              "Ineligibility Code": 108
+            },
+            "APTC Referral": {
+              "Indicator": null
+            },
+            "CHIP": {
+              "Indicator": "Y"
+            },
+            "Medicaid": {
+              "Indicator": "Y"
+            },
+            "Emergency Medicaid": {
+              "Indicator": "N",
+              "Ineligibility Code": 109
+            },
+            "Refugee Medical Assistance": {
+              "Indicator": "X"
+            }
+          },
+          "Other Outputs": {
+            "Qualified Children List": [
+
+            ]
+          }
+        },
+        {
+          "Person ID": "Grandfather",
+          "Medicaid Eligible": "N",
+          "CHIP Eligible": "N",
+          "Non-MAGI Referral": "Y",
+          "Category": "Adult Group Category",
+          "Category Threshold": 23554,
+          "Determinations": {
+            "Parent Caretaker Category": {
+              "Indicator": "N",
+              "Ineligibility Code": 146
+            },
+            "Pregnancy Category": {
+              "Indicator": "N",
+              "Ineligibility Code": 124
+            },
+            "Child Category": {
+              "Indicator": "N",
+              "Ineligibility Code": 394
+            },
+            "Adult Group Category": {
+              "Indicator": "Y"
+            },
+            "Adult Group XX Category": {
+              "Indicator": "Y"
+            },
+            "Optional Targeted Low Income Child": {
+              "Indicator": "N",
+              "Ineligibility Code": 127
+            },
+            "CHIP Targeted Low Income Child": {
+              "Indicator": "N",
+              "Ineligibility Code": 127
+            },
+            "Unborn Child": {
+              "Indicator": "X"
+            },
+            "Income Medicaid Eligible": {
+              "Indicator": "N",
+              "Ineligibility Code": "Unimplemented"
+            },
+            "CHIPRA 214": {
+              "Indicator": "N",
+              "Ineligibility Code": 119
+            },
+            "Trafficking Victim": {
+              "Indicator": "X"
+            },
+            "Seven Year Limit": {
+              "Indicator": "X"
+            },
+            "Five Year Bar": {
+              "Indicator": "X"
+            },
+            "Title II Work Quarters Met": {
+              "Indicator": "X"
+            },
+            "Medicaid Citizen Or Immigrant": {
+              "Indicator": "Y"
+            },
+            "Former Foster Care Category": {
+              "Indicator": "N",
+              "Ineligibility Code": 125
+            },
+            "Work Quarters Override Income": {
+              "Indicator": "N",
+              "Ineligibility Code": 340
+            },
+            "State Health Benefits CHIP": {
+              "Indicator": "N",
+              "Ineligibility Code": 155
+            },
+            "CHIP Waiting Period Satisfied": {
+              "Indicator": "X"
+            },
+            "CHIP Incarceration": {
+              "Indicator": "N",
+              "Ineligibility Code": 999
+            },
+            "Dependent Child Covered": {
+              "Indicator": "X"
+            },
+            "Medicaid Non-MAGI Referral": {
+              "Indicator": "Y"
+            },
+            "APTC Referral": {
+              "Indicator": null
+            },
+            "CHIP": {
+              "Indicator": "N",
+              "Ineligibility Code": 107
+            },
+            "Medicaid": {
+              "Indicator": "N",
+              "Ineligibility Code": 106
+            },
+            "Emergency Medicaid": {
+              "Indicator": "N",
+              "Ineligibility Code": 109
+            },
+            "Refugee Medical Assistance": {
+              "Indicator": "X"
+            }
+          },
+          "Other Outputs": {
+            "Qualified Children List": [
+
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "MAGI": 40000,
+      "Applicants": [
+        {
+          "Person ID": "Father",
+          "Medicaid Eligible": "N",
+          "CHIP Eligible": "Y",
+          "Non-MAGI Referral": "N",
+          "Category": "Adult Group Category",
+          "Category Threshold": 40036,
+          "Determinations": {
+            "Parent Caretaker Category": {
+              "Indicator": "Y"
+            },
+            "Pregnancy Category": {
+              "Indicator": "N",
+              "Ineligibility Code": 124
+            },
+            "Child Category": {
+              "Indicator": "N",
+              "Ineligibility Code": 394
+            },
+            "Adult Group Category": {
+              "Indicator": "Y"
+            },
+            "Adult Group XX Category": {
+              "Indicator": "Y"
+            },
+            "Optional Targeted Low Income Child": {
+              "Indicator": "N",
+              "Ineligibility Code": 127
+            },
+            "CHIP Targeted Low Income Child": {
+              "Indicator": "N",
+              "Ineligibility Code": 127
+            },
+            "Unborn Child": {
+              "Indicator": "X"
+            },
+            "Income Medicaid Eligible": {
+              "Indicator": "Y"
+            },
+            "CHIPRA 214": {
+              "Indicator": "X"
+            },
+            "Trafficking Victim": {
+              "Indicator": "X"
+            },
+            "Seven Year Limit": {
+              "Indicator": "X"
+            },
+            "Five Year Bar": {
+              "Indicator": "X"
+            },
+            "Title II Work Quarters Met": {
+              "Indicator": "X"
+            },
+            "Medicaid Citizen Or Immigrant": {
+              "Indicator": "Y"
+            },
+            "Former Foster Care Category": {
+              "Indicator": "N",
+              "Ineligibility Code": 125
+            },
+            "Work Quarters Override Income": {
+              "Indicator": "N",
+              "Ineligibility Code": 340
+            },
+            "State Health Benefits CHIP": {
+              "Indicator": "X"
+            },
+            "CHIP Waiting Period Satisfied": {
+              "Indicator": "X"
+            },
+            "CHIP Incarceration": {
+              "Indicator": "N",
+              "Ineligibility Code": 999
+            },
+            "Dependent Child Covered": {
+              "Indicator": "N",
+              "Ineligibility Code": 128
+            },
+            "Medicaid Non-MAGI Referral": {
+              "Indicator": "N",
+              "Ineligibility Code": 108
+            },
+            "APTC Referral": {
+              "Indicator": null
+            },
+            "CHIP": {
+              "Indicator": "Y"
+            },
+            "Medicaid": {
+              "Indicator": "N",
+              "Ineligibility Code": 128
+            },
+            "Emergency Medicaid": {
+              "Indicator": "N",
+              "Ineligibility Code": 109
+            },
+            "Refugee Medical Assistance": {
+              "Indicator": "X"
+            }
+          },
+          "Other Outputs": {
+            "Qualified Children List": [
+              {
+                "Person ID": "Child",
+                "Determinations": {
+                  "Dependent Age": {
+                    "Indicator": "Y"
+                  },
+                  "Deprived Child": {
+                    "Indicator": "X"
+                  },
+                  "Relationship": {
+                    "Indicator": "Y"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "Person ID": "Mother",
+          "Medicaid Eligible": "N",
+          "CHIP Eligible": "Y",
+          "Non-MAGI Referral": "N",
+          "Category": "Pregnancy Category",
+          "Category Threshold": 40036,
+          "Determinations": {
+            "Parent Caretaker Category": {
+              "Indicator": "Y"
+            },
+            "Pregnancy Category": {
+              "Indicator": "Y"
+            },
+            "Child Category": {
+              "Indicator": "N",
+              "Ineligibility Code": 394
+            },
+            "Adult Group Category": {
+              "Indicator": "Y"
+            },
+            "Adult Group XX Category": {
+              "Indicator": "Y"
+            },
+            "Optional Targeted Low Income Child": {
+              "Indicator": "N",
+              "Ineligibility Code": 127
+            },
+            "CHIP Targeted Low Income Child": {
+              "Indicator": "N",
+              "Ineligibility Code": 127
+            },
+            "Unborn Child": {
+              "Indicator": "N",
+              "Ineligibility Code": 151
+            },
+            "Income Medicaid Eligible": {
+              "Indicator": "Y"
+            },
+            "CHIPRA 214": {
+              "Indicator": "X"
+            },
+            "Trafficking Victim": {
+              "Indicator": "X"
+            },
+            "Seven Year Limit": {
+              "Indicator": "X"
+            },
+            "Five Year Bar": {
+              "Indicator": "X"
+            },
+            "Title II Work Quarters Met": {
+              "Indicator": "X"
+            },
+            "Medicaid Citizen Or Immigrant": {
+              "Indicator": "Y"
+            },
+            "Former Foster Care Category": {
+              "Indicator": "N",
+              "Ineligibility Code": 125
+            },
+            "Work Quarters Override Income": {
+              "Indicator": "N",
+              "Ineligibility Code": 340
+            },
+            "State Health Benefits CHIP": {
+              "Indicator": "X"
+            },
+            "CHIP Waiting Period Satisfied": {
+              "Indicator": "X"
+            },
+            "CHIP Incarceration": {
+              "Indicator": "N",
+              "Ineligibility Code": 999
+            },
+            "Dependent Child Covered": {
+              "Indicator": "N",
+              "Ineligibility Code": 128
+            },
+            "Medicaid Non-MAGI Referral": {
+              "Indicator": "N",
+              "Ineligibility Code": 108
+            },
+            "APTC Referral": {
+              "Indicator": null
+            },
+            "CHIP": {
+              "Indicator": "Y"
+            },
+            "Medicaid": {
+              "Indicator": "N",
+              "Ineligibility Code": 128
+            },
+            "Emergency Medicaid": {
+              "Indicator": "N",
+              "Ineligibility Code": 109
+            },
+            "Refugee Medical Assistance": {
+              "Indicator": "X"
+            }
+          },
+          "Other Outputs": {
+            "Qualified Children List": [
+              {
+                "Person ID": "Child",
+                "Determinations": {
+                  "Dependent Age": {
+                    "Indicator": "Y"
+                  },
+                  "Deprived Child": {
+                    "Indicator": "X"
+                  },
+                  "Relationship": {
+                    "Indicator": "Y"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "Person ID": "Child",
+          "Medicaid Eligible": "Y",
+          "CHIP Eligible": "Y",
+          "Non-MAGI Referral": "N",
+          "Category": "Child Category",
+          "Category Threshold": 40036,
+          "Determinations": {
+            "Parent Caretaker Category": {
+              "Indicator": "N",
+              "Ineligibility Code": 146
+            },
+            "Pregnancy Category": {
+              "Indicator": "N",
+              "Ineligibility Code": 124
+            },
+            "Child Category": {
+              "Indicator": "Y"
+            },
+            "Adult Group Category": {
+              "Indicator": "Y"
+            },
+            "Adult Group XX Category": {
+              "Indicator": "Y"
+            },
+            "Optional Targeted Low Income Child": {
+              "Indicator": "Y"
+            },
+            "CHIP Targeted Low Income Child": {
+              "Indicator": "Y"
+            },
+            "Unborn Child": {
+              "Indicator": "X"
+            },
+            "Income Medicaid Eligible": {
+              "Indicator": "Y"
+            },
+            "CHIPRA 214": {
+              "Indicator": "X"
+            },
+            "Trafficking Victim": {
+              "Indicator": "X"
+            },
+            "Seven Year Limit": {
+              "Indicator": "X"
+            },
+            "Five Year Bar": {
+              "Indicator": "X"
+            },
+            "Title II Work Quarters Met": {
+              "Indicator": "X"
+            },
+            "Medicaid Citizen Or Immigrant": {
+              "Indicator": "Y"
+            },
+            "Former Foster Care Category": {
+              "Indicator": "N",
+              "Ineligibility Code": 125
+            },
+            "Work Quarters Override Income": {
+              "Indicator": "N",
+              "Ineligibility Code": 340
+            },
+            "State Health Benefits CHIP": {
+              "Indicator": "X"
+            },
+            "CHIP Waiting Period Satisfied": {
+              "Indicator": "X"
+            },
+            "CHIP Incarceration": {
+              "Indicator": "N",
+              "Ineligibility Code": 999
+            },
+            "Dependent Child Covered": {
+              "Indicator": "X"
+            },
+            "Medicaid Non-MAGI Referral": {
+              "Indicator": "N",
+              "Ineligibility Code": 108
+            },
+            "APTC Referral": {
+              "Indicator": null
+            },
+            "CHIP": {
+              "Indicator": "Y"
+            },
+            "Medicaid": {
+              "Indicator": "Y"
+            },
+            "Emergency Medicaid": {
+              "Indicator": "N",
+              "Ineligibility Code": 109
+            },
+            "Refugee Medical Assistance": {
+              "Indicator": "X"
+            }
+          },
+          "Other Outputs": {
+            "Qualified Children List": [
+
+            ]
+          }
+        },
+        {
+          "Person ID": "Grandfather",
+          "Medicaid Eligible": "N",
+          "CHIP Eligible": "N",
+          "Non-MAGI Referral": "Y",
+          "Category": "Adult Group Category",
+          "Category Threshold": 23554,
+          "Determinations": {
+            "Parent Caretaker Category": {
+              "Indicator": "N",
+              "Ineligibility Code": 146
+            },
+            "Pregnancy Category": {
+              "Indicator": "N",
+              "Ineligibility Code": 124
+            },
+            "Child Category": {
+              "Indicator": "N",
+              "Ineligibility Code": 394
+            },
+            "Adult Group Category": {
+              "Indicator": "Y"
+            },
+            "Adult Group XX Category": {
+              "Indicator": "Y"
+            },
+            "Optional Targeted Low Income Child": {
+              "Indicator": "N",
+              "Ineligibility Code": 127
+            },
+            "CHIP Targeted Low Income Child": {
+              "Indicator": "N",
+              "Ineligibility Code": 127
+            },
+            "Unborn Child": {
+              "Indicator": "X"
+            },
+            "Income Medicaid Eligible": {
+              "Indicator": "N",
+              "Ineligibility Code": "Unimplemented"
+            },
+            "CHIPRA 214": {
+              "Indicator": "N",
+              "Ineligibility Code": 119
+            },
+            "Trafficking Victim": {
+              "Indicator": "X"
+            },
+            "Seven Year Limit": {
+              "Indicator": "X"
+            },
+            "Five Year Bar": {
+              "Indicator": "X"
+            },
+            "Title II Work Quarters Met": {
+              "Indicator": "X"
+            },
+            "Medicaid Citizen Or Immigrant": {
+              "Indicator": "Y"
+            },
+            "Former Foster Care Category": {
+              "Indicator": "N",
+              "Ineligibility Code": 125
+            },
+            "Work Quarters Override Income": {
+              "Indicator": "N",
+              "Ineligibility Code": 340
+            },
+            "State Health Benefits CHIP": {
+              "Indicator": "N",
+              "Ineligibility Code": 155
+            },
+            "CHIP Waiting Period Satisfied": {
+              "Indicator": "X"
+            },
+            "CHIP Incarceration": {
+              "Indicator": "N",
+              "Ineligibility Code": 999
+            },
+            "Dependent Child Covered": {
+              "Indicator": "X"
+            },
+            "Medicaid Non-MAGI Referral": {
+              "Indicator": "Y"
+            },
+            "APTC Referral": {
+              "Indicator": null
+            },
+            "CHIP": {
+              "Indicator": "N",
+              "Ineligibility Code": 107
+            },
+            "Medicaid": {
+              "Indicator": "N",
+              "Ineligibility Code": 106
+            },
+            "Emergency Medicaid": {
+              "Indicator": "N",
+              "Ineligibility Code": 109
+            },
+            "Refugee Medical Assistance": {
+              "Indicator": "X"
+            }
+          },
+          "Other Outputs": {
+            "Qualified Children List": [
+
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
