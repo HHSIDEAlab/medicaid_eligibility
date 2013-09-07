@@ -1,5 +1,6 @@
 var relationshipTemplate = _.template($('#relationship_template').html()),
   dependentTemplate = _.template($('#dependent_template').html()),
+  formTemplate = _.template($('#form_template').html()),
   resetForm = function ($form) {
     $form.find('input:text, input:password, input:file, input[type="number"], select, textarea').val('');
     $form.find('input:radio, input:checkbox')
@@ -17,6 +18,7 @@ var relationshipTemplate = _.template($('#relationship_template').html()),
             .append(relationshipTemplate({self: i + 1, relation: rI + 1}));
         }
       }
+      /*
       $('label, input', el).each(function (j, formEl) {
         var $formEl = $(formEl);
         _.each(['for', 'id', 'name'], function (at) {
@@ -26,6 +28,8 @@ var relationshipTemplate = _.template($('#relationship_template').html()),
           }
         });
       });
+
+      */
       $(el).toggleClass('last-applicant', i === $fieldsets.length - 1);
     });
     $('.filer-2-row').toggle($fieldsets.length > 1);
@@ -52,9 +56,10 @@ $(document).on('change', '[type=checkbox]', function () {
     $newFieldset,
     $newDependent;
   $.uniform.restore('input[type=checkbox], select');
-  $newFieldset = $fieldsets.first().clone();
-  $newFieldset.removeClass('first-applicant');
-  resetForm($newFieldset);
+  //$newFieldset = $fieldsets.first().clone();
+  $newFieldset = $(formTemplate({num: $fieldsets.length + 1, 'applicant_class': 'last-applicant'}));
+  //$newFieldset.removeClass('first-applicant');
+  //resetForm($newFieldset);
   $newFieldset.hide();
   $fieldsets.last().after($newFieldset);
   $newFieldset.slideDown();
@@ -104,7 +109,9 @@ $(document).on('change', '[type=checkbox]', function () {
       }
   });
     return false;
-});
+}).ready(function() {
+    $('.add-applicant').before(formTemplate({num: 1, 'applicant_class': 'first_applicant'}))
+  });
 
 $(function () {
   $('.date').mask('99 / 99 / 9999');
