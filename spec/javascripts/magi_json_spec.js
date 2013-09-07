@@ -66,9 +66,14 @@ describe("MAGI.Application", function() {
     expect(application.People[2].Relationships.length).toBe(2)
 
     expect(application.People[1].Relationships[0]["Other ID"]).toBe("ABCD");
+    expect(application.People[1].Relationships[0]["Relationship Code"]).toBe(4);
 
     expect(application.People[2].Relationships[0]["Other ID"]).toBe("ABCD");
+    expect(application.People[2].Relationships[0]["Relationship Code"]).toBe(3);
+
     expect(application.People[2].Relationships[1]["Other ID"]).toBe("EFGH");
+    expect(application.People[2].Relationships[1]["Relationship Code"]).toBe(15);
+
   });
 
   it('creates a tax return', function() {
