@@ -1,0 +1,434 @@
+/*
+  Common colors:
+    94% gray: #f0f1f2
+*/
+
+body, button, input, div.selector span {
+  color: #231f20;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+body, button {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+body {
+  background: #e1e3e4;
+  margin: 160px auto;
+  width: 740px;
+}
+
+button[type=submit], input::-webkit-outer-spin-button, input::-webkit-inner-spin-button, .add-applicant, .remove-applicant {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+button[type=submit], .add-applicant, .remove-applicant {
+  border: none;
+}
+
+h1 {
+  background: #414958;
+  color: #fff;
+  font-weight: 300;
+  margin: 0;
+  line-height: 80px;
+  text-align: center;
+}
+
+fieldset {
+  border: none;
+  margin: 2px 0 0;
+  position: relative;
+}
+
+legend, .add-applicant, h2 {
+  color: #61708c;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+legend {
+  position: absolute;
+  top: 22px;
+}
+
+label, input {
+  vertical-align: middle;
+}
+
+label {
+  color: #58585b;
+  display: inline-block;
+  line-height: 1em;
+  padding: 0 20px;
+  width: 156px;
+  text-align: right;
+}
+
+input, div.checker span, div.selector span, .form-row-expandable-fields {
+  border: 1px solid #c5c9cb;
+}
+
+input, div.checker span, div.selector span {
+  background: #f0f1f2;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+input, div.selector span {
+  font-weight: 400;
+  height: 20px;
+  padding: 10px;
+}
+
+input[type=number] {
+  text-align: right;
+  width: 40px;
+}
+
+.long-number[type=number] {
+  width: 100px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    margin: 0;
+}
+
+input[type=text] {
+  width: 280px;
+}
+
+fieldset, .form-fields-area {
+  background: white;
+  padding: 30px 21px;
+}
+
+fieldset {
+  padding-top: 80px;
+}
+
+h2 {
+  font-size: 1em;
+  margin-top: 0;
+}
+
+.form-row, .form-half-field {
+  padding: 10px 0;
+}
+
+.form-row {
+  clear: both;
+}
+
+.form-half-field {
+  float: left;
+  margin-right: 27px;
+  width: 255px;
+}
+
+.add-applicant {
+  background: #f0f1f2;
+  display: block;
+  line-height: 80px;
+  padding: 0 22px;
+  text-align: left;
+  width: 100%;
+}
+
+.add-applicant:before {
+  content: '+ ';
+}
+
+.remove-applicant {
+  background: url('/assets/close.png') no-repeat 0 0;
+  height: 30px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  right: 21px;
+  text-indent: 100%;
+  top: 16px;
+  white-space: nowrap;
+  width: 30px;
+}
+
+.form-row-expandable-fields {
+  display: none;
+  margin-top: 18px;
+  padding: 10px 0;
+  position: relative;
+}
+
+.form-row-expandable-fields.expanded {
+  display: block;
+}
+
+.form-row-expandable-fields label {
+  width: 155px;
+}
+
+.form-row-expandable-fields:before {
+  background: #fff url('/assets/tail.png') no-repeat 0 0;
+  bottom: 100%;
+  content: '';
+  display: block;
+  height: 12px;
+  left: 199px;
+  position: absolute;
+  width: 22px;
+}
+
+.form-row-expandable-fields .form-half-field {
+  width: 321px;
+}
+
+.form-row-expandable-fields .form-row-expandable-fields {
+  margin-left: 22px;
+  margin-right: 22px;
+}
+
+.form-row-expandable-fields .form-row-expandable-fields label {
+  width: 132px;
+}
+
+.form-row-expandable-fields .form-row-expandable-fields:before {
+  left: 177px;
+}
+
+.filer-2-row {
+  display: none;
+}
+
+.date[type=text] {
+  width: 120px;
+}
+
+.last-applicant-only {
+  display: none;
+}
+
+.last-applicant .last-applicant-only {
+  display: block;
+}
+
+.first-applicant.last-applicant .last-applicant-only {
+  display: none;
+}
+
+button[type=submit] {
+  background: #24bbbe;
+  -webkit-border-radius: 5px;
+          border-radius: 5px;
+  background-clip: padding-box;
+  color: #fff;
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 20px 85px;
+  margin: 40px auto 0;
+  text-align: center;
+}
+
+div.selector {
+  height: 42px;
+  padding: 0;
+}
+
+div.selector.fixedWidth {
+  width: 302px;
+}
+
+div.selector.fixedWidth span {
+  width: 280px;
+}
+
+div.selector span, div.selector.hover span, div.selector.focus span, div.selector.focus.active span {
+  background-image: url('/assets/arrow.png');
+  background-position: 100% 0;
+  background-repeat: no-repeat;
+  height: 20px;
+  text-shadow: none;
+}
+
+div.selector select {
+  height: 40px;
+}
+
+div.checker span.checked, div.checker span.checked:hover {
+  background-image: url('/assets/check.png');
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+
+div.checker input {
+  vertical-align: top;
+}
+
+.clear {
+  clear: both;
+}
+
+.cf:before,
+.cf:after {
+    content: " ";
+    display: table;
+}
+
+.cf:after {
+    clear: both;
+}
+
+.cf {
+    *zoom: 1;
+}
+
+.household table th {
+  text-align: left;
+}
+
+.household table td {
+  text-align: left;
+  padding: 1px 3px 1px 3px;
+}
+
+
+.household {
+  background-color: #fff;
+  padding: 0px;
+  margin: 10px 0;
+  border-top: 1px solid #999;
+}
+
+.household .people {
+  list-style-type: none;
+}
+
+.household h2 {
+  margin-left: 10px;
+}
+
+.household .people>li {
+  margin: 15px;
+  border-left: 2px solid #999;
+}
+
+.household .people {
+  padding: 0;
+}
+
+.household .name {
+  font-weight: bold;
+}
+
+.eligibility {
+  border-radius: 5px;
+  border: 3px solid;
+  margin: 2px;
+  padding: 2px;
+}
+
+.eligibility i {
+  margin-right: 3px;
+}
+
+.eligibility.eligible {
+  background-color: rgb(223, 240, 216);
+  border-color: rgb(214, 233, 198);
+  color: rgb(70, 136, 71);
+}
+
+.eligibility.ineligible {
+  background-color: rgb(242, 222, 222);
+  border-color: rgb(238, 211, 215);
+  color: rgb(185, 74, 72);
+}
+
+.eligibility {
+  border-radius: 5px;
+  border: 1px solid;
+}
+
+#sidebar {
+  width: 400px;
+  float: left;
+}
+
+.household table {
+  width: 100%;
+}
+
+.household th {
+  padding-left: 10px;
+}
+
+
+.household tr {
+  border-top: 1px solid #999;
+  width: 100%;
+}
+
+.household tr.selected td, .household tr.selected th{
+  background-color: rgb(65, 73, 88);
+}
+
+.household tr.selected th {
+  color: white;
+}
+
+.household tr:hover td, .household tr:hover th{
+  background-color: #efefef;
+  cursor: pointer; 
+}
+
+.household tr:hover th{
+  color: black;
+}
+
+h3.name {
+  font-size: 18px;
+  display: inline-block;
+}
+
+#person {
+  width: 540px;
+  background-color: white;
+  float: left;
+  margin: 10px;
+  padding: 10px;
+}
+
+#person tr{
+  width: 100%;
+}
+
+#person td{
+  padding: 0 0 6px 0;
+  vertical-align:top;
+}
+
+.determinations {
+  width: 170px;
+  float: left;
+  margin-right: 10px;
+}
+
+.determinations h3{
+  margin-top: 0;
+}
+
+.determinations ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.determinations li {
+  margin-bottom: 6px;
+}
+
+#results {
+  display: none;
+}

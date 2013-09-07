@@ -14,6 +14,8 @@ gem "active_model_serializers"
 
 gem 'nokogiri'
 
+gem "font-awesome-rails"
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
@@ -25,6 +27,10 @@ gem 'nokogiri'
 
 # Deploy with Capistrano
 gem 'capistrano', :group => :development
+
+group :development, :test do
+  gem 'jasmine'
+end
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'

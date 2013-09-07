@@ -69,7 +69,7 @@ module MAGI
 
     rule "Set FPL * percentage" do
       o["FPL"] = v("FPL")
-      o["FPL * Percentage"] = v("FPL") * c("Category-Percentage Mapping")[v("Max Eligible Income")[:category]]
+      o["FPL * Percentage"] = v("FPL") * (c("Category-Percentage Mapping")[v("Max Eligible Income")[:category]] + 0.05)
     end
 
     rule "Determine Income Eligibility" do

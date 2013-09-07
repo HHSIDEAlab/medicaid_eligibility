@@ -33,7 +33,7 @@ module MAGI
     end
 
     rule "Applicant did not meet Title II Work Quarters requirement" do
-      if v("Calculated Income") < v("FPL") && v("Applicant Title II Work Quarters Met Status Indicator") == 'N'
+      if v("Calculated Income") < v("FPL") && v("Applicant Title II Work Quarters Met Indicator") == 'N'
         determination_y "Work Quarters Override Income"
 
         o["Applicant Medicaid Indicator"] = 'N'
