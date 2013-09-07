@@ -11,7 +11,7 @@ module ApplicationResponder
       hh_json["MAGI"] = hh_applicants.first.outputs["Calculated Income"]
 
       hh_json["Applicants"] = []
-      for app in @applicants
+      for app in household.people.select{|p| @applicants.include? p}
         app_json = {}
         app_json["Person ID"] = app.person_id
         app_json["Medicaid Eligible"] = app.outputs["Applicant Medicaid Indicator"]
