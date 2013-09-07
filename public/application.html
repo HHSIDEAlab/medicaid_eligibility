@@ -323,14 +323,14 @@
           <label for="filer_1">Filer 1</label>
           <select id="filer_1" name="filer_1" class="filer">
             <option value=""></option>
-            <option value="1"></option>
+            <option value=""></option>
           </select>
         </div>
         <div class="form-row filer-2-row">
           <label for="filer_2">Filer 2</label>
           <select id="filer_2" name="filer_2" class="filer">
             <option value=""></option>
-            <option value="1"></option>
+            <option value=""></option>
           </select>
         </div>
         <div class="dependent-fields"></div>
@@ -364,9 +364,8 @@
     </script>
     <script id="dependent_template" type="text/template">
       <div class="form-row">
-        <label for="dependent_{{num}}">Dependent 1</label>
+        <label for="dependent_{{num}}">Dependent {{num}}</label>
         <select id="dependent_{{num}}" name="dependent_{{num}}" class="filer">
-          <option value=""></option>
         </select>
       </div>
     </script>
