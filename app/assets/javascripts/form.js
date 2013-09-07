@@ -91,13 +91,18 @@ $(document).on('change', '[type=checkbox]', function () {
     console.log(JSON.stringify(application, undefined, 2));
     var endpoint = new MAGI.Endpoint("/determinations/eval.json");
     endpoint.submit(application, function(response) {
-      $("#application_form").hide();
-      $("#results").show();
-      Results = response;
-      refreshResults();
-//      $("body").append(response)
-      console.log(response);
-    });
+      if(response == "ERROR"){
+        alert("ERROR");
+      } else {
+
+        $("#application_form").hide();
+        $("#results").show();
+        Results = response;
+        refreshResults();
+  //      $("body").append(response)
+        console.log(response);
+      }
+  });
     return false;
 });
 
