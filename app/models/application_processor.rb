@@ -22,7 +22,7 @@ module ApplicationProcessor
       MAGI::PreliminaryMedicaid,
       MAGI::PreliminaryCHIP,
       MAGI::FormerFosterCare,
-#      MAGI::IncomeOverride,
+      MAGI::IncomeOverride,
       MAGI::OptionalUnbornChild,
       MAGI::PublicEmployeesBenefits,
       MAGI::CHIPWaitingPeriod,
