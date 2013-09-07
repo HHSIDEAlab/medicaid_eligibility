@@ -401,7 +401,7 @@
     <script id="relationship_template" type="text/template">
       <div class="form-row">
         <label for="applicant_<%= self %>_relationship_to_<%= relation %>">Relationship to Applicant <%= relation %></label>
-        <select id="applicant_<%= self %>_relationship_to_<%= relation %>">
+        <select id="applicant_<%= self %>_relationship_to_<%= relation %>" name="applicant_<%= self %>_relationship_to_<%= relation %>">
           <option value=""></option>
           <option value="02">Spouse</option>
           <option value="03">Parent</option>
