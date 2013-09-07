@@ -45,6 +45,8 @@ GEM
     diff-lcs (1.2.4)
     erubis (2.7.0)
     ffi (1.9.0)
+    font-awesome-rails (3.2.1.3)
+      railties (>= 3.2, < 5.0)
     highline (1.6.19)
     hike (1.2.3)
     i18n (0.6.4)
@@ -137,6 +139,7 @@ DEPENDENCIES
   active_model_serializers
   activerecord-nulldb-adapter
   capistrano
+  font-awesome-rails
   jasmine
   nokogiri
   pg

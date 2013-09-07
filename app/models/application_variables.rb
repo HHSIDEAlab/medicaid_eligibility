@@ -232,6 +232,7 @@ module ApplicationVariables
       :type       => :flag,
       :values     => %w(Y N),
       :group      => :applicant,
+      :default    => "N",
       :xpath      => :unimplemented
     },
     {
