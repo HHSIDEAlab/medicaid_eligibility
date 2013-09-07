@@ -14,7 +14,7 @@
   <div class="form-fields-area">
     <div class="form-row">
       <label for="state">State</label>
-      <select id="state" name="state">
+      <select id="state" name="state" required>
         <option value=""></option>
         <option value="AL">Alabama</option>
         <option value="AK">Alaska</option>
@@ -71,7 +71,7 @@
     </div>
     <div class="form-row">
       <label for="id">Application Name or ID</label>
-      <input type="text" id="id" name="id">
+      <input type="text" id="id" name="id" required>
     </div>
   </div>
     <button type="button" class="add-applicant">Add Another Applicant</button>
@@ -168,11 +168,11 @@
         </div>
         <div class="form-row">
           <label for="applicant_<%= num %>_age">Age</label>
-          <input type="number" id="applicant_<%= num %>_age" name="applicant_<%= num %>_age">
+          <input type="number" id="applicant_<%= num %>_age" name="applicant_<%= num %>_age" required>
         </div>
         <div class="form-row">
           <label for="applicant_<%= num %>_hours">Hours worked per week</label>
-          <input type="number" id="applicant_<%= num %>_hours" name="applicant_<%= num %>_hours">
+          <input type="number" id="applicant_<%= num %>_hours" name="applicant_<%= num %>_hours" required>
         </div>
         <div class="form-half-field">
           <label for="applicant_<%= num %>_disabled">Disabled</label>
@@ -406,7 +406,8 @@
     <script id="relationship_template" type="text/template">
       <div class="form-row">
         <label for="applicant_<%= self %>_relationship_to_<%= relation %>">Relationship to Applicant <%= relation %></label>
-        <select id="applicant_<%= self %>_relationship_to_<%= relation %>" name="applicant_<%= self %>_relationship_to_<%= relation %>">
+        <select id="applicant_<%= self %>_relationship_to_<%= relation %>"
+                name="applicant_<%= self %>_relationship_to_<%= relation %>" required>
           <option value=""></option>
           <option value="02">Spouse</option>
           <option value="03">Parent</option>
