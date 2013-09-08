@@ -76,7 +76,7 @@ module ApplicationParser
         other_id = relationship["Other ID"]
         
         other_person = @people.find{|p| p.person_id == other_id}
-        relationship_type = ApplicationVariables::RELATIONSHIP_CODES[relationship["Relationship Code"]]
+        relationship_type = ApplicationVariables::RELATIONSHIP_INVERSE[ApplicationVariables::RELATIONSHIP_CODES[relationship["Relationship Code"]]]
         relationship_attributes = {}
         for input in ApplicationVariables::PERSON_INPUTS.select{|i| i[:group] == :relationship}
           relationship_attributes[input[:name]] = get_json_variable(relationship, input, person_attributes.merge(applicant_attributes))
