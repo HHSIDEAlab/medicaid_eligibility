@@ -5,13 +5,12 @@ module ApplicationResponder
     for household in @medicaid_households
       hh_json = {}
       hh_applicants = household.people.select{|p| @applicants.include? p}
-      unless hh_applicants
-        next
+      if hh_applicants.any?
+        hh_json["MAGI"] = hh_applicants.first.outputs["Calculated Income"]
       end
-      hh_json["MAGI"] = hh_applicants.first.outputs["Calculated Income"]
 
       hh_json["Applicants"] = []
-      for app in household.people.select{|p| @applicants.include? p}
+      for app in hh_applicants
         app_json = {}
         app_json["Person ID"] = app.person_id
         app_json["Medicaid Eligible"] = app.outputs["Applicant Medicaid Indicator"]
