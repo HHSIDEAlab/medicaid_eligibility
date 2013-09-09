@@ -257,7 +257,11 @@ div.selector select {
   height: 40px;
 }
 
-div.checker span.checked, div.checker span.checked:hover {
+input:focus, div.selector.focus, div.checker.focus {
+  outline: 2px solid #80c0ff;
+}
+
+div.checker span.checked, div.checker.focus span.checked, div.checker span.checked:hover {
   background-image: url('/assets/check.png');
   background-position: 50% 50%;
   background-repeat: no-repeat;
