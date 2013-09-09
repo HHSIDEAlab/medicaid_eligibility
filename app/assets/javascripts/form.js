@@ -1,7 +1,7 @@
 var addUniquenessValidator = function(name, selector) {
   $.validator.addMethod(name, function(value) {
     var count = _.filter($(selector), function($el) {
-      return $el.value = value;
+      return $el.value == value;
     }).length;
     return count == 1;
   }, "Applicant ID must be unique");
