@@ -84,7 +84,7 @@ $(document).on('change', '[type=checkbox]', function () {
     $('option', this).eq(index + 1).val(val).text(val);
     $.uniform.update(this);
   });
-}).on('submit', '#application_form', function() {
+}).on('submit', '#application_form', function(event) {
     event.preventDefault();
     var application = new MAGI.Application($(this).serializeObject(), $('fieldset').length);
     console.log(JSON.stringify(application, undefined, 2));
