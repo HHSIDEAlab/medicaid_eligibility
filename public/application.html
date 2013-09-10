@@ -95,63 +95,10 @@
     </div>
     <button type="submit">Check Eligibility</button>
 </form>
-    <div id="results">
-        <div id="sidebar">
-    <div class="household">
-      <h2>Household MAGI: 50,000</h2>
-        <table>
-      <tr>
-        <th>Father</th>
-        <td><div class="eligibility eligible"><i class="icon-ok"></i>Medicaid Eligible</div>
-        </td>
-        <td><div class="eligibility ineligible"><i class="icon-remove"></i>Not Chip Eligible</div>
-        </td>
-      </tr>
-      <tr>
-        <th>Mother</th>
-        <td><div class="eligibility ineligible"><i class="icon-remove"></i>Not Medicaid Eligible</div>
-        </td><td><div class="eligibility ineligible"><i class="icon-remove"></i>Not Chip Eligible</div>
-        </td>
-      </tr>
-      </table>
 
-    </div>
-      <div class="household">
-      <h2>Household MAGI: 25,000</h2>
-      <table>
-      <tr>
-        <th>Father</th>
-        <td><div class="eligibility eligible"><i class="icon-ok"></i>Medicaid Eligible</div>
-        </td>
-        <td><div class="eligibility ineligible"><i class="icon-remove"></i>Not Chip Eligible</div>
-        </td>
-      </tr>
-      <tr>
-        <th>Mother</th>
-        <td><div class="eligibility ineligible"><i class="icon-remove"></i>Not Medicaid Eligible</div>
-        </td><td><div class="eligibility ineligible"><i class="icon-remove"></i>Not Chip Eligible</div>
-        </td>
-      </tr>
-      </table>
+<div id="results">
 
-    </div>
-    </div>
-    <div id="person">
-      <h2>Category</h2>
-      <p>Adult Group Category</p>
-      <h2>Determinations</h2>
-      <div class="determinations">
-      <h3>Yes</h3>
-      </div>
-      <div class="determinations">
-        <h3>No</h3>
-      </div>
-      <div class="determinations">
-        <h3>Not Applicable</h3>
-      </div>
-      
-    </div>
-    </div>
+</div>
     
     <script id="form_template" type="text/template">
       <fieldset class="<%= applicant_class %>">
@@ -437,88 +384,86 @@
         </select>
       </div>
     </script>
-        <script type="text/html" id="household_template">
+    <script type="text/html" id="household_template">
       <% _.each(households, function(household, index){ %>
-        <div class="household" data-household-index="<%= index %>">
-        <h2>Household MAGI:  <%= household["MAGI"] %></h2>
-        <table>
-        <% _.each(household["Applicants"], function(applicant, index){ %>
-        <tr data-applicant-index="<%= index %>" >
-          <th><%= applicant["Person ID"] %></th>
-          <% if(applicant["Medicaid Eligible"] == "Y"){ %>
-          <td><div class="eligibility eligible"><i class="icon-ok"></i>Medicaid Eligible</div>
-          </td>
-          <% } else { %>
-          <td><div class="eligibility ineligible"><i class="icon-remove"></i>Not Medicaid Eligible</div>
-          </td>
-          <% } %>
-        </tr>
-        <% }); %>
-        </table>
+        <div class="household">
+          <h2>Household MAGI:  <%= household["MAGI"] %></h2>
+          <% _.each(household["Applicants"], function(applicant, index){ %>
+            <div class="person 
+              <% if(households.length != 1 || household["Applicants"].length != 1){ %>
+              collapsed
+              <% } %>">
+              <div class="head">
+                <h3><%= applicant["Person ID"] %></h3>
+                <% if(applicant["Medicaid Eligible"] == "Y"){ %>
+                  <span class="eligibility eligible"><i class="icon-ok"></i>Medicaid Eligible</span>
+                
+                <% } else { %>
+                  <span class="eligibility ineligible"><i class="icon-remove"></i>Not Medicaid Eligible</span>
+                <% } %>
+<span class="threshold">Eligibility Threshold: <%= applicant["Category Threshold"] %></span>                <span class="category"><%= applicant["Category"] %></span>
+              </div>
+              <div class="details">
+                <h4>DETERMINATIONS</h4>
+                <div class="determinations">
+                <h5>Yes</h5>
+                <ul>
+                <%
+                  _.chain(applicant["Determinations"])
+                    .pairs()
+                    .filter(function(item){
+                      return item[1]["Indicator"]=="Y";
+                    })
+                    .map(function(item){
+                      return item[0];
+                    }).each(function(yes){
+                %>
+                <li><%= yes %></li>
+                <% }); %>
+                </ul>
+                </div>
+                <div class="determinations">
+                  <h5>No</h5>
+                  <table>
+                <%
+                  _.chain(applicant["Determinations"])
+                    .pairs()
+                    .filter(function(item){
+                      return item[1]["Indicator"]=="N";
+                    })
+                    .map(function(item){
+                      return {item: item[0], code: item[1]["Ineligibility Code"]};
+                    }).each(function(no){
+                %>
+                <tr><td class="item"><%= no.item %></td><td class="code"><%= no.code %></td>
+                </tr>
+                <% }); %>
+                </table>
+                </div>
+                <div class="determinations">
+                  <h5>Not Applicable</h5>
+                  <ul>
+                <%
+                  _.chain(applicant["Determinations"])
+                    .pairs()
+                    .filter(function(item){
+                      return item[1]["Indicator"]=="X";
+                    })
+                    .map(function(item){
+                      return item[0];
+                    }).each(function(na){
+                %>
+                <li><%= na %></li>
+                <% }); %>
+                </ul>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+          </div>
+          <% }); %>
       </div>
     <% }); %>
     </script>
-    <script type="text/html" id="person_template">
-      <h1><%= person["Person ID"] %>
-      <h2>Category</h2>
-      <p><%= person["Category"] %></p>
-      <h3>Category MAGI Threshold</h3>
-      <p><%= person["Category Threshold"] %></p>
-      <h2>Determinations</h2>
-      <div class="determinations">
-      <h3>Yes</h3>
-      <ul>
-      <%
-        _.chain(person["Determinations"])
-          .pairs()
-          .filter(function(item){
-            return item[1]["Indicator"]=="Y";
-          })
-          .map(function(item){
-            return item[0];
-          }).each(function(yes){
-      %>
-      <li><%= yes %></li>
-      <% }); %>
-      </ul>
-      </div>
-      <div class="determinations">
-        <h3>No</h3>
-        <table>
-      <%
-        _.chain(person["Determinations"])
-          .pairs()
-          .filter(function(item){
-            return item[1]["Indicator"]=="N";
-          })
-          .map(function(item){
-            return {item: item[0], code: item[1]["Ineligibility Code"]};
-          }).each(function(no){
-      %>
-      <tr><td><%= no.item %></td><td><%= no.code %></td>
-      </tr>
-      <% }); %>
-      </table>
-      </div>
-      <div class="determinations">
-        <h3>Not Applicable</h3>
-        <ul>
-      <%
-        _.chain(person["Determinations"])
-          .pairs()
-          .filter(function(item){
-            return item[1]["Indicator"]=="X";
-          })
-          .map(function(item){
-            return item[0];
-          }).each(function(na){
-      %>
-      <li><%= na %></li>
-      <% }); %>
-      </ul>
-      </div>
-    </script>
-
     <script src="/assets/underscore.js"></script>
     <script src="/assets/jquery.js"></script>
     <script src="/assets/jquery.validate.js"></script>
