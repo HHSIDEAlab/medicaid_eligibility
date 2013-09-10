@@ -289,13 +289,17 @@ div.checker input {
     *zoom: 1;
 }
 
-.household table th {
-  text-align: left;
+.determinations table td {
+  vertical-align: top;
+  padding: 0px 3px 6px 0px;
 }
 
-.household table td {
-  text-align: left;
-  padding: 1px 3px 1px 3px;
+.determinations table td.item{
+    text-align: left;
+}
+
+.determinations table td.code{
+  text-align: right;
 }
 
 
@@ -312,6 +316,9 @@ div.checker input {
 
 .household h2 {
   margin-left: 10px;
+  margin-top: 10px;
+  margin-right: 20px;
+  text-align: right;
 }
 
 .household .people>li {
@@ -355,22 +362,7 @@ div.checker input {
   border: 1px solid;
 }
 
-#sidebar {
-  width: 400px;
-  float: left;
-}
-
-.household table {
-  width: 100%;
-}
-
-.household th {
-  padding-left: 10px;
-}
-
-
-.household tr {
-  border-top: 1px solid #999;
+.household {
   width: 100%;
 }
 
@@ -382,46 +374,60 @@ div.checker input {
   color: white;
 }
 
-.household tr:hover td, .household tr:hover th{
+.person .head:hover{
   background-color: #efefef;
   cursor: pointer; 
 }
 
-.household tr:hover th{
-  color: black;
+
+.person{
+  margin: 2px 15px;
+  padding: 5px;
+  border-top: 1px solid #ddd;
+  border-left: 1px solid #ddd;
 }
 
-h3.name {
-  font-size: 18px;
+.person h3{
   display: inline-block;
+  margin: 0;
 }
 
-#person {
-  width: 540px;
-  background-color: white;
-  float: left;
-  margin: 10px;
-  padding: 10px;
+.person h4{
+  font-size: 12px;
+  margin: 12px 0 4px;
 }
 
-#person tr{
-  width: 100%;
+.person h5{
+  font-size: 12px;
+  margin: 2px 0 4px 0
 }
 
-#person td{
-  padding: 0 0 6px 0;
-  vertical-align:top;
+.person .category, .person .threshold{
+  color: #58585b;
+  margin-left: 15px;
+  float: right;
 }
+
+.person .eligibility {
+  margin-left: 15px;
+}
+
+.person.threshold{
+  margin-left: 10px;
+}
+
+.determinations li, .determinations td{
+  font-size: 11px;
+  margin-bottom: 6px;
+}
+
 
 .determinations {
-  width: 170px;
+  width: 220px;
   float: left;
   margin-right: 10px;
 }
 
-.determinations h3{
-  margin-top: 0;
-}
 
 .determinations ul {
   list-style-type: none;
@@ -429,8 +435,17 @@ h3.name {
   padding: 0;
 }
 
-.determinations li {
+.determinations li {  
   margin-bottom: 6px;
+}
+
+.household{
+  padding: 10px;
+}
+
+.person.collapsed .details{
+  display: none;
+  transition: height 2s;
 }
 
 #results {
