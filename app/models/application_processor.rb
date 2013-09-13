@@ -5,6 +5,7 @@ module ApplicationProcessor
     # relationship validator
     compute_relationships!
     build_medicaid_households!
+    calculate_household_size!
     calculate_household_income!
   end
 
@@ -154,6 +155,20 @@ module ApplicationProcessor
         med_household.income_people << person
       end
     end    
+  end
+
+  def calculate_household_size!
+    for household in @medicaid_households
+      if @config["Count Unborn Children for Household"] == "01"
+        household.household_size = household.people.count + household.people.inject(0){|sum, p| sum + (p.person_attributes["Applicant Pregnant Indicator"] == 'Y' ? p.person_attributes["Number of Children Expected"] : 0)}
+      elsif @config["Count Unborn Children for Household"] == "02"
+        household.household_size = household.people.count + household.people.count{|p| p.person_attributes["Applicant Pregnant Indicator"] == 'Y'}
+      elsif @config["Count Unborn Children for Household"] == "03"
+        household.household_size = household.people.count
+      else
+        raise "Invalid or missing state configuration Count Unborn Children for Household"
+      end  
+    end
   end
 
   def calculate_household_income!

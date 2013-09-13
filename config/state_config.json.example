@@ -44,6 +44,8 @@
     "State CHIP Waiting Period": 0,
 
     "State Offers Refugee Medical Assistance": "Y",
-    "Percent FPL Refugee Medical Assistance": 1
+    "Percent FPL Refugee Medical Assistance": 1,
+
+    "Count Unborn Children for Household": "01"
   }
 }
