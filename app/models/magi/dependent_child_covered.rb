@@ -12,6 +12,7 @@ module MAGI
     assumption "Note that the logic currently contained in this rule requires that an applicant’s own children, as well as other children for whom the applicant may exercise primary responsibility, meet the requirements to be a “dependent child” – i.e., be under age 18 or, at state option age 18 and a full time student and be deprived of parental support – in order for the child’s parent to be subject to this restriction on coverage under the Adult Group or Adult XX Group."  
     assumption "The logic does not implement the policy with respect to older children (ages 18, 19 and 20) or younger children who do not meet the definition of a \"dependent child.\""
 
+    input "Applicant List", "Application", "List"
     input "Person List", "Application", "List"
     input "Applicant Adult Group Category Indicator", "From Identify Medicaid Category – Adult Group rule", "Char(1)", %w(Y N)
     input "Applicant Adult Group XX Category Indicator", "From Identify Medicaid Category – Adult Group rule", "Char(1)", %w(Y N)
@@ -23,7 +24,7 @@ module MAGI
     rule "Determine eligibility - Dependent Child Covered" do
       if v("Applicant Adult Group Category Indicator") == 'N' || v("Applicant Adult Group XX Category Indicator") == 'N' || v("Qualified Children List").empty?
         determination_na "Dependent Child Covered"
-      elsif v("Qualified Children List").all?{|child| v("Person List").find{|p| p.person_id == child["Person ID"]}.applicant_attributes["Has Insurance"] == 'Y'}
+      elsif v("Qualified Children List").all?{|child| v("Applicant List").any?{|app| app.person_id == child["Person ID"]} || v("Person List").find{|p| p.person_id == child["Person ID"]}.applicant_attributes["Has Insurance"] == 'Y'}
         determination_y "Dependent Child Covered"
       else
         o["Applicant Dependent Child Covered Indicator"] = 'N'
