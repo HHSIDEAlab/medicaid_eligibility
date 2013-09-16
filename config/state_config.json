@@ -46,7 +46,16 @@
     "Percent FPL Refugee Medical Assistance": 1
   },
 
+  "AK": {
+     "Base FPL": 9320,
+     "FPL Per Person": 5030
+  },
+  "HI": {
+     "Base FPL": 8610,
+     "FPL Per Person": 4620
+  },
 
+  }
   "WV": { 
     "Age Limit for Primary Responsibility": 19,
     "Category-Percentage Mapping": {
