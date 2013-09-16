@@ -3,6 +3,7 @@ module ApplicationProcessor
 
   def compute_values!
     # relationship validator
+    validate_tax_returns
     compute_relationships!
     build_medicaid_households!
     calculate_household_income!
@@ -50,6 +51,10 @@ module ApplicationProcessor
     person.person_attributes["Applicant Age"] < @config["Child Age Threshold"] || (person.person_attributes["Student Indicator"] == "Y" && person.person_attributes["Applicant Age"] < @config["Student Age Threshold"])
   end
 
+  def live_together?(person1, person2)
+    @physical_households.any?{|hh| hh.people.include?(person1) && hh.people.include?(person2)}
+  end
+
   def from_context!(applicant, context)
     applicant.outputs.merge!(context.output)
   end
@@ -71,6 +76,25 @@ module ApplicationProcessor
     RuleContext.new(config, input, @determination_date)
   end
 
+  def validate_tax_returns
+    for person in @people
+      if @tax_returns.select{|tr| tr.filers.include?(person)}.count > 1
+        raise "Invalid tax returns: #{person.person_id} is a filer on two returns"
+      end
+      if @tax_returns.select{|tr| tr.dependents.include?(person)}.count > 1
+        raise "Invalid tax returns: #{person.person_id} is a dependent on two returns"
+      end
+      if @tax_returns.any?{|tr| tr.filers.include?(person) && tr.filers.count == 2} && @tax_returns.any?{|tr| tr.dependents.include?(person)}
+        raise "Invalid tax returns: #{person.person_id} is filing jointly and also claimed as a dependent"
+      end
+    end
+    if @tax_returns.any?{|tr| tr.filers.count > 2}
+      raise "Invalid tax returns: Tax return has more than two filers"
+    elsif @tax_returns.any?{|tr| tr.filers.count == 2 && tr.filers[0].get_relationship(:spouse) != tr.filers[1]}
+      raise "Invalid tax returns: Tax return has joint filers who are not married"
+    end
+  end
+
   def compute_relationships!
     for person in @people
       for rel in person.relationships
@@ -89,38 +113,45 @@ module ApplicationProcessor
   def build_medicaid_households!
     @medicaid_households = []
     
-    for person in @people      
-      # Start with someone's tax return
-      tax_return = @tax_returns.find{|tr| tr.filers.include?(person) || tr.dependents.include?(person)}
-      if tax_return
-        tax_return_people = tax_return.filers + tax_return.dependents
-      else
-        tax_return_people = []
+    for person in @people
+      filed_tax_return = @tax_returns.find{|tr| tr.filers.include?(person)}
+      dependent_tax_return = @tax_returns.find{|tr| tr.dependents.include?(person)}
+      parents = person.get_relationships(:parent) + person.get_relationships(:stepparent)
+
+      # If person files a return and no one claims person as dependent, add tax
+      # return people (435.603.f1)
+      if filed_tax_return && !dependent_tax_return
+        med_household_members = filed_tax_return.filers + filed_tax_return.dependents
+      # If spouse claims person as a dependent, include spouse (435.603.f2)
+      elsif dependent_tax_return && dependent_tax_return.filers.any?{|filer| filer == person.get_relationship(:spouse)}
+        med_household_members = dependent_tax_return.filers
+      # If parent claimes person as a dependent and person lives with parent, include 
+      # filers, unless person is a minor and lives with another parent (not 
+      # stepparent) not on the tax return (435.603.f2)
+      elsif dependent_tax_return && dependent_tax_return.filers.any?{|filer| parents.include?(filer) && live_together?(person, filer)} && !(is_minor?(person) && person.get_relationships(:parent).any?{|parent| live_together?(person, parent) && !(dependent_tax_return.filers.include?(parent))})
+        med_household_members = dependent_tax_return.filers
+      # In all other cases, the household is person's children who are minors and,
+      # if person is a minor, person's siblings (435.603.f3)
+      elsif
+        med_household_members = person.get_relationships(:child) + person.get_relationships(:stepchild)
+        if is_minor?(person)
+          med_household_members += person.get_relationships(:sibling).select{|sib| is_minor?(sib)}
+        end
+        med_household_members.select!{|member| live_together?(person, member)}
       end
 
-      # Get all the person's relevant family members who live with the
-      # person
-      spouses = person.relationships.select{|r| r.relationship_type == :spouse}
-
-      if is_minor?(person)
-        siblings = person.relationships.select{|r| r.relationship_type == :sibling && is_minor?(r.person)}
-      else
-        siblings = []
+      # If person lives with a spouse, add the spouse (435.603.f4)
+      spouse = person.get_relationship(:spouse)
+      begin
+        if spouse && live_together?(person, spouse)
+          med_household_members << spouse
+        end
+      rescue
+        raise "#{@physical_households}"
       end
 
-      if is_minor?(person)
-        parents = person.relationships.select{|r| [:parent, :stepparent].include?(r.relationship_type)}
-      else
-        parents = []
-      end
-
-      children = person.relationships.select{|r| [:child, :stepchild].include?(r.relationship_type) && is_minor?(r.person)}
-
-      physical_household = @physical_households.find{|ph| ph.people.include? person}
-
-      family_members = (spouses + siblings + parents + children).map{|r| r.person}.select{|p| physical_household.people.include?(p)}
-      
-      med_household_members = (tax_return_people + family_members).uniq
+      # Then dedupe and remove the person
+      med_household_members.uniq!
       med_household_members.delete(person)
       
       # Your income is NOT counted if you are claimed as a tax dependent
@@ -128,7 +159,7 @@ module ApplicationProcessor
       # in the medicaid household (in which case parents is not empty). 
       # Your income IS counted (overriding the above) if you are 
       # required to file taxes.
-      income_counted = !(tax_return && tax_return.dependents.include?(person)) && parents.empty? || person.person_attributes["Required to File Taxes"] == 'Y'
+      income_counted = !dependent_tax_return && !(is_minor?(person) && parents.any?{|parent| med_household_members.include?(parent)}) || person.person_attributes["Required to File Taxes"] == 'Y'
 
       med_households = @medicaid_households.select{|mh| med_household_members.any?{|mhm| mh.people.include?(mhm)}}
 

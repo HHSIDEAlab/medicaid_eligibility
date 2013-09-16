@@ -9,6 +9,14 @@ module ApplicationComponents
       @relationships = []
       @income = income
     end
+
+    def get_relationships(relationship_type)
+      @relationships.select{|rel| rel.relationship_type == relationship_type}.map{|rel| rel.person}
+    end
+
+    def get_relationship(relationship_type)
+      get_relationships(relationship_type).first
+    end
   end
 
   class Applicant < Person
