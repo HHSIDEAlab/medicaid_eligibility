@@ -8,7 +8,7 @@ module ApplicationVariables
       :required   => true
     },
     {
-      :name       => "Applicant Attest Disabled",
+      :name       => "Applicant Attest Blind or Disabled",
       :type       => :flag,
       :values     => %w(Y N),
       :group      => :applicant,
@@ -96,6 +96,14 @@ module ApplicationVariables
       :xpath      => :unimplemented,
       :required_if => "Prior Insurance",
       :required_if_value => "Y"
+    },
+    {
+      :name       => "Receives SSI",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :applicant,
+      :xpath      => :unimplemented,
+      :default    => "N"
     },
     {
       :name       => "Required to File Taxes",
