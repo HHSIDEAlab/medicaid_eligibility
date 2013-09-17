@@ -441,7 +441,7 @@ module ApplicationVariables
     "04" => :child,
     "05" => :stepchild,
     "06" => :grandchild,
-    "07" => :sibling,
+    "07" => :sibling, # Could also be stepsibling
     "08" => :domestic_partner,
     "12" => :stepparent,
     "13" => :uncle_aunt,
@@ -484,5 +484,58 @@ module ApplicationVariables
     :former_spouse => :former_spouse,
     :parent_in_law => :child_in_law,
     :other => :other
+  }
+
+  SECONDARY_RELATIONSHIPS = {
+    :spouse => {
+      :parent => [:parent_in_law],
+      :child => [:child, :stepchild],
+      :stepchild => [:child],
+      :sibling => [:sibling_in_law],
+      :nephew_niece => [:nephew_niece]
+    },
+    :parent => {
+      :spouse => [:parent, :stepparent],
+      :parent => [:grandparent],
+      :child => [:sibling],
+      :stepchild => [:sibling],
+      :sibling => [:uncle_aunt],
+      :domestic_partner => [:parents_domestic_partner],
+      :sibling_in_law => [:uncle_aunt]
+    },
+    :child => {
+      :spouse => [:child_in_law],
+      :child => [:grandchild],
+      :uncle_aunt => [:sibling, :sibling_in_law]
+    },
+    :stepchild => {
+      :parent => [:spouse],
+      :sibling => [:stepchild, :child],
+    },
+    :stepparent => {
+      :spouse => [:parent],
+      :child => [:sibling],
+      :stepchild => [:sibling]
+    },
+    :uncle_aunt => {
+      :spouse => [:uncle_aunt],
+      :child => [:cousin]
+    },
+    :nephew_niece => {
+      :parent => [:sibling, :sibling_in_law]
+    },
+    :grandparent => {
+      :child => [:parent, :uncle_aunt],
+      :grandchild => [:sibling, :cousin]
+    },
+    :cousin => {
+      :parent => [:uncle_aunt]
+    },
+    :parents_domestic_partner => {
+      :domestic_partner => [:parent]
+    },
+    :sibling_in_law => {
+      :child => [:nephew_niece]
+    }
   }
 end
