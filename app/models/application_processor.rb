@@ -1,9 +1,11 @@
 module ApplicationProcessor
   include ApplicationComponents
 
+  class RelationshipError < StandardError
+
   def compute_values!
-    # relationship validator
     compute_relationships!
+    validate_relationships!
     build_medicaid_households!
     calculate_household_size!
     calculate_household_income!
@@ -85,6 +87,20 @@ module ApplicationProcessor
         end
       end
     end
+  end
+
+  def validate_relationships!
+    for person in @people
+      if get_relationship[:self]
+        raise RelationshipError, "No person should have a \"Self\" relationship"
+      end
+      if get_relationships[:spouse] > 1 || get_relationships[:domestic_partner] || (get_relationship[:spouse] && get_relationship[:domestic_partner])
+        raise RelationshipError, "A person cannot have more than one spouse or domestic partner"
+      end
+      if get_relationship[:spouse]
+        spouse = get_relationship[:spouse]
+
+
   end
 
   def build_medicaid_households!
