@@ -121,7 +121,7 @@ module ApplicationProcessor
 
       # If person files a return and no one claims person as dependent, add tax
       # return people (435.603.f1)
-      if filed_tax_return && !dependent_tax_return
+      if filed_tax_return && !dependent_tax_return && person.person_attributes["Claimed as Dependent by Person Not on Application"] != 'Y'
         med_household_members = filed_tax_return.filers + filed_tax_return.dependents
       # If spouse claims person as a dependent, include spouse (435.603.f2)
       elsif dependent_tax_return && dependent_tax_return.filers.any?{|filer| filer == person.get_relationship(:spouse)}
