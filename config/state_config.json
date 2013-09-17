@@ -12,6 +12,7 @@
 
     "Age Limit for Primary Responsibility": 19,
     "Category-Percentage Mapping": {
+      "Parent Caretaker Category": 1.33,
       "Pregnancy Category": 1.33,
       "Child Category": 1.5,
       "Adult Group Category": 1.33,
@@ -62,6 +63,7 @@
   "WV": { 
     "Age Limit for Primary Responsibility": 19,
     "Category-Percentage Mapping": {
+      "Parent Caretaker Category": 1.33,
       "Pregnancy Category": 2,
       "Child Category": 2,
       "Adult Group Category": 2,

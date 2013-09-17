@@ -3,6 +3,7 @@
 module MAGI
   class Income < Ruleset
     categories = [
+      "Parent Caretaker Category",
       "Pregnancy Category",
       "Child Category",
       "Adult Group Category",
@@ -15,6 +16,7 @@ module MAGI
     mandatory   "Mandatory"
     applies_to  "Medicaid and CHIP"
     
+    input "Applicant Parent Caretaker Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
     input "Applicant Pregnancy Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
     input "Applicant Child Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
     input "Applicant Adult Group Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
