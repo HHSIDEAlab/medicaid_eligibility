@@ -32,6 +32,22 @@ module ApplicationVariables
       :default    => "N"
     },
     {
+      :name       => "Claimed as Dependent by Person Not on Application",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :person,
+      :xpath      => :unimplemented,
+      :default    => "N"
+    },
+    {
+      :name       => "Claimer Is Out of State",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :person,
+      :xpath      => :unimplemented,
+      :default    => "N"
+    },
+    {
       :name       => "Has Insurance",
       :type       => :flag,
       :values     => %w(Y N),
