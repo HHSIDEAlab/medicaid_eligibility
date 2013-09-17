@@ -143,14 +143,10 @@ module ApplicationProcessor
 
       # If person lives with a spouse, add the spouse (435.603.f4)
       spouse = person.get_relationship(:spouse)
-      begin
-        if spouse && live_together?(person, spouse)
-          med_household_members << spouse
-        end
-      rescue
-        raise "#{@physical_households}"
+      if spouse && live_together?(person, spouse)
+        med_household_members << spouse
       end
-
+      
       # Then dedupe and remove the person
       med_household_members.uniq!
       med_household_members.delete(person)
