@@ -32,6 +32,22 @@ module ApplicationVariables
       :default    => "N"
     },
     {
+      :name       => "Claimed as Dependent by Person Not on Application",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :person,
+      :xpath      => :unimplemented,
+      :default    => "N"
+    },
+    {
+      :name       => "Claimer Is Out of State",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :person,
+      :xpath      => :unimplemented,
+      :default    => "N"
+    },
+    {
       :name       => "Has Insurance",
       :type       => :flag,
       :values     => %w(Y N),
@@ -430,6 +446,14 @@ module ApplicationVariables
     "27" => :former_spouse,
     "30" => :parent_in_law,
     "88" => :other
+  }.freeze
+
+  CONFIGURATION_CODES = {
+    "Count Unborn Children for Household" => {
+      "01" => "Add the number of children expected to household size",
+      "02" => "Add one child for each pregnant applicant",
+      "03" => "Do not count unborn children"
+    }
   }.freeze
 
   RELATIONSHIP_INVERSE = {
