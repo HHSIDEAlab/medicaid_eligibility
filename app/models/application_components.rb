@@ -44,7 +44,7 @@ module ApplicationComponents
   end
 
   class MedicaidHousehold < Household
-    attr_accessor :income_people, :income
+    attr_accessor :income_people, :income, :household_size
 
     def initialize(household_id, people)
       super

@@ -432,6 +432,14 @@ module ApplicationVariables
     "88" => :other
   }.freeze
 
+  CONFIGURATION_CODES = {
+    "Count Unborn Children for Household" => {
+      "01" => "Add the number of children expected to household size",
+      "02" => "Add one child for each pregnant applicant",
+      "03" => "Do not count unborn children"
+    }
+  }.freeze
+
   RELATIONSHIP_INVERSE = {
     :self => :self,
     :spouse => :spouse,

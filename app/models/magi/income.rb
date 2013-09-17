@@ -34,7 +34,7 @@ module MAGI
     code      "Income Medicaid Eligible Ineligibility Reason", %w(999 A B)
 
     calculated "FPL" do
-      c("Base FPL") + v("Medicaid Household").people.length * c("FPL Per Person")
+      c("Base FPL") + v("Medicaid Household").household_size * c("FPL Per Person")
     end
 
     calculated "Max Eligible Income" do
