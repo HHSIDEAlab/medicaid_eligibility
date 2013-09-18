@@ -14,15 +14,10 @@ module MAGI
     input "Applicant Pregnancy Category Indicator", "Output from the Pregnant Women Category Rule", "Char(1)", %w(Y N)
     input "Applicant Age", "From Child Category Rule", "Number"  
 
-    config "Option Adult Group XX", "State Configuration", "Char(1)", %w(Y N)
-
     # Outputs
     indicator "Applicant Adult Group Category Indicator", %w(Y N)
     date      "Adult Group Category Determination Date"  
     code      "Adult Group Category Ineligibility Reason", %w(999 117 122 123)
-    indicator "Applicant Adult Group XX Category Indicator", %w(Y N X)
-    date      "Adult Group XX Category Determination Date"
-    code      "Adult Group XX Category Ineligibility Reason", %w(999 122 123)
 
     rule "Adult Group Category-Applicant not the right age" do  
       if v("Applicant Age") < 19 || v("Applicant Age") >= 65 
@@ -53,30 +48,6 @@ module MAGI
         o["Applicant Adult Group Category Indicator"] = 'Y'
         o["Adult Group Category Determination Date"] = current_date
         o["Adult Group Category Ineligibility Reason"] = 999
-      end
-    end
-
-    rule "Adult XX Group: State does not elect this option" do
-      if c("Option Adult Group XX") == 'N'
-        o["Applicant Adult Group XX Category Indicator"] = 'X'
-        o["Adult Group XX Category Determination Date"] = current_date
-        o["Adult Group XX Category Ineligibility Reason"] = 555
-      end
-    end
-
-    rule "Adult Group XX Category- applicant meets all criteria for Adult XX Group" do
-      if c("Option Adult Group XX") == 'Y' && o["Applicant Adult Group Category Indicator"] == 'Y'
-        o["Applicant Adult Group XX Category Indicator"] = 'Y'
-        o["Adult Group XX Category Determination Date"] = current_date
-        o["Adult Group XX Category Ineligibility Reason"] = 999
-      end
-    end
-
-    rule "Adult Group XX Category - applicant meets all criteria for Adult XX  Group" do
-      if c("Option Adult Group XX") == 'Y' && o["Applicant Adult Group Category Indicator"] == 'N' && v("Medicare Entitlement Indicator") == 'Y'
-        o["Applicant Adult Group XX Category Indicator"] = 'Y'
-        o["Adult Group XX Category Determination Date"] = current_date
-        o["Adult Group XX Category Ineligibility Reason"] = 999
       end
     end
 
