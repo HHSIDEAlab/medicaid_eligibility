@@ -33,8 +33,8 @@ module MAGI
       elsif v("Calculated Income") < c("Category-Percentage Mapping")["Unborn Child Category"] * v("FPL")
         determination_y "Unborn Child"
 
-        o["Percentage for Category Used"] = c("Category-Percentage Mapping")["Unborn Child Category"] * 100
-        o["FPL * Percentage"] = v("FPL") * c("Category-Percentage Mapping")["Unborn Child Category"]
+        o["Percentage for Category Used"] = c("Category-Percentage Mapping")["Unborn Child Category"]
+        o["FPL * Percentage"] = v("FPL") * c("Category-Percentage Mapping")["Unborn Child Category"] * 0.01
       end
     end
   end

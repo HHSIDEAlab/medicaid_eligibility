@@ -36,7 +36,7 @@ module MAGI
     code      "Income Medicaid Eligible Ineligibility Reason", %w(999 A B)
 
     calculated "FPL" do
-      c("Base FPL") + v("Medicaid Household").household_size * c("FPL Per Person")
+      c("Base FPL") + (v("Medicaid Household").household_size - 1) * c("FPL Per Person")
     end
 
     calculated "Max Eligible Income" do
@@ -45,7 +45,7 @@ module MAGI
         category = eligible_categories.max_by{|cat| c("Category-Percentage Mapping")[cat]}
         {
           :category => category,
-          :income   => v("FPL") * (c("Category-Percentage Mapping")[category] + 0.05)
+          :income   => v("FPL") * (c("Category-Percentage Mapping")[category] + 5) * 0.01
         }
       else
         {
@@ -66,12 +66,12 @@ module MAGI
     end
 
     rule "Set percentage used" do
-      o["Percentage for Category Used"] = c("Category-Percentage Mapping")[v("Max Eligible Income")[:category]] * 100
+      o["Percentage for Category Used"] = c("Category-Percentage Mapping")[v("Max Eligible Income")[:category]]
     end
 
     rule "Set FPL * percentage" do
       o["FPL"] = v("FPL")
-      o["FPL * Percentage"] = v("FPL") * (c("Category-Percentage Mapping")[v("Max Eligible Income")[:category]] + 0.05)
+      o["FPL * Percentage"] = v("FPL") * (c("Category-Percentage Mapping")[v("Max Eligible Income")[:category]] + 5) * 0.01
     end
 
     rule "Determine Income Eligibility" do
