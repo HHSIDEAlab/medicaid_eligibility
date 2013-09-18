@@ -9,7 +9,7 @@ var MAGI = {};
   var person_fields = [
     {name: 'id', json: "Person ID"},
     {name: 'age', json: 'Applicant Age'},
-    {name: 'disabled', json: 'Applicant Attest Disabled'},
+    {name: 'disabled', json: 'Applicant Attest Blind or Disabled'},
     {name: 'long_term_care', json: 'Applicant Attest Long Term Care'},
     {name: 'citizen_forty_quarters', json: 'Applicant Has 40 Title II Work Quarters'},
     {name: 'has_insurance', json: 'Has Insurance'},
