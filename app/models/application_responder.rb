@@ -6,7 +6,7 @@ module ApplicationResponder
       hh_json = {}
       hh_applicants = household.people.select{|p| @applicants.include? p}
       if hh_applicants.any?
-        hh_json["MAGI"] = hh_applicants.first.outputs["Calculated Income"]
+        hh_json["MAGI"] = household.income
       end
 
       hh_json["Applicants"] = []
