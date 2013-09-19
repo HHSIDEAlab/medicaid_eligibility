@@ -303,7 +303,6 @@ module ApplicationVariables
     {name: "Pregnancy Category", eligibility: :MAGI},
     {name: "Child Category", eligibility: :MAGI},
     {name: "Adult Group Category", eligibility: :MAGI},
-    {name: "Adult Group XX Category", eligibility: :MAGI},
     {name: "Optional Targeted Low Income Child", eligibility: :MAGI},
     {name: "CHIP Targeted Low Income Child", eligibility: :CHIP},
     {name: "Unborn Child"},
