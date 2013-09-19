@@ -35,28 +35,7 @@ module ApplicationParser
       end
 
       # get income
-      json_income = json_person["Income"]
-      income = {}
-      for income_calculation in ApplicationVariables::INCOME_INPUTS
-        if json_income[income_calculation[:primary_income]]
-          income[:primary_income] = json_income[income_calculation[:primary_income]].to_i
-          income[:other_income] = {}
-          for other_income in income_calculation[:other_income]
-            income[:other_income][other_income] = (json_income[other_income] || 0).to_i
-          end
-          income[:deductions] = {}
-          for deduction in income_calculation[:deductions]
-            income[:deductions][deduction] = (json_income[deduction] || 0).to_i
-          end
-          break
-        end
-      end
-      if income.empty?
-        income[:primary_income] = 0
-        income[:other_income] = {}
-        income[:deductions] = {}        
-#        raise "No income for person #{person_id}"
-      end
+      income = get_json_income(json_person["Income"], :personal)
 
       if is_applicant
         person = Applicant.new(person_id, person_attributes, applicant_id, applicant_attributes, income)
@@ -100,7 +79,9 @@ module ApplicationParser
         @people.find{|p| p.person_id == jd["Person ID"]}
       }
 
-      @tax_returns << TaxReturn.new(filers, dependents)
+      income = get_json_income(json_return["Income"], :tax_return)
+
+      @tax_returns << TaxReturn.new(filers, dependents, income)
     end
 
     # get physical households
@@ -223,6 +204,28 @@ module ApplicationParser
 
   def get_json_variable(json_object, input, attributes)
     get_variable(json_object[input[:name]], input, attributes)
+  end
+
+  def get_json_income(json_income, income_type)
+    income = {}
+    income_calculation = ApplicationVariables::INCOME_INPUTS[income_type]
+    if json_income && json_income[income_calculation[:primary_income]]
+      income[:primary_income] = json_income[income_calculation[:primary_income]].to_i
+      income[:other_income] = {}
+      for other_income in income_calculation[:other_income]
+        income[:other_income][other_income] = (json_income[other_income] || 0).to_i
+      end
+      income[:deductions] = {}
+      for deduction in income_calculation[:deductions]
+        income[:deductions][deduction] = (json_income[deduction] || 0).to_i
+      end
+    end
+    
+    if income.empty?
+      nil
+    else
+      income
+    end
   end
 
   def get_xml_variable(node, input, attributes)

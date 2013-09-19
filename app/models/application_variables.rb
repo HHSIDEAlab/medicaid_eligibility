@@ -339,8 +339,8 @@ module ApplicationVariables
     {name: "Refugee Medical Assistance"}
   ].freeze
 
-  INCOME_INPUTS = [
-    {
+  INCOME_INPUTS = {
+    :tax_return => {
       :primary_income => "AGI",
       :other_income => [ 
         "Deductible Part of Self-Employment Tax",
@@ -354,12 +354,12 @@ module ApplicationVariables
         "Social Security Benefits Taxable Amount"
       ]
     },
-    {
-      :primary_income => "MAGI",
-      :other_income => [],
-      :deductions => []
-    },
-    {
+    # {
+    #   :primary_income => "MAGI",
+    #   :other_income => [],
+    #   :deductions => []
+    # },
+    :personal => {
       :primary_income => "Wages, Salaries, Tips",
       :other_income => [
         "Taxable Interest",
@@ -376,7 +376,7 @@ module ApplicationVariables
         "MAGI Deductions"
       ]
     }
-  ].freeze
+  }.freeze
 
   # INCOME_INPUTS = {
   #   :tax_return => {
