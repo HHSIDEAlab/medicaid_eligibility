@@ -70,6 +70,7 @@ module ApplicationProcessor
       "Person List" => @people,
       "Applicant Relationships" => applicant.relationships,
       "Medicaid Household" => @medicaid_households.find{|mh| mh.people.include?(applicant)},
+      "Calculated Income" => @medicaid_households.find{|mh| mh.people.include?(applicant)}.income,
       "Physical Household" => @physical_households.find{|hh| hh.people.include?(applicant)},
       "Tax Returns" => @tax_returns
     }).slice(*(ruleset.class.inputs.keys))
@@ -199,6 +200,25 @@ module ApplicationProcessor
   end
 
   def calculate_household_income!
-
+    for household in @medicaid_households
+      non_tax_return_people = []
+      tax_returns = []
+      for person in household.income_people
+        tax_return = @tax_returns.find{|tr| tr.filers.include?(person)}
+        if tax_return && tax_return.income
+          tax_returns << tax_return
+        elsif person.income
+          non_tax_return_people << person
+        else
+          raise "Missing income for person #{person.person_id}"
+        end
+      end
+      incomes = (tax_returns.uniq + non_tax_return_people).map{|obj| 
+        obj.income[:primary_income] + 
+        obj.income[:other_income].inject(0){|sum, (name, amt)| sum + amt} - 
+        obj.income[:deductions].inject(0){|sum, (name, amt)| sum + amt}
+      }
+      household.income = incomes.sum
+    end
   end
 end
