@@ -68,6 +68,14 @@ module ApplicationVariables
       :xpath      => :unimplemented
     },
     {
+      :name       => "Lives In State",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :person,
+      :xpath      => :unimplemented,
+      :required   => :true
+    },
+    {
       :name       => "Medicare Entitlement Indicator",
       :type       => :flag,
       :values     => %w(Y N),
@@ -75,12 +83,11 @@ module ApplicationVariables
       :xpath      => "hix-ee:MedicaidNonMAGIEligibility/hix-ee:MedicaidNonMAGIMedicareEntitlementEligibilityBasis/hix-core:StatusIndicator"
     },
     {
-      :name       => "Medicaid Residency Indicator",
+      :name       => "No Fixed Address",
       :type       => :flag,
-      :values     => %w(Y N P),
+      :values     => %w(Y N),
       :group      => :applicant,
-      :xpath      => "hix-ee:MedicaidMAGIEligibility/hix-ee:MedicaidMAGIResidencyEligibilityBasis/hix-ee:StatusIndicator",
-      :required   => true
+      :xpath      => :unimplemented
     },
     {
       :name       => "Prior Insurance",
@@ -126,6 +133,13 @@ module ApplicationVariables
       :values     => %w(Y N),
       :group      => :applicant,
       :xpath      => "hix-ee:InsuranceApplicantStudentIndicator"
+    },
+    {
+      :name       => "Temporarily Out of State",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :applicant,
+      :xpath      => :unimplemented
     },
     
     # Pregnancy inputs
