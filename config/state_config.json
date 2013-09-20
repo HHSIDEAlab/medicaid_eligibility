@@ -95,7 +95,7 @@
             "minimum": 6,
             "maximum": 18,
             "threshold": 133
-          },
+          }
         ]
       }
     },
@@ -129,13 +129,13 @@
   
   "WV": {
     "Medicaid Thresholds": {},
-    "State Offers Refugee Medical Assistance": ,
-    "Percent FPL Refugee Medical Assistance": ,
+    "State Offers Refugee Medical Assistance": "Y",
+    "Percent FPL Refugee Medical Assistance": 100,
     
     "CHIP Thresholds": {},
-    "Option Cover Unborn Child": ,
-    "CHIP for State Health Benefits": ,
-    "State Health Benefits FPL Standard": ,
-    "Percent FPL Unborn Child": ,
+    "Option Cover Unborn Child": "Y",
+    "CHIP for State Health Benefits": "Y",
+    "State Health Benefits FPL Standard": 100,
+    "Percent FPL Unborn Child": 100
   }
 }
