@@ -7,7 +7,6 @@ module MAGI
       "Pregnancy Category",
       "Child Category",
       "Adult Group Category",
-      "Adult Group XX Category",
       "Optional Targeted Low Income Child",
       "CHIP Targeted Low Income Child"
     ]
@@ -20,7 +19,6 @@ module MAGI
     input "Applicant Pregnancy Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
     input "Applicant Child Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
     input "Applicant Adult Group Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
-    input "Applicant Adult Group XX Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N X)
     input "Applicant Optional Targeted Low Income Child Indicator", "From MAGI Part I", "Char(1)", %w(Y N X)
     input "Applicant CHIP Targeted Low Income Child Indicator", "From MAGI Part I", "Char(1)", %w(Y N X)
     input "Medicaid Household", "Householding Logic", "Array"
