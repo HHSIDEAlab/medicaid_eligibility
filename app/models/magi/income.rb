@@ -14,6 +14,7 @@ module MAGI
     input "Applicant CHIP Targeted Low Income Child Indicator", "From MAGI Part I", "Char(1)", %w(Y N X)
     input "Calculated Income", "Medicaid Household Income Logic", "Integer"
     input "Medicaid Household", "Householding Logic", "Array"
+    input "Applicant Age", "From application", "Integer"
 
     config "Base FPL", "State Configuration", "Integer"
     config "FPL Per Person", "State Configuration", "Integer"
@@ -35,10 +36,43 @@ module MAGI
       c("Base FPL") + (v("Medicaid Household").household_size - 1) * c("FPL Per Person")
     end
 
+    def get_income(threshold, percentage)
+      if percentage == 'Y'
+        return (percentage + 5) * 0.01 * v("FPL")
+      elsif percentage == 'N'
+        return threshold
+      else
+        raise "Invalid state config"
+      end
+    end
+
+    def get_threshold(category)
+      if category["method"] == "standard"
+        threshold = category["threshold"]
+      elsif category["method"] == "household_size"
+        thresholds = category["household_size"]
+        household_size = v("Medicaid Household").household_size
+        if household_size < thresholds.length
+          threshold = thresholds[household_size]
+        else
+          threshold = thresholds.last + (household_size - thresholds.length + 1) * category["additional person"]
+        end
+      elsif category["method"] == "age"
+        age_group = category["age"].find{|group| v("Applicant Age") >= group["minimum"] && v("Applicant Age") <= group["maximum"]}
+        if age_group
+          threshold = age_group["threshold"]
+        else
+          raise "No threshold defined for applicant age #{v("Applicant Age")}"
+      else
+        raise "Undefined threshold method #{category["method"]}"
+      end
+      get_income(threshold, category["percentage"])
+    end
+
     calculated "Max Eligible Medicaid Category" do
-      eligible_categories = c("Medicaid Percentages").keys.select{|cat| v("Applicant #{cat} Indicator") == 'Y'}
+      eligible_categories = c("Medicaid Thresholds").keys.select{|cat| v("Applicant #{cat} Indicator") == 'Y'}
       if eligible_categories.any?
-        eligible_categories.max_by{|cat| c("Medicaid Percentages")[cat]}
+        eligible_categories.max_by{|cat| get_threshold(c("Medicaid Thresholds")[cat])}
       else
         "None"
       end
@@ -46,24 +80,24 @@ module MAGI
 
     calculated "Max Eligible Medicaid Income" do
       if v("Max Eligible Medicaid Category") != "None"
-        v("FPL") * (c("Medicaid Percentages")[v("Max Eligible Medicaid Category")] + 5) * 0.01
+        get_threshold(c("Medicaid Thresholds")[v("Max Eligible Medicaid Category")])
       else
         0
       end
     end
 
     calculated "Max Eligible CHIP Category" do
-      eligible_categories = c("CHIP Percentages").keys.select{|cat| v("Applicant #{cat} Indicator") == 'Y'}
+      eligible_categories = c("CHIP Thresholds").keys.select{|cat| v("Applicant #{cat} Indicator") == 'Y'}
       if eligible_categories.any?
-        eligible_categories.max_by{|cat| c("CHIP Percentages")[cat]}
+        eligible_categories.max_by{|cat| get_threshold(c("CHIP Thresholds")[cat])}
       else
         "None"
       end
     end
-    
+
     calculated "Max Eligible CHIP Income" do
       if v("Max Eligible CHIP Category") != "None"
-        v("FPL") * (c("CHIP Percentages")[v("Max Eligible CHIP Category")] + 5) * 0.01
+        get_threshold(c("CHIP Thresholds")[v("Max Eligible CHIP Category")])
       else
         0
       end
