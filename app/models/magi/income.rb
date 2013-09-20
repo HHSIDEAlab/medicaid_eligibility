@@ -54,9 +54,6 @@ module MAGI
 
     calculated "Max Eligible CHIP Category" do
       eligible_categories = c("CHIP Percentages").keys.select{|cat| v("Applicant #{cat} Indicator") == 'Y'}
-      if c("Option CHIP Pregnancy Category") != 'Y'
-        eligible_categories.delete("Pregnancy Category")
-      end
       if eligible_categories.any?
         eligible_categories.max_by{|cat| c("CHIP Percentages")[cat]}
       else

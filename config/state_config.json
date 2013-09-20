@@ -51,8 +51,6 @@
   
   "WV": {
     "Optional Targeted Low Income Child Group": "Y",
-
-    "Option CHIP Pregnancy Category": "Y",
     "CHIP Targeted Low Income Child Group": "Y",
     
     "Medicaid Percentages": {
@@ -63,7 +61,6 @@
       "Optional Targeted Low Income Child": 150
     },
     "CHIP Percentages": {
-      "Pregnancy Category": 133,
       "Child Category": 150,
       "CHIP Targeted Low Income Child": 150
     },
