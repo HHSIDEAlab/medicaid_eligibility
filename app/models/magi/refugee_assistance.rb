@@ -16,6 +16,7 @@ module MAGI
     input "FPL", "From Income rule", "Numeric"
 
     config "State Offers Refugee Medical Assistance", "State Configuration", "Char(1)", %w(Y N)
+    config "Refugee Medical Assistance Income Requirement", "State Configuration", "Char(1)", %w(Y N)
     config "Percent FPL Refugee Medical Assistance", "State Configuration", "Number"
 
     calculated "Applicant Refugee Medical Assistance End Date" do 
@@ -45,16 +46,17 @@ module MAGI
         o["Refugee Medical Assistance Ineligibility Reason"] = 309
 
         o["APTC Referral Indicator"] = 'Y'
-      elsif v("Calculated Income") >= v("FPL") * c("Percent FPL Refugee Medical Assistance") * 0.01
+      elsif c("Refugee Medical Assistance Income Requirement") == 'N' || 
+        v("Calculated Income") < v("FPL") * c("Percent FPL Refugee Medical Assistance") * 0.01
+        determination_y "Refugee Medical Assistance"
+
+        o["APTC Referral Indicator"] = 'N'
+      else
         o["Applicant Refugee Medical Assistance Indicator"] = 'N'
         o["Refugee Medical Assistance Determination Date"] = current_date
         o["Refugee Medical Assistance Ineligibility Reason"] = 373
 
         o["APTC Referral Indicator"] = 'Y'
-      else
-        determination_y "Refugee Medical Assistance"
-
-        o["APTC Referral Indicator"] = 'N'
       end
     end
   end
