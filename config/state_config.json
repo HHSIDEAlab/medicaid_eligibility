@@ -43,6 +43,68 @@
      "Base FPL": 14350,
      "FPL Per Person": 5030
   },
+  "GA": {
+    "Optional Targeted Low Income Child Group": "N",
+    "CHIP Targeted Low Income Child Group": "N",
+    
+    "Medicaid Thresholds": {
+      "Adult Group Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 100
+      },
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 220
+      },
+      "Parent Caretaker Category": {
+        "percentage": "N",
+        "method": "household size",
+        "household size": [
+          0,
+          310,
+          457,
+          551,
+          653,
+          752,
+          826,
+          903,
+          970,
+          1034,
+          1113,
+          1194
+        ],
+        "additional person": 50
+      },
+      "Child Category": {
+        "percentage": "Y",
+        "method": "age",
+        "age": [
+          {
+            "minimum": 0,
+            "maximum": 0,
+            "threshold": 205
+          },{
+            "minimum": 1,
+            "maximum": 5,
+            "threshold": 149
+          },{
+            "minimum": 6,
+            "maximum": 18,
+            "threshold": 133
+          },
+        ]
+      }
+    },
+    "CHIP Thresholds": {
+      "Child Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 247
+      }
+    },
+  },
   "HI": {
      "Base FPL": 13230,
      "FPL Per Person": 4620
@@ -53,14 +115,14 @@
     "Optional Targeted Low Income Child Group": "Y",
     "CHIP Targeted Low Income Child Group": "Y",
     
-    "Medicaid Percentages": {
+    "Medicaid Thresholds": {
       "Adult Group Category": 100,
       "Pregnancy Category": 133,
       "Parent Caretaker Category": 133,
       "Child Category": 150,
       "Optional Targeted Low Income Child": 150
     },
-    "CHIP Percentages": {
+    "CHIP Thresholds": {
       "Child Category": 150,
       "CHIP Targeted Low Income Child": 150
     },
