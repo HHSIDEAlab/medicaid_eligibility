@@ -1,10 +1,12 @@
 {
   "default": {
     "Base FPL": 11490,
+    "FPL Per Person": 4020,
+
     "CHIP Targeted Low Income Child Age High Threshold": 19,
     "CHIP Targeted Low Income Child Age Low Threshold": 0,
     "Foster Care Age Threshold": 18,
-    "FPL Per Person": 4020,    
+    
     "Option Caretaker Relative Relationship": "00",
     "Optional Targeted Low Income Child Age High Threshold": 19,
     "Optional Targeted Low Income Child Age Low Threshold": 0,
@@ -33,7 +35,6 @@
 
     "State Offers Refugee Medical Assistance": "Y",
     "Percent FPL Refugee Medical Assistance": 100,
-
 
     "Count Unborn Children for Household": "02"
   },
@@ -88,12 +89,7 @@
     "Option Require Work Quarters": "N",
     "State Applies Seven Year Limit": "N",
 
-    "CHIP for State Health Benefits": "01",
-    "State Health Benefits FPL Standard": 1,
-    "State CHIP Waiting Period": 0,
-
-    "State Offers Refugee Medical Assistance": "Y",
-    "Percent FPL Refugee Medical Assistance": 100
+    "State CHIP Waiting Period": 0
   }
 
 
