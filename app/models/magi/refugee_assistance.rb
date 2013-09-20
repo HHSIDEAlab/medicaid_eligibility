@@ -45,7 +45,7 @@ module MAGI
         o["Refugee Medical Assistance Ineligibility Reason"] = 309
 
         o["APTC Referral Indicator"] = 'Y'
-      elsif v("Calculated Income") >= v("FPL") * c("Percent FPL Refugee Medical Assistance")
+      elsif v("Calculated Income") >= v("FPL") * c("Percent FPL Refugee Medical Assistance") * 0.01
         o["Applicant Refugee Medical Assistance Indicator"] = 'N'
         o["Refugee Medical Assistance Determination Date"] = current_date
         o["Refugee Medical Assistance Ineligibility Reason"] = 373

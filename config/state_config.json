@@ -11,15 +11,6 @@
     "State Unemployed Standard": 100,
 
     "Age Limit for Primary Responsibility": 19,
-    "Category-Percentage Mapping": {
-      "Parent Caretaker Category": 133,
-      "Pregnancy Category": 133,
-      "Child Category": 150,
-      "Adult Group Category": 100,
-      "Optional Targeted Low Income Child": 150,
-      "CHIP Targeted Low Income Child": 150,
-      "Unborn Child Category": 133
-    },
     "CHIP Targeted Low Income Child Group": "Y",
     "Deprivation Requirement Retained": "N",
     "In-State Foster Care Required": "N",
@@ -36,13 +27,12 @@
     "State Applies Seven Year Limit": "N",
 
     "Option Cover Unborn Child": "Y",
-    "Percent CHIP FPL Unborn Child": 100,
     "CHIP for State Health Benefits": "01",
-    "State Health Benefits FPL Standard": 1,
+    "State Health Benefits FPL Standard": 100,
     "State CHIP Waiting Period": 0,
 
     "State Offers Refugee Medical Assistance": "Y",
-    "Percent FPL Refugee Medical Assistance": 1,
+    "Percent FPL Refugee Medical Assistance": 100,
 
 
     "Count Unborn Children for Household": "02"
@@ -58,23 +48,37 @@
   },
 
   
-  "WV": { 
-    "Age Limit for Primary Responsibility": 19,
-    "Category-Percentage Mapping": {
-      "Parent Caretaker Category": 133,
-      "Pregnancy Category": 200,
-      "Child Category": 200,
-      "Adult Group Category": 133,
-      "Optional Targeted Low Income Child": 200,
-      "CHIP Targeted Low Income Child": 200,
-      "Unborn Child Category": 200
-    },
+  "WV": {
+    "Optional Targeted Low Income Child Group": "Y",
+
+    "Option CHIP Pregnancy Category": "Y",
     "CHIP Targeted Low Income Child Group": "Y",
+    
+    "Medicaid Percentages": {
+      "Adult Group Category": 100,
+      "Pregnancy Category": 133,
+      "Parent Caretaker Category": 133,
+      "Child Category": 150,
+      "Optional Targeted Low Income Child": 150
+    },
+    "CHIP Percentages": {
+      "Pregnancy Category": 133,
+      "Child Category": 150,
+      "CHIP Targeted Low Income Child": 150
+    },
+
+    "State Offers Refugee Medical Assistance": "Y",
+    "Percent FPL Refugee Medical Assistance": 100,
+    "Option Cover Unborn Child": "Y",
+    "Percent FPL Unborn Child": 100,
+    "CHIP for State Health Benefits": "01",
+    "State Health Benefits FPL Standard": 100,
+
+    "Age Limit for Primary Responsibility": 19,
     "Deprivation Requirement Retained": "N",
     "In-State Foster Care Required": "N",
     "Option Dependent Student": "Y",
     "Option Young Adults": "Y",
-    "Optional Targeted Low Income Child Group": "Y",
     "Young Adult Age Threshold": 21,
 
     "Option CHIPRA 214 Applicable Program": "01",
@@ -84,14 +88,12 @@
     "Option Require Work Quarters": "N",
     "State Applies Seven Year Limit": "N",
 
-    "Option Cover Unborn Child": "Y",
-    "Percent CHIP FPL Unborn Child": 100,
     "CHIP for State Health Benefits": "01",
     "State Health Benefits FPL Standard": 1,
     "State CHIP Waiting Period": 0,
 
     "State Offers Refugee Medical Assistance": "Y",
-    "Percent FPL Refugee Medical Assistance": 1
+    "Percent FPL Refugee Medical Assistance": 100
   }
 
 
