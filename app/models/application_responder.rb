@@ -35,6 +35,8 @@ module ApplicationResponder
         
         app_json["Category"] = app.outputs["Category Used to Calculate Medicaid Income"]
         app_json["Category Threshold"] = app.outputs["FPL * Percentage Medicaid"].to_i
+        app_json["CHIP Category"] = app.outputs["Category Used to Calculate CHIP Income"]
+        app_json["CHIP Category Threshold"] = app.outputs["FPL * Percentage CHIP"].to_i
 
         app_json["Determinations"] = {}
 
