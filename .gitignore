@@ -16,8 +16,14 @@
 /cons-files
 /export-files
 
+# Ignore Bower Dependencies.
+/app/assets/components
+
+
 /config/database.yml
+
 *.json
+!bower.json
 *.xml
 
 .idea
