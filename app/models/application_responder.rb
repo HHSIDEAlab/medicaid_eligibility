@@ -34,7 +34,9 @@ module ApplicationResponder
         end
         
         app_json["Category"] = app.outputs["Category Used to Calculate Income"]
-        app_json["Category Threshold"] = app.outputs["FPL * Percentage"].to_i
+        unless ["None", "Categorically Needy"].include?(app.outputs["Category Used to Calculate Income"])          
+          app_json["Category Threshold"] = app.outputs["FPL * Percentage"].to_i
+        end
 
         app_json["Determinations"] = {}
 
