@@ -13,7 +13,7 @@
         <div class="form-fields-area">
           <div class="form-row">
             <label for="state">State</label>
-            <select selector ng-model="application.state" name="state" id="state" ng-options="state as state.name for state in states" required>
+            <select selector ng-model="state" name="state" id="state" ng-options="state as state.name for state in states" required>
             </select>
           <div class="form-row">
             <label for="id">Application Name or ID</label>
@@ -21,7 +21,7 @@
           </div>
         </div>
       </div>
-      <fieldset ng-repeat="applicant in application.applicants" ng-controller="ApplicantController">
+      <fieldset ng-repeat="applicant in applicants" ng-controller="ApplicantController">
         <legend>Applicant <span class="applicant-number">{{$index+1}}</span></legend>
         <div class="applicant-relationship-fields" ng-repeat="relationship in applicant.relationships">
           <div class="form-row" >
@@ -50,7 +50,7 @@
           </div>
               <div class="form-row" ng-show="applicant.nonParentResponsibility">
                 <label for="applicant_{{ $index }}_nonParentResponsibilityPerson">Who?</label>
-                <select id="applicant_{{ $index }}_nonParentResponsibilityPerson" selector ng-model="applicant.nonParentResponsibilityPerson" ng-options="appl.id for appl in application.applicants | filter:notMe">
+                <select id="applicant_{{ $index }}_nonParentResponsibilityPerson" selector ng-model="applicant.nonParentResponsibilityPerson" ng-options="appl.id for appl in applicants | filter:notMe">
                 <option value="">Not on this application</option>
               </select>
 
@@ -95,11 +95,11 @@
         </div>
         <div class="form-row form-row-expandable">
           <label for="applicant_{{ $index }}_prior_insurance">Prior insurance</label>
-          <input type="checkbox" checker id="applicant_{{ $index }}_prior_insurance" name="applicant_{{ $index }}_prior_insurance" ng-model="applicant.priorInsurance">
-          <div class="form-row-expandable-fields2" ng-show="applicant.priorInsurance">
+          <input type="checkbox" checker id="applicant_{{ $index }}_prior_insurance" name="applicant_{{ $index }}_prior_insurance" ng-model="applicant.priorInsuranceIndicator">
+          <div class="form-row-expandable-fields2" ng-show="applicant.priorInsuranceIndicator">
             <div class="form-row">
               <label for="applicant_{{ $index }}_prior_insurance_end_date">Prior insurance end date</label>
-              <input type="text" id="applicant_{{ $index }}_prior_insurance_end_date" name="applicant_{{ $index }}_prior_insurance_end_date" ng-model="applicant.priorInsuranceEndDate" class="date" placeholder="mm / dd / yyyy" ui-mask="99 / 99 / 9999">
+              <input type="text" id="applicant_{{ $index }}_prior_insurance_end_date" name="applicant_{{ $index }}_prior_insurance_end_date" ng-model="applicant.priorInsurance.EndDate" class="date" placeholder="mm / dd / yyyy" ui-mask="99 / 99 / 9999">
             </div>
           </div>
         </div>
@@ -113,20 +113,20 @@
         </div>
         <div class="form-row form-row-expandable">
           <label for="applicant_{{ $index }}_foster_care">Formerly in foster care</label>
-          <input type="checkbox" checker id="applicant_{{ $index }}_foster_care" name="applicant_{{ $index }}_foster_care" ng-model="applicant.fosterCare">
-          <div class="form-row-expandable-fields2" ng-show="applicant.fosterCare">
+          <input type="checkbox" checker id="applicant_{{ $index }}_foster_care" name="applicant_{{ $index }}_foster_care" ng-model="applicant.formerlyFosterCare">
+          <div class="form-row-expandable-fields2" ng-show="applicant.formerlyFosterCare">
             <div class="form-row">
               <label for="applicant_{{ $index }}_foster_care_had_medicaid">Had Medicaid during foster
                 care</label>
-              <input type="checkbox" checker id="applicant_{{ $index }}_foster_care_had_medicaid" name="applicant_{{ $index }}_foster_care_had_medicaid" ng-model="applicant.fosterCareHadMedicaid">
+              <input type="checkbox" checker id="applicant_{{ $index }}_foster_care_had_medicaid" name="applicant_{{ $index }}_foster_care_had_medicaid" ng-model="applicant.fosterCare.hadMedicaid">
             </div>
             <div class="form-row">
               <label for="applicant_{{ $index }}_foster_care_age_left">Age left foster care</label>
-              <input type="number" id="applicant_{{ $index }}_foster_care_age_left" name="applicant_{{ $index }}_foster_care_age_left" ng-model="applicant.fosterCareAgeLeft">
+              <input type="number" id="applicant_{{ $index }}_foster_care_age_left" name="applicant_{{ $index }}_foster_care_age_left" ng-model="applicant.fosterCare.ageLeftFosterCare">
             </div>
             <div class="form-row">
               <label for="applicant_{{ $index }}_foster_care_state">Foster care state</label>
-              <select id="applicant_{{ $index }}_foster_care_state" name="applicant_{{ $index }}_foster_care_state" selector ng-model="applicant.fosterCareState" ng-options="state as state.name for state in states">
+              <select id="applicant_{{ $index }}_foster_care_state" name="applicant_{{ $index }}_foster_care_state" selector ng-model="applicant.fosterCare.state" ng-options="state as state.name for state in states">
               </select>
             </div>
           </div>
@@ -189,28 +189,32 @@
           <div class="form-row-expandable-fields2" ng-show="!applicant.citizen">
             <div class="form-half-field">
               <label for="applicant_{{ $index }}_citizen_lawful">Lawful resident</label>
-              <input type="checkbox" checker ng-model="applicant.citizenLawful" id="applicant_{{ $index }}_citizen_lawful" name="applicant_{{ $index }}_citizen_lawful">
+              <input type="checkbox" checker ng-model="applicant.nonCitizen.Lawful" id="applicant_{{ $index }}_citizen_lawful" name="applicant_{{ $index }}_citizen_lawful">
             </div>
             <div class="form-half-field">
               <label for="applicant_{{ $index }}_citizen_five_year_bar">Subject to a 5 year bar</label>
-              <input type="checkbox" checker ng-model="applicant.citizenFiveYearBar" id="applicant_{{ $index }}_citizen_five_year_bar" name="applicant_{{ $index }}_citizen_five_year_bar">
+              <input type="checkbox" checker ng-model="applicant.nonCitizen.fiveYearBar" id="applicant_{{ $index }}_citizen_five_year_bar" name="applicant_{{ $index }}_citizen_five_year_bar">
             </div>
             <div class="form-half-field">
               <label for="applicant_{{ $index }}_citizen_forty_quarters">Worked in the US for 40 quarters (120 months)</label>
-              <input type="checkbox" checker ng-model="applicant.CitizenFortyQuarters" id="applicant_{{ $index }}_citizen_forty_quarters" name="applicant_{{ $index }}_citizen_forty_quarters">
+              <input type="checkbox" checker ng-model="applicant.nonCitizen.fortyQuarters" id="applicant_{{ $index }}_citizen_forty_quarters" name="applicant_{{ $index }}_citizen_forty_quarters">
             </div>
             <div class="form-half-field">
               <label for="applicant_{{ $index }}_citizen_five_year_bar_met">5 year bar met</label>
-              <input type="checkbox" checker ng-model="applicant.fiveYearBarMet" id="applicant_{{ $index }}_citizen_five_year_bar_met" name="applicant_{{ $index }}_citizen_five_year_bar_met">
+              <input type="checkbox" checker ng-model="applicant.nonCitizen.fiveYearBarMet" id="applicant_{{ $index }}_citizen_five_year_bar_met" name="applicant_{{ $index }}_citizen_five_year_bar_met">
             </div>
-            <div class="form-row">
+            <div class="form-row form-row-expandable">
               <label for="applicant_{{ $index }}_citizen_refugee_assistance">Eligible for refugee medical assistance</label>
-              <input type="checkbox" checker ng-model="applicant.citizenRefugeeAssistance" id="applicant_{{ $index }}_citizen_refugee_assistance" name="applicant_{{ $index }}_citizen_refugee_assistance">
+              <input type="checkbox" checker ng-model="applicant.nonCitizen.refugeeMedicalAssistanceEligible" id="applicant_{{ $index }}_citizen_refugee_assistance" name="applicant_{{ $index }}_citizen_refugee_assistance">
+
+              <div class="form-row-expandable-fields2" ng-show="applicant.nonCitizen.refugeeMedicalAssistanceEligible">
+                <div class="form-row">
+                  <label for="applicant_{{ $index }}_citizen_refugee_assistance_start_date">Refugee medical assistance start date</label>
+              <input type="text" ng-model="applicant.nonCitizen.refugeeMedicalAssistance.StartDate" id="applicant_{{ $index }}_citizen_refugee_assistance_start_date" name="applicant_{{ $index }}_citizen_refugee_assistance_start_date" class="date" ui-mask="99 / 99 / 9999" placeholder="mm / dd / yyyy">
+                </div>
+              </div>
             </div>
-            <div class="form-row">
-              <label for="applicant_{{ $index }}_citizen_refugee_assistance_start_date">Refugee medical assistance start date</label>
-              <input type="text" ng-model="applicant.citizenRefugeeAssistanceStartDate" id="applicant_{{ $index }}_citizen_refugee_assistance_start_date" name="applicant_{{ $index }}_citizen_refugee_assistance_start_date" class="date" ui-mask="99 / 99 / 9999" placeholder="mm / dd / yyyy">
-            </div>
+
             <div class="form-row form-row-expandable">
               <label for="applicant_{{ $index }}_citizen_human_trafficking">Victim of human trafficking</label>
               <input type="checkbox" checker ng-model="applicant.citizenHumanTrafficking" id="applicant_{{ $index }}_citizen_human_trafficking" name="applicant_{{ $index }}_citizen_human_trafficking">
@@ -241,25 +245,25 @@
 
       <button ng-click="addApplicant()" type="button" class="add-applicant">Add Another Applicant</button>
 
-      <fieldset ng-repeat="taxReturn in application.taxReturns">
+      <fieldset ng-repeat="taxReturn in taxReturns">
         <legend>Tax Return <span class="applicant-number">{{$index+1}}</span></legend>
-        <div ng-show="numFilers == 0">
+        <div ng-show="!showFilers()">
           Please enter some applicants.
         </div>
-        <div ng-show="numFilers > 0">
+        <div ng-show="showFilers()">
         <h3>Filers</h3>
         <div class="form-row" ng-repeat="filer in taxReturn.filers track by $index">
           <label for="filer_{$index}">Filer {{$index+1}}</label>
-          <select id="filer_{$index}" selector ng-model="taxReturn.filers[$index]" ng-options="applicant.id for  applicant in application.applicants">
+          <select id="filer_{$index}" selector ng-model="taxReturn.filers[$index]" ng-options="applicant.id for applicant in applicants">
             <option value=""></option>
           </select>
         </div>
         </div>
-          <div ng-show="numDependents > 0">
+          <div ng-show="showDependents()">
             <h3>Dependents</h3>
             <div class="form-row" ng-repeat="dependent in taxReturn.dependents track by $index">
             <label for="dependent__{$index}">Dependent {{$index+1}}</label>
-            <select id="dependent_{$index}" selector ng-model="taxReturn.dependents[$index]" ng-options="applicant.id for  applicant in application.applicants">
+            <select id="dependent_{$index}" selector ng-model="taxReturn.dependents[$index]" ng-options="applicant.id for  applicant in applicants">
               <option value=""></option>
             </select>
           </div>
@@ -270,10 +274,7 @@
       </div>
         <button ng-click="addTaxReturn()" type="button" class="add-applicant">Add Another Tax Return</button>
       
-
-
-
-      <button type="submit" ng-click="doStuff()">Check Eligibility</button>
+      <button type="submit" ng-click="checkEligibility()">Check Eligibility</button>
 
     </form>
 
