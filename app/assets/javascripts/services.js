@@ -1,5 +1,5 @@
 angular.module('MAGI.services',[]).
-	factory('Application', function(relationshipCodes){
+	factory('Application', ['relationshipCodes', function(relationshipCodes){
 		function Application(){
 			this.applicants = [];
 			this.taxReturns = [];
@@ -112,14 +112,14 @@ angular.module('MAGI.services',[]).
 
 		Relationship.prototype.updateOpposite = function(){
 			var me = this;
-			this.getOpposite().code = _.filter(relationshipCodes, function(rc){
-                    return rc.code == me.code;
-            });
+			this.getOpposite().code = _.find(relationshipCodes, function(rc){
+                    return rc.opposite == me.code;
+            }).code;
 		}
 
 		return new Application();
 
-	})
+	}])
 	.constant('relationshipCodes',
 		[
             {code: '02', label: 'Spouse', opposite: '02'},
