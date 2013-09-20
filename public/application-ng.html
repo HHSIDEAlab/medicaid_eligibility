@@ -25,7 +25,7 @@
         <legend>Applicant <span class="applicant-number">{{$index+1}}</span></legend>
         <div class="applicant-relationship-fields" ng-repeat="relationship in applicant.relationships">
           <div class="form-row" >
-            <label>Relationship to {{application.applicants[relationship.otherIndex].id}}</label>
+            <label>Relationship to {{relationship.otherApplicant.id}}</label>
             <select selector ng-model="relationship.code" ng-options="rc.code as rc.label for rc in relationshipCodes" ng-change="updateRelationship(relationship)">
             </select>
           </div>

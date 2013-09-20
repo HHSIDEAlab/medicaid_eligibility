@@ -72,7 +72,6 @@ angular.module('MAGI.controllers', []).
 		];
 
                 $scope.relationshipCodes = [
-                        {code: '', label: '', opposite: ''},
                         {code: '02', label: 'Spouse', opposite: '02'},
                         {code: '03', label: 'Parent', opposite: '04'},
                         {code: '04', label: 'Child', opposite: '03'},
@@ -90,28 +89,27 @@ angular.module('MAGI.controllers', []).
                         {code: '26', label: 'Child-in-law', opposite: '30'},
                         {code: '27', label: 'Former spouse', opposite: '27'},
                         {code: '30', label: 'Parent-in-law', opposite: '26'},
-                        {code: 'XX', label: "Domestic partner's child", opposite: '17'}
+                        {code: 'XX', label: "Domestic partner's child", opposite: '17'},
+                        {code: '88', label: "Other", opposite: '88'}
                 ]
 
 
 		$scope.addApplicant = function(){
-			angular.forEach($scope.application.applicants,function(applicant){
-                                applicant.relationships.push({otherIndex: $scope.application.applicants.length, code: ''});
-                        });
-
-                        var rels = [];
-
-                        for(var i = 0; i < $scope.application.applicants.length; i++){
-                                rels.push({otherIndex: i, code: ''});
-                        }
-
-                        $scope.application.applicants.push({
+                        var newApplicant = {
                                 id: "Applicant " + ($scope.application.applicants.length+1),
                                 citizen: true,
                                 stateResidency: true,
                                 isApplicant: true,
-                                relationships: rels
+                                relationships: _.map($scope.application.applicants, function(applicant){
+                                        return {otherApplicant: applicant};
+                                })
+                        }
+
+			angular.forEach($scope.application.applicants,function(applicant){
+                                applicant.relationships.push({otherApplicant: newApplicant});
                         });
+
+                        $scope.application.applicants.push(newApplicant);
                         
 		}
 
@@ -144,14 +142,12 @@ angular.module('MAGI.controllers', []).
                         $scope.application.applicants.splice(removeIndex,1);
                         angular.forEach($scope.application.applicants,function(otherApplicant){
                                 var otherRel = _.find(otherApplicant.relationships, function(rel){
-                                        return rel.otherIndex == removeIndex;
+                                        return rel.otherApplicant == applicant;
                                 });
                                 var otherRelIndex = otherApplicant.relationships.indexOf(otherRel);
                                 otherApplicant.relationships.splice(otherRelIndex, 1);
-                                for(var i = otherRelIndex; i< otherApplicant.relationships.length; i++){
-                                        otherApplicant.relationships[i].otherIndex--;
-                                }
                         });
+
                         if($scope.application.applicants.length == 0){
                                 $scope.addApplicant();
                         }
@@ -182,8 +178,8 @@ angular.module('MAGI.controllers', []).
                 });
 
                 $scope.updateRelationship = function(relationship){
-                        var otherRel = _.find($scope.application.applicants[relationship.otherIndex].relationships,function(rel){
-                                return rel.otherIndex==$scope.$index;
+                        var otherRel = _.find(relationship.otherApplicant.relationships,function(rel){
+                                return rel.otherApplicant==$scope.applicant;
                         });
 
                         var myCode = _.find($scope.relationshipCodes, function(rc){
