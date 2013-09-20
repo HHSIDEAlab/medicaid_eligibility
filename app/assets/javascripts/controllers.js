@@ -108,6 +108,8 @@ angular.module('MAGI.controllers', []).
                         $scope.application.applicants.push({
                                 id: "Applicant " + ($scope.application.applicants.length+1),
                                 citizen: true,
+                                stateResidency: true,
+                                isApplicant: true,
                                 relationships: rels
                         });
                         
