@@ -206,8 +206,6 @@ module ApplicationProcessor
           tax_returns << tax_return
         elsif person.income
           non_tax_return_people << person
-        else
-          raise "Missing income for person #{person.person_id}"
         end
       end
       incomes = (tax_returns.uniq + non_tax_return_people).map{|obj| 
