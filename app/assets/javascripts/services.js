@@ -3,6 +3,7 @@ angular.module('MAGI.services',[]).
 		function Application(){
 			this.applicants = [];
 			this.taxReturns = [];
+			this.state = {};
 		}
 
 		function TaxReturn(){
@@ -14,6 +15,7 @@ angular.module('MAGI.services',[]).
 			this.citizen = true;
 			this.stateResidency = true;
 			this.isApplicant = true;
+			this.incomeTaxes = {};
 			this.relationships = [];
 		}
 
@@ -117,7 +119,140 @@ angular.module('MAGI.services',[]).
             }).code;
 		}
 
+		Applicant.prototype.serialize = function(){
+			var me = this;
+			var checkBoxes = [
+				{app: 'isApplicant', api: 'Is Applicant'},
+				{app: 'disabled', api: 'Applicant Attest Blind or Disabled'},
+				{app: 'student', api: 'Student Indicator'},
+				{app: 'eligible', api: 'Medicare Entitlement Indicator'},
+				{app: 'incarcerated', api: 'Incarceration Status'},
+				{app: 'stateResidency', api: 'Medicaid Residency Indicator'},
+				{app: 'longTermCare', api: 'Applicant Attest Long Term Care'},
+				{app: 'hasInsurance', api: 'Has Insurance'},
+				{app: 'stateEmployeeHealthBenefits', api: 'State Health Benefits Through Public Employee'},
+				{app: 'priorInsurance', api: 'Prior Insurance'},
+				{app: 'pregnant', api: 'Applicant Pregnant Indicator'},
+				{app: 'pregnantThreeMonths', api: 'Applicant Post Partum Period Indicator'},
+				{app: 'formerlyFosterCare', api: 'Former Foster Care'},
+				{app: 'incomeTaxesRequired', api: 'Required to File Taxes'},
+				{app: 'citizen', api: 'US Citizen Indicator'}
+			];
+
+			var textBoxes = [
+				{app: 'id', api: 'Person ID'},
+				{app: 'age', api: 'Applicant Age'},
+				{app: 'hours', api: 'Hours Worked Per Week'}	
+			];
+
+			var incomeFields = [
+			    {app: 'wages',              api:'Wages, Salaries, Tips'},
+			    {app: 'taxableInterest',    api: 'Taxable Interest'},
+			    {app: 'taxExemptInterest',  api:'Tax-Exempt Interest'},
+			    {app: 'taxableRefunds',     api: 'Taxable Refunds, Credits, or Offsets of State and Local Income Taxes'},
+			    {app: 'alimony',            api: 'Alimony'},
+			    {app: 'capitalGains',       api: 'Capital Gain or Loss'},
+			    {app: 'pensions',           api: 'Pensions and Annuities Taxable Amount'},
+			    {app: 'farmIncome',         api: 'Farm Income or Loss'},
+			    {app: 'unemployment',       api: 'Unemployment Compensation'},
+			    {app: 'other',              api: 'Other Income'},
+			    {app: 'MAGIDeductions',     api: 'MAGI Deductions'}
+			];
+
+			var nonCitizenCheckboxes = [
+				{app: 'lawful', api: 'Lawful Presence Attested'},
+				{app: 'fiveYearBar', api: 'Five Year Bar Applies'},
+				{app: 'fortyQuarters', api: 'Applicant Has 40 Title II Work Quarters'},
+				{app: 'fiveYearBarMet', api: 'Five Year Bar Met'},
+				{app: 'refugeeMedicalAssistanceEligible', api: 'Refugee Status'},
+				{app: 'humanTraffickingVictim', api: 'Victim of Trafficking'},
+			]
+
+			// var rv = _.map(checkBoxes, function(checkbox){
+			// 		return [checkbox.api,(me[checkbox.app] ? 'Y': 'N')];
+			// })+;
+
+			var rv = _.map(checkBoxes, function(checkbox){
+					return [checkbox.api,(me[checkbox.app] ? 'Y': 'N')];
+			}).concat(_.map(textBoxes, function(textbox){
+				return [textbox.api, me[textbox.app]]
+			}));
+
+			if(this.priorInsurance){
+				rv.push(['Prior Insurance End Date',this.priorInsuranceEndDate]);
+			}
+
+			if(this.formerlyFosterCare){
+				rv.push(['Had Medicaid During Foster Care'],(this.fosterCare.hadMedicaid ? 'Y': 'N'));
+				rv.push(['Age Left Foster Care',this.fosterCare.ageLeftFosterCare]);
+				rv.push(['Foster Care State',this.fosterCare.state]);
+			}
+
+			var incomeData = _.map(incomeFields, function(field){
+				var val = me.incomeTaxes[field.app] ? me.incomeTaxes[field.app] : 0;
+				return [field.api, val]
+			});
+
+			rv.push(['Income',_.object(incomeData)]);
+
+			if(!this.citizen){
+				ncOut = _.map(nonCitizenCheckboxes, function(checkbox){
+					return [checkbox.api,(me.nonCitizen[checkbox.app] ? 'Y': 'N')];});
+				if(this.nonCitizen.refugeeMedicalAssistanceEligible){
+					ncOut.push(['Refugee Medical Assistance Start Date',this.nonCitizen.refugeeMedicalAssistance.StartDate])
+				}
+				if(this.nonCitizen.humanTraffickingVictim){
+					ncOut.push(['Qualified Non-Citizen Status',(this.nonCitizen.humanTrafficking.qualified ? 'Y': 'N')]);
+					ncOut.push(['Non-Citizen Deport Withheld Date',this.nonCitizen.humanTrafficking.deportWithheldDate]);
+					ncOut.push(['Non-Citizen Entry Date',this.nonCitizen.humanTrafficking.entryDate]);
+					ncOut.push(['Non-Citizen Status Grant Date',this.nonCitizen.humanTrafficking.statusGrantDate]);
+				}
+
+				rv = rv.concat(ncOut);
+			}
+
+			rv.push(['Relationships', _.map(this.relationships, function(rel){
+				return rel.serialize();
+			})]);
+
+			return _.object(rv);
+		}
+
+		Relationship.prototype.serialize = function(){
+			return {
+	          "Other ID": this.otherApplicant.id,
+	          "Relationship Code": this.code
+	        }
+		};
+
+		TaxReturn.prototype.serialize = function(){
+			return {
+				"Filers": _.map(this.filers, function(pers){
+					return pers.id;
+				}),
+				"Dependents": _.map(this.dependents, function(pers){
+					return pers.id;
+				})
+			}
+		};
+
+		Application.prototype.serialize = function(){
+			return {
+				"State": this.state.abbr,
+				"People": _.map(this.applicants,
+					function(applicant){return applicant.serialize()}),
+				"Physical Households": 
+					[{
+						"Household ID": "Household1",
+						"People":  _.map(this.applicants,
+							function(applicant){return applicant.id;})
+					}],
+				"Tax Returns": _.map(this.taxReturns, function(tr){return tr.serialize();})
+			};
+		};
+
 		return new Application();
+
 
 	}])
 	.constant('relationshipCodes',
