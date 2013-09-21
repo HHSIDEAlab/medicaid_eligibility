@@ -1,5 +1,5 @@
 angular.module('MAGI.services',[]).
-	factory('Application', ['relationshipCodes', function(relationshipCodes){
+	factory('Application', ['$http','relationshipCodes', function($http,relationshipCodes){
 		function Application(){
 			this.applicants = [];
 			this.taxReturns = [];
@@ -227,11 +227,11 @@ angular.module('MAGI.services',[]).
 
 		TaxReturn.prototype.serialize = function(){
 			return {
-				"Filers": _.map(this.filers, function(pers){
-					return pers.id;
+				"Filers": _.filter(this.filers, function(pers){return pers.id && pers.id.length;}).map(function(pers){
+					return {"Person ID": pers.id};
 				}),
-				"Dependents": _.map(this.dependents, function(pers){
-					return pers.id;
+				"Dependents": _.filter(this.dependents, function(pers){ return pers.id && pers.id.length;}).map(function(pers){
+					return {"Person ID": pers.id};
 				})
 			}
 		};
@@ -245,11 +245,37 @@ angular.module('MAGI.services',[]).
 					[{
 						"Household ID": "Household1",
 						"People":  _.map(this.applicants,
-							function(applicant){return applicant.id;})
+							function(applicant){return {"Person ID": applicant.id};})
 					}],
 				"Tax Returns": _.map(this.taxReturns, function(tr){return tr.serialize();})
 			};
 		};
+
+		// Returns a promise of a result.
+		Application.prototype.checkEligibility = function(){
+			var app = this.serialize();
+			var me = this;
+			return $http({
+				url: "/determinations/eval.json",
+				method: "POST",
+				data: app
+			}).success(function(response){
+				console.log(response);
+				me.determination = response;
+				angular.forEach(me.determination["Medicaid Households"], function(hh){
+					angular.forEach(hh.Applicants, function(applicant){
+						applicant.cleanDets = _.map(_.pairs(applicant.Determinations), function(item){
+							return {
+								item: item[0], 
+								indicator: item[1]["Indicator"],
+								code: item[1]["Ineligibility Code"]
+							};
+						});					
+					});
+				})
+				return response;
+            });
+		}
 
 		return new Application();
 
