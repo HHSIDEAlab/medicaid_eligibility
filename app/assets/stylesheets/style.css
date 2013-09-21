@@ -2,6 +2,9 @@
   Common colors:
     94% gray: #f0f1f2
 */
+/*
+ *= require font-awesome
+ */
 
 body, button, input, div.selector span {
   color: #231f20;

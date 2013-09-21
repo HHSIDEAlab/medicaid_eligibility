@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('MAGI.controllers', []).
-	controller('FormController',['$scope','filterFilter', 'Application','relationshipCodes','states', function($scope,filterFilter, Application, relationshipCodes,states){		
+	controller('FormController',['$scope','$location','filterFilter', 'Application','relationshipCodes','states', function($scope,$location,filterFilter, Application, relationshipCodes,states){		
                 $scope.applicants = Application.applicants;
                 $scope.taxReturns = Application.taxReturns;
                 $scope.application = Application;
@@ -13,6 +13,9 @@ angular.module('MAGI.controllers', []).
 
                 $scope.checkEligibility = function(){
                         console.log(Application.serialize());
+                        Application.checkEligibility().then(function(resp){
+                                $location.path("/results");
+                        });
                 }
 
 
@@ -30,8 +33,10 @@ angular.module('MAGI.controllers', []).
 
 
                 // We want to initialize the application with an applicant and a tax return
-                $scope.addApplicant();
-                $scope.addTaxReturn();
+                if($scope.applicants.length==0){
+                        $scope.addApplicant();
+                        $scope.addTaxReturn();
+                }
 
 
 		$scope.states = states;
@@ -64,4 +69,14 @@ angular.module('MAGI.controllers', []).
                 $scope.notMe = function(other) {
                         return other !== $scope.applicant; 
                 } 
+        }]).
+        controller('ResultsController',['$scope','$location','Application', function($scope,$location,Application){
+                $scope.households = Application.determination['Medicaid Households'];
+                $scope.expandByDefault = function(){
+                        return $scope.households.length == 1 && $scope.households.Applicants.length == 1;
+                }
+
+                $scope.returnToForm = function(){
+                        $location.path("/application");
+                }
         }]);
