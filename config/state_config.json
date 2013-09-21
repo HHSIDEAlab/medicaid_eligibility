@@ -55,6 +55,9 @@
      "Base FPL": 14350,
      "FPL Per Person": 5030
   },
+  "GA": {
+    "Option Deny Residency to Temporary Resident Students": "Y",
+  },
   "HI": {
      "Base FPL": 13230,
      "FPL Per Person": 4620
