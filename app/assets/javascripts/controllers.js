@@ -4,12 +4,16 @@ angular.module('MAGI.controllers', []).
 	controller('FormController',['$scope','filterFilter', 'Application','relationshipCodes','states', function($scope,filterFilter, Application, relationshipCodes,states){		
                 $scope.applicants = Application.applicants;
                 $scope.taxReturns = Application.taxReturns;
-                $scope.state = Application.state;
+                $scope.application = Application;
 
                 $scope.addTaxReturn = Application.addTaxReturn;
                 $scope.removeApplicant = Application.removeApplicant;
                 $scope.removeTaxReturn = Application.removeTaxReturn;
                 $scope.relationshipCodes = relationshipCodes;
+
+                $scope.checkEligibility = function(){
+                        console.log(Application.serialize());
+                }
 
 
                 $scope.addApplicant = function(){
@@ -51,9 +55,7 @@ angular.module('MAGI.controllers', []).
                         if(newValue){
                                 $scope.applicant.pregnantThreeMonths = false;
                         }
-                });
-
-                        
+                }); 
 
                 $scope.updateRelationship = function(relationship){
                         relationship.updateOpposite();
