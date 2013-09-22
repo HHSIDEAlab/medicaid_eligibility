@@ -86,9 +86,6 @@ module ApplicationProcessor
       if @tax_returns.select{|tr| tr.dependents.include?(person)}.count > 1
         raise "Invalid tax returns: #{person.person_id} is a dependent on two returns"
       end
-      if @tax_returns.any?{|tr| tr.filers.include?(person) && tr.filers.count == 2} && @tax_returns.any?{|tr| tr.dependents.include?(person)}
-        raise "Invalid tax returns: #{person.person_id} is filing jointly and also claimed as a dependent"
-      end
     end
     if @tax_returns.any?{|tr| tr.filers.count > 2}
       raise "Invalid tax returns: Tax return has more than two filers"
