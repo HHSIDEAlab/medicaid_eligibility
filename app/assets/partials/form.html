@@ -122,6 +122,10 @@
         </div>
       </div>
     </div>
+    <div class="form-row">
+      <label for="applicant_{{ $index }}_categorically_needy">Categorically Needy</label>
+      <input type="checkbox" checker id="applicant_{{ $index }}_categorically_needy" name="applicant_{{ $index }}_categorically_needy" ng-model="applicant.categoricallyNeedy">
+    </div>
     <div class="form-row form-row-expandable">
       <label for="applicant_{{ $index }}_income_taxes_required">Required to file income
         taxes</label>

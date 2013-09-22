@@ -135,7 +135,8 @@ angular.module('MAGI.services',[]).
 				{app: 'pregnant', api: 'Applicant Pregnant Indicator'},
 				{app: 'pregnantThreeMonths', api: 'Applicant Post Partum Period Indicator'},
 				{app: 'formerlyFosterCare', api: 'Former Foster Care'},
-				{app: 'incomeTaxesRequired', api: 'Required to File Taxes'},
+				{app: 'categoricallyNeedy', api: 'Categorically Needy'},
+        {app: 'incomeTaxesRequired', api: 'Required to File Taxes'},
 				{app: 'citizen', api: 'US Citizen Indicator'}
 			];
 
