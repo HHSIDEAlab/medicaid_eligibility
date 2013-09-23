@@ -1,6 +1,7 @@
 angular.module('MAGI.services',[]).
 	factory('Application', ['$http','relationshipCodes','states', function($http,relationshipCodes, states){
 		function Application(){
+			this.applicationId = "";
 			this.applicants = [];
 			this.taxReturns = [];
 			this.state = {};
@@ -400,7 +401,7 @@ angular.module('MAGI.services',[]).
 		Application.prototype.serialize = function(){
 			return {
 				"State": this.state.abbr,
-				"Name": this.id,
+				"Name": this.applicationId,
 				"People": _.map(this.applicants,
 					function(applicant){return applicant.serialize()}),
 				"Physical Households": 
@@ -427,7 +428,7 @@ angular.module('MAGI.services',[]).
 			});
 
 
-			this.id = application["Name"];
+			this.applicationId = application["Name"];
 			this.state = _.find(states, function(st){
 				return st.abbr == application["State"];
 			});
