@@ -14,12 +14,14 @@ angular.module('MAGI.services',[]).
 
 		function Applicant(){
 			this.citizen = true;
-			this.stateResidency = true;
+			this.livesInState = true;
 			this.isApplicant = true;
 			this.incomeTaxes = new IncomeTaxes();
 			this.relationships = [];
 			this.nonCitizen = {};
-			this.fosterCare = {};
+			this.fosterCare = {
+        state: {}
+      };
 		}
 
 		function Relationship(applicant, otherApplicant, code){
@@ -166,8 +168,9 @@ angular.module('MAGI.services',[]).
 			{app: 'student', api: 'Student Indicator', type: 'checkbox'},
 			{app: 'eligible', api: 'Medicare Entitlement Indicator', type: 'checkbox'},
 			{app: 'incarcerated', api: 'Incarceration Status', type: 'checkbox'},
-			{app: 'stateResidency', api: 'Medicaid Residency Indicator', type: 'checkbox'},
-			{app: 'longTermCare', api: 'Applicant Attest Long Term Care', type: 'checkbox'},
+			{app: 'livesInState', api: 'Lives In State', type: 'checkbox'},
+			{app: 'claimedByNonApplicant', api: 'Claimed as Dependent by Person Not on Application', type: 'checkbox'},
+      {app: 'longTermCare', api: 'Applicant Attest Long Term Care', type: 'checkbox'},
 			{app: 'hasInsurance', api: 'Has Insurance', type: 'checkbox'},
 			{app: 'stateEmployeeHealthBenefits', api: 'State Health Benefits Through Public Employee', type: 'checkbox'},
 			{app: 'priorInsurance', api: 'Prior Insurance', type: 'checkbox'},
@@ -183,6 +186,15 @@ angular.module('MAGI.services',[]).
 	
 		];
 
+    Applicant.prototype.residencyFields = [
+      {app: 'temporarilyOutOfState', api: 'Temporarily Out of State', type: 'checkbox'},
+      {app: 'noFixedAddress', api: 'No Fixed Address', type: 'checkbox'}
+    ]
+
+    Applicant.prototype.claimedFields = [
+      {app: 'claimerIsOutOfState', api: 'Claimer Is Out of State', type: 'checkbox'}
+    ]
+
 		Applicant.prototype.priorInsuranceFields = [
 				{app: 'priorInsuranceEndDate', api: 'Prior Insurance End Date', type: 'date'}
 		];
@@ -190,7 +202,7 @@ angular.module('MAGI.services',[]).
 		Applicant.prototype.fosterCareFields = [
 			{app: 'hadMedicaid', api: 'Had Medicaid During Foster Care', type: 'checkbox'},
 			{app: 'ageLeftFosterCare', api: 'Age Left Foster Care', type: 'string'},
-			{app: 'state', api: 'Foster Care State', type: 'string'}
+			{app: 'state', api: 'Foster Care State', type: 'state'}
 		]
 
 		Applicant.prototype.nonCitizenFields = [
@@ -222,7 +234,9 @@ angular.module('MAGI.services',[]).
 			} else if(field.type == 'date'){
 				// This probably needs to be changed. Currently a placeholder
 				return [field.api, baseObject[field.app]];
-			}
+			} else if(field.type == 'state'){
+        return [field.api, baseObject[field.app].abbr]
+      }
 		}
 
 		var deserializeField = function(field, serializedObject){
@@ -233,7 +247,11 @@ angular.module('MAGI.services',[]).
 			} else if(field.type == 'date'){
 				// This probably needs to be changed. Currently a placeholder
 				return serializedObject[field.api];
-			}
+			} else if(field.type == 'state'){
+        return _.find(states, function(st){
+          return st.abbr ==  serializedObject[field.api];
+        });
+      }
 		}
 
 		Applicant.prototype.serialize = function(){
@@ -243,14 +261,26 @@ angular.module('MAGI.services',[]).
 				return serializeField(field,me);
 			});
 
+      if(!(this.livesInState)){
+        rv = rv.concat(_.map(this.residencyFields, function(field){
+            return serializeField(field,me);
+          }));
+      }
+
+      if(this.claimedByNonApplicant){
+        rv = rv.concat(_.map(this.claimedFields, function(field){
+            return serializeField(field,me);
+          }));
+      }
+
 			if(this.priorInsurance){
-				rv.push(_.map(this.priorInsuranceFields, function(field){
+				rv = rv.concat(_.map(this.priorInsuranceFields, function(field){
 						return serializeField(field,me);
 					}));
 			}
 
 			if(this.formerlyFosterCare){
-				rv.push(_.map(this.fosterCareFields, function(field){
+				rv = rv.concat(_.map(this.fosterCareFields, function(field){
 						return serializeField(field,me.fosterCare);
 					}));
 			}
@@ -288,6 +318,14 @@ angular.module('MAGI.services',[]).
 			angular.forEach(this.fields, function(field){
 				me[field.app] = deserializeField(field, person);
 			});
+
+      angular.forEach(this.residencyFields, function(field){
+        me[field.app] = deserializeField(field, person);
+      })
+
+      angular.forEach(this.claimedFields, function(field){
+        me[field.app] = deserializeField(field, person);
+      })
 
 			angular.forEach(this.priorInsuranceFields, function(field){
 				me[field.app] = deserializeField(field, person);
