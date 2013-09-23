@@ -3,6 +3,8 @@
     "Base FPL": 11490,
     "FPL Per Person": 4020,
 
+    "Option Deny Residency to Temporary Resident Students": "N",
+
     "Age Limit for Primary Responsibility": 19,
     "Deprivation Requirement Retained": "N",
     "Option Caretaker Relative Relationship": "00",
@@ -88,6 +90,8 @@
      "FPL Per Person": 5030
   },
   "GA": {
+    "Option Deny Residency to Temporary Resident Students": "Y",
+
     "Age Limit for Primary Responsibility": 19,
     "Deprivation Requirement Retained": "Y",
     "Option Caretaker Relative Relationship": "04",
