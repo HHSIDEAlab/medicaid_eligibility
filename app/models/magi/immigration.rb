@@ -7,6 +7,7 @@ module MAGI
     applies_to  "Medicaid and CHIP"
     
     input "US Citizen Indicator", "Application", "Char(1)", %w(Y N)
+    input "Legal Permanent Resident", "Application", "Char(1)", %w(Y N)
     input "Lawful Presence Attested", "Application", "Char(1)", %w(Y N)
     input "Qualified Non-Citizen Status", "Application", "Char(1)", %w(Y N)
     input "Applicant Income Medicaid Eligible Indicator", "Income Rule", "Char(1)", %w(Y N)
@@ -17,8 +18,7 @@ module MAGI
     input "Seven Year Limit Start Date", "Application", "Date"
     input "Five Year Bar Applies", "Application", "Char(1)", %w(Y N)
     input "Five Year Bar Met", "Application", "Char(1)", %w(Y N)
-    input "Veteran Status", "Application", "Char(1)", %w(Y N)
-    input "Immigrant Status", "Application", "Char(2)"
+    input "Veteran Status", "Application", "Char(1)", %w(Y N)    
     input "Applicant Has 40 Title II Work Quarters", "Application", "Char(1)", %w(Y N)
     
     config "Option CHIPRA 214 Applicable Program", "State Configuration", "Char(2)", %w(01 02 03)
@@ -150,9 +150,9 @@ module MAGI
         if v("Five Year Bar Applies") == 'N' 
           determination_na "Five Year Bar"
 
-          # if v("Immigrant Status") == "12"
-          #   determination_na "Title II Work Quarters Met"
-          # end
+          if v("Legal Permanent Resident") == 'Y'
+            determination_na "Title II Work Quarters Met"
+          end
         elsif v("Veteran Status") == 'Y'
           determination_na "Five Year Bar"
           determination_na "Title II Work Quarters Met"
@@ -169,7 +169,7 @@ module MAGI
 
       # Title II Work Quarters logic
       unless o["Applicant Title II Work Quarters Met Indicator"] == 'X'
-        if c("Option Require Work Quarters") == 'N' #|| v("Immigrant Status") != '12'
+        if c("Option Require Work Quarters") == 'N' || v("Legal Permanent Resident") == 'Y'
           determination_na "Title II Work Quarters Met"
         elsif v("Applicant Has 40 Title II Work Quarters") == 'Y'
           determination_y "Title II Work Quarters Met"
