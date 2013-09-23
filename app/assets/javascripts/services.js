@@ -20,7 +20,9 @@ angular.module('MAGI.services',[]).
 			this.relationships = [];
       this.residency = {};
 			this.nonCitizen = {};
-			this.fosterCare = {};
+			this.fosterCare = {
+        state: {}
+      };
 		}
 
 		function Relationship(applicant, otherApplicant, code){
@@ -196,7 +198,7 @@ angular.module('MAGI.services',[]).
 		Applicant.prototype.fosterCareFields = [
 			{app: 'hadMedicaid', api: 'Had Medicaid During Foster Care', type: 'checkbox'},
 			{app: 'ageLeftFosterCare', api: 'Age Left Foster Care', type: 'string'},
-			{app: 'state', api: 'Foster Care State', type: 'string'}
+			{app: 'state', api: 'Foster Care State', type: 'state'}
 		]
 
 		Applicant.prototype.nonCitizenFields = [
@@ -228,7 +230,9 @@ angular.module('MAGI.services',[]).
 			} else if(field.type == 'date'){
 				// This probably needs to be changed. Currently a placeholder
 				return [field.api, baseObject[field.app]];
-			}
+			} else if(field.type == 'state'){
+        return [field.api, baseObject[field.app].abbr]
+      }
 		}
 
 		var deserializeField = function(field, serializedObject){
@@ -239,7 +243,11 @@ angular.module('MAGI.services',[]).
 			} else if(field.type == 'date'){
 				// This probably needs to be changed. Currently a placeholder
 				return serializedObject[field.api];
-			}
+			} else if(field.type == 'state'){
+        return _.find(states, function(st){
+          return st.abbr ==  serializedObject[field.api];
+        });
+      }
 		}
 
 		Applicant.prototype.serialize = function(){
@@ -250,19 +258,19 @@ angular.module('MAGI.services',[]).
 			});
 
       if(!(this.livesInState)){
-        rv.push(_.map(this.residencyFields, function(field){
+        rv = rv.concat(_.map(this.residencyFields, function(field){
             return serializeField(field,me);
           }));
       }
 
 			if(this.priorInsurance){
-				rv.push(_.map(this.priorInsuranceFields, function(field){
+				rv = rv.concat(_.map(this.priorInsuranceFields, function(field){
 						return serializeField(field,me);
 					}));
 			}
 
 			if(this.formerlyFosterCare){
-				rv.push(_.map(this.fosterCareFields, function(field){
+				rv = rv.concat(_.map(this.fosterCareFields, function(field){
 						return serializeField(field,me.fosterCare);
 					}));
 			}
