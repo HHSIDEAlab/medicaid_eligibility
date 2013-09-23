@@ -1,0 +1,9 @@
+{
+  "name": "MAGI-UI",
+  "dependencies": {
+    "angular": "~1.2.0",
+    "angular-animate": "~1.2.0",
+    "angular-route": "~1.2.0",
+    "angular-ui-utils": "~0.0.4"
+  }
+}

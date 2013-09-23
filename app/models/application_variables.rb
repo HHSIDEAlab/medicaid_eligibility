@@ -32,6 +32,13 @@ module ApplicationVariables
       :default    => "N"
     },
     {
+      :name       => "Categorically Needy",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :applicant,
+      :xpath      => :unimplemented
+    },
+    {
       :name       => "Claimed as Dependent by Person Not on Application",
       :type       => :flag,
       :values     => %w(Y N),
@@ -205,14 +212,14 @@ module ApplicationVariables
       :required_if => "Five Year Bar Applies",
       :required_if_value => "Y"
     },
-    {
-      :name       => "Immigrant Status",
-      :type       => :string,
-      :group      => :applicant,
-      :xpath      => :unimplemented,
-      :required_if => "US Citizen Indicator",
-      :required_if_value => "N"
-    },
+    # {
+    #   :name       => "Immigrant Status",
+    #   :type       => :string,
+    #   :group      => :applicant,
+    #   :xpath      => :unimplemented,
+    #   :required_if => "US Citizen Indicator",
+    #   :required_if_value => "N"
+    # },
     {
       :name       => "Lawful Presence Attested",
       :type       => :flag,
@@ -350,7 +357,10 @@ module ApplicationVariables
         "Other MAGI-Eligible Income"
       ],
       :deductions => [
-        "Social Security Benefits Taxable Amount"
+        "Social Security Benefits Taxable Amount",
+        "Lump Sum Payments",
+        "Educational Scholarships, Fellowship Grants, and Awards",
+        "AIAN Income"
       ]
     },
     # {

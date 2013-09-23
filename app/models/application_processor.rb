@@ -3,8 +3,8 @@ module ApplicationProcessor
 
   def compute_values!
     # relationship validator
-    validate_tax_returns
     compute_relationships!
+    validate_tax_returns
     build_medicaid_households!
     calculate_household_size!
     calculate_household_income!
@@ -85,9 +85,6 @@ module ApplicationProcessor
       end
       if @tax_returns.select{|tr| tr.dependents.include?(person)}.count > 1
         raise "Invalid tax returns: #{person.person_id} is a dependent on two returns"
-      end
-      if @tax_returns.any?{|tr| tr.filers.include?(person) && tr.filers.count == 2} && @tax_returns.any?{|tr| tr.dependents.include?(person)}
-        raise "Invalid tax returns: #{person.person_id} is filing jointly and also claimed as a dependent"
       end
     end
     if @tax_returns.any?{|tr| tr.filers.count > 2}
@@ -209,8 +206,6 @@ module ApplicationProcessor
           tax_returns << tax_return
         elsif person.income
           non_tax_return_people << person
-        else
-          raise "Missing income for person #{person.person_id}"
         end
       end
       incomes = (tax_returns.uniq + non_tax_return_people).map{|obj| 
