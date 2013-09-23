@@ -22,12 +22,12 @@ body {
   width: 740px;
 }
 
-button[type=submit], input::-webkit-outer-spin-button, input::-webkit-inner-spin-button, .add-applicant, .remove-applicant {
+button[type=submit], input::-webkit-outer-spin-button, input::-webkit-inner-spin-button, .add-applicant, .remove-applicant, .submitlike {
   -webkit-appearance: none;
   appearance: none;
 }
 
-button[type=submit], .add-applicant, .remove-applicant {
+button[type=submit], .add-applicant, .remove-applicant, .submitlike {
   border: none;
 }
 
@@ -270,7 +270,7 @@ h2 {
   display: none;
 }
 
-button[type=submit] {
+button[type=submit], button.submitlike {
   background: #24bbbe;
   -webkit-border-radius: 5px;
           border-radius: 5px;
@@ -582,3 +582,15 @@ fieldset h3, .export h3{
   margin: 30px 20px 5px;
 }
 
+label.error {
+  width: 150px;
+  text-align: left;
+  background-color: #f2dede;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-left: 10px;
+}
+
+.form-row.invalid, .form-half-field.invalid {
+  background: #ffdddd;
+}

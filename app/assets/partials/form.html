@@ -1,4 +1,4 @@
-<form id="application_form" method="post" ng-submit="print()">
+<form name="applicationForm" id="application_form" method="post" ng-submit="checkEligibility()" novalidate>
   <h1>MAGI In A Box</h1>
 
     <div class="form-fields-area">
@@ -6,13 +6,16 @@
         <label for="state">State</label>
         <select selector ng-model="application.state" name="state" id="state" ng-options="state as state.name for state in states" required>
         </select>
+        <label for="state" class="error" ng-show="(applicationForm.state.$dirty  || submitted) && applicationForm.state.$invalid">Please enter a State</label>
+      </div>
       <div class="form-row">
         <label for="id">Application Name or ID</label>
-        <input ng-model="application.id" type="text" name="id" required>
+        <input id="applicationId" ng-model="application.applicationId" type="text" name="id" required>
+        <label for="id" class="error" ng-show="(applicationForm.id.$dirty  || submitted) && applicationForm.id.$invalid">This field is required.</label>
       </div>
     </div>
   </div>
-  <fieldset ng-repeat="applicant in applicants" ng-controller="ApplicantController">
+  <fieldset ng-form name="applicantForm" ng-repeat="applicant in applicants" ng-controller="ApplicantController">
     <legend>Applicant <span class="applicant-number">{{$index+1}}</span></legend>
     <div class="applicant-relationship-fields" ng-repeat="relationship in applicant.relationships">
       <div class="form-row" >
@@ -22,22 +25,24 @@
       </div>
       </div>
       <div class="form-row">
-        <label for="applicant_{{ $index }}_id">Applicant Name or ID</label>
-        <input type="text" ng-model="applicant.id" id="applicant_{{ $index }}_id" name="applicant_{{ $index }}_id"
-             class="applicant-id-field" applicant_id_unique="true">
+        <label for="applicant_id">Applicant Name or ID</label>
+        <input type="text" ng-model="applicant.id" name="applicant_id"
+             class="applicant-id-field" required applicant_id_unique="true">
+        <label for="applicant_id" class="error" ng-show="(applicantForm.applicant_id.$dirty || submitted)  && applicantForm.applicant_id.$invalid">This field is required.</label>
       </div>
       <div class="form-row">
         <label for="applicant_{{ $index }}_is_applicant">Is this individual applying for insurance?</label>
-        <input type="checkbox" checker ng-model = "applicant.isApplicant" id="applicant_{{ $index }}_is_applicant" name="applicant_{{ $index }}_is_applicant" >
+        <input type="checkbox" checker ng-model = "applicant.isApplicant" id="applicant_{{ $index }}_is_applicant" name="applicant_is_applicant" >
     </div>
     <div class="form-row-expandable">
       <label for="applicant_{{ $index }}_age">Age</label>
-      <input type="number" ng-model = "applicant.age" id="applicant_{{ $index }}_age" name="applicant_{{ $index }}_age" required>
+      <input type="number" ng-model = "applicant.age" id="applicant_{{ $index }}_age" name="applicant_age" required>
+      <label for="applicant_{{ $index }}_age" class="error" ng-show="(applicantForm.applicant_age.$dirty  || submitted)  && applicantForm.applicant_age.$invalid">This field is required.</label>
       <div class="form-row-expandable-fields2" ng-show="checkResponsibility()">
 
       <div class="form-row" >
         <label for="applicant_{{ $index }}_nonParentResponsibility" >Someone other than a parent claims primary responsibility for this person</label>
-        <input type="checkbox" checker id="applicant_{{ $index }}_nonParentResponsibility" name="applicant_{{ $index }}_nonParentResponsibility" ng-model="applicant.nonParentResponsibility">
+        <input type="checkbox" checker id="applicant_{{ $index }}_nonParentResponsibility" name="applicant_nonParentResponsibility" ng-model="applicant.nonParentResponsibility">
       </div>
           <div class="form-row" ng-show="applicant.nonParentResponsibility">
             <label for="applicant_{{ $index }}_nonParentResponsibilityPerson">Who?</label>
@@ -50,185 +55,186 @@
     </div>
     <div class="form-row">
       <label for="applicant_{{ $index }}_hours">Hours worked per week</label>
-      <input type="number" ng-model="applicant.hours" id="applicant_{{ $index }}_hours" name="applicant_{{ $index }}_hours" required>
+      <input type="number" ng-model="applicant.hours" id="applicant_{{ $index }}_hours" name="applicant_hours" required>
+      <label for="applicant_{{ $index }}_hours" class="error" ng-show="(applicantForm.applicant_hours.$dirty || submitted) && applicantForm.applicant_hours.$invalid">This field is required.</label>
     </div>
     <div class="form-half-field">
       <label for="applicant_{{ $index }}_disabled" >Disabled</label>
-      <input type="checkbox" checker id="applicant_{{ $index }}_disabled" name="applicant_{{ $index }}_disabled" ng-model="applicant.disabled">
+      <input type="checkbox" checker id="applicant_{{ $index }}_disabled" name="applicant_disabled" ng-model="applicant.disabled">
     </div>
     <div class="form-half-field">
       <label for="applicant_{{ $index }}_student">Student</label>
-      <input type="checkbox" checker id="applicant_{{ $index }}_student" name="applicant_{{ $index }}_student" ng-model="applicant.student">
+      <input type="checkbox" checker id="applicant_{{ $index }}_student" name="applicant_student" ng-model="applicant.student">
     </div>
     <div class="form-half-field">
       <label for="applicant_{{ $index }}_eligible">Eligible for Medicare</label>
-      <input type="checkbox" checker id="applicant_{{ $index }}_eligible" name="applicant_{{ $index }}_eligible" ng-model="applicant.eligible">
+      <input type="checkbox" checker id="applicant_{{ $index }}_eligible" name="applicant_eligible" ng-model="applicant.eligible">
     </div>
     <div class="form-half-field">
       <label for="applicant_{{ $index }}_incarcerated">Incarcerated</label>
-      <input type="checkbox" checker id="applicant_{{ $index }}_incarcerated" name="applicant_{{ $index }}_incarcerated" ng-model="applicant.incarcerated">
+      <input type="checkbox" checker id="applicant_{{ $index }}_incarcerated" name="applicant_incarcerated" ng-model="applicant.incarcerated">
     </div>
     <div class="form-half-field">
       <label for="applicant_{{ $index }}_state_residency">Meets state residency status requirements</label>
-      <input type="checkbox" checker id="applicant_{{ $index }}_state_residency" name="applicant_{{ $index }}_state_residency" ng-model="applicant.stateResidency">
+      <input type="checkbox" checker id="applicant_{{ $index }}_state_residency" name="applicant_state_residency" ng-model="applicant.stateResidency">
     </div>
     <div class="form-half-field">
       <label for="applicant_{{ $index }}_long_term_care">In long-term care</label>
-      <input type="checkbox" checker id="applicant_{{ $index }}_long_term_care" name="applicant_{{ $index }}_long_term_care" ng-model="applicant.longTermCare">
+      <input type="checkbox" checker id="applicant_{{ $index }}_long_term_care" name="applicant_long_term_care" ng-model="applicant.longTermCare">
     </div>
     <div class="form-half-field clear">
       <label for="applicant_{{ $index }}_has_insurance">Has insurance</label>
-      <input type="checkbox" checker id="applicant_{{ $index }}_has_insurance" name="applicant_{{ $index }}_has_insurance" ng-model="applicant.hasInsurance">
+      <input type="checkbox" checker id="applicant_{{ $index }}_has_insurance" name="applicant_has_insurance" ng-model="applicant.hasInsurance">
     </div>
     <div class="form-half-field">
       <label for="applicant_{{ $index }}_state_employee_health_benefits">Received state employee health benefits</label>
-      <input type="checkbox" checker id="applicant_{{ $index }}_state_employee_health_benefits" name="applicant_{{ $index }}_state_employee_health_benefits" ng-model="applicant.stateEmployeeHealthBenefits">
+      <input type="checkbox" checker id="applicant_{{ $index }}_state_employee_health_benefits" name="applicant_state_employee_health_benefits" ng-model="applicant.stateEmployeeHealthBenefits">
     </div>
     <div class="form-row form-row-expandable">
       <label for="applicant_{{ $index }}_prior_insurance">Prior insurance</label>
-      <input type="checkbox" checker id="applicant_{{ $index }}_prior_insurance" name="applicant_{{ $index }}_prior_insurance" ng-model="applicant.priorInsuranceIndicator">
+      <input type="checkbox" checker id="applicant_{{ $index }}_prior_insurance" name="applicant_prior_insurance" ng-model="applicant.priorInsuranceIndicator">
       <div class="form-row-expandable-fields2" ng-show="applicant.priorInsuranceIndicator">
         <div class="form-row">
           <label for="applicant_{{ $index }}_prior_insurance_end_date">Prior insurance end date</label>
-          <input type="text" id="applicant_{{ $index }}_prior_insurance_end_date" name="applicant_{{ $index }}_prior_insurance_end_date" ng-model="applicant.priorInsurance.EndDate" class="date" placeholder="mm / dd / yyyy" ui-mask="99 / 99 / 9999">
+          <input type="text" id="applicant_{{ $index }}_prior_insurance_end_date" name="applicant_prior_insurance_end_date" ng-model="applicant.priorInsurance.EndDate" class="date" placeholder="mm / dd / yyyy" ui-mask="99 / 99 / 9999">
         </div>
       </div>
     </div>
     <div class="form-row">
       <label for="applicant_{{ $index }}_pregnant">Pregnant</label>
-      <input type="checkbox" checker id="applicant_{{ $index }}_pregnant" name="applicant_{{ $index }}_pregnant" ng-model="applicant.pregnant" data-exclusive="pregnant">
+      <input type="checkbox" checker id="applicant_{{ $index }}_pregnant" name="applicant_pregnant" ng-model="applicant.pregnant" data-exclusive="pregnant">
     </div>
     <div class="form-row">
       <label for="applicant_{{ $index }}_pregnant_three_months">Pregnant within the last 3 months</label>
-      <input type="checkbox" checker id="applicant_{{ $index }}_pregnant_three_months" name="applicant_{{ $index }}_pregnant_three_months" ng-model="applicant.pregnantThreeMonths" data-exclusive="pregnant">
+      <input type="checkbox" checker id="applicant_{{ $index }}_pregnant_three_months" name="applicant_pregnant_three_months" ng-model="applicant.pregnantThreeMonths" data-exclusive="pregnant">
     </div>
     <div class="form-row form-row-expandable">
       <label for="applicant_{{ $index }}_foster_care">Formerly in foster care</label>
-      <input type="checkbox" checker id="applicant_{{ $index }}_foster_care" name="applicant_{{ $index }}_foster_care" ng-model="applicant.formerlyFosterCare">
+      <input type="checkbox" checker id="applicant_{{ $index }}_foster_care" name="applicant_foster_care" ng-model="applicant.formerlyFosterCare">
       <div class="form-row-expandable-fields2" ng-show="applicant.formerlyFosterCare">
         <div class="form-row">
           <label for="applicant_{{ $index }}_foster_care_had_medicaid">Had Medicaid during foster
             care</label>
-          <input type="checkbox" checker id="applicant_{{ $index }}_foster_care_had_medicaid" name="applicant_{{ $index }}_foster_care_had_medicaid" ng-model="applicant.fosterCare.hadMedicaid">
+          <input type="checkbox" checker id="applicant_{{ $index }}_foster_care_had_medicaid" name="applicant_foster_care_had_medicaid" ng-model="applicant.fosterCare.hadMedicaid">
         </div>
         <div class="form-row">
           <label for="applicant_{{ $index }}_foster_care_age_left">Age left foster care</label>
-          <input type="number" id="applicant_{{ $index }}_foster_care_age_left" name="applicant_{{ $index }}_foster_care_age_left" ng-model="applicant.fosterCare.ageLeftFosterCare">
+          <input type="number" id="applicant_{{ $index }}_foster_care_age_left" name="applicant_foster_care_age_left" ng-model="applicant.fosterCare.ageLeftFosterCare">
         </div>
         <div class="form-row">
           <label for="applicant_{{ $index }}_foster_care_state">Foster care state</label>
-          <select id="applicant_{{ $index }}_foster_care_state" name="applicant_{{ $index }}_foster_care_state" selector ng-model="applicant.fosterCare.state" ng-options="state as state.name for state in states">
+          <select id="applicant_{{ $index }}_foster_care_state" name="applicant_foster_care_state" selector ng-model="applicant.fosterCare.state" ng-options="state as state.name for state in states">
           </select>
         </div>
       </div>
     </div>
     <div class="form-row">
       <label for="applicant_{{ $index }}_categorically_needy">Categorically Needy</label>
-      <input type="checkbox" checker id="applicant_{{ $index }}_categorically_needy" name="applicant_{{ $index }}_categorically_needy" ng-model="applicant.categoricallyNeedy">
+      <input type="checkbox" checker id="applicant_{{ $index }}_categorically_needy" name="applicant_categorically_needy" ng-model="applicant.categoricallyNeedy">
     </div>
     <div class="form-row form-row-expandable">
       <label for="applicant_{{ $index }}_income_taxes_required">Required to file income
         taxes</label>
-      <input type="checkbox" checker id="applicant_{{ $index }}_income_taxes_required" name="applicant_{{ $index }}_income_taxes_required" ng-model="applicant.incomeTaxesRequired">
+      <input type="checkbox" checker id="applicant_{{ $index }}_income_taxes_required" name="applicant_income_taxes_required" ng-model="applicant.incomeTaxesRequired">
       <div class="form-row-expandable-fields2 cf" >
         <div class="form-half-field">
           <label for="applicant_{{ $index }}_income_taxes_required_wages">Wages, salaries, tips</label>
-          <input type="number" id="applicant_{{ $index }}_income_taxes_required_wages" name="applicant_{{ $index }}_income_taxes_required_wages" class="long-number" ng-model="applicant.incomeTaxes.wages">
+          <input type="number" id="applicant_{{ $index }}_income_taxes_required_wages" name="applicant_income_taxes_required_wages" class="long-number" ng-model="applicant.incomeTaxes.wages">
         </div>
         <div class="form-half-field">
           <label for="applicant_{{ $index }}_income_taxes_required_capital_gains">Capital gains or loss</label>
-          <input type="number" id="applicant_{{ $index }}_income_taxes_required_capital_gains" name="applicant_{{ $index }}_income_taxes_required_capital_gains" class="long-number" ng-model="applicant.incomeTaxes.capitalGains">
+          <input type="number" id="applicant_{{ $index }}_income_taxes_required_capital_gains" name="applicant_income_taxes_required_capital_gains" class="long-number" ng-model="applicant.incomeTaxes.capitalGains">
         </div>
         <div class="form-half-field">
           <label for="applicant_{{ $index }}_income_taxes_required_taxable_interest">Taxable interest</label>
-          <input type="number" id="applicant_{{ $index }}_income_taxes_required_taxable_interest" name="applicant_{{ $index }}_income_taxes_required_taxable_interest" class="long-number" ng-model="applicant.incomeTaxes.taxableInterest">
+          <input type="number" id="applicant_{{ $index }}_income_taxes_required_taxable_interest" name="applicant_income_taxes_required_taxable_interest" class="long-number" ng-model="applicant.incomeTaxes.taxableInterest">
         </div>
         <div class="form-half-field">
           <label for="applicant_{{ $index }}_income_taxes_required_pensions">Pensions and annuities taxable amount</label>
-          <input type="number" id="applicant_{{ $index }}_income_taxes_required_pensions" name="applicant_{{ $index }}_income_taxes_required_pensions" class="long-number" ng-model="applicant.incomeTaxes.pensions">
+          <input type="number" id="applicant_{{ $index }}_income_taxes_required_pensions" name="applicant_income_taxes_required_pensions" class="long-number" ng-model="applicant.incomeTaxes.pensions">
         </div>
         <div class="form-half-field">
           <label for="applicant_{{ $index }}_income_taxes_required_tax_exempt_interest">Tax-exempt interest</label>
-          <input type="number" id="applicant_{{ $index }}_income_taxes_required_tax_exempt_interest" name="applicant_{{ $index }}_income_taxes_required_tax_exempt_interest" class="long-number" ng-model="applicant.incomeTaxes.taxExemptInterest">
+          <input type="number" id="applicant_{{ $index }}_income_taxes_required_tax_exempt_interest" name="applicant_income_taxes_required_tax_exempt_interest" class="long-number" ng-model="applicant.incomeTaxes.taxExemptInterest">
         </div>
         <div class="form-half-field">
           <label for="applicant_{{ $index }}_income_taxes_required_farm_income">Farm income or loss</label>
-          <input type="number" id="applicant_{{ $index }}_income_taxes_required_farm_income" name="applicant_{{ $index }}_income_taxes_required_farm_income" class="long-number" ng-model="applicant.incomeTaxes.farmIncome">
+          <input type="number" id="applicant_{{ $index }}_income_taxes_required_farm_income" name="applicant_income_taxes_required_farm_income" class="long-number" ng-model="applicant.incomeTaxes.farmIncome">
         </div>
         <div class="form-half-field">
           <label for="applicant_{{ $index }}_income_taxes_required_taxable_refunds">Taxable refunds, credits, or offsets of state and local income taxes</label>
-          <input type="number" id="applicant_{{ $index }}_income_taxes_required_taxable_refunds" name="applicant_{{ $index }}_income_taxes_required_taxable_refunds" class="long-number" ng-model="applicant.incomeTaxes.taxableRefunds">
+          <input type="number" id="applicant_{{ $index }}_income_taxes_required_taxable_refunds" name="applicant_income_taxes_required_taxable_refunds" class="long-number" ng-model="applicant.incomeTaxes.taxableRefunds">
         </div>
         <div class="form-half-field">
           <label for="applicant_{{ $index }}_income_taxes_required_unemployment">Unemployment compensation</label>
-          <input type="number" id="applicant_{{ $index }}_income_taxes_required_unemployment" name="applicant_{{ $index }}_income_taxes_required_unemployment" class="long-number" ng-model="applicant.incomeTaxes.unemployment">
+          <input type="number" id="applicant_{{ $index }}_income_taxes_required_unemployment" name="applicant_income_taxes_required_unemployment" class="long-number" ng-model="applicant.incomeTaxes.unemployment">
         </div>
         <div class="form-half-field clear">
           <label for="applicant_{{ $index }}_income_taxes_required_alimony">Alimony</label>
-          <input type="number" id="applicant_{{ $index }}_income_taxes_required_alimony" name="applicant_{{ $index }}_income_taxes_required_alimony" class="long-number" ng-model="applicant.incomeTaxes.alimony">
+          <input type="number" id="applicant_{{ $index }}_income_taxes_required_alimony" name="applicant_income_taxes_required_alimony" class="long-number" ng-model="applicant.incomeTaxes.alimony">
         </div>
         <div class="form-half-field">
           <label for="applicant_{{ $index }}_income_taxes_required_other">Other income</label>
-          <input type="number" id="applicant_{{ $index }}_income_taxes_required_other" name="applicant_{{ $index }}_income_taxes_required_other" class="long-number" ng-model="applicant.incomeTaxes.other">
+          <input type="number" id="applicant_{{ $index }}_income_taxes_required_other" name="applicant_income_taxes_required_other" class="long-number" ng-model="applicant.incomeTaxes.other">
         </div>
         <div class="form-half-field">
           <label for="applicant_{{ $index }}_income_taxes_required_deductions">MAGI deductions</label>
-          <input type="number" id="applicant_{{ $index }}_income_taxes_required_deductions" name="applicant_{{ $index }}_income_taxes_required_deductions" class="long-number" ng-model="applicant.incomeTaxes.MAGIDeductions">
+          <input type="number" id="applicant_{{ $index }}_income_taxes_required_deductions" name="applicant_income_taxes_required_deductions" class="long-number" ng-model="applicant.incomeTaxes.MAGIDeductions">
         </div>
       </div>
 
     </div>
     <div class="form-row form-row-expandable">
       <label for="applicant_{{ $index }}_citizen">US citizen</label>
-      <input type="checkbox" checker ng-model="applicant.citizen" id="applicant_{{ $index }}_citizen" name="applicant_{{ $index }}_citizen">
+      <input type="checkbox" checker ng-model="applicant.citizen" id="applicant_{{ $index }}_citizen" name="applicant_citizen">
       <div class="form-row-expandable-fields2" ng-show="!applicant.citizen">
         <div class="form-half-field">
           <label for="applicant_{{ $index }}_citizen_lawful">Lawful resident</label>
-          <input type="checkbox" checker ng-model="applicant.nonCitizen.lawful" id="applicant_{{ $index }}_citizen_lawful" name="applicant_{{ $index }}_citizen_lawful">
+          <input type="checkbox" checker ng-model="applicant.nonCitizen.lawful" id="applicant_{{ $index }}_citizen_lawful" name="applicant_citizen_lawful">
         </div>
         <div class="form-half-field">
           <label for="applicant_{{ $index }}_citizen_five_year_bar">Subject to a 5 year bar</label>
-          <input type="checkbox" checker ng-model="applicant.nonCitizen.fiveYearBar" id="applicant_{{ $index }}_citizen_five_year_bar" name="applicant_{{ $index }}_citizen_five_year_bar">
+          <input type="checkbox" checker ng-model="applicant.nonCitizen.fiveYearBar" id="applicant_{{ $index }}_citizen_five_year_bar" name="applicant_citizen_five_year_bar">
         </div>
         <div class="form-half-field">
           <label for="applicant_{{ $index }}_citizen_forty_quarters">Worked in the US for 40 quarters (120 months)</label>
-          <input type="checkbox" checker ng-model="applicant.nonCitizen.fortyQuarters" id="applicant_{{ $index }}_citizen_forty_quarters" name="applicant_{{ $index }}_citizen_forty_quarters">
+          <input type="checkbox" checker ng-model="applicant.nonCitizen.fortyQuarters" id="applicant_{{ $index }}_citizen_forty_quarters" name="applicant_citizen_forty_quarters">
         </div>
         <div class="form-half-field">
           <label for="applicant_{{ $index }}_citizen_five_year_bar_met">5 year bar met</label>
-          <input type="checkbox" checker ng-model="applicant.nonCitizen.fiveYearBarMet" id="applicant_{{ $index }}_citizen_five_year_bar_met" name="applicant_{{ $index }}_citizen_five_year_bar_met">
+          <input type="checkbox" checker ng-model="applicant.nonCitizen.fiveYearBarMet" id="applicant_{{ $index }}_citizen_five_year_bar_met" name="applicant_citizen_five_year_bar_met">
         </div>
         <div class="form-row form-row-expandable">
           <label for="applicant_{{ $index }}_citizen_refugee_assistance">Eligible for refugee medical assistance</label>
-          <input type="checkbox" checker ng-model="applicant.nonCitizen.refugeeMedicalAssistanceEligible" id="applicant_{{ $index }}_citizen_refugee_assistance" name="applicant_{{ $index }}_citizen_refugee_assistance">
+          <input type="checkbox" checker ng-model="applicant.nonCitizen.refugeeMedicalAssistanceEligible" id="applicant_{{ $index }}_citizen_refugee_assistance" name="applicant_citizen_refugee_assistance">
 
           <div class="form-row-expandable-fields2" ng-show="applicant.nonCitizen.refugeeMedicalAssistanceEligible">
             <div class="form-row">
               <label for="applicant_{{ $index }}_citizen_refugee_assistance_start_date">Refugee medical assistance start date</label>
-          <input type="text" ng-model="applicant.nonCitizen.refugeeMedicalAssistance.StartDate" id="applicant_{{ $index }}_citizen_refugee_assistance_start_date" name="applicant_{{ $index }}_citizen_refugee_assistance_start_date" class="date" ui-mask="99 / 99 / 9999" placeholder="mm / dd / yyyy">
+          <input type="text" ng-model="applicant.nonCitizen.refugeeMedicalAssistance.StartDate" id="applicant_{{ $index }}_citizen_refugee_assistance_start_date" name="applicant_citizen_refugee_assistance_start_date" class="date" ui-mask="99 / 99 / 9999" placeholder="mm / dd / yyyy">
             </div>
           </div>
         </div>
 
         <div class="form-row form-row-expandable">
           <label for="applicant_{{ $index }}_citizen_human_trafficking">Victim of human trafficking</label>
-          <input type="checkbox" checker ng-model="applicant.nonCitizen.humanTraffickingVictim" id="applicant_{{ $index }}_citizen_human_trafficking" name="applicant_{{ $index }}_citizen_human_trafficking">
+          <input type="checkbox" checker ng-model="applicant.nonCitizen.humanTraffickingVictim" id="applicant_{{ $index }}_citizen_human_trafficking" name="applicant_citizen_human_trafficking">
           <div class="form-row-expandable-fields2" ng-show="applicant.nonCitizen.humanTraffickingVictim">
             <div class="form-row">
               <label for="applicant_{{ $index }}_citizen_human_trafficking_non_citizen">Qualified non-citizen</label>
-              <input type="checkbox" checker ng-model="applicant.nonCitizen.humanTrafficking.qualified" id="applicant_{{ $index }}_citizen_human_trafficking_non_citizen" name="applicant_{{ $index }}_citizen_human_trafficking_non_citizen">
+              <input type="checkbox" checker ng-model="applicant.nonCitizen.humanTrafficking.qualified" id="applicant_{{ $index }}_citizen_human_trafficking_non_citizen" name="applicant_citizen_human_trafficking_non_citizen">
             </div>
             <div class="form-row">
               <label for="applicant_{{ $index }}_citizen_human_trafficking_deport_withheld_date">Non-citizen deport withheld date</label>
-              <input type="text" ng-model="applicant.nonCitizen.humanTrafficking.deportWithheldDate" id="applicant_{{ $index }}_citizen_human_trafficking_deport_withheld_date" name="applicant_{{ $index }}_citizen_human_trafficking_deport_withheld_date" class="date" ui-mask="99 / 99 / 9999" placeholder="mm / dd / yyyy">
+              <input type="text" ng-model="applicant.nonCitizen.humanTrafficking.deportWithheldDate" id="applicant_{{ $index }}_citizen_human_trafficking_deport_withheld_date" name="applicant_citizen_human_trafficking_deport_withheld_date" class="date" ui-mask="99 / 99 / 9999" placeholder="mm / dd / yyyy">
             </div>
             <div class="form-row">
               <label for="applicant_{{ $index }}_citizen_human_trafficking_entry_date">Non-citizen entry date</label>
-              <input type="text" ng-model="applicant.nonCitizen.humanTrafficking.entryDate" id="applicant_{{ $index }}_citizen_human_trafficking_entry_date" name="applicant_{{ $index }}_citizen_human_trafficking_entry_date" class="date" ui-mask="99 / 99 / 9999" placeholder="mm / dd / yyyy" >
+              <input type="text" ng-model="applicant.nonCitizen.humanTrafficking.entryDate" id="applicant_{{ $index }}_citizen_human_trafficking_entry_date" name="applicant_citizen_human_trafficking_entry_date" class="date" ui-mask="99 / 99 / 9999" placeholder="mm / dd / yyyy" >
             </div>
             <div class="form-row">
               <label for="applicant_{{ $index }}_citizen_human_trafficking_status_grant_date">Non-citizen status grant date</label>
-              <input type="text" ng-model="applicant.nonCitizen.humanTrafficking.statusGrantDate" id="applicant_{{ $index }}_citizen_human_trafficking_status_grant_date" name="applicant_{{ $index }}_citizen_human_trafficking_status_grant_date" class="date" ui-mask="99 / 99 / 9999" placeholder="mm / dd / yyyy">
+              <input type="text" ng-model="applicant.nonCitizen.humanTrafficking.statusGrantDate" id="applicant_{{ $index }}_citizen_human_trafficking_status_grant_date" name="applicant_citizen_human_trafficking_status_grant_date" class="date" ui-mask="99 / 99 / 9999" placeholder="mm / dd / yyyy">
             </div>
           </div>
         </div>
@@ -257,7 +263,7 @@
       <div ng-show="showDependents()">
         <h3>Dependents</h3>
         <div class="form-row" ng-repeat="dependent in taxReturn.dependents track by $index">
-        <label for="dependent__{$index}">Dependent {{$index+1}}</label>
+        <label for="dependent_{$index}">Dependent {{$index+1}}</label>
         <select id="dependent_{$index}" selector ng-model="taxReturn.dependents[$index]" ng-options="applicant.id for  applicant in applicants">
           <option value=""></option>
         </select>
@@ -270,6 +276,6 @@
     <button ng-click="addTaxReturn()" type="button" class="add-applicant">Add Another Tax Return</button>
   
   <button type="submit" ng-click="checkEligibility()">Check Eligibility</button>
-  <button type="submit" ng-click="exportApplication()">Export Application</button>
+  <button class="submitlike" ng-click="exportApplication()">Export Application</button>
 
 </form>
