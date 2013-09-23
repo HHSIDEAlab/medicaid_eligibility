@@ -265,13 +265,13 @@ angular.module('MAGI.services',[]).
 
       if(!(this.livesInState)){
         rv = rv.concat(_.map(this.residencyFields, function(field){
-            return serializeField(field,me);
+            return serializeField(field,me.residency);
           }));
       }
 
       if(this.claimedByNonApplicant){
         rv = rv.concat(_.map(this.claimedFields, function(field){
-            return serializeField(field,me);
+            return serializeField(field,me.claimed);
           }));
       }
 
