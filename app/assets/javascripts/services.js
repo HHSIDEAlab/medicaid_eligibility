@@ -19,6 +19,7 @@ angular.module('MAGI.services',[]).
 			this.incomeTaxes = new IncomeTaxes();
 			this.relationships = [];
       this.residency = {};
+      this.claimed = {};
 			this.nonCitizen = {};
 			this.fosterCare = {
         state: {}
@@ -170,7 +171,8 @@ angular.module('MAGI.services',[]).
 			{app: 'eligible', api: 'Medicare Entitlement Indicator', type: 'checkbox'},
 			{app: 'incarcerated', api: 'Incarceration Status', type: 'checkbox'},
 			{app: 'livesInState', api: 'Lives In State', type: 'checkbox'},
-			{app: 'longTermCare', api: 'Applicant Attest Long Term Care', type: 'checkbox'},
+			{app: 'claimedByNonApplicant', api: 'Claimed as Dependent by Person Not on Application', type: 'checkbox'},
+      {app: 'longTermCare', api: 'Applicant Attest Long Term Care', type: 'checkbox'},
 			{app: 'hasInsurance', api: 'Has Insurance', type: 'checkbox'},
 			{app: 'stateEmployeeHealthBenefits', api: 'State Health Benefits Through Public Employee', type: 'checkbox'},
 			{app: 'priorInsurance', api: 'Prior Insurance', type: 'checkbox'},
@@ -189,6 +191,10 @@ angular.module('MAGI.services',[]).
     Applicant.prototype.residencyFields = [
       {app: 'temporarilyOutOfState', api: 'Temporarily Out of State', type: 'checkbox'},
       {app: 'noFixedAddress', api: 'No Fixed Address', type: 'checkbox'}
+    ]
+
+    Applicant.prototype.claimedFields = [
+      {app: 'claimerIsOutOfState', api: 'Claimer Is Out of State', type: 'checkbox'}
     ]
 
 		Applicant.prototype.priorInsuranceFields = [
@@ -263,6 +269,12 @@ angular.module('MAGI.services',[]).
           }));
       }
 
+      if(this.claimedByNonApplicant){
+        rv = rv.concat(_.map(this.claimedFields, function(field){
+            return serializeField(field,me);
+          }));
+      }
+
 			if(this.priorInsurance){
 				rv = rv.concat(_.map(this.priorInsuranceFields, function(field){
 						return serializeField(field,me);
@@ -313,6 +325,12 @@ angular.module('MAGI.services',[]).
 
       angular.forEach(this.residencyFields, function(field){
         me.residency[field.app] = deserializeField(field, person);
+      })
+
+      me.claimedFields = {};
+
+      angular.forEach(this.claimedFields, function(field){
+        me.claimed[field.app] = deserializeField(field, person);
       })
 
 			angular.forEach(this.priorInsuranceFields, function(field){
