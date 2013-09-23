@@ -28,6 +28,7 @@ var MAGI = {};
     {name: 'foster_care_age_left', json: 'Age Left Foster Care'},
     {name: 'foster_care_state', json: 'Foster Care State'},
     {name: 'foster_care_had_medicaid', json: 'Had Medicaid During Foster Care'},
+    {name: 'categorically_needy', json: 'Categorically Needy'},
     {name: 'citizen', json: 'US Citizen Indicator', required: true},
     {name: 'citizen_five_year_bar', json: 'Five Year Bar Applies'},
     {name: 'citizen_five_year_bar_ment', json: 'Five Year Bar Met'},

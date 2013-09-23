@@ -32,6 +32,13 @@ module ApplicationVariables
       :default    => "N"
     },
     {
+      :name       => "Categorically Needy",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :applicant,
+      :xpath      => :unimplemented
+    },
+    {
       :name       => "Claimed as Dependent by Person Not on Application",
       :type       => :flag,
       :values     => %w(Y N),
@@ -219,14 +226,14 @@ module ApplicationVariables
       :required_if => "Five Year Bar Applies",
       :required_if_value => "Y"
     },
-    {
-      :name       => "Immigrant Status",
-      :type       => :string,
-      :group      => :applicant,
-      :xpath      => :unimplemented,
-      :required_if => "US Citizen Indicator",
-      :required_if_value => "N"
-    },
+    # {
+    #   :name       => "Immigrant Status",
+    #   :type       => :string,
+    #   :group      => :applicant,
+    #   :xpath      => :unimplemented,
+    #   :required_if => "US Citizen Indicator",
+    #   :required_if_value => "N"
+    # },
     {
       :name       => "Lawful Presence Attested",
       :type       => :flag,
@@ -317,7 +324,6 @@ module ApplicationVariables
     {name: "Pregnancy Category", eligibility: :MAGI},
     {name: "Child Category", eligibility: :MAGI},
     {name: "Adult Group Category", eligibility: :MAGI},
-    {name: "Adult Group XX Category", eligibility: :MAGI},
     {name: "Optional Targeted Low Income Child", eligibility: :MAGI},
     {name: "CHIP Targeted Low Income Child", eligibility: :CHIP},
     {name: "Unborn Child"},
@@ -353,8 +359,8 @@ module ApplicationVariables
     {name: "Refugee Medical Assistance"}
   ].freeze
 
-  INCOME_INPUTS = [
-    {
+  INCOME_INPUTS = {
+    :tax_return => {
       :primary_income => "AGI",
       :other_income => [ 
         "Deductible Part of Self-Employment Tax",
@@ -365,15 +371,18 @@ module ApplicationVariables
         "Other MAGI-Eligible Income"
       ],
       :deductions => [
-        "Social Security Benefits Taxable Amount"
+        "Social Security Benefits Taxable Amount",
+        "Lump Sum Payments",
+        "Educational Scholarships, Fellowship Grants, and Awards",
+        "AIAN Income"
       ]
     },
-    {
-      :primary_income => "MAGI",
-      :other_income => [],
-      :deductions => []
-    },
-    {
+    # {
+    #   :primary_income => "MAGI",
+    #   :other_income => [],
+    #   :deductions => []
+    # },
+    :personal => {
       :primary_income => "Wages, Salaries, Tips",
       :other_income => [
         "Taxable Interest",
@@ -390,7 +399,7 @@ module ApplicationVariables
         "MAGI Deductions"
       ]
     }
-  ].freeze
+  }.freeze
 
   # INCOME_INPUTS = {
   #   :tax_return => {
