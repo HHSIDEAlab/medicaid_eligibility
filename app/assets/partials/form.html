@@ -203,7 +203,11 @@
       <input type="checkbox" checker ng-model="applicant.citizen" id="applicant_{{ $index }}_citizen" name="applicant_{{ $index }}_citizen">
       <div class="form-row-expandable-fields2" ng-show="!applicant.citizen">
         <div class="form-half-field">
-          <label for="applicant_{{ $index }}_citizen_lawful">Lawful resident</label>
+          <label for="applicant_{{ $index }}_citizen_legal_permanent_resident">Legal Permanent Resident</label>
+          <input type="checkbox" checker ng-model="applicant.nonCitizen.legalPermanentResident" id="applicant_{{ $index }}_citizen_legal_permanent_resident" name="applicant_{{ $index }}_citizen_legal_permanent_resident">
+        </div>
+        <div class="form-half-field">
+          <label for="applicant_{{ $index }}_citizen_lawful">Lawfully present in the US</label>
           <input type="checkbox" checker ng-model="applicant.nonCitizen.lawful" id="applicant_{{ $index }}_citizen_lawful" name="applicant_{{ $index }}_citizen_lawful">
         </div>
         <div class="form-half-field">

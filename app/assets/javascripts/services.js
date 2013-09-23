@@ -206,6 +206,7 @@ angular.module('MAGI.services',[]).
 		]
 
 		Applicant.prototype.nonCitizenFields = [
+      {app: 'legalPermanentResident', api: 'Legal Permanent Resident', type: 'checkbox'},
 			{app: 'lawful', api: 'Lawful Presence Attested', type: 'checkbox'},
 			{app: 'fiveYearBar', api: 'Five Year Bar Applies', type: 'checkbox'},
 			{app: 'fortyQuarters', api: 'Applicant Has 40 Title II Work Quarters', type: 'checkbox'},
