@@ -12,6 +12,7 @@ module ApplicationProcessor
 
   def process_rules!
     rulesets = [
+      MAGI::Residency,
       MAGI::ParentCaretakerRelative,
       MAGI::ParentCaretakerRelativeSpouse,
       MAGI::Pregnant,

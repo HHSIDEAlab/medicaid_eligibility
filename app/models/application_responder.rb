@@ -51,6 +51,13 @@ module ApplicationResponder
           app_json["Determinations"][det[:name]] = det_json
         end
 
+        det_json = {}
+        det_json["Indicator"] = app.outputs["Medicaid Residency Indicator"]
+        if app.outputs["Medicaid Residency Indicator"] == 'N'
+          det_json["Ineligibility Code"] = app.outputs["Medicaid Residency Ineligibility Reason"]
+        end
+        app_json["Determinations"]["Residency"] = det_json
+
         app_json["Other Outputs"] = {}
         app_json["Other Outputs"]["Qualified Children List"] = []
         for qual_child in app.outputs["Qualified Children List"]
