@@ -83,6 +83,16 @@
       </div>
     </div>
     <div class="form-half-field">
+      <label for="applicant_{{ $index }}_claimed_by_non_applicant">Claimed as a dependent by someone not on this application</label>
+      <input type="checkbox" checker id="applicant_{{ $index }}_claimed_by_non_applicant" name="applicant_{{ $index }}_claimed_by_non_applicant" ng-model="applicant.claimedByNonApplicant">
+      <div class="form-row-expandable-fields2" ng-show="applicant.claimedByNonApplicant">
+        <div class="form-row">
+          <label for="applicant_{{ $index }}_claimer_is_out_of_state">Claimer lives out of state</label>
+          <input type="checkbox" checker id="applicant_{{ $index }}_claimer_is_out_of_state" name="applicant_{{ $index }}_claimer_is_out_of_state" ng-model="applicant.residency.claimerIsOutOfState">
+        </div>
+      </div>
+    </div>
+    <div class="form-half-field">
       <label for="applicant_{{ $index }}_long_term_care">In long-term care</label>
       <input type="checkbox" checker id="applicant_{{ $index }}_long_term_care" name="applicant_{{ $index }}_long_term_care" ng-model="applicant.longTermCare">
     </div>
