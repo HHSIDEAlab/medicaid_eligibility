@@ -150,9 +150,9 @@ module MAGI
         if v("Five Year Bar Applies") == 'N' 
           determination_na "Five Year Bar"
 
-          if v("Immigrant Status") == "12"
-            determination_na "Title II Work Quarters Met"
-          end
+          # if v("Immigrant Status") == "12"
+          #   determination_na "Title II Work Quarters Met"
+          # end
         elsif v("Veteran Status") == 'Y'
           determination_na "Five Year Bar"
           determination_na "Title II Work Quarters Met"
@@ -169,7 +169,7 @@ module MAGI
 
       # Title II Work Quarters logic
       unless o["Applicant Title II Work Quarters Met Indicator"] == 'X'
-        if c("Option Require Work Quarters") == 'N' || v("Immigrant Status") != '12'
+        if c("Option Require Work Quarters") == 'N' #|| v("Immigrant Status") != '12'
           determination_na "Title II Work Quarters Met"
         elsif v("Applicant Has 40 Title II Work Quarters") == 'Y'
           determination_y "Title II Work Quarters Met"

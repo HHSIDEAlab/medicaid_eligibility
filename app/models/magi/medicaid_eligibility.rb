@@ -9,6 +9,7 @@ module MAGI
 
     input "Applicant Medicaid Prelim Indicator", "From Determine Preliminary Medicaid & CHIP Eligibility Rule", "Char(1)", %w(Y N)
     input "Applicant Dependent Child Covered Indicator", "From Dependent Child Covered Rule", "Char(1)", %w(Y N)
+    input "Categorically Needy", "From application", "Char(1)", %w(Y N)
     input "Medicaid Residency Indicator", "From Residency Logic", "Char(1)", %w(Y N)
     input "Applicant Medicaid Citizen or Immigrant Indicator", "From Immigration Status logic", "Char(1)", %w(Y N)
     input "Applicant Income Medicaid Eligible Indicator", "From Verify Household Income Rule", "Char(1)", %w(Y N)
@@ -18,7 +19,12 @@ module MAGI
     output "APTC Referral Indicator", "Char(1)", %w(Y N)
 
     rule "Determine final Medicaid eligibility" do
-      if v("Applicant Medicaid Prelim Indicator") == 'Y' && v("Applicant Dependent Child Covered Indicator") == 'N'
+      if v("Categorically Needy") == 'Y'
+        determination_y "Medicaid"
+
+        o["Category Used to Calculate Income"] = "Categorically Needy"
+        o["APTC Referral Indicator"] = 'N'
+      elsif v("Applicant Medicaid Prelim Indicator") == 'Y' && v("Applicant Dependent Child Covered Indicator") == 'N'
         o["Applicant Medicaid Indicator"] = 'N'
         o["Medicaid Determination Date"] = current_date
         o["Medicaid Ineligibility Reason"] = 128

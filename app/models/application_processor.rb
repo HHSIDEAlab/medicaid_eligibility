@@ -3,8 +3,8 @@ module ApplicationProcessor
 
   def compute_values!
     # relationship validator
-    validate_tax_returns
     compute_relationships!
+    validate_tax_returns
     build_medicaid_households!
     calculate_household_size!
     calculate_household_income!
@@ -71,6 +71,7 @@ module ApplicationProcessor
       "Person List" => @people,
       "Applicant Relationships" => applicant.relationships,
       "Medicaid Household" => @medicaid_households.find{|mh| mh.people.include?(applicant)},
+      "Calculated Income" => @medicaid_households.find{|mh| mh.people.include?(applicant)}.income,
       "Physical Household" => @physical_households.find{|hh| hh.people.include?(applicant)},
       "Tax Returns" => @tax_returns
     }).slice(*(ruleset.class.inputs.keys))
@@ -85,9 +86,6 @@ module ApplicationProcessor
       end
       if @tax_returns.select{|tr| tr.dependents.include?(person)}.count > 1
         raise "Invalid tax returns: #{person.person_id} is a dependent on two returns"
-      end
-      if @tax_returns.any?{|tr| tr.filers.include?(person) && tr.filers.count == 2} && @tax_returns.any?{|tr| tr.dependents.include?(person)}
-        raise "Invalid tax returns: #{person.person_id} is filing jointly and also claimed as a dependent"
       end
     end
     if @tax_returns.any?{|tr| tr.filers.count > 2}
@@ -200,6 +198,23 @@ module ApplicationProcessor
   end
 
   def calculate_household_income!
-
+    for household in @medicaid_households
+      non_tax_return_people = []
+      tax_returns = []
+      for person in household.income_people
+        tax_return = @tax_returns.find{|tr| tr.filers.include?(person)}
+        if tax_return && tax_return.income
+          tax_returns << tax_return
+        elsif person.income
+          non_tax_return_people << person
+        end
+      end
+      incomes = (tax_returns.uniq + non_tax_return_people).map{|obj| 
+        obj.income[:primary_income] + 
+        obj.income[:other_income].inject(0){|sum, (name, amt)| sum + amt} - 
+        obj.income[:deductions].inject(0){|sum, (name, amt)| sum + amt}
+      }
+      household.income = incomes.sum
+    end
   end
 end

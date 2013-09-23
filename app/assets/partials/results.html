@@ -1,0 +1,42 @@
+<div class="household" ng-repeat="household in households">
+  <h2>Household Magi: {{household.MAGI}}</h2>
+  <div class="person" ng-repeat="applicant in household.Applicants">
+  <div class="head">
+    <h3>{{ applicant["Person ID"] }}</h3>
+      <eligibility data-value='{{applicant["Medicaid Eligible"]}}'></eligibility>
+      <span class="threshold">Eligibility Threshold: {{ applicant["Category Threshold"] }}</span>  
+      <span class="category">{{applicant["Category"] }}</span>
+  </div>
+  <div class="details">
+    <h4>DETERMINATIONS</h4>
+    <div class="determinations">
+      <h5>Yes</h5>
+      <ul>
+        <li ng-repeat="determination in applicant.cleanDets | filter:{ indicator: 'Y'}">{{determination.item}}</li>
+      </ul>
+    </div>
+    <div class="determinations">
+      <h5>No</h5>
+      <table>
+        <tr ng-repeat="determination in applicant.cleanDets | filter:{ indicator: 'N'}">
+          <td class="item">
+            {{determination.item}}
+          </td>
+          <td class="code">
+            {{determination.code}}
+          </td>
+        </tr>
+      </table>
+      </div>
+      <div class="determinations">
+        <h5>Not Applicable</h5>
+        <ul>
+          <li ng-repeat="determination in applicant.cleanDets | filter:{ indicator: 'X'}">{{determination.item}}</li>
+        </ul>
+      </div>
+      <div style="clear: both;"></div>
+    </div>
+  </div>
+</div>
+<button ng-click="returnToForm()" type="submit">Return to Application</button>
+<button type="submit" ng-click="exportApplication()">Export Application</button>

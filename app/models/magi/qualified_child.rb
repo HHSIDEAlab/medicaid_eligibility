@@ -46,6 +46,23 @@ module MAGI
       end
     end
 
+    calculated "Valid Relationships" do
+      standard_relationships = [:parent, :sibling, :stepparent, :uncle_aunt, :grandparent, :cousin, :sibling_in_law]
+      relative_relationships = [:parent, :sibling, :stepparent, :uncle_aunt, :grandparent, :cousin, :sibling_in_law, :former_spouse, :parent_in_law]
+
+      if c("Option Caretaker Relative Relationship") == '00'
+        standard_relationships
+      elsif c("Option Caretaker Relative Relationship") == '01'
+        relative_relationships
+      elsif c("Option Caretaker Relative Relationship") == '02'
+        standard_relationships << :parents_domestic_partner
+      elsif c("Option Caretaker Relative Relationship") == '03'
+        relative_relationships << :parents_domestic_partner
+      elsif c("Option Caretaker Relative Relationship") == '04'
+        ApplicationVariables::RELATIONSHIP_CODES.values
+      end
+    end
+
     rule "Dependent Child Age Logic – Child under dependent age" do
       if v("Child Age") < c("Dependent Age Threshold")
         o["Child of Caretaker Dependent Age Indicator"] = 'Y' 
@@ -94,64 +111,26 @@ module MAGI
       end
     end
 
-    rule "Caretaker Relationship – Caretaker meets standard definition" do
-      if c("Option Caretaker Relative Relationship") == "00" && [:parent, :sibling, :stepparent, :uncle_aunt, :grandparent, :cousin, :sibling_in_law].include?(v("Relationship Type"))
-        o["Child of Caretaker Relationship Indicator"] = 'Y'
-        o["Child of Caretaker Relationship Determination Date"] = current_date
-        o["Child of Caretaker Relationship Ineligibility Reason"] = 999
-      end
-    end
-    
-    rule "Caretaker Relationship – Caretaker does not meet standard definition" do
-      if c("Option Caretaker Relative Relationship") == "00" && !([:parent, :sibling, :stepparent, :uncle_aunt, :grandparent, :cousin, :sibling_in_law].include?(v("Relationship Type")))
+    rule "Determine whether caretaker meets relationship requirements" do
+      if c("Option Caretaker Relative Relationship") == "04"
+        if v("Caretaker Age") >= c("Child Age Threshold")
+          determination_y "Child of Caretaker Relationship"
+        else
+          o["Child of Caretaker Relationship Indicator"] = 'N'
+          o["Child of Caretaker Relationship Determination Date"] = current_date
+          o["Child of Caretaker Relationship Ineligibility Reason"] = 130
+        end
+      elsif v("Valid Relationships").include?(v("Relationship Type"))
+        determination_y "Child of Caretaker Relationship"
+      elsif c("Option Caretaker Relative Relationship") == "00"
         o["Child of Caretaker Relationship Indicator"] = 'N'
         o["Child of Caretaker Relationship Determination Date"] = current_date
         o["Child of Caretaker Relationship Ineligibility Reason"] = 132
-      end
-    end
-    
-    rule "Caretaker Relationship – Caretaker meets any relative definition" do
-      if c("Option Caretaker Relative Relationship") == "01" && [:parent, :sibling, :stepparent, :uncle_aunt, :grandparent, :cousin, :sibling_in_law, :former_spouse, :parent_in_law].include?(v("Relationship Type"))
-        o["Child of Caretaker Relationship Indicator"] = 'Y'
-        o["Child of Caretaker Relationship Determination Date"] = current_date
-        o["Child of Caretaker Relationship Ineligibility Reason"] = 999
-      end
-    end
-
-    rule "Caretaker Relationship – Caretaker does not meet any relative definition" do
-      if c("Option Caretaker Relative Relationship") == "01" && !([:parent, :sibling, :stepparent, :uncle_aunt, :grandparent, :cousin, :sibling_in_law, :former_spouse, :parent_in_law].include?(v("Relationship Type")))
+      elsif c("Option Caretaker Relative Relationship") == "01"
         o["Child of Caretaker Relationship Indicator"] = 'N'
         o["Child of Caretaker Relationship Determination Date"] = current_date
         o["Child of Caretaker Relationship Ineligibility Reason"] = 131
-      end
-    end
-
-    rule "Caretaker Relationship – Any Adult – Caretaker is an adult" do
-      if c("Option Caretaker Relative Relationship") == "04" && v("Caretaker Age") >= c("Child Age Threshold")
-        o["Child of Caretaker Relationship Indicator"] = 'Y'
-        o["Child of Caretaker Relationship Determination Date"] = current_date
-        o["Child of Caretaker Relationship Ineligibility Reason"] = 999
-      end
-    end
-
-    rule "Caretaker Relationship – Any Adult – Caretaker is not an Adult" do
-      if c("Option Caretaker Relative Relationship") == "04" && v("Caretaker Age") < c("Child Age Threshold")
-        o["Child of Caretaker Relationship Indicator"] = 'N'
-        o["Child of Caretaker Relationship Determination Date"] = current_date
-        o["Child of Caretaker Relationship Ineligibility Reason"] = 130
-      end
-    end
-    
-    rule "Caretaker Relationship – Domestic Partner – Individual is domestic partner" do
-      if c("Option Caretaker Relative Relationship") == "02" && v("Relationship Type") == :parents_domestic_partner
-        o["Child of Caretaker Relationship Indicator"] = 'Y'
-        o["Child of Caretaker Relationship Determination Date"] = current_date
-        o["Child of Caretaker Relationship Ineligibility Reason"] = 999
-      end
-    end
-
-    rule "Caretaker Relationship – Domestic Partner Individual is not the domestic partner" do
-      if c("Option Caretaker Relative Relationship") == "02" && v("Relationship Type") != :parents_domestic_partner
+      else
         o["Child of Caretaker Relationship Indicator"] = 'N'
         o["Child of Caretaker Relationship Determination Date"] = current_date
         o["Child of Caretaker Relationship Ineligibility Reason"] = 389

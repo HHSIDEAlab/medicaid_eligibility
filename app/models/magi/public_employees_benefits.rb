@@ -32,7 +32,7 @@ module MAGI
       elsif c("CHIP for State Health Benefits") == "02"
         determination_y "State Health Benefits CHIP"
       elsif c("CHIP for State Health Benefits") == "03"
-        if v("Calculated Income") < v("FPL") * c("State Health Benefits FPL Standard")
+        if v("Calculated Income") < v("FPL") * c("State Health Benefits FPL Standard") * 0.01
           determination_y "State Health Benefits CHIP"
         else
           o["Applicant State Health Benefits CHIP Indicator"] = 'N'
