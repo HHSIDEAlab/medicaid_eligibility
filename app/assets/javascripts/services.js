@@ -327,7 +327,7 @@ angular.module('MAGI.services',[]).
         me.residency[field.app] = deserializeField(field, person);
       })
 
-      me.claimedFields = {};
+      me.claimed = {};
 
       angular.forEach(this.claimedFields, function(field){
         me.claimed[field.app] = deserializeField(field, person);
