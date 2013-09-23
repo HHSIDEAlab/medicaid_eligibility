@@ -2,6 +2,7 @@
 
 angular.module('MAGI.controllers', []).
 	controller('FormController',['$scope','$location','filterFilter', 'Application','relationshipCodes','states', function($scope,$location,filterFilter, Application, relationshipCodes,states){		
+                Application.resetResults();
                 $scope.applicants = Application.applicants;
                 $scope.taxReturns = Application.taxReturns;
                 $scope.application = Application;
@@ -10,6 +11,10 @@ angular.module('MAGI.controllers', []).
                 $scope.removeApplicant = Application.removeApplicant;
                 $scope.removeTaxReturn = Application.removeTaxReturn;
                 $scope.relationshipCodes = relationshipCodes;
+
+                $scope.exportApplication = function(){
+                         $location.path("/exportimport");
+                }
 
                 $scope.checkEligibility = function(){
                         console.log(Application.serialize());
@@ -74,6 +79,30 @@ angular.module('MAGI.controllers', []).
                 $scope.households = Application.determination['Medicaid Households'];
                 $scope.expandByDefault = function(){
                         return $scope.households.length == 1 && $scope.households.Applicants.length == 1;
+                }
+
+                $scope.exportApplication = function(){
+                         $location.path("/exportimport");
+                }
+
+
+                $scope.returnToForm = function(){
+                        $location.path("/application");
+                }
+        }]).
+        controller('ExportImportController',['$scope','$location','Application', function($scope,$location,Application){
+                $scope.applicationJson = angular.toJson(Application.serialize());
+                $scope.resultsJson = angular.toJson(Application.determination);
+
+                $scope.showResults = Object.keys(Application.determination).length > 0;
+
+                $scope.importApplication = function(){
+                        // Note - may want to wrap this in a try/catch loop of some sort
+                        var application = angular.fromJson($scope.applicationJson);
+                        console.log(application);
+                        Application.deserialize(application);
+                        // Redirect to application
+                        $location.path("/application");
                 }
 
                 $scope.returnToForm = function(){

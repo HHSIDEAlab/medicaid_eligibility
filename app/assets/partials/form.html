@@ -8,7 +8,7 @@
         </select>
       <div class="form-row">
         <label for="id">Application Name or ID</label>
-        <input ng-model="id" type="text" name="id" required>
+        <input ng-model="application.id" type="text" name="id" required>
       </div>
     </div>
   </div>
@@ -266,5 +266,6 @@
     <button ng-click="addTaxReturn()" type="button" class="add-applicant">Add Another Tax Return</button>
   
   <button type="submit" ng-click="checkEligibility()">Check Eligibility</button>
+  <button type="submit" ng-click="exportApplication()">Export Application</button>
 
 </form>
