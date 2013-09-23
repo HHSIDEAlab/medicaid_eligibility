@@ -18,7 +18,7 @@ body, button {
 
 body {
   background: #e1e3e4;
-  margin: 160px auto;
+  margin: 30px auto;
   width: 740px;
 }
 
@@ -554,7 +554,7 @@ div.checker input {
   transform: scaleY(1);
 }
 
-fieldset h3{
+fieldset h3, .export h3{
   color: #61708c;
   font-weight: bold;
   text-transform: uppercase;
@@ -562,5 +562,23 @@ fieldset h3{
   text-align: right;
   width: 156px;
   padding: 0 20px;
+}
+
+.export {
+  background-color: #fff;
+  background: solid;
+  padding: 0px;
+  margin: 10px 0;
+  border-top: 1px solid #999;
+}
+
+.export textarea {
+  margin: 10px 20px;
+  width: 700px;
+  height: 300px;
+}
+
+.export h2 {
+  margin: 30px 20px 5px;
 }
 
