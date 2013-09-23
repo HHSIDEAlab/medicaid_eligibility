@@ -74,11 +74,11 @@
       <div class="form-row-expandable-fields2" ng-show="!applicant.livesInState">
         <div class="form-row">
           <label for="applicant_{{ $index }}_temporarily_out_of_state">Temporarily out of state</label>
-          <input type="checkbox" checker id="applicant_{{ $index }}_temporarily_out_of_state" name="applicant_{{ $index }}_temporarily_out_of_state" ng-model="applicant.residency.temporarilyOutOfState">
+          <input type="checkbox" checker id="applicant_{{ $index }}_temporarily_out_of_state" name="applicant_{{ $index }}_temporarily_out_of_state" ng-model="applicant.temporarilyOutOfState">
         </div>
         <div class="form-row">
           <label for="applicant_{{ $index }}_no_fixed_address">No fixed address</label>
-          <input type="checkbox" checker id="applicant_{{ $index }}_no_fixed_address" name="applicant_{{ $index }}_no_fixed_address" ng-model="applicant.residency.noFixedAddress">
+          <input type="checkbox" checker id="applicant_{{ $index }}_no_fixed_address" name="applicant_{{ $index }}_no_fixed_address" ng-model="applicant.noFixedAddress">
         </div>
       </div>
     </div>
@@ -88,7 +88,7 @@
       <div class="form-row-expandable-fields2" ng-show="applicant.claimedByNonApplicant">
         <div class="form-row">
           <label for="applicant_{{ $index }}_claimer_is_out_of_state">Claimer lives out of state</label>
-          <input type="checkbox" checker id="applicant_{{ $index }}_claimer_is_out_of_state" name="applicant_{{ $index }}_claimer_is_out_of_state" ng-model="applicant.claimed.claimerIsOutOfState">
+          <input type="checkbox" checker id="applicant_{{ $index }}_claimer_is_out_of_state" name="applicant_{{ $index }}_claimer_is_out_of_state" ng-model="applicant.claimerIsOutOfState">
         </div>
       </div>
     </div>
