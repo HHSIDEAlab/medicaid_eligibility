@@ -8,5 +8,7 @@ angular.module('MAGI',['ui.mask','ngRoute','ngAnimate','MAGI.filters','MAGI.serv
 								  controller: 'FormController'}).
 			when('/results', {templateUrl: '/assets/results.html',
 							  controller:  'ResultsController'}).
+			when('/exportimport', {templateUrl: '/assets/exportimport.html',
+								   controller: 'ExportImportController'}).
 			otherwise({redirectTo: '/application'});
 	}])

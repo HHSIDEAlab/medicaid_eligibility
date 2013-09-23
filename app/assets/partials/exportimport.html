@@ -1,0 +1,11 @@
+<div class="export">
+	<h1>Import/Export Application</h1>
+	<h2>Application</h2>
+	<textarea ng-model="applicationJson">
+	</textarea>
+	<h2 ng-show="showResults">Results</h2>
+	<textarea ng-model="resultsJson" ng-show="showResults">
+	</textarea>
+</div>
+<button type="submit" ng-click="importApplication()">Import Application</button>
+<button ng-click="returnToForm()" type="submit">Return to Application</button>
