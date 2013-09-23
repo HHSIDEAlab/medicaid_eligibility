@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('MAGI.controllers', []).
-	controller('FormController',['$scope','$location','filterFilter', 'Application','relationshipCodes','states', function($scope,$location,filterFilter, Application, relationshipCodes,states){		
+	controller('FormController',['$scope','$location','$anchorScroll','$timeout','filterFilter', 'Application','relationshipCodes','states', function($scope,$location,$anchorScroll,$timeout,filterFilter, Application, relationshipCodes,states){		
                 Application.resetResults();
+                $scope.submitted = false;
                 $scope.applicants = Application.applicants;
                 $scope.taxReturns = Application.taxReturns;
                 $scope.application = Application;
@@ -17,10 +18,19 @@ angular.module('MAGI.controllers', []).
                 }
 
                 $scope.checkEligibility = function(){
-                        console.log(Application.serialize());
-                        Application.checkEligibility().then(function(resp){
-                                $location.path("/results");
-                        });
+                                                console.log(Application.serialize());
+
+                        if($scope.applicationForm.$valid){
+                                Application.checkEligibility().then(function(resp){
+                                        $location.path("/results");
+                                });
+                        } else {
+                                $scope.submitted = true;   
+                                $timeout(
+                                        function(){
+                                            angular.element(document.querySelector("input.ng-invalid"))[0].focus( );  
+                                });                           
+                        }
                 }
 
 
