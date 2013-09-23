@@ -9,7 +9,7 @@ module MAGI
 
     input "Medicaid Residency Indicator", "From Residency Logic", "Char(1)", %w(Y N)
     input "Applicant Medicaid Citizen Or Immigrant Indicator", "From Immigration Status rule in MAGI Part 2", "Char(1)", %w(Y N)
-    input "Applicant Income Medicaid Eligible Indicator", "From Verify Household Income Rule", "Char(1)", %w(Y N)
+    input "Applicant Income CHIP Eligible Indicator", "From Verify Household Income Rule", "Char(1)", %w(Y N)
     input "Has Insurance", "Application", "Char(1)", %w(Y N)
 
     # Outputs 
@@ -18,7 +18,7 @@ module MAGI
     code      "CHIP Prelim Ineligibility Reason", %w(999 107 302)
 
     rule "Applicant meets all CHIP eligibility criteria" do
-      if v("Medicaid Residency Indicator") == 'Y' && v("Applicant Medicaid Citizen Or Immigrant Indicator") == 'Y' && v("Applicant Income Medicaid Eligible Indicator") == 'Y' && v("Has Insurance") == 'N'
+      if v("Medicaid Residency Indicator") == 'Y' && v("Applicant Medicaid Citizen Or Immigrant Indicator") == 'Y' && v("Applicant Income CHIP Eligible Indicator") == 'Y' && v("Has Insurance") == 'N'
         determination_y "CHIP Prelim"
       else
         o["Applicant CHIP Prelim Indicator"] = 'N'

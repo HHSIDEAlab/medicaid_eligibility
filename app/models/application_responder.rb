@@ -24,7 +24,7 @@ module ApplicationResponder
           if app.outputs["Applicant Medicaid Citizen Or Immigrant Indicator"] == 'N'
             ineligibility_reason += "\nApplicant did not meet citizenship/immigration requirements"
           end
-          if app.outputs["Category Used to Calculate Income"] == "None"
+          if app.outputs["Category Used to Calculate Medicaid Income"] == "None"
             ineligibility_reason += "\nApplicant did not meet the requirements for any eligibility category"
           elsif app.outputs["Applicant Income Medicaid Eligible Indicator"] == 'N'
             ineligibility_reason += "\nApplicant did not meet the income requirements for any category qualified for"            
@@ -33,8 +33,12 @@ module ApplicationResponder
           app_json["Non-MAGI Referral"] = app.outputs["Applicant Medicaid Non-MAGI Referral Indicator"]
         end
         
-        app_json["Category"] = app.outputs["Category Used to Calculate Income"]
-        app_json["Category Threshold"] = app.outputs["FPL * Percentage"].to_i
+        app_json["Category"] = app.outputs["Category Used to Calculate Medicaid Income"]
+        unless ["None", "Categorically Needy"].include?(app.outputs["Category Used to Calculate Income"])
+          app_json["Category Threshold"] = app.outputs["FPL * Percentage Medicaid"].to_i
+        end
+        app_json["CHIP Category"] = app.outputs["Category Used to Calculate CHIP Income"]
+        app_json["CHIP Category Threshold"] = app.outputs["FPL * Percentage CHIP"].to_i
 
         app_json["Determinations"] = {}
 
