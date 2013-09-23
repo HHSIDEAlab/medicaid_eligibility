@@ -212,14 +212,14 @@ module ApplicationVariables
       :required_if => "Five Year Bar Applies",
       :required_if_value => "Y"
     },
-    {
-      :name       => "Immigrant Status",
-      :type       => :string,
-      :group      => :applicant,
-      :xpath      => :unimplemented,
-      :required_if => "US Citizen Indicator",
-      :required_if_value => "N"
-    },
+    # {
+    #   :name       => "Immigrant Status",
+    #   :type       => :string,
+    #   :group      => :applicant,
+    #   :xpath      => :unimplemented,
+    #   :required_if => "US Citizen Indicator",
+    #   :required_if_value => "N"
+    # },
     {
       :name       => "Lawful Presence Attested",
       :type       => :flag,
