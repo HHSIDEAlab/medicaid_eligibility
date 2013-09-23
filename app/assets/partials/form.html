@@ -69,8 +69,18 @@
       <input type="checkbox" checker id="applicant_{{ $index }}_incarcerated" name="applicant_{{ $index }}_incarcerated" ng-model="applicant.incarcerated">
     </div>
     <div class="form-half-field">
-      <label for="applicant_{{ $index }}_state_residency">Meets state residency status requirements</label>
-      <input type="checkbox" checker id="applicant_{{ $index }}_state_residency" name="applicant_{{ $index }}_state_residency" ng-model="applicant.stateResidency">
+      <label for="applicant_{{ $index }}_lives_in_state">Lives in state</label>
+      <input type="checkbox" checker id="applicant_{{ $index }}_lives_in_state" name="applicant_{{ $index }}_lives_in_state" ng-model="applicant.livesInState">
+      <div class="form-row-expandable-fields2" ng-show="!applicant.livesInState">
+        <div class="form-row">
+          <label for="applicant_{{ $index }}_temporarily_out_of_state">Temporarily out of state</label>
+          <input type="checkbox" checker id="applicant_{{ $index }}_temporarily_out_of_state" name="applicant_{{ $index }}_temporarily_out_of_state" ng-model="applicant.residency.temporarilyOutOfState">
+        </div>
+        <div class="form-row">
+          <label for="applicant_{{ $index }}_no_fixed_address">No fixed address</label>
+          <input type="checkbox" checker id="applicant_{{ $index }}_no_fixed_address" name="applicant_{{ $index }}_no_fixed_address" ng-model="applicant.residency.noFixedAddress">
+        </div>
+      </div>
     </div>
     <div class="form-half-field">
       <label for="applicant_{{ $index }}_long_term_care">In long-term care</label>

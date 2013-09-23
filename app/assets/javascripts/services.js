@@ -14,10 +14,11 @@ angular.module('MAGI.services',[]).
 
 		function Applicant(){
 			this.citizen = true;
-			this.stateResidency = true;
+			this.livesInState = true;
 			this.isApplicant = true;
 			this.incomeTaxes = new IncomeTaxes();
 			this.relationships = [];
+      this.residency = {};
 			this.nonCitizen = {};
 			this.fosterCare = {};
 		}
@@ -166,7 +167,7 @@ angular.module('MAGI.services',[]).
 			{app: 'student', api: 'Student Indicator', type: 'checkbox'},
 			{app: 'eligible', api: 'Medicare Entitlement Indicator', type: 'checkbox'},
 			{app: 'incarcerated', api: 'Incarceration Status', type: 'checkbox'},
-			{app: 'stateResidency', api: 'Medicaid Residency Indicator', type: 'checkbox'},
+			{app: 'livesInState', api: 'Lives In State', type: 'checkbox'},
 			{app: 'longTermCare', api: 'Applicant Attest Long Term Care', type: 'checkbox'},
 			{app: 'hasInsurance', api: 'Has Insurance', type: 'checkbox'},
 			{app: 'stateEmployeeHealthBenefits', api: 'State Health Benefits Through Public Employee', type: 'checkbox'},
@@ -182,6 +183,11 @@ angular.module('MAGI.services',[]).
 			{app: 'categoricallyNeedy', api: 'Categorically Needy', type: 'checkbox'},
 	
 		];
+
+    Applicant.prototype.residencyFields = [
+      {app: 'temporarilyOutOfState', api: 'Temporarily Out of State', type: 'checkbox'},
+      {app: 'noFixedAddress', api: 'No Fixed Address', type: 'checkbox'}
+    ]
 
 		Applicant.prototype.priorInsuranceFields = [
 				{app: 'priorInsuranceEndDate', api: 'Prior Insurance End Date', type: 'date'}
@@ -243,6 +249,12 @@ angular.module('MAGI.services',[]).
 				return serializeField(field,me);
 			});
 
+      if(!(this.livesInState)){
+        rv.push(_.map(this.residencyFields, function(field){
+            return serializeField(field,me);
+          }));
+      }
+
 			if(this.priorInsurance){
 				rv.push(_.map(this.priorInsuranceFields, function(field){
 						return serializeField(field,me);
@@ -288,6 +300,12 @@ angular.module('MAGI.services',[]).
 			angular.forEach(this.fields, function(field){
 				me[field.app] = deserializeField(field, person);
 			});
+
+      me.residency = {};
+
+      angular.forEach(this.residencyFields, function(field){
+        me.residency[field.app] = deserializeField(field, person);
+      })
 
 			angular.forEach(this.priorInsuranceFields, function(field){
 				me[field.app] = deserializeField(field, person);
