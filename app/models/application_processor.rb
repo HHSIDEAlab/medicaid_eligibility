@@ -3,8 +3,8 @@ module ApplicationProcessor
 
   def compute_values!
     # relationship validator
-    validate_tax_returns
     compute_relationships!
+    validate_tax_returns
     build_medicaid_households!
     calculate_household_size!
     calculate_household_income!
@@ -209,8 +209,6 @@ module ApplicationProcessor
           tax_returns << tax_return
         elsif person.income
           non_tax_return_people << person
-        else
-          raise "Missing income for person #{person.person_id}"
         end
       end
       incomes = (tax_returns.uniq + non_tax_return_people).map{|obj| 
