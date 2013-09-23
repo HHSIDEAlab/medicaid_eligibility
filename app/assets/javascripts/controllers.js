@@ -91,8 +91,8 @@ angular.module('MAGI.controllers', []).
                 }
         }]).
         controller('ExportImportController',['$scope','$location','Application', function($scope,$location,Application){
-                $scope.applicationJson = angular.toJson(Application.serialize());
-                $scope.resultsJson = angular.toJson(Application.determination);
+                $scope.applicationJson = angular.toJson(Application.serialize(), true);
+                $scope.resultsJson = angular.toJson(Application.determination, true);
 
                 $scope.showResults = Object.keys(Application.determination).length > 0;
 
