@@ -18,8 +18,6 @@ angular.module('MAGI.services',[]).
 			this.isApplicant = true;
 			this.incomeTaxes = new IncomeTaxes();
 			this.relationships = [];
-      this.residency = {};
-      this.claimed = {};
 			this.nonCitizen = {};
 			this.fosterCare = {
         state: {}
@@ -265,13 +263,13 @@ angular.module('MAGI.services',[]).
 
       if(!(this.livesInState)){
         rv = rv.concat(_.map(this.residencyFields, function(field){
-            return serializeField(field,me.residency);
+            return serializeField(field,me);
           }));
       }
 
       if(this.claimedByNonApplicant){
         rv = rv.concat(_.map(this.claimedFields, function(field){
-            return serializeField(field,me.claimed);
+            return serializeField(field,me);
           }));
       }
 
@@ -321,16 +319,12 @@ angular.module('MAGI.services',[]).
 				me[field.app] = deserializeField(field, person);
 			});
 
-      me.residency = {};
-
       angular.forEach(this.residencyFields, function(field){
-        me.residency[field.app] = deserializeField(field, person);
+        me[field.app] = deserializeField(field, person);
       })
 
-      me.claimed = {};
-
       angular.forEach(this.claimedFields, function(field){
-        me.claimed[field.app] = deserializeField(field, person);
+        me[field.app] = deserializeField(field, person);
       })
 
 			angular.forEach(this.priorInsuranceFields, function(field){
