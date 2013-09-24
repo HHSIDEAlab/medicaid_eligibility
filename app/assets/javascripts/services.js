@@ -15,6 +15,7 @@ angular.module('MAGI.services',[]).
 		}
 
 		function Applicant(){
+      this.hours = 0;
 			this.citizen = true;
 			this.livesInState = true;
 			this.isApplicant = true;
@@ -40,6 +41,7 @@ angular.module('MAGI.services',[]).
 		}
 
 		IncomeTaxes.prototype.fields = [
+        {app: 'monthly',            api:'Monthly Income'},
 		    {app: 'wages',              api:'Wages, Salaries, Tips'},
 		    {app: 'taxableInterest',    api: 'Taxable Interest'},
 		    {app: 'taxExemptInterest',  api:'Tax-Exempt Interest'},
@@ -176,6 +178,14 @@ angular.module('MAGI.services',[]).
                 this.addApplicant('Applicant 1');
             }
 		}
+
+    Applicant.prototype.updateMonthly = function(){
+      this.incomeTaxes.monthly = Math.floor(this.incomeTaxes.wages / 12);
+    }
+
+    Applicant.prototype.updateWages = function(){
+      this.incomeTaxes.wages = this.incomeTaxes.monthly * 12;
+    }
 
 		Relationship.prototype.getOpposite = function(){
 			return this.otherApplicant.getRelationship(this.applicant);

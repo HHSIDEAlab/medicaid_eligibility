@@ -218,49 +218,59 @@
       <input type="checkbox" checker id="applicant_{{ $index }}_income_taxes_required" name="applicant_income_taxes_required" ng-model="applicant.incomeTaxesRequired">
       <div class="form-row-expandable-fields2 cf" >
         <div class="form-half-field">
-          <label for="applicant_{{ $index }}_income_taxes_required_wages">Wages, salaries, tips</label>
-          <input type="number" id="applicant_{{ $index }}_income_taxes_required_wages" name="applicant_income_taxes_required_wages" class="long-number" ng-model="applicant.incomeTaxes.wages">
+          <label for="applicant_{{ $index }}_income_taxes_required_monthly">Monthly wages</label>
+          <input type="number" id="applicant_{{ $index }}_income_taxes_required_monthly" name="applicant_income_taxes_required_monthly" class="long-number" ng-model="applicant.incomeTaxes.monthly" ng-change="updateWages(applicant)">
         </div>
         <div class="form-half-field">
-          <label for="applicant_{{ $index }}_income_taxes_required_capital_gains">Capital gains or loss</label>
-          <input type="number" id="applicant_{{ $index }}_income_taxes_required_capital_gains" name="applicant_income_taxes_required_capital_gains" class="long-number" ng-model="applicant.incomeTaxes.capitalGains">
+          <label for="applicant_{{ $index }}_income_taxes_required_wages">Annual wages</label>
+          <input type="number" id="applicant_{{ $index }}_income_taxes_required_wages" name="applicant_income_taxes_required_wages" class="long-number" ng-model="applicant.incomeTaxes.wages" ng-change="updateMonthly(applicant)">
         </div>
-        <div class="form-half-field">
-          <label for="applicant_{{ $index }}_income_taxes_required_taxable_interest">Taxable interest</label>
-          <input type="number" id="applicant_{{ $index }}_income_taxes_required_taxable_interest" name="applicant_income_taxes_required_taxable_interest" class="long-number" ng-model="applicant.incomeTaxes.taxableInterest">
+
+        <div class="head" ng-click="showOtherIncome = !showOtherIncome"><h3>Other income and deductions</h3></div>
+        <div class="form-row-expandable-fields2 cf" ng-show="showOtherIncome">
+          <div class="form-half-field">
+            <label for="applicant_{{ $index }}_income_taxes_required_capital_gains">Capital gains or loss</label>
+            <input type="number" id="applicant_{{ $index }}_income_taxes_required_capital_gains" name="applicant_income_taxes_required_capital_gains" class="long-number" ng-model="applicant.incomeTaxes.capitalGains">
+          </div>
+          <div class="form-half-field">
+            <label for="applicant_{{ $index }}_income_taxes_required_taxable_interest">Taxable interest</label>
+            <input type="number" id="applicant_{{ $index }}_income_taxes_required_taxable_interest" name="applicant_income_taxes_required_taxable_interest" class="long-number" ng-model="applicant.incomeTaxes.taxableInterest">
+          </div>
+          <div class="form-half-field">
+            <label for="applicant_{{ $index }}_income_taxes_required_pensions">Pensions and annuities taxable amount</label>
+            <input type="number" id="applicant_{{ $index }}_income_taxes_required_pensions" name="applicant_income_taxes_required_pensions" class="long-number" ng-model="applicant.incomeTaxes.pensions">
+          </div>
+          <div class="form-half-field">
+            <label for="applicant_{{ $index }}_income_taxes_required_tax_exempt_interest">Tax-exempt interest</label>
+            <input type="number" id="applicant_{{ $index }}_income_taxes_required_tax_exempt_interest" name="applicant_income_taxes_required_tax_exempt_interest" class="long-number" ng-model="applicant.incomeTaxes.taxExemptInterest">
+          </div>
+          <div class="form-half-field">
+            <label for="applicant_{{ $index }}_income_taxes_required_farm_income">Farm income or loss</label>
+            <input type="number" id="applicant_{{ $index }}_income_taxes_required_farm_income" name="applicant_income_taxes_required_farm_income" class="long-number" ng-model="applicant.incomeTaxes.farmIncome">
+          </div>
+          <div class="form-half-field">
+            <label for="applicant_{{ $index }}_income_taxes_required_taxable_refunds">Taxable refunds, credits, or offsets of state and local income taxes</label>
+            <input type="number" id="applicant_{{ $index }}_income_taxes_required_taxable_refunds" name="applicant_income_taxes_required_taxable_refunds" class="long-number" ng-model="applicant.incomeTaxes.taxableRefunds">
+          </div>
+          <div class="form-half-field">
+            <label for="applicant_{{ $index }}_income_taxes_required_unemployment">Unemployment compensation</label>
+            <input type="number" id="applicant_{{ $index }}_income_taxes_required_unemployment" name="applicant_income_taxes_required_unemployment" class="long-number" ng-model="applicant.incomeTaxes.unemployment">
+          </div>
+          <div class="form-half-field clear">
+            <label for="applicant_{{ $index }}_income_taxes_required_alimony">Alimony</label>
+            <input type="number" id="applicant_{{ $index }}_income_taxes_required_alimony" name="applicant_income_taxes_required_alimony" class="long-number" ng-model="applicant.incomeTaxes.alimony">
+          </div>
+          <div class="form-half-field">
+            <label for="applicant_{{ $index }}_income_taxes_required_other">Other income</label>
+            <input type="number" id="applicant_{{ $index }}_income_taxes_required_other" name="applicant_income_taxes_required_other" class="long-number" ng-model="applicant.incomeTaxes.other">
+          </div>
+          <div class="form-half-field">
+            <label for="applicant_{{ $index }}_income_taxes_required_deductions">MAGI deductions</label>
+            <input type="number" id="applicant_{{ $index }}_income_taxes_required_deductions" name="applicant_income_taxes_required_deductions" class="long-number" ng-model="applicant.incomeTaxes.MAGIDeductions">
+          </div>
         </div>
-        <div class="form-half-field">
-          <label for="applicant_{{ $index }}_income_taxes_required_pensions">Pensions and annuities taxable amount</label>
-          <input type="number" id="applicant_{{ $index }}_income_taxes_required_pensions" name="applicant_income_taxes_required_pensions" class="long-number" ng-model="applicant.incomeTaxes.pensions">
-        </div>
-        <div class="form-half-field">
-          <label for="applicant_{{ $index }}_income_taxes_required_tax_exempt_interest">Tax-exempt interest</label>
-          <input type="number" id="applicant_{{ $index }}_income_taxes_required_tax_exempt_interest" name="applicant_income_taxes_required_tax_exempt_interest" class="long-number" ng-model="applicant.incomeTaxes.taxExemptInterest">
-        </div>
-        <div class="form-half-field">
-          <label for="applicant_{{ $index }}_income_taxes_required_farm_income">Farm income or loss</label>
-          <input type="number" id="applicant_{{ $index }}_income_taxes_required_farm_income" name="applicant_income_taxes_required_farm_income" class="long-number" ng-model="applicant.incomeTaxes.farmIncome">
-        </div>
-        <div class="form-half-field">
-          <label for="applicant_{{ $index }}_income_taxes_required_taxable_refunds">Taxable refunds, credits, or offsets of state and local income taxes</label>
-          <input type="number" id="applicant_{{ $index }}_income_taxes_required_taxable_refunds" name="applicant_income_taxes_required_taxable_refunds" class="long-number" ng-model="applicant.incomeTaxes.taxableRefunds">
-        </div>
-        <div class="form-half-field">
-          <label for="applicant_{{ $index }}_income_taxes_required_unemployment">Unemployment compensation</label>
-          <input type="number" id="applicant_{{ $index }}_income_taxes_required_unemployment" name="applicant_income_taxes_required_unemployment" class="long-number" ng-model="applicant.incomeTaxes.unemployment">
-        </div>
-        <div class="form-half-field clear">
-          <label for="applicant_{{ $index }}_income_taxes_required_alimony">Alimony</label>
-          <input type="number" id="applicant_{{ $index }}_income_taxes_required_alimony" name="applicant_income_taxes_required_alimony" class="long-number" ng-model="applicant.incomeTaxes.alimony">
-        </div>
-        <div class="form-half-field">
-          <label for="applicant_{{ $index }}_income_taxes_required_other">Other income</label>
-          <input type="number" id="applicant_{{ $index }}_income_taxes_required_other" name="applicant_income_taxes_required_other" class="long-number" ng-model="applicant.incomeTaxes.other">
-        </div>
-        <div class="form-half-field">
-          <label for="applicant_{{ $index }}_income_taxes_required_deductions">MAGI deductions</label>
-          <input type="number" id="applicant_{{ $index }}_income_taxes_required_deductions" name="applicant_income_taxes_required_deductions" class="long-number" ng-model="applicant.incomeTaxes.MAGIDeductions">
-        </div>
+
+
       </div>
 
     </div>
