@@ -140,8 +140,9 @@ module ApplicationProcessor
         med_household_members = dependent_tax_return.filers
       # In all other cases, the household is person's children who are minors and,
       # if person is a minor, person's siblings (435.603.f3)
-      elsif
+      else
         med_household_members = person.get_relationships(:child) + person.get_relationships(:stepchild)
+        med_household_members.select!{|member| is_minor?(member)}
         if is_minor?(person)
           med_household_members += person.get_relationships(:sibling).select{|sib| is_minor?(sib)}
         end
