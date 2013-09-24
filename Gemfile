@@ -16,6 +16,8 @@ gem 'nokogiri'
 
 gem "font-awesome-rails"
 
+gem "uglifier"
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
