@@ -2,94 +2,155 @@
 
 module MAGI
   class Income < Ruleset
-    categories = [
-      "Parent Caretaker Category",
-      "Pregnancy Category",
-      "Child Category",
-      "Adult Group Category",
-      "Adult Group XX Category",
-      "Optional Targeted Low Income Child",
-      "CHIP Targeted Low Income Child"
-    ]
-
     name        "Determine MAGI Eligibility"
     mandatory   "Mandatory"
     applies_to  "Medicaid and CHIP"
     
-    input "Applicant Parent Caretaker Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
-    input "Applicant Pregnancy Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
-    input "Applicant Child Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
     input "Applicant Adult Group Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
-    input "Applicant Adult Group XX Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N X)
+    input "Applicant Pregnancy Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
+    input "Applicant Parent Caretaker Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
+    input "Applicant Child Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
     input "Applicant Optional Targeted Low Income Child Indicator", "From MAGI Part I", "Char(1)", %w(Y N X)
     input "Applicant CHIP Targeted Low Income Child Indicator", "From MAGI Part I", "Char(1)", %w(Y N X)
+    input "Calculated Income", "Medicaid Household Income Logic", "Integer"
     input "Medicaid Household", "Householding Logic", "Array"
+    input "Applicant Age", "From application", "Integer"
 
-    config "Category-Percentage Mapping", "State Configuration", "Hash" 
     config "Base FPL", "State Configuration", "Integer"
     config "FPL Per Person", "State Configuration", "Integer"
+    config "Option CHIP Pregnancy Category", "State Configuration", "Char(1)", %w(Y N)
+    config "Medicaid Thresholds", "State Configuration", "Hash"
+    config "CHIP Thresholds", "State Configuration", "Hash"
 
     # Outputs
-    output    "Category Used to Calculate Income", "String", categories
+    output    "Category Used to Calculate Medicaid Income", "String"
     indicator "Applicant Income Medicaid Eligible Indicator", %w(Y N)
     date      "Income Medicaid Eligible Determination Date"
     code      "Income Medicaid Eligible Ineligibility Reason", %w(999 A B)
+    output    "Category Used to Calculate CHIP Income", "String"
+    indicator "Applicant Income CHIP Eligible Indicator", %w(Y N)
+    date      "Income CHIP Eligible Determination Date"
+    code      "Income CHIP Eligible Ineligibility Reason", %w(999 A B)
 
     calculated "FPL" do
-      c("Base FPL") + v("Medicaid Household").household_size * c("FPL Per Person")
+      c("Base FPL") + (v("Medicaid Household").household_size - 1) * c("FPL Per Person")
     end
 
-    calculated "Max Eligible Income" do
-      eligible_categories = categories.select{|cat| v("Applicant #{cat} Indicator") == 'Y'}
-      if eligible_categories.any?
-        category = eligible_categories.max_by{|cat| c("Category-Percentage Mapping")[cat]}
-        {
-          :category => category,
-          :income   => v("FPL") * (c("Category-Percentage Mapping")[category] + 0.05)
-        }
-      else
-        {
-          :category => nil,
-          :income   => nil
-        }
+    module Customizations
+      def get_income(threshold, percentage)
+        if percentage == 'Y'
+          return (threshold + 5) * 0.01 * v("FPL")
+        elsif percentage == 'N'
+          return threshold
+        else
+          raise "Invalid state config"
+        end
+      end
+
+      def get_threshold(category)
+        if category["method"] == "standard"
+          threshold = category["threshold"]
+        elsif category["method"] == "household_size"
+          thresholds = category["household_size"]
+          household_size = v("Medicaid Household").household_size
+          if household_size < thresholds.length
+            threshold = thresholds[household_size]
+          else
+            threshold = thresholds.last + (household_size - thresholds.length + 1) * category["additional person"]
+          end
+        elsif category["method"] == "age"
+          age_group = category["age"].find{|group| v("Applicant Age") >= group["minimum"] && v("Applicant Age") <= group["maximum"]}
+          if age_group
+            threshold = age_group["threshold"]
+          else
+            raise "No threshold defined for applicant age #{v("Applicant Age")}"
+          end
+        else
+          raise "Undefined threshold method #{category["method"]}"
+        end
+        get_income(threshold, category["percentage"])
       end
     end
 
-    calculated "Applicant Household Income" do
-      incomes = v("Medicaid Household").income_people.map{|p| p.income}
-
-      incomes.map{|i| i[:primary_income] + i[:other_income].inject(0){|sum, (name, amt)| sum + amt} - i[:deductions].inject(0){|sum, (name, amt)| sum + amt}}.inject(0){|sum, amt| sum + amt}
+    def run(context)
+      context.extend Customizations
+      super context
     end
 
-    rule "Set calculated income" do
-      o["Calculated Income"] = v("Applicant Household Income")
+    calculated "Max Eligible Medicaid Category" do
+      eligible_categories = c("Medicaid Thresholds").keys.select{|cat| v("Applicant #{cat} Indicator") == 'Y'}
+      if eligible_categories.any?
+        eligible_categories.max_by{|cat| get_threshold(c("Medicaid Thresholds")[cat])}
+      else
+        "None"
+      end
+    end
+
+    calculated "Max Eligible Medicaid Income" do
+      if v("Max Eligible Medicaid Category") != "None"
+        get_threshold(c("Medicaid Thresholds")[v("Max Eligible Medicaid Category")])
+      else
+        0
+      end
+    end
+
+    calculated "Max Eligible CHIP Category" do
+      eligible_categories = c("CHIP Thresholds").keys.select{|cat| v("Applicant #{cat} Indicator") == 'Y'}
+      if eligible_categories.any?
+        eligible_categories.max_by{|cat| get_threshold(c("CHIP Thresholds")[cat])}
+      else
+        "None"
+      end
+    end
+
+    calculated "Max Eligible CHIP Income" do
+      if v("Max Eligible CHIP Category") != "None"
+        get_threshold(c("CHIP Thresholds")[v("Max Eligible CHIP Category")])
+      else
+        0
+      end
     end
 
     rule "Set percentage used" do
-      o["Percentage for Category Used"] = c("Category-Percentage Mapping")[v("Max Eligible Income")[:category]] * 100
+      o["Percentage for Medicaid Category Used"] = c("Medicaid Thresholds")[v("Max Eligible Medicaid Category")]
+      o["Percentage for CHIP Category Used"] = c("CHIP Thresholds")[v("Max Eligible CHIP Category")]
     end
 
     rule "Set FPL * percentage" do
       o["FPL"] = v("FPL")
-      o["FPL * Percentage"] = v("FPL") * (c("Category-Percentage Mapping")[v("Max Eligible Income")[:category]] + 0.05)
+      o["FPL * Percentage Medicaid"] = v("Max Eligible Medicaid Income")
+      o["FPL * Percentage CHIP"] = v("Max Eligible CHIP Income")
+      o["Category Used to Calculate Medicaid Income"] = v("Max Eligible Medicaid Category")
+      o["Category Used to Calculate CHIP Income"] = v("Max Eligible CHIP Category")
     end
 
     rule "Determine Income Eligibility" do
-      if !(v("Max Eligible Income")[:category])
-        o["Category Used to Calculate Income"] = "None"
+      if v("Max Eligible Medicaid Category") == "None"
         o["Applicant Income Medicaid Eligible Indicator"] = "N"
         o["Income Medicaid Eligible Determination Date"] = current_date
         o["Income Medicaid Eligible Ineligibility Reason"] = "Unimplemented"
-      elsif v("Applicant Household Income") > v("Max Eligible Income")[:income]
-        o["Category Used to Calculate Income"] = v("Max Eligible Income")[:category]
+      elsif v("Calculated Income") > v("Max Eligible Medicaid Income")
         o["Applicant Income Medicaid Eligible Indicator"] = "N"
         o["Income Medicaid Eligible Determination Date"] = current_date
         o["Income Medicaid Eligible Ineligibility Reason"] = "Unimplemented"
       else
-        o["Category Used to Calculate Income"] = v("Max Eligible Income")[:category]
         o["Applicant Income Medicaid Eligible Indicator"] = "Y"
         o["Income Medicaid Eligible Determination Date"] = current_date
         o["Income Medicaid Eligible Ineligibility Reason"] = 999
+      end
+
+      if v("Max Eligible CHIP Category") == "None"
+        o["Applicant Income CHIP Eligible Indicator"] = "N"
+        o["Income CHIP Eligible Determination Date"] = current_date
+        o["Income CHIP Eligible Ineligibility Reason"] = "Unimplemented"
+      elsif v("Calculated Income") > v("Max Eligible CHIP Income")
+        o["Applicant Income CHIP Eligible Indicator"] = "N"
+        o["Income CHIP Eligible Determination Date"] = current_date
+        o["Income CHIP Eligible Ineligibility Reason"] = "Unimplemented"
+      else
+        o["Applicant Income CHIP Eligible Indicator"] = "Y"
+        o["Income CHIP Eligible Determination Date"] = current_date
+        o["Income CHIP Eligible Ineligibility Reason"] = 999
       end
     end
   end

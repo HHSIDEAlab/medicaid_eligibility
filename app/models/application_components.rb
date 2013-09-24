@@ -9,6 +9,14 @@ module ApplicationComponents
       @relationships = []
       @income = income
     end
+
+    def get_relationships(relationship_type)
+      @relationships.select{|rel| rel.relationship_type == relationship_type}.map{|rel| rel.person}
+    end
+
+    def get_relationship(relationship_type)
+      get_relationships(relationship_type).first
+    end
   end
 
   class Applicant < Person
@@ -53,11 +61,12 @@ module ApplicationComponents
   end
 
   class TaxReturn
-    attr_reader :filers, :dependents
+    attr_reader :filers, :dependents, :income
 
-    def initialize(filers, dependents)
+    def initialize(filers, dependents, income)
       @filers = filers
       @dependents = dependents
+      @income = income
     end
   end
 end
