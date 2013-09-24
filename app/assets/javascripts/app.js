@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('MAGI',['ui.mask','ngRoute','ngAnimate','MAGI.filters','MAGI.services',
+angular.module('MAGI',['btford.dragon-drop','ui.mask','ngRoute','ngAnimate','MAGI.filters','MAGI.services',
 					   'MAGI.directives','MAGI.controllers']).
 	config(['$routeProvider', function($routeProvider){
 		$routeProvider.

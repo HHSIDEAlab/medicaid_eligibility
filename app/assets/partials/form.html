@@ -299,6 +299,20 @@
     </fieldset>
   </div>
     <button ng-click="addTaxReturn()" type="button" class="add-applicant">Add Another Tax Return</button>
+  <fieldset ng-show="showHouseholds()">
+    <legend>Physical Households</legend>
+
+    <div class="householdbucket" ng-repeat="household in application.households" btf-dragon="person in household">
+      <div class="householdperson">{{person.id}}</div>
+    </div>
+    <div class="newHouseholdBucketWrapper" ng-show="showNewHousehold()">
+      <div class="newHouseholdBucket" btf-dragon="person in newHousehold">
+            <div>{{person.id}}</div>
+      </div>
+      <span class="newHouseholdBucketLabel">Drag a person here to add a new physical household</span>
+
+    </div>
+  </fieldset>
   
   <button type="submit" ng-click="checkEligibility()">Check Eligibility</button>
   <button class="submitlike" ng-click="exportApplication()">Export Application</button>

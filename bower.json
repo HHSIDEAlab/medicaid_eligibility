@@ -4,6 +4,7 @@
     "angular": "~1.2.0",
     "angular-animate": "~1.2.0",
     "angular-route": "~1.2.0",
-    "angular-ui-utils": "~0.0.4"
+    "angular-ui-utils": "~0.0.4",
+    "angular-dragon-drop": "~0.3.1"
   }
 }
