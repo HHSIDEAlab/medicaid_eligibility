@@ -135,7 +135,7 @@ module ApplicationProcessor
       # parent claimers must be equal to the set of parents lived with
       elsif dependent_tax_return && 
         dependent_tax_return.filers.any?{|filer| parents_stepparents.include?(filer)} && 
-        !(is_minor?(person) && parents &&
+        !(is_minor?(person) &&
           (Set.new(parents.select{|parent| live_together?(person, parent)}) != Set.new(parents.select{|parent| dependent_tax_return.filers.include?(parent)})))
         med_household_members = dependent_tax_return.filers
       # In all other cases, the household is person's children who are minors and,
