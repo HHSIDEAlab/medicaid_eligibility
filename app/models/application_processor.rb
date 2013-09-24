@@ -116,19 +116,27 @@ module ApplicationProcessor
     for person in @people
       filed_tax_return = @tax_returns.find{|tr| tr.filers.include?(person)}
       dependent_tax_return = @tax_returns.find{|tr| tr.dependents.include?(person)}
-      parents = person.get_relationships(:parent) + person.get_relationships(:stepparent)
+      parents = person.get_relationships(:parent)
+      parents_stepparents = parents + person.get_relationships(:stepparent)
 
       # If person files a return and no one claims person as dependent, add tax
       # return people (435.603.f1)
-      if filed_tax_return && !dependent_tax_return && person.person_attributes["Claimed as Dependent by Person Not on Application"] != 'Y'
+      if filed_tax_return && !dependent_tax_return && 
+        person.person_attributes["Claimed as Dependent by Person Not on Application"] != 'Y'
         med_household_members = filed_tax_return.filers + filed_tax_return.dependents
       # If spouse claims person as a dependent, include spouse (435.603.f2)
-      elsif dependent_tax_return && dependent_tax_return.filers.any?{|filer| filer == person.get_relationship(:spouse)}
+      elsif dependent_tax_return && 
+        dependent_tax_return.filers.any?{|filer| filer == person.get_relationship(:spouse)}
         med_household_members = dependent_tax_return.filers
-      # If parent claimes person as a dependent and person lives with parent, include 
+      # If parent claims person as a dependent and person lives with parent, include 
       # filers, unless person is a minor and lives with another parent (not 
-      # stepparent) not on the tax return (435.603.f2)
-      elsif dependent_tax_return && dependent_tax_return.filers.any?{|filer| parents.include?(filer) && live_together?(person, filer)} && !(is_minor?(person) && person.get_relationships(:parent).any?{|parent| live_together?(person, parent) && !(dependent_tax_return.filers.include?(parent))})
+      # stepparent) not on the tax return (435.603.f2) or person is a minor claimed
+      # by a parent (not stepparent) they don't live with (435.603.f2) -- the set of 
+      # parent claimers must be equal to the set of parents lived with
+      elsif dependent_tax_return && 
+        dependent_tax_return.filers.any?{|filer| parents_stepparents.include?(filer)} && 
+        !(is_minor?(person) && parents &&
+          (Set.new(parents.select{|parent| live_together?(person, parent)}) != Set.new(parents.select{|parent| dependent_tax_return.filers.include?(parent)})))
         med_household_members = dependent_tax_return.filers
       # In all other cases, the household is person's children who are minors and,
       # if person is a minor, person's siblings (435.603.f3)
@@ -142,7 +150,8 @@ module ApplicationProcessor
 
       # If person lives with a spouse, add the spouse (435.603.f4)
       spouse = person.get_relationship(:spouse)
-      if spouse && live_together?(person, spouse)
+      if spouse && 
+        (live_together?(person, spouse) || (filed_tax_return && filed_tax_return.filers.include?(spouse)))
         med_household_members << spouse
       end
       
@@ -155,7 +164,7 @@ module ApplicationProcessor
       # in the medicaid household (in which case parents is not empty). 
       # Your income IS counted (overriding the above) if you are 
       # required to file taxes.
-      income_counted = !dependent_tax_return && !(is_minor?(person) && parents.any?{|parent| med_household_members.include?(parent)}) || person.person_attributes["Required to File Taxes"] == 'Y'
+      income_counted = !dependent_tax_return && !(is_minor?(person) && parents_stepparents.any?{|parent| med_household_members.include?(parent)}) || person.person_attributes["Required to File Taxes"] == 'Y'
 
       med_households = @medicaid_households.select{|mh| med_household_members.any?{|mhm| mh.people.include?(mhm)}}
 
