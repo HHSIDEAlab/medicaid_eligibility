@@ -594,3 +594,62 @@ label.error {
 .form-row.invalid, .form-half-field.invalid {
   background: #ffdddd;
 }
+
+.householdbucket{
+  padding: 10px;  
+  width: 190px;
+  min-height: 190px;
+}
+
+.householdbucket, .newHouseholdBucketWrapper{
+  border: 1px solid #333;
+  border-radius: 10px;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.newHouseholdBucket{
+  height: 200px;
+  width: 200px;
+  position: relative;
+  z-index: 2;
+}
+
+.newHouseholdBucketWrapper{
+  position: relative;
+  border: 1px dashed #999;
+  width: 210px;
+  height: 210px;
+
+
+}
+
+.newHouseholdBucketLabel{
+  position: absolute;
+  top: 80px;
+  left: 10px;
+  width: 150px;
+  padding: 0 25px;
+  text-align: center;
+  color: #999;
+  z-index: 1;
+  -webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+  cursor: default;
+
+}
+
+.householdperson{
+  background-color: #414958;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  width: 180px;
+  margin-bottom: 3px;
+  cursor: move;
+}

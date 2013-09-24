@@ -6,6 +6,7 @@ angular.module('MAGI.services',[]).
 			this.taxReturns = [];
 			this.state = {};
 			this.determination = {};
+			this.households = [[]];
 		}
 
 		function TaxReturn(){
@@ -103,6 +104,13 @@ angular.module('MAGI.services',[]).
             }
 		}
 
+		Application.prototype.cleanHouseholds = function(){
+			var idx = _.map(this.households, function(hh){return hh.length;}).indexOf(0);
+			if(idx >= 0 && this.applicants.length > 0){
+				this.households.splice(idx,1);
+			}
+		}
+
 		Application.prototype.addApplicant = function(applicantName){
 			var applicant = new Applicant();
 			applicant.id = applicantName;
@@ -113,6 +121,7 @@ angular.module('MAGI.services',[]).
 			});
 
 			this.applicants.push(applicant);
+			this.households[0].push(applicant);
 			var appl = this;
 
 			angular.forEach(this.taxReturns, function(taxReturn){
@@ -143,12 +152,28 @@ angular.module('MAGI.services',[]).
 		}
 
 		Application.prototype.removeApplicant = function(applicant){
-			applicant.removeRelationships();
+			console.log(this);
+			var me = this;
+
+            angular.forEach(me.households, function(hh, idx){
+            	var hhri = hh.indexOf(applicant);
+            	console.log(idx);
+            	console.log(hhri);
+            	if(hhri >= 0){
+            		me.households[idx].splice(hhri,1);
+	            }
+            });
+
 			var removeIndex = this.applicants.indexOf(applicant);
             this.applicants.splice(removeIndex,1);
-            
+
+
+			applicant.removeRelationships();
+
+			me.cleanHouseholds();
+
             if( this.applicants.length == 0 ){
-                        	this.addApplicant();
+                this.addApplicant('Applicant 1');
             }
 		}
 
@@ -404,12 +429,14 @@ angular.module('MAGI.services',[]).
 				"Name": this.applicationId,
 				"People": _.map(this.applicants,
 					function(applicant){return applicant.serialize()}),
-				"Physical Households": 
-					[{
-						"Household ID": "Household1",
-						"People":  _.map(this.applicants,
-							function(applicant){return {"Person ID": applicant.id};})
-					}],
+				"Physical Households": _.map(this.households, function(hh, idx){
+					return {
+						"Household ID": "Household" + (idx+1),
+						"People": _.map(hh, function(applicant){
+							return {"Person ID": applicant.id}
+						})
+					};
+				}),
 				"Tax Returns": _.map(this.taxReturns, function(tr){return tr.serialize();})
 			};
 		};
@@ -425,6 +452,12 @@ angular.module('MAGI.services',[]).
 				var tr = new TaxReturn().deserialize(me, taxReturn);
 				tr.checkNumFilers(application["People"].length);
 				return tr;
+			});
+
+			this.households = _.map(application["Physical Households"], function(hh){
+				return _.map(hh["People"], function(person){
+					return me.getApplicantById(person["Person ID"]);
+				});
 			});
 
 
