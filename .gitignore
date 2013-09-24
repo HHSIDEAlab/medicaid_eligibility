@@ -16,8 +16,12 @@
 /cons-files
 /export-files
 
+
+
 /config/database.yml
+
 *.json
+!bower.json
 *.xml
 
 .idea
