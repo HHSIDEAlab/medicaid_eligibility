@@ -9,16 +9,48 @@ angular.module('MAGI.controllers', []).
                 $scope.application = Application;
 
                 $scope.addTaxReturn = Application.addTaxReturn;
-                $scope.removeApplicant = Application.removeApplicant;
+                
+                $scope.removeApplicant = function(app){
+                    $scope.application.removeApplicant(app);
+                };
+
                 $scope.removeTaxReturn = Application.removeTaxReturn;
                 $scope.relationshipCodes = relationshipCodes;
+
+                $scope.newHousehold = [];
 
                 $scope.exportApplication = function(){
                          $location.path("/exportimport");
                 }
 
+                $scope.$watch('newHousehold.length', function(newVal,oldVal){
+                    if(newVal > 0){
+                        $scope.application.households.push([$scope.newHousehold.pop()]); 
+                    }
+                });
+
+                $scope.rehouseholdingHappened = function(){
+                    return _.map($scope.application.households,
+                                          function(hh){return hh.length}).
+                                      reduce(function (m, w) {return m + w}, 0) == $scope.applicants.length;
+
+                }
+                $scope.$watch('rehouseholdingHappened()', function(newVal, oldVal){
+                    if(newVal){
+                        $scope.application.cleanHouseholds();
+                    }
+                });
+
+                $scope.showNewHousehold = function(){
+                    return $scope.application.households.length < $scope.applicants.length;
+                }
+
+                $scope.showHouseholds = function(){
+                    return $scope.applicants.length > 1;
+                }
+
                 $scope.checkEligibility = function(){
-                                                console.log(Application.serialize());
+                         console.log(Application.serialize());
 
                         if($scope.applicationForm.$valid){
                                 Application.checkEligibility().then(function(resp){
