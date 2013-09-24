@@ -226,7 +226,7 @@
           <input type="number" id="applicant_{{ $index }}_income_taxes_required_wages" name="applicant_income_taxes_required_wages" class="long-number" ng-model="applicant.incomeTaxes.wages" ng-change="updateMonthly(applicant)">
         </div>
 
-        <div class="head" ng-click="showOtherIncome = !showOtherIncome"><h3>Other income and deductions</h3></div>
+        <button ng-click="showOtherIncome = !showOtherIncome" type="button" class="add-applicant">Other income and deductions</button>
         <div class="form-row-expandable-fields2 cf" ng-show="showOtherIncome">
           <div class="form-half-field">
             <label for="applicant_{{ $index }}_income_taxes_required_capital_gains">Capital gains or loss</label>
