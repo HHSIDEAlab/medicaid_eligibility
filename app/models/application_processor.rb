@@ -1,9 +1,12 @@
 module ApplicationProcessor
   include ApplicationComponents
 
+  class RelationshipError < StandardError
+  end
+
   def compute_values!
-    # relationship validator
     compute_relationships!
+    validate_relationships!
     validate_tax_returns
     build_medicaid_households!
     calculate_household_size!
@@ -105,6 +108,40 @@ module ApplicationProcessor
           end
         else
           rel.person.relationships << Relationship.new(person, ApplicationVariables::RELATIONSHIP_INVERSE[rel.relationship_type], {})
+        end
+      end
+    end
+  end
+
+  def validate_relationships!
+    for person in @people
+      if person.get_relationship(:self)
+        raise RelationshipError, "#{person.person_id} has a \"Self\" relationship"
+      end
+      if person.get_relationships(:spouse).count > 1 || 
+        person.get_relationships(:domestic_partner).count > 1 || 
+        (person.get_relationship(:spouse) && person.get_relationship(:domestic_partner))
+        raise RelationshipError, "#{person.person_id} has more than one spouse or domestic partner"
+      end
+      
+      for first_rel, second_rels in ApplicationVariables::SECONDARY_RELATIONSHIPS
+        # Get all the people who have the primary relationship to person
+        first_people = person.get_relationships(first_rel)
+        for first_person in first_people
+          for second_rel, computed_rels in second_rels
+            # Get all the people who have the secondary relationship to first_person
+            second_people = first_person.get_relationships(second_rel)
+            for second_person in second_people
+              if second_person == person
+                # We've already checked inverse relationships elsewhere
+                next
+              else
+                unless computed_rels.any?{|cr| person.get_relationships(cr).include? second_person}
+                  raise RelationshipError, "#{person.person_id} and #{first_person.person_id} have inconsistent relationships to #{second_person.person_id}"
+                end
+              end
+            end
+          end
         end
       end
     end
