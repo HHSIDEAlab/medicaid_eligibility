@@ -437,7 +437,7 @@ angular.module('MAGI.services',[]).
 
 		TaxReturn.prototype.serialize = function(){
 			return {
-				"Filers": _.filter(this.filers, function(pers){return pers.id && pers.id.length;}).map(function(pers){
+				"Filers": _.filter(this.filers, function(pers){return pers && pers.id && pers.id.length;}).map(function(pers){
 					return {"Person ID": pers.id};
 				}),
 				"Dependents": _.filter(this.dependents, function(pers){ return pers.id && pers.id.length;}).map(function(pers){
