@@ -127,9 +127,9 @@ angular.module('MAGI.controllers', []).
                 } 
         }]).
         controller('ResultsController',['$scope','$location','Application', function($scope,$location,Application){
-                $scope.households = Application.determination['Medicaid Households'];
+                $scope.applicants = Application.determination['Applicants'];
                 $scope.expandByDefault = function(){
-                        return $scope.households.length == 1 && $scope.households.Applicants.length == 1;
+                        return $scope.applicants.length == 1;
                 }
 
                 $scope.exportApplication = function(){
