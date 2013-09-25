@@ -465,7 +465,7 @@ module ApplicationVariables
     "04" => :child,
     "05" => :stepchild,
     "06" => :grandchild,
-    "07" => :sibling,
+    "07" => :sibling, # Could also be stepsibling
     "08" => :domestic_partner,
     "12" => :stepparent,
     "13" => :uncle_aunt,
@@ -477,6 +477,7 @@ module ApplicationVariables
     "26" => :child_in_law,
     "27" => :former_spouse,
     "30" => :parent_in_law,
+    "70" => :domestic_partners_child,
     "88" => :other
   }.freeze
 
@@ -502,11 +503,55 @@ module ApplicationVariables
     :nephew_niece => :uncle_aunt,
     :grandparent => :grandchild,
     :cousin => :cousin,
-    :parents_domestic_partner => :other,
+    :parents_domestic_partner => :domestic_partners_child,
     :sibling_in_law => :sibling_in_law,
     :child_in_law => :parent_in_law,
     :former_spouse => :former_spouse,
     :parent_in_law => :child_in_law,
     :other => :other
+  }
+
+  SECONDARY_RELATIONSHIPS = {
+    :spouse => {
+      :spouse => [:self],
+      :parent => [:parent_in_law],
+      :child => [:child, :stepchild],
+      :stepchild => [:child],
+      :sibling => [:sibling_in_law],
+      :nephew_niece => [:nephew_niece]
+    },
+    :parent => {
+      :spouse => [:parent, :stepparent],
+      :parent => [:grandparent],
+      :child => [:self, :sibling],
+      :stepchild => [:sibling],
+      :sibling => [:uncle_aunt],
+      :domestic_partner => [:parents_domestic_partner]
+    },
+    :child => {
+      :spouse => [:child_in_law],
+      :child => [:grandchild]
+    },
+    :stepchild => {
+      :parent => [:spouse]
+    },
+    :stepparent => {
+      :spouse => [:parent],
+      :child => [:sibling],
+      :stepchild => [:self, :sibling]
+    },
+    :uncle_aunt => {
+      :spouse => [:uncle_aunt]
+    },
+    :grandparent => {
+      :child => [:parent, :uncle_aunt],
+      :grandchild => [:self, :sibling, :cousin]
+    },
+    :parents_domestic_partner => {
+      :domestic_partner => [:parent]
+    },
+    :child_in_law => {
+      :spouse => [:child]
+    }
   }
 end
