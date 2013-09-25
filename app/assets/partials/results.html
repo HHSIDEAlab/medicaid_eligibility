@@ -1,19 +1,19 @@
 <div class="person" ng-repeat="applicant in applicants">
   
   <div class="head">
-    <h3>{{ applicant["Person ID"] }}</h3 >
-    <h2>Household:
-      <span ng-repeat="person in applicant['Medicaid Household']['People']">
-        {{ person }}
-        <span ng-show=" ! $last ">, </span>
-      </span>
-    </h2>
-    <h2>Household Magi: {{applicant["Medicaid Household"]["MAGI"]}}</h2>
+    <h3>{{ applicant["Person ID"] }}</h3>
     <eligibility data-value='{{applicant["Medicaid Eligible"]}}'></eligibility>
     <span class="threshold">Eligibility Threshold: {{ applicant["Category Threshold"] }}</span>  
     <span class="category">{{applicant["Category"] }}</span>
   </div>
   <div class="details">
+    <h4>HOUSEHOLD:
+      <span ng-repeat="person in applicant['Medicaid Household']['People']">
+        {{ person }}
+        <span ng-show=" ! $last ">, </span>
+      </span>
+    </h4>
+    <h4>MAGI: {{applicant["Medicaid Household"]["MAGI"]}}</h4>
     <h4>DETERMINATIONS</h4>
     <div class="determinations">
       <h5>Yes</h5>
