@@ -11,4 +11,4 @@ angular.module('MAGI',['btford.dragon-drop','ui.mask','ngRoute','ngAnimate','MAG
 			when('/exportimport', {templateUrl: '/assets/exportimport.html',
 								   controller: 'ExportImportController'}).
 			otherwise({redirectTo: '/application'});
-	}])
+	}]);
