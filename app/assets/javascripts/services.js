@@ -559,8 +559,8 @@ angular.module('MAGI.services',[]).
             {abbr: 'FL', name: 'Florida'},
            */
             {abbr: 'GA', name: 'Georgia'},
-	   /*
             {abbr: 'GU', name: 'Guam'},
+            /*
             {abbr: 'HI', name: 'Hawaii'},
             {abbr: 'ID', name: 'Idaho'},
             {abbr: 'IL', name: 'Illinois'},
