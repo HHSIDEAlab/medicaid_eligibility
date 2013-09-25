@@ -114,16 +114,34 @@ module ApplicationProcessor
 
   def validate_relationships!
     for person in @people
-      if get_relationship[:self]
-        raise RelationshipError, "No person should have a \"Self\" relationship"
+      if person.get_relationship(:self)
+        raise RelationshipError, "#{person.person_id} has a \"Self\" relationship"
       end
-      if get_relationships[:spouse] > 1 || get_relationships[:domestic_partner] || (get_relationship[:spouse] && get_relationship[:domestic_partner])
-        raise RelationshipError, "A person cannot have more than one spouse or domestic partner"
+      if get_relationships(:spouse).count > 1 || get_relationships(:domestic_partner).count > 1 || (get_relationship(:spouse) && get_relationship(:domestic_partner))
+        raise RelationshipError, "#{person.person_id} has more than one spouse or domestic partner"
       end
-      if get_relationship[:spouse]
-        spouse = get_relationship[:spouse]
-
-
+      
+      for first_rel, second_rels in ApplicationVariables::SECONDARY_RELATIONSHIPS
+        # Get all the people who have the primary relationship to person
+        first_people = person.get_relationships(first_rel)
+        for first_person in first_people
+          for second_rel, computed_rels in second_rels
+            # Get all the people who have the secondary relationship to first_person
+            second_people = first_person.get_relationships(second_rel)
+            for second_person in second_people
+              if second_person == person
+                # We've already checked inverse relationships elsewhere
+                next
+              else
+                unless computed_rels.any?{|cr| person.get_relationships(cr).include? second_person}
+                  raise RelationshipError, "#{person.person_id} and #{first_person.person_id} have inconsistent relationships to #{second_person.person_id}"
+                end
+              end
+            end
+          end
+        end
+      end
+    end
   end
 
   def build_medicaid_households!
