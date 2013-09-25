@@ -167,8 +167,25 @@ angular.module('MAGI.services',[]).
 	            }
             });
 
+            angular.forEach(me.taxReturns, function(tr, idx){
+            	var trfri = tr.filers.indexOf(applicant);
+            	if(trfri >= 0){
+            		tr.filers.splice(trfri, 1);
+            	}
+
+            	var trdri = tr.dependents.indexOf(applicant);
+            	if(trdri >= 0){
+            		tr.dependents.splice(trdri, 1);
+            	}
+            });
+
 			var removeIndex = this.applicants.indexOf(applicant);
             this.applicants.splice(removeIndex,1);
+
+            angular.forEach(me.taxReturns, function(tr){
+            	tr.checkNumFilers(me.applicants.length);
+            });
+
 
 
 			applicant.removeRelationships();
