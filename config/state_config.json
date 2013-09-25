@@ -3,6 +3,7 @@
     "Base FPL": 11490,
     "FPL Per Person": 4020,
 
+    "Count Unborn Children for Household": "02",
     "Option Deny Residency to Temporary Resident Students": "N",
 
     "Age Limit for Primary Responsibility": 19,
@@ -21,7 +22,28 @@
     "CHIP Targeted Low Income Child Group": "Y",
     "CHIP Targeted Low Income Child Age High Threshold": 19,
     "CHIP Targeted Low Income Child Age Low Threshold": 0,
+
+    "CHIP for Pregnant Women": "Y",
+
+    "Option CHIPRA 214 Applicable Program": "01",
+    "Option CHIPRA 214 Child Age Threshold": 21,
+    "Option CHIPRA 214 Applies To": "01",
+    "Option CHIPRA 214 CHIP Applies To": "01",
+    "Option Require Work Quarters": "N",
+    "State Applies Seven Year Limit": "N",
     
+    "Foster Care Age Threshold": 18,
+    "In-State Foster Care Required": "N",
+    "State Offers Refugee Medical Assistance": "Y",
+    "Refugee Medical Assistance Income Requirement": "Y",
+    "Percent FPL Refugee Medical Assistance": 100,
+
+    "Option Cover Unborn Child": "Y",
+    "Percent FPL Unborn Child": 100,
+    "CHIP for State Health Benefits": "01",
+    "State Health Benefits FPL Standard": 100,
+    "State CHIP Waiting Period": 0,
+
     "Medicaid Thresholds": {
       "Adult Group Category": {
         "percentage": "Y",
@@ -49,10 +71,7 @@
         "threshold": 100
       }
     },
-    "State Offers Refugee Medical Assistance": "Y",
-    "Refugee Medical Assistance Income Requirement": "Y",
-    "Percent FPL Refugee Medical Assistance": 100,
-    
+
     "CHIP Thresholds": {
       "Child Category": {
         "percentage": "Y",
@@ -63,26 +82,13 @@
         "percentage": "Y",
         "method": "standard",
         "threshold": 100
+      },
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 133
       }
-    },
-    "Option Cover Unborn Child": "Y",
-    "CHIP for State Health Benefits": "Y",
-    "State Health Benefits FPL Standard": 100,
-    "Percent FPL Unborn Child": 100,
-
-
-
-    "Option CHIPRA 214 Applicable Program": "01",
-    "Option CHIPRA 214 Child Age Threshold": 21,
-    "Option CHIPRA 214 Applies To": "01",
-    "Option CHIPRA 214 CHIP Applies To": "01",
-    "Option Require Work Quarters": "N",
-    "State Applies Seven Year Limit": "N",
-
-    "Foster Care Age Threshold": 18,
-    "In-State Foster Care Required": "N",
-      
-    "State CHIP Waiting Period": 0
+    }
   },
 
   "AK": {
@@ -90,6 +96,7 @@
      "FPL Per Person": 5030
   },
   "GA": {
+    "Count Unborn Children for Household": "02",
     "Option Deny Residency to Temporary Resident Students": "Y",
 
     "Age Limit for Primary Responsibility": 19,
@@ -97,11 +104,27 @@
     "Option Caretaker Relative Relationship": "04",
     "Option Dependent Student": "N",
     "State Unemployed Standard": 100,
-    
+
     "Option Young Adults": "N",
 
     "Optional Targeted Low Income Child Group": "N",
+    
     "CHIP Targeted Low Income Child Group": "N",
+
+    "CHIP for Pregnant Women": "N",
+
+    "Option CHIPRA 214 Applicable Program": "03",
+    "Option Require Work Quarters": "Y",
+    "State Applies Seven Year Limit": "Y",
+    
+    "Foster Care Age Threshold": 18,
+    "In-State Foster Care Required": "N",
+    "State Offers Refugee Medical Assistance": "Y",
+    "Refugee Medical Assistance Income Requirement": "N",
+
+    "Option Cover Unborn Child": "N",
+    "CHIP for State Health Benefits": "01",
+    "State CHIP Waiting Period": 2,
 
     "Medicaid Thresholds": {
       "Adult Group Category": {
@@ -153,27 +176,24 @@
         ]
       }
     },
-    "State Offers Refugee Medical Assistance": "Y",
-    "Refugee Medical Assistance Income Requirement": "N",
 
     "CHIP Thresholds": {
       "Child Category": {
         "percentage": "Y",
         "method": "standard",
-        "threshold": 247
+        "threshold": 100
+      },
+      "CHIP Targeted Low Income Child": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 100
+      },
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 133
       }
-    },
-    "Option Cover Unborn Child": "N",
-    "CHIP for State Health Benefits": "01",
-
-    "Option CHIPRA 214 Applicable Program": "03",
-    "Option Require Work Quarters": "Y",
-    "State Applies Seven Year Limit": "Y",
-    
-    "Foster Care Age Threshold": 18,
-    "In-State Foster Care Required": "N",
-
-    "State CHIP Waiting Period": 2
+    }
   },
   "HI": {
      "Base FPL": 13230,
