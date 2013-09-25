@@ -559,17 +559,17 @@ angular.module('MAGI.services',[]).
 			}).success(function(response){
 				console.log(response);
 				me.determination = response;
-				angular.forEach(me.determination["Medicaid Households"], function(hh){
-					angular.forEach(hh.Applicants, function(applicant){
-						applicant.cleanDets = _.map(_.pairs(applicant.Determinations), function(item){
-							return {
-								item: item[0], 
-								indicator: item[1]["Indicator"],
-								code: item[1]["Ineligibility Code"]
-							};
-						});					
-					});
-				})
+				
+				angular.forEach(me.determination["Applicants"], function(applicant){
+					applicant.cleanDets = _.map(_.pairs(applicant.Determinations), function(item){
+						return {
+							item: item[0], 
+							indicator: item[1]["Indicator"],
+							code: item[1]["Ineligibility Code"]
+						};
+					});					
+				});
+				
 				return response;
             }).error(function(error){
 				console.log(error);
