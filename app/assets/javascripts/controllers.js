@@ -114,6 +114,14 @@ angular.module('MAGI.controllers', []).
                         relationship.updateOpposite();
                 }
 
+                $scope.updateMonthly = function(applicant){
+                  applicant.updateMonthly();
+                }
+
+                $scope.updateWages = function(applicant){
+                  applicant.updateWages();
+                }
+
                 $scope.notMe = function(other) {
                         return other !== $scope.applicant; 
                 } 
