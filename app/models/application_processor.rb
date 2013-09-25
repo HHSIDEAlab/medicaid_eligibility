@@ -2,6 +2,7 @@ module ApplicationProcessor
   include ApplicationComponents
 
   class RelationshipError < StandardError
+  end
 
   def compute_values!
     compute_relationships!
@@ -117,7 +118,9 @@ module ApplicationProcessor
       if person.get_relationship(:self)
         raise RelationshipError, "#{person.person_id} has a \"Self\" relationship"
       end
-      if get_relationships(:spouse).count > 1 || get_relationships(:domestic_partner).count > 1 || (get_relationship(:spouse) && get_relationship(:domestic_partner))
+      if person.get_relationships(:spouse).count > 1 || 
+        person.get_relationships(:domestic_partner).count > 1 || 
+        (person.get_relationship(:spouse) && person.get_relationship(:domestic_partner))
         raise RelationshipError, "#{person.person_id} has more than one spouse or domestic partner"
       end
       
