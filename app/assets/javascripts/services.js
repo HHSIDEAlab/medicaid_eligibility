@@ -155,20 +155,34 @@ angular.module('MAGI.services',[]).
 		}
 
 		Application.prototype.removeApplicant = function(applicant){
-			console.log(this);
 			var me = this;
 
             angular.forEach(me.households, function(hh, idx){
             	var hhri = hh.indexOf(applicant);
-            	console.log(idx);
-            	console.log(hhri);
             	if(hhri >= 0){
             		me.households[idx].splice(hhri,1);
 	            }
             });
 
+            angular.forEach(me.taxReturns, function(tr, idx){
+            	var trfri = tr.filers.indexOf(applicant);
+            	if(trfri >= 0){
+            		tr.filers.splice(trfri, 1);
+            	}
+
+            	var trdri = tr.dependents.indexOf(applicant);
+            	if(trdri >= 0){
+            		tr.dependents.splice(trdri, 1);
+            	}
+            });
+
 			var removeIndex = this.applicants.indexOf(applicant);
             this.applicants.splice(removeIndex,1);
+
+            angular.forEach(me.taxReturns, function(tr){
+            	tr.checkNumFilers(me.applicants.length);
+            });
+
 
 
 			applicant.removeRelationships();
@@ -202,7 +216,7 @@ angular.module('MAGI.services',[]).
       {app: 'longTermCare', api: 'Applicant Attest Long Term Care', type: 'checkbox'},
 			{app: 'hasInsurance', api: 'Has Insurance', type: 'checkbox'},
 			{app: 'stateEmployeeHealthBenefits', api: 'State Health Benefits Through Public Employee', type: 'checkbox'},
-			{app: 'priorInsurance', api: 'Prior Insurance', type: 'checkbox'},
+			{app: 'priorInsuranceIndicator', api: 'Prior Insurance', type: 'checkbox'},
 			{app: 'pregnant', api: 'Applicant Pregnant Indicator', type: 'checkbox'},
 			{app: 'pregnantThreeMonths', api: 'Applicant Post Partum Period Indicator', type: 'checkbox'},
 			{app: 'formerlyFosterCare', api: 'Former Foster Care', type: 'checkbox'},
@@ -225,7 +239,7 @@ angular.module('MAGI.services',[]).
     ]
 
 		Applicant.prototype.priorInsuranceFields = [
-				{app: 'priorInsuranceEndDate', api: 'Prior Insurance End Date', type: 'date'}
+				{app: 'EndDate', api: 'Prior Insurance End Date', type: 'date'}
 		];
 
 		Applicant.prototype.fosterCareFields = [
@@ -262,8 +276,10 @@ angular.module('MAGI.services',[]).
 			} else if(field.type == 'string'){
 				return [field.api, baseObject[field.app]];
 			} else if(field.type == 'date'){
-				// This probably needs to be changed. Currently a placeholder
-				return [field.api, baseObject[field.app]];
+				var month = baseObject[field.app].substring(0,2);
+				var day = baseObject[field.app].substring(2,4);
+				var year = baseObject[field.app].substring(4,8);
+				return [field.api, year + "-" + month + "-" + day]
 			} else if(field.type == 'state'){
         return [field.api, baseObject[field.app].abbr]
       }
@@ -275,8 +291,13 @@ angular.module('MAGI.services',[]).
 			} else if(field.type == 'string'){
 				return serializedObject[field.api] || '';
 			} else if(field.type == 'date'){
-				// This probably needs to be changed. Currently a placeholder
-				return serializedObject[field.api];
+				if(serializedObject[field.api]){
+					var month = serializedObject[field.api].substring(5,7);
+					var day = serializedObject[field.api].substring(8,10);
+					var year = serializedObject[field.api].substring(0,4);
+					return month+day+year;
+				}
+				return "";
 			} else if(field.type == 'state'){
         return _.find(states, function(st){
           return st.abbr ==  serializedObject[field.api];
@@ -303,9 +324,9 @@ angular.module('MAGI.services',[]).
           }));
       }
 
-			if(this.priorInsurance){
+			if(this.priorInsuranceIndicator){
 				rv = rv.concat(_.map(this.priorInsuranceFields, function(field){
-						return serializeField(field,me);
+						return serializeField(field,me.priorInsurance);
 					}));
 			}
 
@@ -356,9 +377,10 @@ angular.module('MAGI.services',[]).
       angular.forEach(this.claimedFields, function(field){
         me[field.app] = deserializeField(field, person);
       })
-
+      me.priorInsurance = {};
 			angular.forEach(this.priorInsuranceFields, function(field){
-				me[field.app] = deserializeField(field, person);
+
+				me.priorInsurance[field.app] = deserializeField(field, person);
 			});
 
 			me.fosterCare = {};
@@ -427,8 +449,14 @@ angular.module('MAGI.services',[]).
 		}
 
 		Application.prototype.serialize = function(){
+			var st;
+			if(this.state){
+				st = this.state.abbr;
+			} else{
+				st = "";
+			}
 			return {
-				"State": this.state.abbr,
+				"State": st,
 				"Name": this.applicationId,
 				"People": _.map(this.applicants,
 					function(applicant){return applicant.serialize()}),
@@ -546,7 +574,6 @@ angular.module('MAGI.services',[]).
             {code: '88', label: "Other", opposite: '88'}
         ]
 	).constant('states',[
-	   /*
 	    {abbr: 'AL', name: 'Alabama'},
             {abbr: 'AK', name: 'Alaska'},
             {abbr: 'AZ', name: 'Arizona'},
@@ -557,10 +584,8 @@ angular.module('MAGI.services',[]).
             {abbr: 'DE', name: 'Delaware'},
             {abbr: 'DC', name: 'District Of Columbia'},
             {abbr: 'FL', name: 'Florida'},
-           */
-            {abbr: 'GA', name: 'Georgia'},
-            {abbr: 'GU', name: 'Guam'},
-            /*
+            {abbr: 'GA', name: 'Georgia', inApp: true},
+            {abbr: 'GU', name: 'Guam', inApp: true},
             {abbr: 'HI', name: 'Hawaii'},
             {abbr: 'ID', name: 'Idaho'},
             {abbr: 'IL', name: 'Illinois'},
@@ -580,9 +605,7 @@ angular.module('MAGI.services',[]).
             {abbr: 'NE', name: 'Nebraska'},
             {abbr: 'NV', name: 'Nevada'},
             {abbr: 'NH', name: 'New Hampshire'},
-	   */
-            {abbr: 'NJ', name: 'New Jersey'},
-	    /*
+            {abbr: 'NJ', name: 'New Jersey', inApp: true},
             {abbr: 'NM', name: 'New Mexico'},
             {abbr: 'NY', name: 'New York'},
             {abbr: 'NC', name: 'North Carolina'},
@@ -602,7 +625,6 @@ angular.module('MAGI.services',[]).
             {abbr: 'WA', name: 'Washington'},
             {abbr: 'WV', name: 'West Virginia'},
             {abbr: 'WI', name: 'Wisconsin'},
-            {abbr: 'WY', name: 'Wyoming'},
-	   */
+            {abbr: 'WY', name: 'Wyoming'}
 		]
 	);

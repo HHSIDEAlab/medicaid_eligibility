@@ -87,6 +87,7 @@ angular.module('MAGI.controllers', []).
 
 
 		$scope.states = states;
+        $scope.appStates = _.filter(states, function(state){return state.inApp});
 	}]).
         controller('ApplicantController',['$scope',function($scope){
                 $scope.checkResponsibility = function(){
