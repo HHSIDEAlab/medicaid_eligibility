@@ -4,7 +4,7 @@
     <div class="form-fields-area">
       <div class="form-row">
         <label for="state">State</label>
-        <select selector ng-model="application.state" name="state" id="state" ng-options="state as state.name for state in states" required>
+        <select selector ng-model="application.state" name="state" id="state" ng-options="state as state.name for state in appStates" required>
         </select>
         <label for="state" class="error" ng-show="(applicationForm.state.$dirty  || submitted) && applicationForm.state.$invalid">Please enter a State</label>
       </div>
