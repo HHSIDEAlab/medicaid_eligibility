@@ -1,7 +1,7 @@
 module ApplicationComponents
   class Person
     attr_reader :person_id, :person_attributes, :income
-    attr_accessor :relationships
+    attr_accessor :relationships, :medicaid_household
 
     def initialize(person_id, person_attributes, income)
       @person_id = person_id
@@ -52,11 +52,13 @@ module ApplicationComponents
   end
 
   class MedicaidHousehold < Household
-    attr_accessor :income_people, :income, :household_size
+    attr_reader :income_people, :income, :household_size
 
-    def initialize(household_id, people)
-      super
-      @income_people = []
+    def initialize(household_id, people, income_people, income, household_size)
+      super household_id, people
+      @income_people = income_people
+      @income = income
+      @household_size = household_size 
     end
   end
 

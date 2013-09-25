@@ -1,11 +1,17 @@
-<div class="household" ng-repeat="household in households">
-  <h2>Household Magi: {{household.MAGI}}</h2>
-  <div class="person" ng-repeat="applicant in household.Applicants">
+<div class="person" ng-repeat="applicant in applicants">
+  
   <div class="head">
-    <h3>{{ applicant["Person ID"] }}</h3>
-      <eligibility data-value='{{applicant["Medicaid Eligible"]}}'></eligibility>
-      <span class="threshold">Eligibility Threshold: {{ applicant["Category Threshold"] }}</span>  
-      <span class="category">{{applicant["Category"] }}</span>
+    <h3>{{ applicant["Person ID"] }}</h3 >
+    <h2>Household:
+      <span ng-repeat="person in applicant['Medicaid Household']['People']">
+        {{ person }}
+        <span ng-show=" ! $last ">, </span>
+      </span>
+    </h2>
+    <h2>Household Magi: {{applicant["Medicaid Household"]["MAGI"]}}</h2>
+    <eligibility data-value='{{applicant["Medicaid Eligible"]}}'></eligibility>
+    <span class="threshold">Eligibility Threshold: {{ applicant["Category Threshold"] }}</span>  
+    <span class="category">{{applicant["Category"] }}</span>
   </div>
   <div class="details">
     <h4>DETERMINATIONS</h4>
@@ -37,6 +43,7 @@
       <div style="clear: both;"></div>
     </div>
   </div>
+  
 </div>
 <button ng-click="returnToForm()" type="submit">Return to Application</button>
 <button type="submit" ng-click="exportApplication()">Export Application</button>

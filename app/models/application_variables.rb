@@ -159,6 +159,15 @@ module ApplicationVariables
       :default    => "N"
     },
     {
+      :name       => "Number of Children Expected",
+      :type       => :integer,
+      :values     => (1..10),
+      :group      => :person,
+      :xpath      => :unimplemented,
+      :required_if => "Applicant Pregnant Indicator",
+      :required_if_value => "Y"
+    },
+    {
       :name       => "Applicant Post Partum Period Indicator",
       :type       => :flag,
       :values     => %w(Y N),
