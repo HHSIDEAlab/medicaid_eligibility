@@ -1,10 +1,13 @@
 angular.module('MAGI.services',[]).
-	factory('Application', ['$http','relationshipCodes','states', function($http,relationshipCodes, states){
+    factory('Application', ['$http','relationshipCodes','states', '$location', function($http,relationshipCodes, states, $location){
 		function Application(){
 			this.applicationId = "";
 			this.applicants = [];
 			this.taxReturns = [];
-			this.state = {};
+			// get the state from the URL if it is set
+			this.state = _.find(states, function(st){
+				return st.abbr == ($location.search()).state;
+			});
 			this.determination = {};
 			this.households = [[]];
 		}
@@ -543,7 +546,8 @@ angular.module('MAGI.services',[]).
             {code: '88', label: "Other", opposite: '88'}
         ]
 	).constant('states',[
-			{abbr: 'AL', name: 'Alabama'},
+	   /*
+	    {abbr: 'AL', name: 'Alabama'},
             {abbr: 'AK', name: 'Alaska'},
             {abbr: 'AZ', name: 'Arizona'},
             {abbr: 'AR', name: 'Arkansas'},
@@ -553,7 +557,9 @@ angular.module('MAGI.services',[]).
             {abbr: 'DE', name: 'Delaware'},
             {abbr: 'DC', name: 'District Of Columbia'},
             {abbr: 'FL', name: 'Florida'},
+           */
             {abbr: 'GA', name: 'Georgia'},
+	   /*
             {abbr: 'GU', name: 'Guam'},
             {abbr: 'HI', name: 'Hawaii'},
             {abbr: 'ID', name: 'Idaho'},
@@ -574,7 +580,9 @@ angular.module('MAGI.services',[]).
             {abbr: 'NE', name: 'Nebraska'},
             {abbr: 'NV', name: 'Nevada'},
             {abbr: 'NH', name: 'New Hampshire'},
+	   */
             {abbr: 'NJ', name: 'New Jersey'},
+	    /*
             {abbr: 'NM', name: 'New Mexico'},
             {abbr: 'NY', name: 'New York'},
             {abbr: 'NC', name: 'North Carolina'},
@@ -595,5 +603,6 @@ angular.module('MAGI.services',[]).
             {abbr: 'WV', name: 'West Virginia'},
             {abbr: 'WI', name: 'Wisconsin'},
             {abbr: 'WY', name: 'Wyoming'},
+	   */
 		]
 	);
