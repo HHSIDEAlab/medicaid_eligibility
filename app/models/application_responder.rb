@@ -3,14 +3,6 @@ module ApplicationResponder
     @raw_application
     returned_json = {"Determination Date" => @determination_date, "Applicants" => []}
 
-
-    # for household in @medicaid_households
-    #   hh_json = {}
-    #   hh_applicants = household.people.select{|p| @applicants.include? p}
-    #   if hh_applicants.any?
-    #     hh_json["MAGI"] = household.income
-    #   end
-
     for app in @applicants
       app_json = {}
       app_json["Person ID"] = app.person_id
@@ -85,11 +77,6 @@ module ApplicationResponder
 
       returned_json["Applicants"] << app_json
     end
-
-
-    #   hh_json["Non-Applicants"] = household.people.select{|p| !(@applicants.include?(p))}.map{|p| {"Person ID" => p.person_id}}
-    #   returned_json["Medicaid Households"] << hh_json
-    # end
 
     JSON.pretty_generate(returned_json)
   end
