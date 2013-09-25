@@ -574,7 +574,6 @@ angular.module('MAGI.services',[]).
             {code: '88', label: "Other", opposite: '88'}
         ]
 	).constant('states',[
-	   /*
 	    {abbr: 'AL', name: 'Alabama'},
             {abbr: 'AK', name: 'Alaska'},
             {abbr: 'AZ', name: 'Arizona'},
@@ -585,10 +584,8 @@ angular.module('MAGI.services',[]).
             {abbr: 'DE', name: 'Delaware'},
             {abbr: 'DC', name: 'District Of Columbia'},
             {abbr: 'FL', name: 'Florida'},
-           */
-            {abbr: 'GA', name: 'Georgia'},
-            {abbr: 'GU', name: 'Guam'},
-            /*
+            {abbr: 'GA', name: 'Georgia', inApp: true},
+            {abbr: 'GU', name: 'Guam', inApp: true},
             {abbr: 'HI', name: 'Hawaii'},
             {abbr: 'ID', name: 'Idaho'},
             {abbr: 'IL', name: 'Illinois'},
@@ -608,9 +605,7 @@ angular.module('MAGI.services',[]).
             {abbr: 'NE', name: 'Nebraska'},
             {abbr: 'NV', name: 'Nevada'},
             {abbr: 'NH', name: 'New Hampshire'},
-	   */
-            {abbr: 'NJ', name: 'New Jersey'},
-	    /*
+            {abbr: 'NJ', name: 'New Jersey', inApp: true},
             {abbr: 'NM', name: 'New Mexico'},
             {abbr: 'NY', name: 'New York'},
             {abbr: 'NC', name: 'North Carolina'},
@@ -630,7 +625,6 @@ angular.module('MAGI.services',[]).
             {abbr: 'WA', name: 'Washington'},
             {abbr: 'WV', name: 'West Virginia'},
             {abbr: 'WI', name: 'Wisconsin'},
-            {abbr: 'WY', name: 'Wyoming'},
-	   */
+            {abbr: 'WY', name: 'Wyoming'}
 		]
 	);
