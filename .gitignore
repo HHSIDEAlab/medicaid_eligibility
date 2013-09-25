@@ -16,7 +16,8 @@
 /cons-files
 /export-files
 
-
+# Ignore all emacs backup files
+*~
 
 /config/database.yml
 
