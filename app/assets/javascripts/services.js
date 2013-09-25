@@ -219,7 +219,7 @@ angular.module('MAGI.services',[]).
       {app: 'longTermCare', api: 'Applicant Attest Long Term Care', type: 'checkbox'},
 			{app: 'hasInsurance', api: 'Has Insurance', type: 'checkbox'},
 			{app: 'stateEmployeeHealthBenefits', api: 'State Health Benefits Through Public Employee', type: 'checkbox'},
-			{app: 'priorInsurance', api: 'Prior Insurance', type: 'checkbox'},
+			{app: 'priorInsuranceIndicator', api: 'Prior Insurance', type: 'checkbox'},
 			{app: 'pregnant', api: 'Applicant Pregnant Indicator', type: 'checkbox'},
 			{app: 'pregnantThreeMonths', api: 'Applicant Post Partum Period Indicator', type: 'checkbox'},
 			{app: 'formerlyFosterCare', api: 'Former Foster Care', type: 'checkbox'},
