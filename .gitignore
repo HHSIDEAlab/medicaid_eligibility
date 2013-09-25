@@ -18,7 +18,6 @@
 
 # Ignore all emacs backup files
 *~
-.gitignore
 
 /config/database.yml
 
