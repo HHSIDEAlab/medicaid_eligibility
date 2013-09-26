@@ -93,6 +93,7 @@
      "FPL Per Person": 5030
   },
   "GA": {
+    "Option Householding Minor Student": "N",
     "Count Unborn Children for Household": "02",
     "Option Deny Residency to Temporary Resident Students": "Y",
     "Option Require Work Quarters": "Y",
