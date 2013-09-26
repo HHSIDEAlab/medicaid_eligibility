@@ -1,85 +1,81 @@
 module ApplicationResponder
   def to_json(options={})
     @raw_application
-    returned_json = {"Determination Date" => @determination_date, "Medicaid Households" => []}
-    for household in @medicaid_households
-      hh_json = {}
-      hh_applicants = household.people.select{|p| @applicants.include? p}
-      if hh_applicants.any?
-        hh_json["MAGI"] = household.income
+    returned_json = {"Determination Date" => @determination_date, "Applicants" => []}
+
+    for app in @applicants
+      app_json = {}
+      app_json["Person ID"] = app.person_id
+
+      app_json["Medicaid Household"] = {}
+      app_json["Medicaid Household"]["People"] = app.medicaid_household.people.map{|p| p.person_id}
+      app_json["Medicaid Household"]["MAGI"] = app.medicaid_household.income
+      app_json["Medicaid Household"]["Size"] = app.medicaid_household.household_size
+
+      app_json["Medicaid Eligible"] = app.outputs["Applicant Medicaid Indicator"]
+      app_json["CHIP Eligible"] = app.outputs["Applicant CHIP Indicator"]
+      
+      if app.outputs["Applicant Medicaid Indicator"] == 'N' && app.outputs["Applicant CHIP Indicator"] == 'N'
+        ineligibility_reason = "Applicant ineligible for the following reasons:"
+        if app.applicant_attributes["Medicaid Residency Indicator"] == 'N'
+          ineligibility_reason += "\nApplicant did not meet residency requirements"
+        end
+        if app.outputs["Applicant Medicaid Citizen Or Immigrant Indicator"] == 'N'
+          ineligibility_reason += "\nApplicant did not meet citizenship/immigration requirements"
+        end
+        if app.outputs["Category Used to Calculate Medicaid Income"] == "None"
+          ineligibility_reason += "\nApplicant did not meet the requirements for any eligibility category"
+        elsif app.outputs["Applicant Income Medicaid Eligible Indicator"] == 'N'
+          ineligibility_reason += "\nApplicant did not meet the income requirements for any category qualified for"            
+        end
+        app_json["Ineligibility Reason"] = ineligibility_reason
+        app_json["Non-MAGI Referral"] = app.outputs["Applicant Medicaid Non-MAGI Referral Indicator"]
       end
+      
+      app_json["Category"] = app.outputs["Category Used to Calculate Medicaid Income"]
+      unless ["None"].include?(app.outputs["Category Used to Calculate Income"])
+        app_json["Category Threshold"] = app.outputs["FPL * Percentage Medicaid"].to_i
+      end
+      app_json["CHIP Category"] = app.outputs["Category Used to Calculate CHIP Income"]
+      app_json["CHIP Category Threshold"] = app.outputs["FPL * Percentage CHIP"].to_i
 
-      hh_json["Applicants"] = []
-      for app in hh_applicants
-        app_json = {}
-        app_json["Person ID"] = app.person_id
-        app_json["Medicaid Eligible"] = app.outputs["Applicant Medicaid Indicator"]
-        app_json["CHIP Eligible"] = app.outputs["Applicant CHIP Indicator"]
-        
-        if app.outputs["Applicant Medicaid Indicator"] == 'N' && app.outputs["Applicant CHIP Indicator"] == 'N'
-          ineligibility_reason = "Applicant ineligible for the following reasons:"
-          if app.applicant_attributes["Medicaid Residency Indicator"] == 'N'
-            ineligibility_reason += "\nApplicant did not meet residency requirements"
-          end
-          if app.outputs["Applicant Medicaid Citizen Or Immigrant Indicator"] == 'N'
-            ineligibility_reason += "\nApplicant did not meet citizenship/immigration requirements"
-          end
-          if app.outputs["Category Used to Calculate Medicaid Income"] == "None"
-            ineligibility_reason += "\nApplicant did not meet the requirements for any eligibility category"
-          elsif app.outputs["Applicant Income Medicaid Eligible Indicator"] == 'N'
-            ineligibility_reason += "\nApplicant did not meet the income requirements for any category qualified for"            
-          end
-          app_json["Ineligibility Reason"] = ineligibility_reason
-          app_json["Non-MAGI Referral"] = app.outputs["Applicant Medicaid Non-MAGI Referral Indicator"]
-        end
-        
-        app_json["Category"] = app.outputs["Category Used to Calculate Medicaid Income"]
-        unless ["None"].include?(app.outputs["Category Used to Calculate Income"])
-          app_json["Category Threshold"] = app.outputs["FPL * Percentage Medicaid"].to_i
-        end
-        app_json["CHIP Category"] = app.outputs["Category Used to Calculate CHIP Income"]
-        app_json["CHIP Category Threshold"] = app.outputs["FPL * Percentage CHIP"].to_i
+      app_json["Determinations"] = {}
 
-        app_json["Determinations"] = {}
-
-        for det in ApplicationVariables::DETERMINATIONS
-          det_json = {}
-          det_json["Indicator"] = app.outputs["Applicant #{det[:name]} Indicator"]
-          if app.outputs["Applicant #{det[:name]} Indicator"] == 'N'
-            det_json["Ineligibility Code"] = app.outputs["#{det[:name]} Ineligibility Reason"]
-          end
-          app_json["Determinations"][det[:name]] = det_json
-        end
-
+      for det in ApplicationVariables::DETERMINATIONS
         det_json = {}
-        det_json["Indicator"] = app.outputs["Medicaid Residency Indicator"]
-        if app.outputs["Medicaid Residency Indicator"] == 'N'
-          det_json["Ineligibility Code"] = app.outputs["Medicaid Residency Ineligibility Reason"]
+        det_json["Indicator"] = app.outputs["Applicant #{det[:name]} Indicator"]
+        if app.outputs["Applicant #{det[:name]} Indicator"] == 'N'
+          det_json["Ineligibility Code"] = app.outputs["#{det[:name]} Ineligibility Reason"]
         end
-        app_json["Determinations"]["Residency"] = det_json
-
-        app_json["Other Outputs"] = {}
-        app_json["Other Outputs"]["Qualified Children List"] = []
-        for qual_child in app.outputs["Qualified Children List"]
-          child_json = {
-            "Person ID" => qual_child["Person ID"],
-            "Determinations" => {}
-          }
-          for det_name in ["Dependent Age", "Deprived Child", "Relationship"]
-            det_json = {}
-            det_json["Indicator"] = qual_child["Child of Caretaker #{det_name} Indicator"]
-            if qual_child["Child of Caretaker #{det_name} Indicator"] == 'N'
-              det_json["Ineligibility Code"] = qual_child["Child of Caretaker #{det_name} Ineligibility Reason"]
-            end
-            child_json["Determinations"][det_name] = det_json
-          end
-          app_json["Other Outputs"]["Qualified Children List"] << child_json
-        end
-
-        hh_json["Applicants"] << app_json
+        app_json["Determinations"][det[:name]] = det_json
       end
-      hh_json["Non-Applicants"] = household.people.select{|p| !(@applicants.include?(p))}.map{|p| {"Person ID" => p.person_id}}
-      returned_json["Medicaid Households"] << hh_json
+
+      det_json = {}
+      det_json["Indicator"] = app.outputs["Medicaid Residency Indicator"]
+      if app.outputs["Medicaid Residency Indicator"] == 'N'
+        det_json["Ineligibility Code"] = app.outputs["Medicaid Residency Ineligibility Reason"]
+      end
+      app_json["Determinations"]["Residency"] = det_json
+
+      app_json["Other Outputs"] = {}
+      app_json["Other Outputs"]["Qualified Children List"] = []
+      for qual_child in app.outputs["Qualified Children List"]
+        child_json = {
+          "Person ID" => qual_child["Person ID"],
+          "Determinations" => {}
+        }
+        for det_name in ["Dependent Age", "Deprived Child", "Relationship"]
+          det_json = {}
+          det_json["Indicator"] = qual_child["Child of Caretaker #{det_name} Indicator"]
+          if qual_child["Child of Caretaker #{det_name} Indicator"] == 'N'
+            det_json["Ineligibility Code"] = qual_child["Child of Caretaker #{det_name} Ineligibility Reason"]
+          end
+          child_json["Determinations"][det_name] = det_json
+        end
+        app_json["Other Outputs"]["Qualified Children List"] << child_json
+      end
+
+      returned_json["Applicants"] << app_json
     end
 
     JSON.pretty_generate(returned_json)

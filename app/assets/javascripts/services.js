@@ -22,6 +22,7 @@ angular.module('MAGI.services',[]).
 			this.citizen = true;
 			this.livesInState = true;
 			this.isApplicant = true;
+      this.numberOfChildrenExpected = 1;
 			this.incomeTaxes = new IncomeTaxes();
 			this.relationships = [];
 			this.nonCitizen = {};
@@ -251,6 +252,10 @@ angular.module('MAGI.services',[]).
 				{app: 'EndDate', api: 'Prior Insurance End Date', type: 'date'}
 		];
 
+    Applicant.prototype.pregnantFields = [
+      {app: 'numberOfChildrenExpected', api: 'Number of Children Expected', type: 'string'}
+    ];
+
 		Applicant.prototype.fosterCareFields = [
 			{app: 'hadMedicaid', api: 'Had Medicaid During Foster Care', type: 'checkbox'},
 			{app: 'ageLeftFosterCare', api: 'Age Left Foster Care', type: 'string'},
@@ -339,6 +344,12 @@ angular.module('MAGI.services',[]).
 					}));
 			}
 
+      if(this.pregnant){
+        rv = rv.concat(_.map(this.pregnantFields, function(field){
+            return serializeField(field,me);
+          }));
+      }
+
 			if(this.formerlyFosterCare){
 				rv = rv.concat(_.map(this.fosterCareFields, function(field){
 						return serializeField(field,me.fosterCare);
@@ -386,11 +397,16 @@ angular.module('MAGI.services',[]).
       angular.forEach(this.claimedFields, function(field){
         me[field.app] = deserializeField(field, person);
       })
+
       me.priorInsurance = {};
 			angular.forEach(this.priorInsuranceFields, function(field){
 
 				me.priorInsurance[field.app] = deserializeField(field, person);
 			});
+
+      angular.forEach(this.pregnantFields, function(field){
+        me[field.app] = deserializeField(field, person);
+      })
 
 			me.fosterCare = {};
 
@@ -542,17 +558,17 @@ angular.module('MAGI.services',[]).
 			}).success(function(response){
 				console.log(response);
 				me.determination = response;
-				angular.forEach(me.determination["Medicaid Households"], function(hh){
-					angular.forEach(hh.Applicants, function(applicant){
-						applicant.cleanDets = _.map(_.pairs(applicant.Determinations), function(item){
-							return {
-								item: item[0], 
-								indicator: item[1]["Indicator"],
-								code: item[1]["Ineligibility Code"]
-							};
-						});					
-					});
-				})
+				
+				angular.forEach(me.determination["Applicants"], function(applicant){
+					applicant.cleanDets = _.map(_.pairs(applicant.Determinations), function(item){
+						return {
+							item: item[0], 
+							indicator: item[1]["Indicator"],
+							code: item[1]["Ineligibility Code"]
+						};
+					});					
+				});
+				
 				return response;
             }).error(function(error){
 				console.log(error);
