@@ -123,6 +123,12 @@
     <div class="form-row">
       <label for="applicant_{{ $index }}_pregnant">Pregnant</label>
       <input type="checkbox" checker id="applicant_{{ $index }}_pregnant" name="applicant_pregnant" ng-model="applicant.pregnant" data-exclusive="pregnant">
+      <div class="form-row-expandable-fields2" ng-show="applicant.pregnant">
+        <div class="form-row">
+          <label for="applicant_{{ $index }}_number_of_children_expected">Number of Children Expected</label>
+          <input type="number" ng-model = "applicant.numberOfChildrenExpected" id="applicant_{{ $index }}_number_of_children_expected" name="number_of_children_expected">
+        </div>
+      </div>
     </div>
     <div class="form-row">
       <label for="applicant_{{ $index }}_pregnant_three_months">Pregnant within the last 3 months</label>
