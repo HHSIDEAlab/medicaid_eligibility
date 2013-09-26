@@ -51,7 +51,10 @@ module ApplicationProcessor
   private
 
   def is_minor?(person)
-    person.person_attributes["Applicant Age"] < @config["Child Age Threshold"] || (person.person_attributes["Student Indicator"] == "Y" && person.person_attributes["Applicant Age"] < @config["Student Age Threshold"])
+    person.person_attributes["Applicant Age"] < @config["Child Age Threshold"] || 
+    (@config["Option Householding Minor Student"] == "Y" &&
+     person.person_attributes["Student Indicator"] == "Y" && 
+     person.person_attributes["Applicant Age"] < @config["Student Age Threshold"])
   end
 
   def live_together?(person1, person2)
