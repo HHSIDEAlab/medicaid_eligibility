@@ -228,8 +228,13 @@ module ApplicationProcessor
   end
 
   def calculate_household_size(person, med_household_members)
-    if person.person_attributes["Applicant Pregnant Indicator"] || 
-      @config["Count Unborn Children for Household"] == "01"
+    if person.person_attributes["Applicant Pregnant Indicator"] == 'Y'
+      persons_unborn_children = person.person_attributes["Number of Children Expected"]
+    else
+      persons_unborn_children = 0
+    end
+    
+    if @config["Count Unborn Children for Household"] == "01"
       return med_household_members.count + 
         med_household_members.inject(0){|sum, p| sum + 
           (p.person_attributes["Applicant Pregnant Indicator"] == 'Y' ? 
@@ -237,9 +242,9 @@ module ApplicationProcessor
         }
     elsif @config["Count Unborn Children for Household"] == "02"
       return med_household_members.count + 
-        med_household_members.count{|p| p.person_attributes["Applicant Pregnant Indicator"] == 'Y'}
+        med_household_members.count{|p| p.person_attributes["Applicant Pregnant Indicator"] == 'Y'} + (persons_unborn_children == 0 ? 0 : persons_unborn_children - 1)
     elsif @config["Count Unborn Children for Household"] == "03"
-      return med_household_members.count
+      return med_household_members.count + persons_unborn_children
     else
       raise "Invalid or missing state configuration Count Unborn Children for Household"
     end
