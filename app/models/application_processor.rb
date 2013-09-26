@@ -179,12 +179,12 @@ module ApplicationProcessor
       filers = dependent_tax_return.filers.select{|filer| parents_stepparents.include?(filer)}
       med_household_members = filers.map{|filer| determine_household(filer).people}.reduce(:+)
     # In all other cases, the household is person's children who are minors and,
-    # if person is a minor, person's siblings (435.603.f3)
+    # if person is a minor, person's siblings and parents (435.603.f3)
     else
       med_household_members = person.get_relationships(:child) + person.get_relationships(:stepchild)
       med_household_members.select!{|member| is_minor?(member)}
       if is_minor?(person)
-        med_household_members += person.get_relationships(:sibling).select{|sib| is_minor?(sib)}
+        med_household_members += person.get_relationships(:sibling).select{|sib| is_minor?(sib)} + parents_stepparents
       end
       med_household_members.select!{|member| live_together?(person, member)}
     end
@@ -233,7 +233,7 @@ module ApplicationProcessor
     else
       persons_unborn_children = 0
     end
-    
+
     if @config["Count Unborn Children for Household"] == "01"
       return med_household_members.count + 
         med_household_members.inject(0){|sum, p| sum + 
