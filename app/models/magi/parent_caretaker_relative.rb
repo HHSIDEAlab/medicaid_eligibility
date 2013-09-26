@@ -19,7 +19,6 @@ module MAGI
     input "Applicant Age", "Application", "Integer"
     input "Applicant Relationships", "Application", "List"
     
-    config "Age Limit for Primary Responsibility", "State Configuration", "Integer", [18, 19]
     config "Child Age Threshold", "System Configuration", "Integer", nil, 19
     config "Dependent Age Threshold", "System Configuration", "Integer", nil, 18
     config "Option Dependent Student", "State Configuration", "Char(1)", %w(Y N)
@@ -52,7 +51,13 @@ module MAGI
 
       # Case 3: Adult applicant attests to primary responsibility for child # under the primary responsibility age limit
       if v("Applicant Age") >= c("Child Age Threshold")
-        responsible_children = v("Applicant Relationships").select{|rel| rel.relationship_attributes["Attest Primary Responsibility"] == 'Y' && rel.person.person_attributes("Applicant Age") <= c("Age Limit for Primary Responsibility")}.map{|rel| rel.person}
+        responsible_children = v("Applicant Relationships").select{|rel| 
+          rel.relationship_attributes["Attest Primary Responsibility"] == 'Y' && 
+          (rel.person.person_attributes("Applicant Age") < c("Dependent Age Threshold") ||
+            (c("Option Dependent Student") == "Y" &&
+              rel.person.person_attributes("Student Indicator") == "Y" &&
+              rel.person.person_attributes("Applicant Age") < c("Dependent Age Threshold")))
+          }.map{|rel| rel.person}
 
         # Exception: Exclude if someone else (adult or not) claims the 
         # child on a tax return
