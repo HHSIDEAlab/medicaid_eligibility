@@ -31,13 +31,13 @@ module ApplicationVariables
       :xpath      => :unimplemented,
       :default    => "N"
     },
-    {
-      :name       => "Categorically Needy",
-      :type       => :flag,
-      :values     => %w(Y N),
-      :group      => :applicant,
-      :xpath      => :unimplemented
-    },
+    # {
+    #   :name       => "Categorically Needy",
+    #   :type       => :flag,
+    #   :values     => %w(Y N),
+    #   :group      => :applicant,
+    #   :xpath      => :unimplemented
+    # },
     {
       :name       => "Claimed as Dependent by Person Not on Application",
       :type       => :flag,
