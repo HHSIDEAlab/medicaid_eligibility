@@ -34,7 +34,7 @@ module ApplicationResponder
         end
         
         app_json["Category"] = app.outputs["Category Used to Calculate Medicaid Income"]
-        unless ["None", "Categorically Needy"].include?(app.outputs["Category Used to Calculate Income"])
+        unless ["None"].include?(app.outputs["Category Used to Calculate Income"])
           app_json["Category Threshold"] = app.outputs["FPL * Percentage Medicaid"].to_i
         end
         app_json["CHIP Category"] = app.outputs["Category Used to Calculate CHIP Income"]
