@@ -47,7 +47,7 @@ module MAGI
 
         o["APTC Referral Indicator"] = 'Y'
       elsif c("Refugee Medical Assistance Income Requirement") == 'N' || 
-        v("Calculated Income") < v("FPL") * c("Percent FPL Refugee Medical Assistance") * 0.01
+        v("Calculated Income") < v("FPL") * (c("Percent FPL Refugee Medical Assistance") + 5) * 0.01
         determination_y "Refugee Medical Assistance"
 
         o["APTC Referral Indicator"] = 'N'
