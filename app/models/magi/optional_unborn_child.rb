@@ -30,11 +30,11 @@ module MAGI
         o["Applicant Unborn Child Indicator"] = 'N'
         o["Unborn Child Determination Date"] = current_date
         o["Unborn Child Ineligibility Reason"] = 151
-      elsif v("Calculated Income") < c("Percent FPL Unborn Child") * v("FPL") * 0.01
+      elsif v("Calculated Income") < (c("Percent FPL Unborn Child") + 5) * v("FPL") * 0.01
         determination_y "Unborn Child"
 
         o["Percentage for CHIP Category Used"] = c("Percent FPL Unborn Child")
-        o["FPL * Percentage CHIP"] = v("FPL") * c("Percent FPL Unborn Child") * 0.01
+        o["FPL * Percentage CHIP"] = v("FPL") * (c("Percent FPL Unborn Child") + 5) * 0.01
       end
     end
   end

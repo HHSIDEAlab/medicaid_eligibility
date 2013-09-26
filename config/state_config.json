@@ -47,12 +47,12 @@
         "method": "standard",
         "threshold": 100
       },
-      "Pregnancy Category": {
+      "Parent Caretaker Category": {
         "percentage": "Y",
         "method": "standard",
         "threshold": 100
       },
-      "Parent Caretaker Category": {
+      "Pregnancy Category": {
         "percentage": "Y",
         "method": "standard",
         "threshold": 100
@@ -70,6 +70,11 @@
     },
 
     "CHIP Thresholds": {
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 133
+      },
       "Child Category": {
         "percentage": "Y",
         "method": "standard",
@@ -79,11 +84,6 @@
         "percentage": "Y",
         "method": "standard",
         "threshold": 100
-      },
-      "Pregnancy Category": {
-        "percentage": "Y",
-        "method": "standard",
-        "threshold": 133
       }
     }
   },
