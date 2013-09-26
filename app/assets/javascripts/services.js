@@ -235,7 +235,6 @@ angular.module('MAGI.services',[]).
 			{app: 'id', api: 'Person ID', type: 'string'},
 			{app: 'age', api: 'Applicant Age', type: 'string'},
 			{app: 'hours', api: 'Hours Worked Per Week', type: 'string'},
-			{app: 'categoricallyNeedy', api: 'Categorically Needy', type: 'checkbox'},
 	
 		];
 
