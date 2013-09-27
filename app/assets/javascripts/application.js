@@ -1,7 +1,5 @@
 //= require underscore
 //= require angular/angular
-//= require angular-animate/angular-animate
-//= require angular-route/angular-route
 //= require angular-ui-utils/modules/mask/mask
 //= require angular-dragon-drop/dragon-drop
 
