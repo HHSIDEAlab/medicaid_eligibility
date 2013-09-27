@@ -69,8 +69,8 @@ angular.module('MAGI.directives',[]).
 						},0,false);
 				});
 
-				angular.element(element.find("select")[0]).on('focus',setFocus);
-				angular.element(element.find("select")[0]).on('blur',removeFocus);
+				angular.element(element.find("select")[0]).bind('focus',setFocus);
+				angular.element(element.find("select")[0]).bind('blur',removeFocus);
 
 			}
 		};
