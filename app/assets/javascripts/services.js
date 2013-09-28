@@ -564,10 +564,8 @@ angular.module('MAGI.services',[]).
 				method: "POST",
 				data: app
 			}).success(function(response){
-				console.log("Things Worked");
 				console.log(response);
 				me.determination = response;
-				console.log('Foo');
 				angular.forEach(me.determination["Applicants"], function(applicant){
 					applicant.cleanDets = _.map(_.pairs(applicant.Determinations), function(item){
 						return {
@@ -577,11 +575,9 @@ angular.module('MAGI.services',[]).
 						};
 					});					
 				});
-				console.log('Bar');
 				
 				return response;
             }).error(function(error){
-            	console.log("Things Didn't Work");
 				console.log(error);
 			});
 		};
