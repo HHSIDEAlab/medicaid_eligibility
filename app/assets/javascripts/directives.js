@@ -7,7 +7,7 @@ angular.module('MAGI.directives',[]).
 				ngModel: '=',
 				id: '@'
 			}, 
-			template: '<div class="checker" ng-class="{focus:focus}"><span ng-class="{checked:ngModel}" ng-click="toggle()" >{{text}}</span><input type="checkbox" id="{{id}}" name="{{id}}" ng-model="ngModel" ng-change=setFocus() ng-focus=gotFocus() ng-blur=lostFocus()></div>',
+			template: '<div class="checker"><span ng-class="{checked:ngModel}" ng-click="toggle()" ><input type="checkbox" id="{{id}}" name="{{id}}" ng-model="ngModel" ng-change="setFocus()" ng-focus="gotFocus()" ng-blur="lostFocus()" /></span></div>',
 			replace: true,
 			link: function(scope, element, attrs) {
 				attrs.$observe('id', function(value) {				    
@@ -15,22 +15,26 @@ angular.module('MAGI.directives',[]).
 				});
 
 				scope.toggle = function(){
-					scope.ngModel = !scope.ngModel;
 					scope.setFocus();
 					return false;
 				}
 
 				scope.setFocus = function(){
-					$timeout(function(){element[0].children[1].focus();});
+					$timeout(function(){element[0].children[0].children[0].focus();});
 				}
 
-				scope.gotFocus = function(){
-					scope.focus = true;
+				var setFocus = function(){
+					element.addClass('focus');
 				}
 
-				scope.lostFocus = function(){
-					scope.focus = false;
+				var removeFocus = function(){
+					element.removeClass('focus');
 				}
+
+
+				angular.element(element[0].children[0].children[0]).bind('focus',setFocus);
+				angular.element(element[0].children[0].children[0]).bind('blur',removeFocus);
+
 
 			}
 		};
@@ -69,16 +73,16 @@ angular.module('MAGI.directives',[]).
 						},0,false);
 				});
 
-				angular.element(element.find("select")[0]).on('focus',setFocus);
-				angular.element(element.find("select")[0]).on('blur',removeFocus);
+				angular.element(element.find("select")[0]).bind('focus',setFocus);
+				angular.element(element.find("select")[0]).bind('blur',removeFocus);
 
 			}
 		};
 	}).
 	directive('eligibility', function(){
 		return {		
-			template: "<span class='eligibility' ng-class='{ineligible:(value == \"N\"), eligible:(value==\"Y\")}'><i ng-class='{\"icon-remove\":(\"{{value}}\" == \"N\"), \"icon-ok\":(\"{{value}}\"==\"Y\")}'></i><span ng-if='value==\"N\"'>Not </span>Medicaid Eligible</span>",
-			restrict: 'E',
+			template: "<span class='eligibility' ng-class='{ineligible:(value == \"N\"), eligible:(value==\"Y\")}'><i ng-class='{\"icon-remove\":(\"{{value}}\" == \"N\"), \"icon-ok\":(\"{{value}}\"==\"Y\")}'></i><span ng-show='value==\"N\"'>Not </span>Medicaid Eligible</span>",
+			restrict: 'A',
 			scope: {
 				value: '@value'
 			},

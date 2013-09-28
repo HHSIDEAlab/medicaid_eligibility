@@ -21,7 +21,7 @@ angular.module('MAGI.controllers', []).
 
                 $scope.exportApplication = function(){
                          $location.path("/exportimport");
-                }
+                };
 
                 $scope.$watch('newHousehold.length', function(newVal,oldVal){
                     if(newVal > 0){
@@ -30,11 +30,13 @@ angular.module('MAGI.controllers', []).
                 });
 
                 $scope.rehouseholdingHappened = function(){
-                    return _.map($scope.application.households,
-                                          function(hh){return hh.length}).
-                                      reduce(function (m, w) {return m + w}, 0) == $scope.applicants.length;
+                    return _.chain($scope.application.households).
+                        map(function(hh){return hh.length;}).
+                        reduce(function (m, w) {return m + w;}, 0).
+                        value() == $scope.applicants.length;
 
-                }
+                };
+
                 $scope.$watch('rehouseholdingHappened()', function(newVal, oldVal){
                     if(newVal){
                         $scope.application.cleanHouseholds();
@@ -43,17 +45,19 @@ angular.module('MAGI.controllers', []).
 
                 $scope.showNewHousehold = function(){
                     return $scope.application.households.length < $scope.applicants.length;
-                }
+                };
 
                 $scope.showHouseholds = function(){
                     return $scope.applicants.length > 1;
-                }
+                };
 
                 $scope.checkEligibility = function(){
-                         console.log(Application.serialize());
-
+                         console.log("Form Valid: " + $scope.applicationForm.$valid);
+                         console.log(JSON.stringify($scope.application.serialize()));
+                         console.log('CALLIN');
                         if($scope.applicationForm.$valid){
-                                Application.checkEligibility().then(function(resp){
+                                var serv = $scope.application.checkEligibility();
+                                serv.then(function(resp){
                                         $location.path("/results");
                                 });
                         } else {
@@ -63,7 +67,7 @@ angular.module('MAGI.controllers', []).
                                             angular.element(document.querySelector("input.ng-invalid"))[0].focus( );  
                                 });                           
                         }
-                }
+                };
 
 
                 $scope.addApplicant = function(){
@@ -72,26 +76,22 @@ angular.module('MAGI.controllers', []).
 
                 $scope.showFilers = function(){
                         return $scope.applicants.length > 0;
-                }
-
-                $scope.showDependents = function(){
-                        return $scope.applicants.length > 1;
-                }
+                };
 
 
                 // We want to initialize the application with an applicant and a tax return
-                if($scope.applicants.length==0){
+                if($scope.applicants.length === 0){
                         $scope.addApplicant();
                         $scope.addTaxReturn();
                 }
 
 
 		$scope.states = states;
-        $scope.appStates = _.filter(states, function(state){return state.inApp});
+        $scope.appStates = _.filter(states, function(state){return state.inApp;});
 	}]).
         controller('ApplicantController',['$scope',function($scope){
                 $scope.checkResponsibility = function(){
-                        return $scope.applicant.age <= 19
+                        return $scope.applicant.age <= 19;
                 };
 
                 $scope.$watch('checkResponsibility()', function(newValue,oldValue){
@@ -112,40 +112,41 @@ angular.module('MAGI.controllers', []).
 
                 $scope.updateRelationship = function(relationship){
                         relationship.updateOpposite();
-                }
+                };
 
                 $scope.updateMonthly = function(applicant){
                   applicant.updateMonthly();
-                }
+                };
 
                 $scope.updateWages = function(applicant){
                   applicant.updateWages();
-                }
+                };
 
                 $scope.notMe = function(other) {
                         return other !== $scope.applicant; 
-                } 
+                };
         }]).
         controller('ResultsController',['$scope','$location','Application', function($scope,$location,Application){
                 $scope.applicants = Application.determination['Applicants'];
                 $scope.expandByDefault = function(){
-                        return $scope.applicants.length == 1;
-                }
+                        // return $scope.applicants.length == 1;
+                        return true;
+                };
 
                 $scope.exportApplication = function(){
                          $location.path("/exportimport");
-                }
+                };
 
 
                 $scope.returnToForm = function(){
                         $location.path("/application");
-                }
+                };
         }]).
         controller('ExportImportController',['$scope','$location','Application', function($scope,$location,Application){
                 $scope.applicationJson = angular.toJson(Application.serialize(), true);
                 $scope.resultsJson = angular.toJson(Application.determination, true);
 
-                $scope.showResults = Object.keys(Application.determination).length > 0;
+                $scope.showResults = _.keys(Application.determination).length > 0;
 
                 $scope.importApplication = function(){
                         // Note - may want to wrap this in a try/catch loop of some sort
@@ -154,9 +155,45 @@ angular.module('MAGI.controllers', []).
                         Application.deserialize(application);
                         // Redirect to application
                         $location.path("/application");
-                }
+                };
 
                 $scope.returnToForm = function(){
                         $location.path("/application");
+                };
+        }]).
+        controller('TaxReturnController', ['$scope',function($scope){
+            $scope.inputs = {newFiler: {}, newDependent: {}};
+
+            $scope.canAddFiler = function(){
+                return $scope.taxReturn.canAddFiler($scope.application);
+            };
+
+            $scope.showDependents = function(){
+                return $scope.taxReturn.dependents.length > 0 || $scope.canAddDependent();
+            };
+
+            $scope.canAddDependent = function(){
+                return $scope.taxReturn.canAddDependent($scope.application);
+            }
+
+            $scope.$watch('inputs.newFiler', function(newFiler, oldVal){
+                console.log(newFiler);
+                if(newFiler.id){
+                    $scope.taxReturn.addFiler(newFiler);
+                    $scope.inputs.newFiler = {};
                 }
+            });
+
+            $scope.$watch('inputs.newDependent', function(newDependent, oldVal){
+                if(newDependent.id){
+                    $scope.taxReturn.addDependent(newDependent);
+                    $scope.inputs.newDependent = {};
+                }
+            });
+
+            $scope.$watch('taxReturn.filers', function(newVal, old){
+                console.log()
+            })
+
+
         }]);

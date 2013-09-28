@@ -2,7 +2,7 @@
   
   <div class="head">
     <h3>{{ applicant["Person ID"] }}</h3>
-    <eligibility data-value='{{applicant["Medicaid Eligible"]}}'></eligibility>
+    <span eligibility data-value='{{applicant["Medicaid Eligible"]}}'></span>
     <span class="threshold">Eligibility Threshold: {{ applicant["Category Threshold"] }}</span>  
     <span class="category">{{applicant["Category"] }}</span>
   </div>
