@@ -30,10 +30,10 @@ angular.module('MAGI.controllers', []).
                 });
 
                 $scope.rehouseholdingHappened = function(){
-                    return _.map(
-                        $scope.application.households,
-                            function(hh){return hh.length;}
-                        ).reduce(function (m, w) {return m + w;}, 0) == $scope.applicants.length;
+                    return _.chain($scope.application.households).
+                        map(function(hh){return hh.length;}).
+                        reduce(function (m, w) {return m + w;}, 0).
+                        value() == $scope.applicants.length;
 
                 };
 
@@ -54,9 +54,10 @@ angular.module('MAGI.controllers', []).
                 $scope.checkEligibility = function(){
                          console.log("Form Valid: " + $scope.applicationForm.$valid);
                          console.log(JSON.stringify($scope.application.serialize()));
-
+                         console.log('CALLIN');
                         if($scope.applicationForm.$valid){
-                                $scope.application.checkEligibility().then(function(resp){
+                                var serv = $scope.application.checkEligibility();
+                                serv.then(function(resp){
                                         $location.path("/results");
                                 });
                         } else {
@@ -128,7 +129,8 @@ angular.module('MAGI.controllers', []).
         controller('ResultsController',['$scope','$location','Application', function($scope,$location,Application){
                 $scope.applicants = Application.determination['Applicants'];
                 $scope.expandByDefault = function(){
-                        return $scope.applicants.length == 1;
+                        // return $scope.applicants.length == 1;
+                        return true;
                 };
 
                 $scope.exportApplication = function(){
