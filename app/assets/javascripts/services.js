@@ -66,7 +66,7 @@ angular.module('MAGI.services',[]).
 				return [field.api, val];
 			});
 			return _.object(incomeData);
-		}
+		};
 
 		IncomeTaxes.prototype.deserialize = function(obj){
 			var me = this;
@@ -74,48 +74,65 @@ angular.module('MAGI.services',[]).
 				me[field.app] = obj[field.api];		
 			});
 			return this;
-		}
+		};
 
 		// Note. Remove this eventually. UI should not have to deal with service
 		// For now, sets the number of filers and dependents in a tax return to 
 		// be an appropriate amount for the number of applicants
 		TaxReturn.prototype.checkNumFilers = function(numApplicants){
-			var numFilers = Math.min(numApplicants,2);
-			while(this.filers.length < numFilers){
-                    this.filers.push({});
-            }
-            while(this.filers.length > numFilers){
-                    this.filers.pop();
-            }
+			// var numFilers = Math.min(numApplicants,2);
+			// while(this.filers.length < numFilers){
+   //                  this.filers.push({});
+   //          }
+   //          while(this.filers.length > numFilers){
+   //                  this.filers.pop();
+   //          }
             
-            var numDependents = Math.max(numApplicants-1,0);
-            while(this.dependents.length < numDependents){
-                    this.dependents.push({});
-            }
-            while(this.dependents.length > numDependents){
-                    this.dependents.pop();
-            }
-		}
+   //          var numDependents = Math.max(numApplicants-1,0);
+   //          while(this.dependents.length < numDependents){
+   //                  this.dependents.push({});
+   //          }
+   //          while(this.dependents.length > numDependents){
+   //                  this.dependents.pop();
+   //          }
+		};
+
+		TaxReturn.prototype.canAddFiler = function(application){
+			return (this.filers.length < 2 ) && (this.filers.length < application.applicants.length);
+		};
+
+		TaxReturn.prototype.canAddDependent = function(application){
+			return (this.filers.length > 0) && (this.dependents.length < application.applicants.length - 1);
+		};
+
+		TaxReturn.prototype.addFiler = function(applicant){
+			this.filers.push(applicant);
+		};
+
+		TaxReturn.prototype.addDependent = function(applicant){
+			this.dependents.push(applicant);
+		};
+
 
 		Application.prototype.addTaxReturn = function(){
 			var taxReturn = new TaxReturn();
 			taxReturn.checkNumFilers(this.applicants.length);
 			this.taxReturns.push(taxReturn);
-		}
+		};
 
 		Application.prototype.removeTaxReturn = function(taxReturn){
 			this.taxReturns.splice(this.taxReturns.indexOf(taxReturn),1);
-            if(this.taxReturns.length == 0){
+            if(this.taxReturns.length === 0){
             	this.addTaxReturn();
             }
-		}
+		};
 
 		Application.prototype.cleanHouseholds = function(){
 			var idx = _.map(this.households, function(hh){return hh.length;}).indexOf(0);
 			if(idx >= 0 && this.applicants.length > 0){
 				this.households.splice(idx,1);
 			}
-		}
+		};
 
 		Application.prototype.addApplicant = function(applicantName){
 			var applicant = new Applicant();
@@ -133,7 +150,7 @@ angular.module('MAGI.services',[]).
 			angular.forEach(this.taxReturns, function(taxReturn){
 				taxReturn.checkNumFilers(appl.applicants.length);
 			});
-		}
+		};
 
 		Applicant.prototype.addRelationship = function(other){
 			this.relationships.push(new Relationship(this, other, ''));
@@ -143,19 +160,19 @@ angular.module('MAGI.services',[]).
 			return _.find(this.relationships, function(rel){
 				return rel.otherApplicant == otherApplicant;
 			});
-		}
+		};
 
 		Applicant.prototype.removeRelationship = function(otherApplicant){
 			var toRemove = this.getRelationship(otherApplicant);
 			var idx = this.relationships.indexOf(toRemove);
             this.relationships.splice(idx, 1);
-		}
+		};
 
 		Applicant.prototype.removeRelationships = function(){
 			angular.forEach(this.relationships, function(rel){
 				rel.otherApplicant.removeRelationship(this);
 			});
-		}
+		};
 
 		Application.prototype.removeApplicant = function(applicant){
 			var me = this;
@@ -192,29 +209,29 @@ angular.module('MAGI.services',[]).
 
 			me.cleanHouseholds();
 
-            if( this.applicants.length == 0 ){
+            if( this.applicants.length === 0 ){
                 this.addApplicant('Applicant 1');
             }
-		}
+		};
 
-    Applicant.prototype.updateMonthly = function(){
-      this.incomeTaxes.monthly = Math.floor(this.incomeTaxes.wages / 12);
-    }
+	    Applicant.prototype.updateMonthly = function(){
+	      this.incomeTaxes.monthly = Math.floor(this.incomeTaxes.wages / 12);
+	    };
 
-    Applicant.prototype.updateWages = function(){
-      this.incomeTaxes.wages = this.incomeTaxes.monthly * 12;
-    }
+	    Applicant.prototype.updateWages = function(){
+	      this.incomeTaxes.wages = this.incomeTaxes.monthly * 12;
+	    };
 
 		Relationship.prototype.getOpposite = function(){
 			return this.otherApplicant.getRelationship(this.applicant);
-		}
+		};
 
 		Relationship.prototype.updateOpposite = function(){
 			var me = this;
 			this.getOpposite().code = _.find(relationshipCodes, function(rc){
                     return rc.opposite == me.code;
             }).code;
-		}
+		};
 
 		Applicant.prototype.fields = [
 			{app: 'isApplicant', api: 'Is Applicant', type: 'checkbox'},
@@ -224,7 +241,7 @@ angular.module('MAGI.services',[]).
 			{app: 'incarcerated', api: 'Incarceration Status', type: 'checkbox'},
 			{app: 'livesInState', api: 'Lives In State', type: 'checkbox'},
 			{app: 'claimedByNonApplicant', api: 'Claimed as Dependent by Person Not on Application', type: 'checkbox'},
-      {app: 'longTermCare', api: 'Applicant Attest Long Term Care', type: 'checkbox'},
+      		{app: 'longTermCare', api: 'Applicant Attest Long Term Care', type: 'checkbox'},
 			{app: 'hasInsurance', api: 'Has Insurance', type: 'checkbox'},
 			{app: 'stateEmployeeHealthBenefits', api: 'State Health Benefits Through Public Employee', type: 'checkbox'},
 			{app: 'priorInsuranceIndicator', api: 'Prior Insurance', type: 'checkbox'},
@@ -235,54 +252,52 @@ angular.module('MAGI.services',[]).
 			{app: 'citizen', api: 'US Citizen Indicator', type: 'checkbox'},
 			{app: 'id', api: 'Person ID', type: 'string'},
 			{app: 'age', api: 'Applicant Age', type: 'string'},
-			{app: 'hours', api: 'Hours Worked Per Week', type: 'string'},
-	
+			{app: 'hours', api: 'Hours Worked Per Week', type: 'string'}
 		];
 
-    Applicant.prototype.residencyFields = [
-      {app: 'temporarilyOutOfState', api: 'Temporarily Out of State', type: 'checkbox'},
-      {app: 'noFixedAddress', api: 'No Fixed Address', type: 'checkbox'}
-    ]
+	    Applicant.prototype.residencyFields = [
+	      {app: 'temporarilyOutOfState', api: 'Temporarily Out of State', type: 'checkbox'},
+	      {app: 'noFixedAddress', api: 'No Fixed Address', type: 'checkbox'}
+	    ];
 
-    Applicant.prototype.claimedFields = [
-      {app: 'claimerIsOutOfState', api: 'Claimer Is Out of State', type: 'checkbox'}
-    ]
+	    Applicant.prototype.claimedFields = [
+	      {app: 'claimerIsOutOfState', api: 'Claimer Is Out of State', type: 'checkbox'}
+	    ];
 
 		Applicant.prototype.priorInsuranceFields = [
 				{app: 'EndDate', api: 'Prior Insurance End Date', type: 'date'}
 		];
 
-    Applicant.prototype.pregnantFields = [
-      {app: 'numberOfChildrenExpected', api: 'Number of Children Expected', type: 'string'}
-    ];
+	    Applicant.prototype.pregnantFields = [
+	      {app: 'numberOfChildrenExpected', api: 'Number of Children Expected', type: 'string'}
+	    ];
 
 		Applicant.prototype.fosterCareFields = [
 			{app: 'hadMedicaid', api: 'Had Medicaid During Foster Care', type: 'checkbox'},
 			{app: 'ageLeftFosterCare', api: 'Age Left Foster Care', type: 'string'},
 			{app: 'state', api: 'Foster Care State', type: 'state'}
-		]
+		];
 
 		Applicant.prototype.nonCitizenFields = [
-      {app: 'legalPermanentResident', api: 'Legal Permanent Resident', type: 'checkbox'},
+      		{app: 'legalPermanentResident', api: 'Legal Permanent Resident', type: 'checkbox'},
 			{app: 'lawful', api: 'Lawful Presence Attested', type: 'checkbox'},
 			{app: 'fiveYearBar', api: 'Five Year Bar Applies', type: 'checkbox'},
 			{app: 'fortyQuarters', api: 'Applicant Has 40 Title II Work Quarters', type: 'checkbox'},
 			{app: 'fiveYearBarMet', api: 'Five Year Bar Met', type: 'checkbox'},
 			{app: 'refugeeMedicalAssistanceEligible', api: 'Refugee Status', type: 'checkbox'},
 			{app: 'humanTraffickingVictim', api: 'Victim of Trafficking', type: 'checkbox'}
-		]
+		];
 
 		Applicant.prototype.refugeeMedicalAssistanceFields = [
 			{app: 'StartDate', api: 'Refugee Medical Assistance Start Date', type: 'date'}
-		]
+		];
 
 		Applicant.prototype.humanTraffickingFields = [
 			{app: 'qualified', api: 'Qualified Non-Citizen Status', type: 'checkbox'},
 			{app: 'deportWithheldDate', api: 'Non-Citizen Deport Withheld Date', type: 'date'},
 			{app: 'entryDate', api: 'Non-Citizen Entry Date', type: 'date'},
-			{app: 'statusGrantDate', api: 'Non-Citizen Status Grant Date', type: 'date'},
-
-		]
+			{app: 'statusGrantDate', api: 'Non-Citizen Status Grant Date', type: 'date'}
+		];
 
 		var serializeField = function(field, baseObject){
 			if(field.type == 'checkbox'){
@@ -293,11 +308,11 @@ angular.module('MAGI.services',[]).
 				var month = baseObject[field.app].substring(0,2);
 				var day = baseObject[field.app].substring(2,4);
 				var year = baseObject[field.app].substring(4,8);
-				return [field.api, year + "-" + month + "-" + day]
+				return [field.api, year + "-" + month + "-" + day];
 			} else if(field.type == 'state'){
-        return [field.api, baseObject[field.app].abbr]
-      }
-		}
+		        return [field.api, baseObject[field.app].abbr];
+      		}
+		};
 
 		var deserializeField = function(field, serializedObject){
 			if(field.type == 'checkbox'){
@@ -313,11 +328,11 @@ angular.module('MAGI.services',[]).
 				}
 				return "";
 			} else if(field.type == 'state'){
-        return _.find(states, function(st){
-          return st.abbr ==  serializedObject[field.api];
-        });
-      }
-		}
+		        return _.find(states, function(st){
+		         	return st.abbr ==  serializedObject[field.api];
+		        });
+		    }
+		};
 
 		Applicant.prototype.serialize = function(){
 			var me = this;
@@ -326,29 +341,29 @@ angular.module('MAGI.services',[]).
 				return serializeField(field,me);
 			});
 
-      if(!(this.livesInState)){
-        rv = rv.concat(_.map(this.residencyFields, function(field){
-            return serializeField(field,me);
-          }));
-      }
+		    if(!(this.livesInState)){
+        		rv = rv.concat(_.map(this.residencyFields, function(field){
+            		return serializeField(field,me);
+          		}));
+      		}
 
-      if(this.claimedByNonApplicant){
-        rv = rv.concat(_.map(this.claimedFields, function(field){
-            return serializeField(field,me);
-          }));
-      }
+	        if(this.claimedByNonApplicant){
+	        	rv = rv.concat(_.map(this.claimedFields, function(field){
+	            	return serializeField(field,me);
+	          	}));
+		    }
 
 			if(this.priorInsuranceIndicator){
 				rv = rv.concat(_.map(this.priorInsuranceFields, function(field){
-						return serializeField(field,me.priorInsurance);
-					}));
+					return serializeField(field,me.priorInsurance);
+				}));
 			}
 
-      if(this.pregnant){
-        rv = rv.concat(_.map(this.pregnantFields, function(field){
-            return serializeField(field,me);
-          }));
-      }
+	    	if(this.pregnant){
+        		rv = rv.concat(_.map(this.pregnantFields, function(field){
+            		return serializeField(field,me);
+		        }));
+	        }
 
 			if(this.formerlyFosterCare){
 				rv = rv.concat(_.map(this.fosterCareFields, function(field){
@@ -381,7 +396,7 @@ angular.module('MAGI.services',[]).
 
 			console.log(rv);
 			return _.object(rv);
-		}
+		};
 
 
 		Applicant.prototype.deserialize = function(person){
@@ -390,36 +405,35 @@ angular.module('MAGI.services',[]).
 				me[field.app] = deserializeField(field, person);
 			});
 
-      angular.forEach(this.residencyFields, function(field){
-        me[field.app] = deserializeField(field, person);
-      })
+		    angular.forEach(this.residencyFields, function(field){
+		      me[field.app] = deserializeField(field, person);
+		    });
 
-      angular.forEach(this.claimedFields, function(field){
-        me[field.app] = deserializeField(field, person);
-      })
+		    angular.forEach(this.claimedFields, function(field){
+		      me[field.app] = deserializeField(field, person);
+		    });
 
-      me.priorInsurance = {};
+		    me.priorInsurance = {};
 			angular.forEach(this.priorInsuranceFields, function(field){
-
 				me.priorInsurance[field.app] = deserializeField(field, person);
 			});
 
-      angular.forEach(this.pregnantFields, function(field){
-        me[field.app] = deserializeField(field, person);
-      })
+		    angular.forEach(this.pregnantFields, function(field){
+		        me[field.app] = deserializeField(field, person);
+		    });
 
 			me.fosterCare = {};
 
 			angular.forEach(this.fosterCareFields, function(field){
 				me.fosterCare[field.app] = deserializeField(field, person);
-			})
+			});
 
 			me.incomeTaxes = new IncomeTaxes().deserialize(person['Income']);
 
 			me.nonCitizen = {
 				refugeeMedicalAssistance: {},
 				humanTrafficking: {}
-			}
+			};
 
 			angular.forEach(this.nonCitizenFields, function(field){
 				me.nonCitizen[field.app] = deserializeField(field, person);
@@ -434,31 +448,31 @@ angular.module('MAGI.services',[]).
 			});
 
 			return this;
-		}
+		};
 
 		Application.prototype.getApplicantById = function(id){
 			return _.find(this.applicants, function(appl){
 				return appl.id == id;
 			});
-		}
+		};
 
 
 		Relationship.prototype.serialize = function(){
 			return {
 	          "Other ID": this.otherApplicant.id,
 	          "Relationship Code": this.code
-	        }
+	        };
 		};
 
 		TaxReturn.prototype.serialize = function(){
 			return {
-				"Filers": _.filter(this.filers, function(pers){return pers && pers.id && pers.id.length;}).map(function(pers){
+				"Filers": _.chain(this.filers).filter(function(pers){return pers && pers.id && pers.id.length;}).map(function(pers){
 					return {"Person ID": pers.id};
-				}),
-				"Dependents": _.filter(this.dependents, function(pers){ return pers.id && pers.id.length;}).map(function(pers){
+				}).value(),
+				"Dependents": _.chain(this.dependents).filter(function(pers){ return pers.id && pers.id.length;}).map(function(pers){
 					return {"Person ID": pers.id};
-				})
-			}
+				}).value()
+			};
 		};
 
 		TaxReturn.prototype.deserialize = function(application, obj){
@@ -471,7 +485,7 @@ angular.module('MAGI.services',[]).
 			});
 
 			return this;
-		}
+		};
 
 		Application.prototype.serialize = function(){
 			var st;
@@ -480,16 +494,17 @@ angular.module('MAGI.services',[]).
 			} else{
 				st = "";
 			}
+
 			return {
 				"State": st,
 				"Name": this.applicationId,
 				"People": _.map(this.applicants,
-					function(applicant){return applicant.serialize()}),
+					function(applicant){return applicant.serialize();}),
 				"Physical Households": _.map(this.households, function(hh, idx){
 					return {
 						"Household ID": "Household" + (idx+1),
 						"People": _.map(hh, function(applicant){
-							return {"Person ID": applicant.id}
+							return {"Person ID": applicant.id};
 						})
 					};
 				}),
@@ -526,26 +541,19 @@ angular.module('MAGI.services',[]).
 				this.state = {};
 			}
 
-
-			// TODO: Deserialize physical households
-
 			angular.forEach(application["People"], function(person){
 				var pers = me.getApplicantById(person["Person ID"]);
 				pers.relationships = _.map(person["Relationships"], function(rel){
-					return new Relationship(
-						pers, 
-						me.getApplicantById(rel["Other ID"]), 
-						rel['Relationship Code']
-					);
+					return new Relationship(pers, me.getApplicantById(rel["Other ID"]), rel['Relationship Code']);
 				});
 			});
 
 			console.log(this);
-		}
+		};
 
 		Application.prototype.resetResults = function(){
 			this.determination = {};
-		}
+		};
 
 		// Returns a promise of a result.
 		Application.prototype.checkEligibility = function(){
@@ -558,7 +566,6 @@ angular.module('MAGI.services',[]).
 			}).success(function(response){
 				console.log(response);
 				me.determination = response;
-				
 				angular.forEach(me.determination["Applicants"], function(applicant){
 					applicant.cleanDets = _.map(_.pairs(applicant.Determinations), function(item){
 						return {
@@ -573,10 +580,11 @@ angular.module('MAGI.services',[]).
             }).error(function(error){
 				console.log(error);
 			});
-		}
+		};
+
 		return new Application();
-	}])
-	.constant('relationshipCodes',
+	}]).
+	constant('relationshipCodes',
 		[
             {code: '02', label: 'Spouse', opposite: '02'},
             {code: '03', label: 'Parent', opposite: '04'},
@@ -597,8 +605,8 @@ angular.module('MAGI.services',[]).
             {code: '30', label: 'Parent-in-law', opposite: '26'},
             {code: 'XX', label: "Domestic partner's child", opposite: '17'},
             {code: '88', label: "Other", opposite: '88'}
-        ]
-	).constant('states',[
+        ]).
+	constant('states',[
 	    {abbr: 'AL', name: 'Alabama'},
             {abbr: 'AK', name: 'Alaska'},
             {abbr: 'AZ', name: 'Arizona'},
@@ -651,5 +659,4 @@ angular.module('MAGI.services',[]).
             {abbr: 'WV', name: 'West Virginia'},
             {abbr: 'WI', name: 'Wisconsin'},
             {abbr: 'WY', name: 'Wyoming'}
-		]
-	);
+		]);
