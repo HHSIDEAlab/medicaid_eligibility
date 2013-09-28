@@ -279,6 +279,7 @@ button[type=submit], button.submitlike {
   padding: 20px 85px;
   margin: 40px auto 0;
   text-align: center;
+  width: 350px;
 }
 
 div.selector {

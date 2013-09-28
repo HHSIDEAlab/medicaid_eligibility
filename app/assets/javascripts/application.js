@@ -8,4 +8,3 @@
 //= require controllers
 //= require filters
 //= require directives
-
