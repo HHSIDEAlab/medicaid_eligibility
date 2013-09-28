@@ -146,7 +146,7 @@ angular.module('MAGI.controllers', []).
                 $scope.applicationJson = angular.toJson(Application.serialize(), true);
                 $scope.resultsJson = angular.toJson(Application.determination, true);
 
-                $scope.showResults = Object.keys(Application.determination).length > 0;
+                $scope.showResults = _.keys(Application.determination).length > 0;
 
                 $scope.importApplication = function(){
                         // Note - may want to wrap this in a try/catch loop of some sort
