@@ -81,8 +81,8 @@ angular.module('MAGI.directives',[]).
 	}).
 	directive('eligibility', function(){
 		return {		
-			template: "<span class='eligibility' ng-class='{ineligible:(value == \"N\"), eligible:(value==\"Y\")}'><i ng-class='{\"icon-remove\":(\"{{value}}\" == \"N\"), \"icon-ok\":(\"{{value}}\"==\"Y\")}'></i><span ng-if='value==\"N\"'>Not </span>Medicaid Eligible</span>",
-			restrict: 'E',
+			template: "<span class='eligibility' ng-class='{ineligible:(value == \"N\"), eligible:(value==\"Y\")}'><i ng-class='{\"icon-remove\":(\"{{value}}\" == \"N\"), \"icon-ok\":(\"{{value}}\"==\"Y\")}'></i><span ng-show='value==\"N\"'>Not </span>Medicaid Eligible</span>",
+			restrict: 'A',
 			scope: {
 				value: '@value'
 			},
