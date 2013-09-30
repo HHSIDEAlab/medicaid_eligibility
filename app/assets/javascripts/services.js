@@ -591,7 +591,7 @@ angular.module('MAGI.services',[]).
             {code: '04', label: 'Child', opposite: '03'},
             {code: '05', label: 'Stepchild', opposite: '12'},
             {code: '06', label: 'Grandchild', opposite: '15'},
-            {code: '07', label: 'Sibling', opposite: '07'},
+            {code: '07', label: 'Sibling/Stepsibling', opposite: '07'},
             {code: '08', label: 'Domestic partner', opposite: '08'},
             {code: '12', label: 'Stepparent', opposite: '05'},
             {code: '13', label: 'Uncle/Aunt', opposite: '14'},
