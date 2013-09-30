@@ -87,5 +87,15 @@ angular.module('MAGI.directives',[]).
 				value: '@value'
 			},
 			replace: true
-		}
-	});
+		};
+	}).
+  directive('chip-eligibility', function(){
+    return {    
+      template: "<span class='chip-eligibility' ng-class='{ineligible:(value == \"N\"), eligible:(value==\"Y\")}'><i ng-class='{\"icon-remove\":(\"{{value}}\" == \"N\"), \"icon-ok\":(\"{{value}}\"==\"Y\")}'></i><span ng-show='value==\"N\"'>Not </span>CHIP Eligible</span>",
+      restrict: 'A',
+      scope: {
+        value: '@value'
+      },
+      replace: true
+    };
+  });
