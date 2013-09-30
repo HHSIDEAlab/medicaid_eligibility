@@ -5,6 +5,10 @@
     <span eligibility data-value='{{applicant["Medicaid Eligible"]}}'></span>
     <span class="threshold">Eligibility Threshold: {{ applicant["Category Threshold"] }}</span>  
     <span class="category">{{applicant["Category"] }}</span>
+    <br />
+    <span chip-eligibility data-value='{{applicant["CHIP Eligible"]}}'></span>
+    <span class="threshold">Eligibility Threshold: {{ applicant["CHIP Category Threshold"] }}</span>  
+    <span class="category">{{applicant["CHIP Category"] }}</span>
   </div>
   <div class="details">
     <h4>HOUSEHOLD:
