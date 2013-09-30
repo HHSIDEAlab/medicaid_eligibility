@@ -517,6 +517,7 @@ module ApplicationVariables
     :child_in_law => :parent_in_law,
     :former_spouse => :former_spouse,
     :parent_in_law => :child_in_law,
+    :domestic_partners_child => :parents_domestic_partner,
     :other => :other
   }
 

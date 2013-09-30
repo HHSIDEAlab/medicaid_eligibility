@@ -603,7 +603,7 @@ angular.module('MAGI.services',[]).
             {code: '26', label: 'Child-in-law', opposite: '30'},
             {code: '27', label: 'Former spouse', opposite: '27'},
             {code: '30', label: 'Parent-in-law', opposite: '26'},
-            {code: 'XX', label: "Domestic partner's child", opposite: '17'},
+            {code: '70', label: "Domestic partner's child", opposite: '17'},
             {code: '88', label: "Other", opposite: '88'}
         ]).
 	constant('states',[
