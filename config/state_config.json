@@ -124,7 +124,7 @@
       "Adult Group Category": {
         "percentage": "Y",
         "method": "standard",
-        "threshold": 100
+        "threshold": 0
       },
       "Pregnancy Category": {
         "percentage": "Y",
