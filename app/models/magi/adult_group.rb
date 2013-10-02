@@ -19,32 +19,20 @@ module MAGI
     date      "Adult Group Category Determination Date"  
     code      "Adult Group Category Ineligibility Reason", %w(999 117 122 123)
 
-    rule "Adult Group Category-Applicant not the right age" do  
-      if v("Applicant Age") < 19 || v("Applicant Age") >= 65 
+    rule "Adult Group Category determination" do  
+      if v("Applicant Age") < 19 || v("Applicant Age") >= 65
         o["Applicant Adult Group Category Indicator"] = 'N' 
         o["Adult Group Category Determination Date"] = current_date
         o["Adult Group Category Ineligibility Reason"] = 123 
-      end
-    end
-
-    rule "Adult Group Category -Applicant is in pregnant women category" do
-      if v("Applicant Pregnancy Category Indicator") == 'Y'
+      elsif v("Applicant Pregnancy Category Indicator") == 'Y'
         o["Applicant Adult Group Category Indicator"] = 'N'
         o["Adult Group Category Determination Date"] = current_date
         o["Adult Group Category Ineligibility Reason"] = 122
-      end
-    end
-
-    rule "Applicant is entitled to or enrolled in Medicare" do
-      if v("Medicare Entitlement Indicator") == 'Y' 
+      elsif v("Medicare Entitlement Indicator") == 'Y' 
         o["Applicant Adult Group Category Indicator"] = 'N'
         o["Adult Group Category Determination Date"] = current_date
         o["Adult Group Category Ineligibility Reason"] = 117 
-      end
-    end
-
-    rule "Applicant is not entitled to or enrolled in Medicare" do
-      if v("Medicare Entitlement Indicator") == 'N'
+      else
         o["Applicant Adult Group Category Indicator"] = 'Y'
         o["Adult Group Category Determination Date"] = current_date
         o["Adult Group Category Ineligibility Reason"] = 999

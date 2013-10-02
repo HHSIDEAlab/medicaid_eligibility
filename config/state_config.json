@@ -121,11 +121,6 @@
     "CHIP Targeted Low Income Child Group": "N",    
 
     "Medicaid Thresholds": {
-      "Adult Group Category": {
-        "percentage": "Y",
-        "method": "standard",
-        "threshold": 0
-      },
       "Pregnancy Category": {
         "percentage": "Y",
         "method": "standard",
