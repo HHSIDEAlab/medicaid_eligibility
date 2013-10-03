@@ -128,8 +128,8 @@
       },
       "Parent Caretaker Category": {
         "percentage": "N",
-        "method": "household size",
-        "household size": [
+        "method": "household_size",
+        "household_size": [
           0,
           310,
           457,
