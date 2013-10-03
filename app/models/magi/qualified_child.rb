@@ -114,14 +114,18 @@ module MAGI
     rule "Determine whether caretaker meets relationship requirements" do
       if c("Option Caretaker Relative Relationship") == "04"
         if v("Caretaker Age") >= c("Child Age Threshold")
-          determination_y "Child of Caretaker Relationship"
+          o["Child of Caretaker Relationship Indicator"] = 'Y'
+          o["Child of Caretaker Relationship Determination Date"] = current_date
+          o["Child of Caretaker Relationship Ineligibility Reason"] = 999
         else
           o["Child of Caretaker Relationship Indicator"] = 'N'
           o["Child of Caretaker Relationship Determination Date"] = current_date
           o["Child of Caretaker Relationship Ineligibility Reason"] = 130
         end
       elsif v("Valid Relationships").include?(v("Relationship Type"))
-        determination_y "Child of Caretaker Relationship"
+        o["Child of Caretaker Relationship Indicator"] = 'Y'
+        o["Child of Caretaker Relationship Determination Date"] = current_date
+        o["Child of Caretaker Relationship Ineligibility Reason"] = 999
       elsif c("Option Caretaker Relative Relationship") == "00"
         o["Child of Caretaker Relationship Indicator"] = 'N'
         o["Child of Caretaker Relationship Determination Date"] = current_date

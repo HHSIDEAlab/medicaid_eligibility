@@ -103,7 +103,7 @@ module MAGI
       end
     end
 
-    rule "Child of Caretaker meets all criteria" do 
+    rule "Child of Caretaker meets all criteria" do
       o["Qualified Children List"] = v("Applicant Child List").select{|child|
         child["Child of Caretaker Dependent Age Indicator"] == 'Y' &&
         child["Child of Caretaker Relationship Indicator"] == 'Y' &&
