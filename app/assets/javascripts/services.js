@@ -634,7 +634,7 @@ angular.module('MAGI.services',[]).
             {abbr: 'MN', name: 'Minnesota'},
             {abbr: 'MS', name: 'Mississippi'},
             {abbr: 'MO', name: 'Missouri'},
-            {abbr: 'MT', name: 'Montana'},
+            {abbr: 'MT', name: 'Montana', inApp: true},
             {abbr: 'NE', name: 'Nebraska'},
             {abbr: 'NV', name: 'Nevada'},
             {abbr: 'NH', name: 'New Hampshire'},

@@ -1,5 +1,7 @@
 # encoding: UTF-8
 
+include IncomeThreshold
+
 module MAGI
   class RefugeeAssistance < Ruleset
     name        "Identify Medicaid Category – Refugee Medical Assistance"
@@ -17,7 +19,12 @@ module MAGI
 
     config "State Offers Refugee Medical Assistance", "State Configuration", "Char(1)", %w(Y N)
     config "Refugee Medical Assistance Income Requirement", "State Configuration", "Char(1)", %w(Y N)
-    config "Percent FPL Refugee Medical Assistance", "State Configuration", "Number"
+    config "Refugee Medical Assistance Threshold", "State Configuration", "Hash"
+
+    def run(context)
+      context.extend IncomeThreshold
+      super context
+    end
 
     calculated "Applicant Refugee Medical Assistance End Date" do 
       if v("Refugee Status") == 'Y'
@@ -47,7 +54,7 @@ module MAGI
 
         o["APTC Referral Indicator"] = 'Y'
       elsif c("Refugee Medical Assistance Income Requirement") == 'N' || 
-        v("Calculated Income") < v("FPL") * (c("Percent FPL Refugee Medical Assistance") + 5) * 0.01
+        v("Calculated Income") < get_threshold(c("Refugee Medical Assistance Threshold"))
         determination_y "Refugee Medical Assistance"
 
         o["APTC Referral Indicator"] = 'N'
