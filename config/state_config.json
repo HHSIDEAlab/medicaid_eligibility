@@ -19,6 +19,7 @@
     "Option Dependent Student": "N",
     "State Unemployed Standard": 100,
 
+    "Option Adult Group": "Y",
     "Option Young Adults": "Y",
     "Young Adult Age Threshold": 21,
     "Foster Care Age Threshold": 18,
@@ -106,6 +107,7 @@
     "Option Dependent Student": "N",
     "State Unemployed Standard": 100,
 
+    "Option Adult Group": "N",
     "Option Young Adults": "N",
     "Foster Care Age Threshold": 18,
     "In-State Foster Care Required": "N",
@@ -128,6 +130,7 @@
       },
       "Parent Caretaker Category": {
         "percentage": "N",
+        "monthly": "Y",
         "method": "household_size",
         "household_size": [
           0,

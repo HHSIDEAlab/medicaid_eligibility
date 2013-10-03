@@ -37,11 +37,15 @@ module MAGI
     end
 
     module Customizations
-      def get_income(threshold, percentage)
+      def get_income(threshold, percentage, monthly)
         if percentage == 'Y'
           return (threshold + 5) * 0.01 * v("FPL")
         elsif percentage == 'N'
-          return threshold
+          if monthly == 'Y'
+            return threshold * 12 + 0.05 * v("FPL")
+          else
+            return threshold + 0.05 * v("FPL")
+          end
         else
           raise "Invalid state config"
         end
@@ -68,7 +72,7 @@ module MAGI
         else
           raise "Undefined threshold method #{category["method"]}"
         end
-        get_income(threshold, category["percentage"])
+        get_income(threshold, category["percentage"], category["monthly"])
       end
     end
 
