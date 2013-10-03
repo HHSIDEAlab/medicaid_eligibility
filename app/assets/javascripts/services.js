@@ -377,12 +377,13 @@ angular.module('MAGI.services',[]).
 				var ncOut = _.map(this.nonCitizenFields, function(field){
 					return serializeField(field,me.nonCitizen);});
 				if(this.nonCitizen.refugeeMedicalAssistanceEligible){
-					ncOut.push(_.map(this.refugeeMedicalAssistanceFields, function(field){
+          console.log("IN HERE!!1");
+					ncOut = ncOut.concat(_.map(this.refugeeMedicalAssistanceFields, function(field){
 						return serializeField(field,me.nonCitizen.refugeeMedicalAssistance);
 					}));
 				}
 				if(this.nonCitizen.humanTraffickingVictim){
-					ncOut.push(_.map(this.humanTraffickingFields, function(field){
+					ncOut = ncOut.concat(_.map(this.humanTraffickingFields, function(field){
 						return serializeField(field,me.nonCitizen.humanTrafficking);
 					}));
 				}
