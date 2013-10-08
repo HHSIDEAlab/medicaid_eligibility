@@ -80,12 +80,13 @@ angular.module('MAGI.directives',[]).
 		};
 	}).
 	directive('eligibility', function(){
-		return {		
-			template: "<span class='eligibility' ng-class='{ineligible:(value == \"N\"), eligible:(value==\"Y\")}'><i ng-class='{\"icon-remove\":(\"{{value}}\" == \"N\"), \"icon-ok\":(\"{{value}}\"==\"Y\")}'></i><span ng-show='value==\"N\"'>Not </span>Medicaid Eligible</span>",
-			restrict: 'A',
-			scope: {
-				value: '@value'
-			},
-			replace: true
-		}
-	});
+    return {        
+        template: "<span class='eligibility' ng-class='{ineligible:(value == \"N\"), eligible:(value==\"Y\")}'><i ng-class='{\"icon-remove\":(\"{{value}}\" == \"N\"), \"icon-ok\":(\"{{value}}\"==\"Y\")}'></i><span ng-show='value==\"N\"'>Not </span>{{program}} Eligible</span>",
+        restrict: 'A',
+        scope: {
+            value: '@value',
+            program: '@program'
+        },
+        replace: true
+    }
+  });
