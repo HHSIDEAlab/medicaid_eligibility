@@ -2,11 +2,14 @@
   
   <div class="head">
     <h3>{{ applicant["Person ID"] }}</h3>
-    <span eligibility data-value='{{applicant["Medicaid Eligible"]}}'></span>
-    <span class="threshold">Eligibility Threshold: {{ applicant["Category Threshold"] }}</span>  
-    <span class="category">{{applicant["Category"] }}</span>
+    <br><br>
+    <div>
+      <span eligibility data-program='Medicaid' data-value='{{applicant["Medicaid Eligible"]}}'></span>
+      <span class="threshold">Eligibility Threshold: {{ applicant["Category Threshold"] }}</span>  
+      <span class="category">{{applicant["Category"] }}</span>
+    </div>
     <div ng-show="applicant['Medicaid Eligible'] == 'N'">
-      <span chip-eligibility data-value='{{applicant["CHIP Eligible"]}}'></span>
+      <span eligibility data-program='CHIP' data-value='{{applicant["CHIP Eligible"]}}'></span>
       <span class="threshold">Eligibility Threshold: {{ applicant["CHIP Category Threshold"] }}</span>  
       <span class="category">{{applicant["CHIP Category"] }}</span>
     </div>
