@@ -15,7 +15,7 @@
     "Option CHIPRA 214 CHIP Applies To": "01",
     
     "Deprivation Requirement Retained": "N",
-    "Option Caretaker Relative ReAlationship": "00",
+    "Option Caretaker Relative Relationship": "00",
     "Option Dependent Student": "N",
     "State Unemployed Standard": 100,
 
@@ -200,7 +200,7 @@
     "Option CHIPRA 214 CHIP Applies To": "02",
     
     "Deprivation Requirement Retained": "N",
-    "Option Caretaker Relative ReAlationship": "01",
+    "Option Caretaker Relative Relationship": "01",
     "Option Dependent Student": "Y",
 
     "Option Adult Group": "N",
