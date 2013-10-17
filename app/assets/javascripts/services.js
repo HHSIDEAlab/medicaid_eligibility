@@ -643,7 +643,7 @@ angular.module('MAGI.services',[]).
             {abbr: 'NM', name: 'New Mexico'},
             {abbr: 'NY', name: 'New York'},
             {abbr: 'NC', name: 'North Carolina'},
-            {abbr: 'ND', name: 'North Dakota'},
+            {abbr: 'ND', name: 'North Dakota', inApp: true},
             {abbr: 'OH', name: 'Ohio'},
             {abbr: 'OK', name: 'Oklahoma'},
             {abbr: 'OR', name: 'Oregon'},
