@@ -341,7 +341,9 @@
     "State CHIP Waiting Period": 3,
 
     "Optional Targeted Low Income Child Group": "N",
-    "CHIP Targeted Low Income Child Group": "N",
+    "CHIP Targeted Low Income Child Group": "Y",
+    "CHIP Targeted Low Income Child Age High Threshold": 19,
+    "CHIP Targeted Low Income Child Age Low Threshold": 0,
 
     "Medicaid Thresholds": {
       "Adult Group Category": {
@@ -377,7 +379,7 @@
     },
 
     "CHIP Thresholds": {
-      "Child Category": {
+      "CHIP Targeted Low Income Child": {
         "percentage": "Y",
         "method": "standard",
         "threshold": 170
