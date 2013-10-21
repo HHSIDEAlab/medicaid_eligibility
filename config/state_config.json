@@ -306,5 +306,82 @@
         "threshold": 261
       }
     }
+  },
+
+  "ND": {
+    "Option Householding Minor Student": "N",
+    "Count Unborn Children for Household": "01",
+    "Option Deny Residency to Temporary Resident Students": "Y",
+    "Option Require Work Quarters": "Y",
+    "State Applies Seven Year Limit": "N",
+
+    "Option CHIPRA 214 Applicable Program": "03", 
+    
+    "Deprivation Requirement Retained": "N",
+    "Option Caretaker Relative Relationship": "00",
+    "Option Dependent Student": "N",
+    "State Unemployed Standard": 100,
+
+    "Option Adult Group": "Y",
+    "Option Young Adults": "N",
+    "Young Adult Age Threshold": 19,
+    "Foster Care Age Threshold": 18,
+    "In-State Foster Care Required": "Y",
+    "State Offers Refugee Medical Assistance": "Y",
+    "Refugee Medical Assistance Income Requirement": "Y",
+    "Refugee Medical Assistance Threshold": {
+      "percentage": "Y",
+      "method": "standard",
+      "threshold": 83
+    },
+
+    "CHIP for Pregnant Women": "N",
+    "Option Cover Unborn Child": "N",
+    "CHIP for State Health Benefits": "01",
+    "State CHIP Waiting Period": 3,
+
+    "Optional Targeted Low Income Child Group": "N",
+    "CHIP Targeted Low Income Child Group": "N",
+
+    "Medicaid Thresholds": {
+      "Adult Group Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 133
+      },
+      "Parent Caretaker Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 54
+      },
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 147
+      },
+      "Child Category": {
+        "percentage": "Y",
+        "method": "age",
+        "age": [
+          {
+            "minimum": 0,
+            "maximum": 5,
+            "threshold": 147
+          },{
+            "minimum": 6,
+            "maximum": 18,
+            "threshold": 133
+          }
+        ]
+      }
+    },
+
+    "CHIP Thresholds": {
+      "Child Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 170
+      }
+    }
   }
 }
