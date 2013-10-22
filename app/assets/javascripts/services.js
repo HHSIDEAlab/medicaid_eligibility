@@ -214,14 +214,6 @@ angular.module('MAGI.services',[]).
             }
 		};
 
-	    Applicant.prototype.updateMonthly = function(){
-	      this.incomeTaxes.monthly = Math.floor(this.incomeTaxes.wages / 12);
-	    };
-
-	    Applicant.prototype.updateWages = function(){
-	      this.incomeTaxes.wages = this.incomeTaxes.monthly * 12;
-	    };
-
 		Relationship.prototype.getOpposite = function(){
 			return this.otherApplicant.getRelationship(this.applicant);
 		};
