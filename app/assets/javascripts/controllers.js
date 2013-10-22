@@ -54,7 +54,6 @@ angular.module('MAGI.controllers', []).
                 $scope.checkEligibility = function(){
                          console.log("Form Valid: " + $scope.applicationForm.$valid);
                          console.log(JSON.stringify($scope.application.serialize()));
-                         console.log('CALLIN');
                         if($scope.applicationForm.$valid){
                                 var serv = $scope.application.checkEligibility();
                                 serv.then(function(resp){

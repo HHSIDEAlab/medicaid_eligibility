@@ -89,4 +89,46 @@ angular.module('MAGI.directives',[]).
         },
         replace: true
     }
+  }).
+  directive('incomegroup', function(){
+  	return {
+  		restrict: 'EA',
+  		require: 'ngModel',
+  		template: '<div><div class="form-half-field clear"><label>Monthly</label><input type="number" class="long-number monthly"></div><div class="form-half-field"><label>Annual</label><input type="number" class="long-number annual"></div></div>',
+  		replace: true,
+  		link: function(scope, element, attrs, ngModelCtrl){
+
+
+  			var monthlyLabel = angular.element(element[0].children[0].children[0]);
+  			var annualLabel = angular.element(element[0].children[1].children[0]);
+  			var monthly = angular.element(element[0].children[0].children[1]);
+  			var annual = angular.element(element[0].children[1].children[1]);
+
+  			monthlyLabel.text(attrs['monthlylabel']);
+  			annualLabel.text(attrs['annuallabel']);
+
+  			ngModelCtrl.$render = function() {
+  				annual.val(ngModelCtrl.$viewValue || 0);
+  				monthly.val(Math.floor(ngModelCtrl.$viewValue / 12) || 0);
+            };
+
+  			monthly.bind('input change', function(evt){
+  				scope.$apply(updateViaMonthly);
+  			});
+
+  			annual.bind('input change', function(){
+  				scope.$apply(updateViaAnnual);
+  			});
+
+  			function updateViaMonthly(){
+  				ngModelCtrl.$setViewValue(monthly.val() * 12);
+  				ngModelCtrl.$render();
+  			}
+
+  			function updateViaAnnual(){
+  				ngModelCtrl.$setViewValue(annual.val() * 1);
+  				ngModelCtrl.$render();
+  			}
+  		}
+  	}
   });
