@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('MAGI.controllers', []).
-	controller('FormController',['$scope','$location','$anchorScroll','$timeout','filterFilter', 'Application','relationshipCodes','states', function($scope,$location,$anchorScroll,$timeout,filterFilter, Application, relationshipCodes,states){		
+	controller('FormController',['$scope','$location','$anchorScroll','$timeout','$log','filterFilter', 'Application','relationshipCodes','states', function($scope,$location,$anchorScroll,$timeout,$log,filterFilter, Application, relationshipCodes,states){		
                 Application.resetResults();
                 $scope.submitted = false;
                 $scope.applicants = Application.applicants;
@@ -52,20 +52,20 @@ angular.module('MAGI.controllers', []).
                 };
 
                 $scope.checkEligibility = function(){
-                         console.log("Form Valid: " + $scope.applicationForm.$valid);
-                         console.log(JSON.stringify($scope.application.serialize()));
-                        if($scope.applicationForm.$valid){
-                                var serv = $scope.application.checkEligibility();
-                                serv.then(function(resp){
-                                        $location.path("/results");
-                                });
-                        } else {
-                                $scope.submitted = true;   
-                                $timeout(
-                                        function(){
-                                            angular.element(document.querySelector("input.ng-invalid"))[0].focus( );  
-                                });                           
-                        }
+                    $log.info("Form Valid: " + $scope.applicationForm.$valid);
+                    $log.info(JSON.stringify($scope.application.serialize()));
+                    if($scope.applicationForm.$valid){
+                        var serv = $scope.application.checkEligibility();
+                        serv.then(function(resp){
+                                $location.path("/results");
+                        });
+                    } else {
+                        $scope.submitted = true;   
+                        $timeout(
+                                function(){
+                                    angular.element(document.querySelector("input.ng-invalid"))[0].focus( );  
+                        });                           
+                    }
                 };
 
 
@@ -150,7 +150,7 @@ angular.module('MAGI.controllers', []).
                 $scope.importApplication = function(){
                         // Note - may want to wrap this in a try/catch loop of some sort
                         var application = angular.fromJson($scope.applicationJson);
-                        console.log(application);
+                        $log.info(application);
                         Application.deserialize(application);
                         // Redirect to application
                         $location.path("/application");
@@ -160,7 +160,7 @@ angular.module('MAGI.controllers', []).
                         $location.path("/application");
                 };
         }]).
-        controller('TaxReturnController', ['$scope',function($scope){
+        controller('TaxReturnController', ['$scope','$log',function($scope,$log){
             $scope.inputs = {newFiler: {}, newDependent: {}};
 
             $scope.canAddFiler = function(){
@@ -176,7 +176,7 @@ angular.module('MAGI.controllers', []).
             }
 
             $scope.$watch('inputs.newFiler', function(newFiler, oldVal){
-                console.log(newFiler);
+                $log.info(newFiler);
                 if(newFiler.id){
                     $scope.taxReturn.addFiler(newFiler);
                     $scope.inputs.newFiler = {};
@@ -189,10 +189,6 @@ angular.module('MAGI.controllers', []).
                     $scope.inputs.newDependent = {};
                 }
             });
-
-            $scope.$watch('taxReturn.filers', function(newVal, old){
-                console.log()
-            })
 
 
         }]);
