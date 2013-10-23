@@ -1,5 +1,5 @@
 angular.module('MAGI.services',[]).
-    factory('Application', ['$http','relationshipCodes','states', '$location', function($http,relationshipCodes, states, $location){
+    factory('Application', ['$http','$log','relationshipCodes','states', '$location', function($http,$log,relationshipCodes, states, $location){
 		function Application(){
 			this.applicationId = "";
 			this.applicants = [];
@@ -18,17 +18,17 @@ angular.module('MAGI.services',[]).
 		}
 
 		function Applicant(){
-      this.hours = 0;
+		    this.hours = 0;
 			this.citizen = true;
 			this.livesInState = true;
 			this.isApplicant = true;
-      this.numberOfChildrenExpected = 1;
+			this.numberOfChildrenExpected = 1;
 			this.incomeTaxes = new IncomeTaxes();
 			this.relationships = [];
 			this.nonCitizen = {};
 			this.fosterCare = {
-        state: {}
-      };
+				state: {}
+		    };
 		}
 
 		function Relationship(applicant, otherApplicant, code){
@@ -369,7 +369,7 @@ angular.module('MAGI.services',[]).
 				var ncOut = _.map(this.nonCitizenFields, function(field){
 					return serializeField(field,me.nonCitizen);});
 				if(this.nonCitizen.refugeeMedicalAssistanceEligible){
-          console.log("IN HERE!!1");
+					$log.info('Eligible for Refugee Medical Assistance');
 					ncOut = ncOut.concat(_.map(this.refugeeMedicalAssistanceFields, function(field){
 						return serializeField(field,me.nonCitizen.refugeeMedicalAssistance);
 					}));
@@ -387,7 +387,7 @@ angular.module('MAGI.services',[]).
 				return rel.serialize();
 			})]);
 
-			console.log(rv);
+			$log.info(rv);
 			return _.object(rv);
 		};
 
@@ -541,7 +541,8 @@ angular.module('MAGI.services',[]).
 				});
 			});
 
-			console.log(this);
+			$log.info("Deserializing");
+			$log.info(this);
 		};
 
 		Application.prototype.resetResults = function(){
@@ -557,7 +558,7 @@ angular.module('MAGI.services',[]).
 				method: "POST",
 				data: app
 			}).success(function(response){
-				console.log(response);
+				$log.info(response);
 				me.determination = response;
 				angular.forEach(me.determination["Applicants"], function(applicant){
 					applicant.cleanDets = _.map(_.pairs(applicant.Determinations), function(item){
@@ -571,7 +572,7 @@ angular.module('MAGI.services',[]).
 				
 				return response;
             }).error(function(error){
-				console.log(error);
+				$log.error(error);
 			});
 		};
 
