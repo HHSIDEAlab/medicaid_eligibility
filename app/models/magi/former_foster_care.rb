@@ -54,7 +54,8 @@ module MAGI
     end
 
     rule "Applicant did not age out of foster care" do
-      if v("Age Left Foster Care") <= c("Foster Care Age Threshold") 
+     
+      if v("Age Left Foster Care") != c("Foster Care Age Threshold") 
         o["Applicant Former Foster Care Category Indicator"] = 'N'
         o["Former Foster Care Category Determination Date"] = current_date
         o["Former Foster Care Category Ineligibility Reason"] = 125
