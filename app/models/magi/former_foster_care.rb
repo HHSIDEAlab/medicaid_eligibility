@@ -29,48 +29,32 @@ module MAGI
     determination "Medicaid Prelim", %w(Y N), %w(999)
     determination "CHIP Prelim", %w(Y N), %w(380)
 
-    rule "Applicant does not meet residency or immigration status criteria" do
-      if v("Medicaid Residency Indicator") != 'Y' || v("Applicant Medicaid Citizen Or Immigrant Indicator") != 'Y'
+    rule "Determine Former Foster Care eligibility" do
+      if v("Former Foster Care") != 'Y'
+        o["Applicant Former Foster Care Category Indicator"] = 'N'
+        o["Former Foster Care Category Determination Date"] = current_date
+        o["Former Foster Care Category Ineligibility Reason"] = 'D'
+      elsif v("Medicaid Residency Indicator") != 'Y' || v("Applicant Medicaid Citizen Or Immigrant Indicator") != 'Y'
         o["Applicant Former Foster Care Category Indicator"] = 'N'
         o["Former Foster Care Category Determination Date"] = current_date
         o["Former Foster Care Category Ineligibility Reason"] = 101
-      end
-    end
-
-    rule "Applicant is over age limit for former foster care category" do
-      if v("Applicant Age") >= 26
+      elsif v("Applicant Age") >= 26
         o["Applicant Former Foster Care Category Indicator"] = 'N'
         o["Former Foster Care Category Determination Date"] = current_date
         o["Former Foster Care Category Ineligibility Reason"] = 126
-      end
-    end
-
-    rule "State requires in-state foster care record- child received out-of state foster care" do
-      if c("In-State Foster Care Required") == 'Y' && v("Foster Care State") != v("State")
+      elsif c("In-State Foster Care Required") == 'Y' && v("Foster Care State") != v("State")
         o["Applicant Former Foster Care Category Indicator"] = 'N'
         o["Former Foster Care Category Determination Date"] = current_date
         o["Former Foster Care Category Ineligibility Reason"] = 102
-      end
-    end
-
-    rule "Applicant did not age out of foster care" do
-      if v("Age Left Foster Care") <= c("Foster Care Age Threshold") 
+      elsif v("Age Left Foster Care") < c("Foster Care Age Threshold") 
         o["Applicant Former Foster Care Category Indicator"] = 'N'
         o["Former Foster Care Category Determination Date"] = current_date
         o["Former Foster Care Category Ineligibility Reason"] = 125
-      end
-    end
-
-    rule "Applicant did not receive Medicaid while receiving foster care" do
-      if v("Had Medicaid During Foster Care") == 'N'
+      elsif v("Had Medicaid During Foster Care") == 'N'
         o["Applicant Former Foster Care Category Indicator"] = 'N'
         o["Former Foster Care Category Determination Date"] = current_date
         o["Former Foster Care Category Ineligibility Reason"] = 103
-      end
-    end
-
-    rule "Applicant meets all criteria for former foster care" do
-      if v("Applicant Age") < 26 && v("Age Left Foster Care") == c("Foster Care Age Threshold") && v("Had Medicaid During Foster Care") == 'Y' && ((c("In-State Foster Care Required") == 'Y' && v("Foster Care State") == v("State")) || c("In-State Foster Care Required") == 'N') && v("Medicaid Residency Indicator") == 'Y' && v("Applicant Medicaid Citizen Or Immigrant Indicator") == 'Y'
+      else
         o["Applicant Former Foster Care Category Indicator"] = 'Y'
         o["Former Foster Care Category Determination Date"] = current_date
         o["Former Foster Care Category Ineligibility Reason"] = 999
