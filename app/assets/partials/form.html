@@ -146,11 +146,11 @@
         </div>
         <div class="form-row">
           <label for="applicant_{{ $index }}_foster_care_age_left">Age left foster care</label>
-          <input type="number" id="applicant_{{ $index }}_foster_care_age_left" name="applicant_foster_care_age_left" ng-model="applicant.fosterCare.ageLeftFosterCare">
+          <input type="number" id="applicant_{{ $index }}_foster_care_age_left" name="applicant_foster_care_age_left" ng-model="applicant.fosterCare.ageLeftFosterCare" ng-required="applicant.formerlyFosterCare">
         </div>
         <div class="form-row">
           <label for="applicant_{{ $index }}_foster_care_state">Foster care state</label>
-          <select id="applicant_{{ $index }}_foster_care_state" name="applicant_foster_care_state" selector ng-model="applicant.fosterCare.state" ng-options="state as state.name for state in states">
+          <select id="applicant_{{ $index }}_foster_care_state" name="applicant_foster_care_state" selector ng-model="applicant.fosterCare.state" ng-options="state as state.name for state in states" ng-required="applicant.formerlyFosterCare">
           </select>
         </div>
       </div>
