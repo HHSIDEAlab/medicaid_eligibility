@@ -37,7 +37,7 @@ module MAGI
     end
 
     # Outputs
-    determination "Medicaid Citizen Or Immigrant", %w(Y N), %w(999 101 141 142 372 381)
+    determination "Medicaid Citizen Or Immigrant", %w(Y N), %w(999 101)
     determination "CHIPRA 214", %w(Y N X), %w(999 555 118 119 120)
     determination "Trafficking Victim", %w(Y N X), %w(999 555)
     determination "Seven Year Limit", %w(Y N X), %w(999 555 111)

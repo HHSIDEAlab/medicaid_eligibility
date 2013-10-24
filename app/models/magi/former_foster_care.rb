@@ -25,7 +25,7 @@ module MAGI
     config "In-State Foster Care Required", "State Configuration Table", "Char(1)", %w(Y N)
 
     # Outputs 
-    determination "Former Foster Care Category", %w(Y N), %w(999 101 102 103 125 126 380)
+    determination "Former Foster Care Category", %w(Y N), %w(999 101 102 103 125 126 380 400)
     determination "Medicaid Prelim", %w(Y N), %w(999)
     determination "CHIP Prelim", %w(Y N), %w(380)
 
@@ -33,7 +33,7 @@ module MAGI
       if v("Former Foster Care") != 'Y'
         o["Applicant Former Foster Care Category Indicator"] = 'N'
         o["Former Foster Care Category Determination Date"] = current_date
-        o["Former Foster Care Category Ineligibility Reason"] = 'D'
+        o["Former Foster Care Category Ineligibility Reason"] = 400
       elsif v("Medicaid Residency Indicator") != 'Y' || v("Applicant Medicaid Citizen Or Immigrant Indicator") != 'Y'
         o["Applicant Former Foster Care Category Indicator"] = 'N'
         o["Former Foster Care Category Determination Date"] = current_date

@@ -15,7 +15,7 @@ module MAGI
     # Outputs
     indicator "Applicant Medicaid Prelim Indicator", %w(Y N P)
     date      "Medicaid Prelim Determination Date"
-    code      "Medicaid Prelim Ineligibility Reason", %w(999 106 302)
+    code      "Medicaid Prelim Ineligibility Reason", %w(999 106)
     indicator "Applicant Emergency Medicaid Indicator", %w(Y N)
     date      "Emergency Medicaid Determination Date"
     code      "Emergency Medicaid Ineligibility Reason", %w(999)

@@ -28,11 +28,11 @@ module MAGI
     output    "Category Used to Calculate Medicaid Income", "String"
     indicator "Applicant Income Medicaid Eligible Indicator", %w(Y N)
     date      "Income Medicaid Eligible Determination Date"
-    code      "Income Medicaid Eligible Ineligibility Reason", %w(999 A B)
+    code      "Income Medicaid Eligible Ineligibility Reason", %w(999 401 402)
     output    "Category Used to Calculate CHIP Income", "String"
     indicator "Applicant Income CHIP Eligible Indicator", %w(Y N)
     date      "Income CHIP Eligible Determination Date"
-    code      "Income CHIP Eligible Ineligibility Reason", %w(999 A B)
+    code      "Income CHIP Eligible Ineligibility Reason", %w(999 401 402)
 
     def run(context)
       context.extend IncomeThreshold
@@ -94,11 +94,11 @@ module MAGI
       if v("Max Eligible Medicaid Category") == "None"
         o["Applicant Income Medicaid Eligible Indicator"] = "N"
         o["Income Medicaid Eligible Determination Date"] = current_date
-        o["Income Medicaid Eligible Ineligibility Reason"] = "Unimplemented"
+        o["Income Medicaid Eligible Ineligibility Reason"] = 401
       elsif v("Calculated Income") > v("Max Eligible Medicaid Income")
         o["Applicant Income Medicaid Eligible Indicator"] = "N"
         o["Income Medicaid Eligible Determination Date"] = current_date
-        o["Income Medicaid Eligible Ineligibility Reason"] = "Unimplemented"
+        o["Income Medicaid Eligible Ineligibility Reason"] = 402
       else
         o["Applicant Income Medicaid Eligible Indicator"] = "Y"
         o["Income Medicaid Eligible Determination Date"] = current_date
@@ -108,11 +108,11 @@ module MAGI
       if v("Max Eligible CHIP Category") == "None"
         o["Applicant Income CHIP Eligible Indicator"] = "N"
         o["Income CHIP Eligible Determination Date"] = current_date
-        o["Income CHIP Eligible Ineligibility Reason"] = "Unimplemented"
+        o["Income CHIP Eligible Ineligibility Reason"] = 401
       elsif v("Calculated Income") > v("Max Eligible CHIP Income")
         o["Applicant Income CHIP Eligible Indicator"] = "N"
         o["Income CHIP Eligible Determination Date"] = current_date
-        o["Income CHIP Eligible Ineligibility Reason"] = "Unimplemented"
+        o["Income CHIP Eligible Ineligibility Reason"] = 402
       else
         o["Applicant Income CHIP Eligible Indicator"] = "Y"
         o["Income CHIP Eligible Determination Date"] = current_date
