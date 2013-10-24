@@ -23,7 +23,7 @@ module MAGI
     # Outputs 
     indicator "Applicant CHIP Targeted Low Income Child Indicator", %w(Y N X)
     date      "CHIP Targeted Low Income Child Determination Date"
-    code      "CHIP Targeted Low Income Child Ineligibility Reason", %w(999 555 127)
+    code      "CHIP Targeted Low Income Child Ineligibility Reason", %w(999 555 114 127)
 
     rule "Determine CHIP Targeted Low Income Child eligibility" do
       if c("CHIP Targeted Low Income Child Group") == 'N'

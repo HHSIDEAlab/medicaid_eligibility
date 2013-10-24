@@ -14,7 +14,7 @@ module MAGI
     input "Applicant Income Medicaid Eligible Indicator", "From Verify Household Income Rule", "Char(1)", %w(Y N)
 
     # Outputs 
-    determination "Medicaid", %w(Y N), %w(999 128 106 302 305)
+    determination "Medicaid", %w(Y N), %w(999 128 106)
     output "APTC Referral Indicator", "Char(1)", %w(Y N)
 
     rule "Determine final Medicaid eligibility" do

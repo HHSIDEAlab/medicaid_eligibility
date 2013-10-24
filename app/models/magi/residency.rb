@@ -21,7 +21,7 @@ module MAGI
     # Outputs
     indicator "Medicaid Residency Indicator", %w(Y N)
     date      "Medicaid Residency Indicator Determination Date"
-    code      "Medicaid Residency Indicator Ineligibility Reason", %w(999 A B)
+    code      "Medicaid Residency Indicator Ineligibility Reason", %w(999 403 404)
 
     rule "Determine Residency" do
       if v("Lives In State") == 'Y' || v("Temporarily Out of State") == 'Y' || v("No Fixed Address") == 'Y'
@@ -36,7 +36,7 @@ module MAGI
             }))
           o["Medicaid Residency Indicator"] = 'N'
           o["Medicaid Residency Indicator Determination Date"] = current_date
-          o["Medicaid Residency Indicator Ineligibility Reason"] = 'A'
+          o["Medicaid Residency Indicator Ineligibility Reason"] = 403
         else
           o["Medicaid Residency Indicator"] = 'Y'
           o["Medicaid Residency Indicator Determination Date"] = current_date
@@ -45,7 +45,7 @@ module MAGI
       else
         o["Medicaid Residency Indicator"] = 'N'
         o["Medicaid Residency Indicator Determination Date"] = current_date
-        o["Medicaid Residency Indicator Ineligibility Reason"] = 'B'
+        o["Medicaid Residency Indicator Ineligibility Reason"] = 404
       end
     end
   end
