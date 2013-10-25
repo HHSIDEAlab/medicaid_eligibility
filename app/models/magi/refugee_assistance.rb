@@ -37,6 +37,7 @@ module MAGI
     # Outputs
     determination "Refugee Medical Assistance", %w(Y N X), %w(999 112 309 373 555)
     output "APTC Referral Indicator", "Char(1)", %w(Y N)
+    output "APTC Referral Ineligibility Reason", "Char(3)", %w(407)
 
     rule "Determine Refugee Medical Assistance eligibility" do 
       if c("State Offers Refugee Medical Assistance") == 'N' || v("Refugee Status") == 'N'
@@ -58,6 +59,7 @@ module MAGI
         determination_y "Refugee Medical Assistance"
 
         o["APTC Referral Indicator"] = 'N'
+        o["APTC Referral Ineligibility Reason"] = 407
       else
         o["Applicant Refugee Medical Assistance Indicator"] = 'N'
         o["Refugee Medical Assistance Determination Date"] = current_date

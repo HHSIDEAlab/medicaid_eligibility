@@ -18,7 +18,10 @@ module MAGI
     code      "CHIP Prelim Ineligibility Reason", %w(999 107)
 
     rule "Applicant meets all CHIP eligibility criteria" do
-      if v("Medicaid Residency Indicator") == 'Y' && v("Applicant Medicaid Citizen Or Immigrant Indicator") == 'Y' && v("Applicant Income CHIP Eligible Indicator") == 'Y' && v("Has Insurance") == 'N'
+      if v("Medicaid Residency Indicator") == 'Y' && 
+         v("Applicant Medicaid Citizen Or Immigrant Indicator") == 'Y' && 
+         v("Applicant Income CHIP Eligible Indicator") == 'Y' && 
+         v("Has Insurance") == 'N'
         determination_y "CHIP Prelim"
       else
         o["Applicant CHIP Prelim Indicator"] = 'N'
