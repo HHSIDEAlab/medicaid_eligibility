@@ -2,10 +2,6 @@
 
 module MAGI
   class Immigration < Ruleset
-    name        "Determine MAGI Eligibility"
-    mandatory   "Mandatory"
-    applies_to  "Medicaid and CHIP"
-    
     input "US Citizen Indicator", "Application", "Char(1)", %w(Y N)
     input "Legal Permanent Resident", "Application", "Char(1)", %w(Y N)
     input "Lawful Presence Attested", "Application", "Char(1)", %w(Y N)

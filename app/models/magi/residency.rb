@@ -2,10 +2,6 @@
 
 module MAGI
   class Residency < Ruleset
-    name        "Determine MAGI Residency Status"
-    mandatory   "Mandatory"
-    applies_to  "Medicaid and CHIP"
-    
     input "Lives In State", "From Application", "Char(1)", %w(Y N)
     input "No Fixed Address", "From Application", "Char(1)", %w(Y N)
     input "Temporarily Out of State", "From Application", "Char(1)", %w(Y N)

@@ -2,15 +2,6 @@
 
 module MAGI
   class OptionalUnbornChild < Ruleset
-    name        "Optional CHIP Category - Unborn Child Category"
-    mandatory   "Optional"
-    references  "§457.10"
-    applies_to  "CHIP Only"
-    purpose     "Determine if unborn child is eligible for CHIP."
-    description "States can elect to provide CHIP coverage to unborn children of pregnant women who are not eligible for Medicaid or CHIP, as specified in 42 CFR 457.10.  There is no requirement that the mother be a citizen or in an eligible immigration status for an unborn child to be eligible for coverage under this option.  But an unborn child is not eligible for coverage under this option if the mother is incarcerated or has access to coverage under a state employee health benefits plan."
-    
-    assumption "If the mother’s residency status is flagged as “inconsistent” due to the student residency rule, logic in this rule overrides her residency status so the unborn child is not precluded from CHIP eligibility."
-    
     input "Applicant Pregnant Indicator", "Application", "Char(1)", %w(Y N)
     input "Applicant Medicaid Prelim Indicator", "Output from Prelim Medicaid Eligible Rule", "Char(1)", %w(Y N)
     input "Applicant CHIP Prelim Indicator", "Output from Prelim Medicaid Eligible Rule", "Char(1)", %w(Y N)

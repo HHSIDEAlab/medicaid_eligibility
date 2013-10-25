@@ -2,11 +2,6 @@
 
 module MAGI
   class ParentCaretakerRelativeSpouse < Ruleset
-    name        "Identify Medicaid Category – Parent or Caretaker Relative, Spouse"
-    mandatory   "Mandatory"
-    references  "§435.4 and §435.110"
-    applies_to  "Medicaid only"
-
     input "Applicant Relationships", "Application", "List"
     input "Physical Household", "Application", "List"
     input "Applicant Parent Caretaker Category Indicator", "Parent Caretaker Category Ruleset", "Char(1)", %w(Y N T)

@@ -2,11 +2,6 @@
 
 module MAGI
   class MedicaidEligibility < Ruleset
-    name        "Determine Medicaid Eligibility"
-    applies_to  "Medicaid"
-    purpose     "Determine final Medicaid eligibility based on whether the dependent child of an applicant who is preliminary eligible for Medicaid has minimal essential coverage."
-    description "The final eligibility indicator, Applicant Medicaid Eligible Status Indicator is set for the applicant’s eligibility for Medicaid based on the output from the rules discussed above."
-
     input "Applicant Medicaid Prelim Indicator", "From Determine Preliminary Medicaid & CHIP Eligibility Rule", "Char(1)", %w(Y N)
     input "Applicant Dependent Child Covered Indicator", "From Dependent Child Covered Rule", "Char(1)", %w(Y N)
     input "Medicaid Residency Indicator", "From Residency Logic", "Char(1)", %w(Y N)

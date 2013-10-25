@@ -2,12 +2,6 @@
 
 module MAGI
   class PreliminaryMedicaid < Ruleset
-    name        "Determine Preliminary Medicaid Eligibility"
-    mandatory   "Mandatory"
-    applies_to  "Medicaid"
-    purpose     "Determine preliminary Medicaid eligibility based on citizenship, immigration status, residency and income and set emergency Medicaid referral indicator, when applicable."
-    description "Preliminary Medicaid and CHIP eligibility indicators are set in MAGI Part 2 and Part 3, based on the values of various indicators previously set that govern Medicaid and CHIP eligibility.  These preliminary eligibility indicators are used to control branching in the application, which is designed to ask only the questions needed to determine eligibility for the insurance affordability program for which the applicant is preliminarily determined eligible based on MAGI. The final Medicaid determination is made in MAGI Part 3 after the Dependent Child rule checks for minimal essential coverage."
-    
     input "Medicaid Residency Indicator", "From Residency Logic", "Char(1)", %w(Y N)
     input "Applicant Medicaid Citizen Or Immigrant Indicator", "From Immigration Status rule in MAGI Part 2", "Char(1)", %w(Y N)
     input "Applicant Income Medicaid Eligible Indicator", "From Verify Household Income Rule", "Char(1)", %w(Y N)
