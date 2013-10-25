@@ -1,18 +1,38 @@
 <div class="person" ng-repeat="applicant in applicants">
   
   <div class="head">
+    
     <h3>{{ applicant["Person ID"] }}</h3>
-    <br><br>
-    <div>
+    <br>
+    <div class="eligibility-div">
       <span eligibility data-program='Medicaid' data-value='{{applicant["Medicaid Eligible"]}}'></span>
       <span class="threshold">Eligibility Threshold: {{ applicant["Category Threshold"] }}</span>  
-      <span class="category">{{applicant["Category"] }}</span>
+      <span class="category" ng-show="applicant['Category'] == 'None'">No Category</span>
+      <span class="category" ng-show="applicant['Category'] != 'None'">{{applicant["Category"]}}</span>
+      <div class="eligibility-explanation" ng-show="applicant['Medicaid Eligible'] == 'N'">
+        <div ng-repeat="reason in applicant['Ineligibility Reason']">
+          {{ reason }}
+        </div>
+      </div>
     </div>
-    <div ng-show="applicant['Medicaid Eligible'] == 'N'">
+    <div class="eligibility-div" ng-show="applicant['Medicaid Eligible'] == 'N'">
       <span eligibility data-program='CHIP' data-value='{{applicant["CHIP Eligible"]}}'></span>
       <span class="threshold">Eligibility Threshold: {{ applicant["CHIP Category Threshold"] }}</span>  
-      <span class="category">{{applicant["CHIP Category"] }}</span>
+      <span class="category" ng-show="applicant['CHIP Category'] == 'None'">No Category</span>
+      <span class="category" ng-show="applicant['CHIP Category'] != 'None'">{{applicant["CHIP Category"]}}</span>
+      <div class="eligibility-explanation" ng-show="applicant['CHIP Eligible'] == 'N'">
+        <div ng-repeat="reason in applicant['CHIP Ineligibility Reason']">
+          {{ reason }}
+        </div>
+      </div>
     </div>
+    <div class="eligibility-div" ng-show="applicant['Determinations']['Emergency Medicaid']['Indicator'] == 'Y'">
+      <span eligibility data-program='Emergency Medicaid' data-value="{{applicant['Determinations']['Emergency Medicaid']['Indicator']}}"></span>
+    </div>
+    <div class="eligibility-div" ng-show="applicant['Determinations']['Refugee Medical Assistance']['Indicator'] == 'Y'">
+      <span eligibility data-program='Refugee Medical Assistance' data-value="{{applicant['Determinations']['Refugee Medical Assistance']['Indicator']}}"></span>
+    </div>
+
   </div>
   <div class="details">
     <h4>HOUSEHOLD:
@@ -34,10 +54,9 @@
       <table>
         <tr ng-repeat="determination in applicant.cleanDets | filter:{ indicator: 'N'}">
           <td class="item">
-            {{determination.item}}
-          </td>
-          <td class="code">
-            {{determination.code}}
+            <b>{{determination.item}}</b>
+            <br>
+            {{determination.reason}}
           </td>
         </tr>
       </table>

@@ -655,3 +655,13 @@ user-select: none;
   margin-bottom: 3px;
   cursor: move;
 }
+
+.eligibility-div {
+  padding-top: 5px;
+}
+
+.eligibility-explanation {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 45px;
+}

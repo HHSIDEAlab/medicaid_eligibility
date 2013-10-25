@@ -565,7 +565,8 @@ angular.module('MAGI.services',[]).
 						return {
 							item: item[0], 
 							indicator: item[1]["Indicator"],
-							code: item[1]["Ineligibility Code"]
+							code: item[1]["Ineligibility Code"],
+              reason: item[1]["Ineligibility Reason"]
 						};
 					});					
 				});
