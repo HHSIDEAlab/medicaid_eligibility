@@ -15,24 +15,54 @@ module ApplicationResponder
       app_json["Medicaid Eligible"] = app.outputs["Applicant Medicaid Indicator"]
       app_json["CHIP Eligible"] = app.outputs["Applicant CHIP Indicator"]
       
-      if app.outputs["Applicant Medicaid Indicator"] == 'N' && app.outputs["Applicant CHIP Indicator"] == 'N'
+      # Medicaid ineligibility explanation
+      if app.outputs["Applicant Medicaid Indicator"] == 'N'
         ineligibility_reasons = []
-        if app.applicant_attributes["Medicaid Residency Indicator"] == 'N'
+        if app.outputs["Medicaid Residency Indicator"] == 'N'
           ineligibility_reasons << "Applicant did not meet residency requirements"
         end
         if app.outputs["Applicant Medicaid Citizen Or Immigrant Indicator"] == 'N'
           ineligibility_reasons << "Applicant did not meet citizenship/immigration requirements"
         end
         if app.outputs["Category Used to Calculate Medicaid Income"] == "None"
-          ineligibility_reasons << "Applicant did not meet the requirements for any eligibility category"
+          ineligibility_reasons << "Applicant did not meet the requirements for any Medicaid category"
         elsif app.outputs["Applicant Income Medicaid Eligible Indicator"] == 'N'
-          ineligibility_reasons << "Applicant did not meet the income requirements for any category qualified for"            
+          ineligibility_reasons << "Applicant's MAGI above the threshold for category"
         end
         if app.outputs["Applicant Dependent Child Covered Indicator"] == "Y"
           ineligibility_reasons << "Applicant has a dependent child who does not have coverage and is not included on the application"
         end
         app_json["Ineligibility Reason"] = ineligibility_reasons
         app_json["Non-MAGI Referral"] = app.outputs["Applicant Medicaid Non-MAGI Referral Indicator"]
+      end
+
+      # CHIP ineligibility explanation
+      if app.outputs["Applicant CHIP Indicator"] == 'N'
+        ineligibility_reasons = []
+        if app.outputs["Medicaid Residency Indicator"] == 'N'
+          ineligibility_reasons << "Applicant did not meet residency requirements"
+        end
+        if app.outputs["Applicant Medicaid Citizen Or Immigrant Indicator"] == 'N'
+          ineligibility_reasons << "Applicant did not meet citizenship/immigration requirements"
+        end
+        if app.outputs["Category Used to Calculate CHIP Income"] == "None"
+          ineligibility_reasons << "Applicant did not meet the requirements for any CHIP category"
+        elsif app.outputs["Applicant Income CHIP Eligible Indicator"] == 'N'
+          ineligibility_reasons << "Applicant's MAGI above the threshold for category"
+        end
+        if app.applicant_attributes['Has Insurance'] == 'Y'
+          ineligibility_reasons << "Applicant already has insurance"
+        end
+        if app.outputs["Applicant State Health Benefits CHIP Indicator"] == 'N'
+          ineligibility_reasons << "Applicant not eligible under state health benefits rule"
+        end
+        if app.outputs["Applicant CHIP Waiting Period Satisfied Indicator"] == 'N'
+          ineligibility_reasons << "Applicant has not satisfied the CHIP waiting period"
+        end
+        if app.applicant_attributes["Incarceration Status"] == 'Y'
+          ineligibility_reasons << "Applicant is incarcerated"
+        end
+        app_json["CHIP Ineligibility Reason"] = ineligibility_reasons
       end
       
       app_json["Category"] = app.outputs["Category Used to Calculate Medicaid Income"]

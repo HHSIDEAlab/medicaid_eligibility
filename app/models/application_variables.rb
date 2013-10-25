@@ -330,10 +330,10 @@ module ApplicationVariables
   ].freeze
 
   DETERMINATIONS = [
+    {name: "Adult Group Category", eligibility: :MAGI},
     {name: "Parent Caretaker Category", eligibility: :MAGI},
     {name: "Pregnancy Category", eligibility: :MAGI},
     {name: "Child Category", eligibility: :MAGI},
-    {name: "Adult Group Category", eligibility: :MAGI},
     {name: "Optional Targeted Low Income Child", eligibility: :MAGI},
     {name: "CHIP Targeted Low Income Child", eligibility: :CHIP},
     {name: "Unborn Child"},
@@ -362,8 +362,6 @@ module ApplicationVariables
       reason_xpath: "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityReasonText"
     },
     
-    {name: "CHIP"},
-    {name: "Medicaid"},
     {name: "Emergency Medicaid"},
     {name: "Refugee Medical Assistance"}
   ].freeze
