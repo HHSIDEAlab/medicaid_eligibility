@@ -15,3 +15,4 @@ browse to http://localhost:3000/
 
 You can post determinations JSON to http://localhost:3000/determinations/eval
 
+(c) 2013 BlueLabs. License is available in the LICENSE file
