@@ -4,13 +4,6 @@ include IncomeThreshold
 
 module MAGI
   class RefugeeAssistance < Ruleset
-    name        "Identify Medicaid Category – Refugee Medical Assistance"
-    mandatory   "Optional"
-    references  "Refugee Act of 1980\nINA §412."
-    applies_to  "Medicaid Only"
-    purpose     "Determine if the applicant is entitled to Refugee Medical Assistance (RMA) based on refugee status."
-    description "*** TBD ***" 
-
     input "Refugee Status", "Application", "Char(1)", %w(Y N)
     input "Refugee Medical Assistance Start Date", "Application", "Date"
     input "Medicaid Residency Indicator", "From Residency Logic", "Char(1)", %w(Y N)

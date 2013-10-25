@@ -4,10 +4,6 @@ include IncomeThreshold
 
 module MAGI
   class Income < Ruleset
-    name        "Determine MAGI Eligibility"
-    mandatory   "Mandatory"
-    applies_to  "Medicaid and CHIP"
-    
     input "Applicant Adult Group Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
     input "Applicant Pregnancy Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
     input "Applicant Parent Caretaker Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)

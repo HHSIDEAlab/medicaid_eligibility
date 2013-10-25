@@ -2,13 +2,6 @@
 
 module MAGI
   class ReferralType < Ruleset
-    name        "Determine Non-MAGI Referral Type"
-    mandatory   "Mandatory"
-    references  "§435.603(j)"
-    applies_to  "Medicaid"
-    purpose     "Determine if this applicant may be referred based on non-MAGI factors."
-    description "If the applicant attests to being disabled or in need of long-term services and supports, is age 65 or older or the Hub service returns information from SSA indicating that the applicant is entitled to or enrolled in Medicare or receives Title II benefits due to disability, the applicant’s account is referred to the Medicaid agency for a non-MAGI eligibility determination. The applicant’s account is referred to the state’s Medicaid agency for a non-MAGI eligibility determination regardless of the applicant’s Medicaid or CHIP MAGI eligibility or eligibility for APTC/CSR. "
-
     input "Applicant Age", "From Child Category Rule", "Number"
     input "Applicant Attest Blind or Disabled", "From application", "Char(1)", %w(Y N)
     input "Applicant Attest Long Term Care", "From application", "Char(1)", %w(Y N)
