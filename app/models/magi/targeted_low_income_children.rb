@@ -2,17 +2,6 @@
 
 module MAGI
   class TargetedLowIncomeChildren < Ruleset
-    name        "CHIP Targeted Low-Income Children"
-    mandatory   "Optional"
-    references  "§457.310"
-    applies_to  "CHIP Only"
-    purpose     "Determine if the applicant is in the CHIP targeted low-income child category."
-    description "Per 42 CFR 457.310, states can cover under CHIP, children who are under age 19, not eligible for Medicaid and not enrolled in other health insurance coverage.  States can cover all children under age 19 meeting these criteria, or specify a range of ages, including a range low to high (e.g., 6-18) or under a specified age (e.g., < 1).\nThis rule addresses only whether a child is the required age range; information regarding enrollment in other health insurance coverage has not yet been obtained from the applicant."
-    
-    assumption  "A child can be in the main child category, the optional, targeted low-income category, and the targeted low-income category."
-    assumption  "The low and high thresholds are inclusive of children who meet the requirements for this category."
-    assumption  "This rule can only set a temporary indicator for inclusion in this group as the question regarding whether the child has other health insurance coverage is not asked until after this logic is run.  In MAGI Part 3, a rule is run to check whether the child has other coverage and reset this indicator to yes or no.  If the child is not eligible for this category and it was used as the basis for the applicant’s applicable FPL standard, the applicable standard is re-determined and the income eligibility logic is re-run."
-
     input "Applicant Age", "From Child Category Rule", "Number"
     input "Has Insurance", "Application", "Char(1)", %w(Y N)
 

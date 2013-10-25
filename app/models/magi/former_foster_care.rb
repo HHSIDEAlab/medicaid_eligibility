@@ -2,16 +2,6 @@
 
 module MAGI
   class FormerFosterCare < Ruleset
-    name        "Former Foster Care Children"
-    mandatory   "Mandatory" 
-    references  "section 1902(a)(10)(A)(i)(IX) of the Act"
-    applies_to  "Medicaid Only"
-    purpose     "Determine if the applicant is entitled to Medicaid as a former foster care child."
-    description "The Former Foster Care category is a mandatory group through which states must provide Medicaid coverage to children under age 26 who were in foster care when they turned age 18 or aged out of foster care at such higher age as the state elected under title IV-E of the Social Security Act and who were enrolled in Medicaid when they turned 18 or aged out of foster care. States may require the individual to have been in foster care and receiving Medicaid in that state to be eligible for the former foster care group, or states can cover individuals who were on Medicaid and in foster care when in another state. This rule also evaluates the residency and citizenship/immigration status of the applicant in order to set an indicator for this category."
-
-    assumption "FFE will accept self-attestation without further verification as to whether the applicant was in foster care on the date of attaining 18 years of age (or such higher age as the State has elected) and whether he or she received Medicaid while on foster care."
-    assumption "There is no income limit for these individuals."
-    
     input "Medicaid Residency Indicator", "From Residency Logic", "Char(1)", %w(Y N)
     input "Applicant Medicaid Citizen Or Immigrant Indicator", "From Immigration Status rule in MAGI Part 2", "Char(1)", %w(Y N)
     input "Applicant Age", "Child Category rule", "Number"
