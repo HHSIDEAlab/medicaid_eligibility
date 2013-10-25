@@ -132,7 +132,7 @@ module ApplicationResponder
         xml.send("ext:TransferHeader") {
           xml.send("ext:TransferActivity") {
             xml.send("nc:ActivityIdentification") {
-              # Need Identification ID
+              # TODO
             }
             xml.send("nc:ActivityDate") {
               xml.send("nc:DateTime", Time.now.strftime("%Y-%m-%dT%H:%M:%S"))
@@ -143,19 +143,18 @@ module ApplicationResponder
           }
         }
         xml.send("hix_core:Sender") {
-          # Need to figure out what to put here
+          # TODO
         }
         xml.send("hix_core:Receiver") {
-          # Need to figure out what to put here
+          # TODO
         }
         xml.send("hix-ee:InsuranceApplication") {
           xml.send("hix-core:ApplicationCreation") {
-            # Need to figure out what to put here
+            # TODO
           }
           xml.send("hix-core:ApplicationSubmission") {
-            # Need to figure out what to put here
+            # TODO
           }
-          # Do we want Application Identification?
           @applicants.each do |applicant|
             xml.send("hix-ee:InsuranceApplicant", {"s:id" => applicant.applicant_id}) {
               xml.send("hix-ee:MedicaidMAGIEligibility") {

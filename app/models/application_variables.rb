@@ -31,13 +31,6 @@ module ApplicationVariables
       :xpath      => :unimplemented,
       :default    => "N"
     },
-    # {
-    #   :name       => "Categorically Needy",
-    #   :type       => :flag,
-    #   :values     => %w(Y N),
-    #   :group      => :applicant,
-    #   :xpath      => :unimplemented
-    # },
     {
       :name       => "Claimed as Dependent by Person Not on Application",
       :type       => :flag,
@@ -384,11 +377,6 @@ module ApplicationVariables
         "AIAN Income"
       ]
     },
-    # {
-    #   :primary_income => "MAGI",
-    #   :other_income => [],
-    #   :deductions => []
-    # },
     :personal => {
       :primary_income => "Wages, Salaries, Tips",
       :other_income => [
@@ -407,47 +395,6 @@ module ApplicationVariables
       ]
     }
   }.freeze
-
-  # INCOME_INPUTS = {
-  #   :tax_return => {
-  #     :income => [
-  #       "AGI",
-  #       "Deductible Part of Self-Employment Tax",
-  #       "IRA Deduction",
-  #       "Student Loan Interest Deduction",
-  #       "Tuition and Fees",
-  #       "Tax-Exempt Interest",
-  #       "Other MAGI-Eligible Income"
-  #     ],
-  #     :deductions => [
-  #       "Social Security Benefits Taxable Amount"
-  #     ]
-  #   },
-  #   :personal => [
-  #     {
-  #       :primary_income => "MAGI",
-  #       :other_income => [],
-  #       :deductions => []
-  #     },
-  #     {
-  #       :primary_income => "Wages, Salaries, Tips",
-  #       :other_income => [
-  #         "Taxable Interest",
-  #         "Tax-Exempt Interest",
-  #         "Taxable Refunds, Credits, or Offsets of State and Local Income Taxes",
-  #         "Alimony",
-  #         "Capital Gain or Loss",
-  #         "Pensions and Annuities Taxable Amount",
-  #         "Farm Income or Loss",
-  #         "Unemployment Compensation",
-  #         "Other Income"
-  #       ],
-  #       :deductions => [
-  #         "MAGI Deductions"
-  #       ]
-  #     }
-  #   ]
-  # }.freeze
 
   CHILD_OUTPUTS = [
     {name: "Child of Caretaker Dependent Age", type: :determination},

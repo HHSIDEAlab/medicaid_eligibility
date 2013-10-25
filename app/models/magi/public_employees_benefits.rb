@@ -12,7 +12,7 @@ module MAGI
 
     determination "State Health Benefits CHIP", %w(Y N X), %w(999 555 138 155)
 
-    rule "Applicant is Medicaid eligible  - rule does not apply" do
+    rule "Determine public employee benefit eligibility" do
       if v("Applicant Medicaid Prelim Indicator") == 'Y' || v("State Health Benefits Through Public Employee") == 'N'
         determination_na "State Health Benefits CHIP"
       elsif c("CHIP for State Health Benefits") == "01"
