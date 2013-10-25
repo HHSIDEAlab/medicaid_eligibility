@@ -2,13 +2,6 @@
 
 module MAGI
   class QualifiedChild < Ruleset
-    name        "Identify Medicaid Category – Parent or Caretaker Relative, Qualified Child"
-    mandatory   "Mandatory"
-    references  "§435.4 and §435.110"
-    applies_to  "Medicaid only"
-    
-    assumption "A child must satisfy all four conditions (dependent child age, deprived of parental support, relationship and applicant assumes primary responsibility) in order for the applicant to qualify for the Parent Caretaker Relative category."
-
     input "Caretaker Age", "Application", "Integer"
     input "Child Age", "Application", "Integer"
     input "Child Parents", "Application", "List"

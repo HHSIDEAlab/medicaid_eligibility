@@ -2,11 +2,6 @@
 
 module MAGI
   class PreliminaryCHIP < Ruleset
-    name        "Determine Preliminary CHIP Eligibility"
-    applies_to  "CHIP"
-    purpose     "Determine preliminary eligibility based on citizenship, immigration status, residency and income."
-    description "Preliminary Medicaid and CHIP eligibility indicators are set in MAGI Part 2 and Part 3, based on the values of various indicators previously set that govern Medicaid and CHIP eligibility.  These preliminary eligibility indicators are used to control branching in the application, which is designed to ask only the questions needed to determine eligibility for the insurance affordability program for which the applicant is preliminarily determined eligible based on MAGI. The final CHIP eligibility determination is made in Part 3 after additional CHIP-specific rules are run." 
-
     input "Medicaid Residency Indicator", "From Residency Logic", "Char(1)", %w(Y N)
     input "Applicant Medicaid Citizen Or Immigrant Indicator", "From Immigration Status rule in MAGI Part 2", "Char(1)", %w(Y N)
     input "Applicant Income CHIP Eligible Indicator", "From Verify Household Income Rule", "Char(1)", %w(Y N)
