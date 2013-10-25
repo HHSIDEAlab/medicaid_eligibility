@@ -14,7 +14,7 @@ module MAGI
     # Outputs
     determination "Unborn Child", %w(Y N X), %w(999 151 555)
 
-    rule "State does not elect this option" do 
+    rule "Determine Unborn Child eligibility" do 
       if c("Option Cover Unborn Child") == 'N' || v("Applicant Pregnant Indicator") == 'N'
         determination_na "Unborn Child"
       elsif v("Applicant Medicaid Prelim Indicator") == 'Y' || v("Applicant CHIP Prelim Indicator") == 'Y'

@@ -14,7 +14,7 @@ module MAGI
     date      "Emergency Medicaid Determination Date"
     code      "Emergency Medicaid Ineligibility Reason", %w(999)
 
-    rule "Applicant meets all Medicaid eligibility criteria" do
+    rule "Determine preliminary Medicaid eligibility" do
       if v("Medicaid Residency Indicator") == 'Y' && 
          v("Applicant Medicaid Citizen Or Immigrant Indicator") == 'Y' && 
          v("Applicant Income Medicaid Eligible Indicator") == 'Y'

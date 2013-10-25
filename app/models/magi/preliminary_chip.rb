@@ -12,7 +12,7 @@ module MAGI
     date      "CHIP Prelim Determination Date"
     code      "CHIP Prelim Ineligibility Reason", %w(999 107)
 
-    rule "Applicant meets all CHIP eligibility criteria" do
+    rule "Determine preliminary CHIP eligibility" do
       if v("Medicaid Residency Indicator") == 'Y' && 
          v("Applicant Medicaid Citizen Or Immigrant Indicator") == 'Y' && 
          v("Applicant Income CHIP Eligible Indicator") == 'Y' && 
