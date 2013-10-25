@@ -16,19 +16,22 @@ module ApplicationResponder
       app_json["CHIP Eligible"] = app.outputs["Applicant CHIP Indicator"]
       
       if app.outputs["Applicant Medicaid Indicator"] == 'N' && app.outputs["Applicant CHIP Indicator"] == 'N'
-        ineligibility_reason = "Applicant ineligible for the following reasons:"
+        ineligibility_reasons = []
         if app.applicant_attributes["Medicaid Residency Indicator"] == 'N'
-          ineligibility_reason += "\nApplicant did not meet residency requirements"
+          ineligibility_reasons << "Applicant did not meet residency requirements"
         end
         if app.outputs["Applicant Medicaid Citizen Or Immigrant Indicator"] == 'N'
-          ineligibility_reason += "\nApplicant did not meet citizenship/immigration requirements"
+          ineligibility_reasons << "Applicant did not meet citizenship/immigration requirements"
         end
         if app.outputs["Category Used to Calculate Medicaid Income"] == "None"
-          ineligibility_reason += "\nApplicant did not meet the requirements for any eligibility category"
+          ineligibility_reasons << "Applicant did not meet the requirements for any eligibility category"
         elsif app.outputs["Applicant Income Medicaid Eligible Indicator"] == 'N'
-          ineligibility_reason += "\nApplicant did not meet the income requirements for any category qualified for"            
+          ineligibility_reasons << "Applicant did not meet the income requirements for any category qualified for"            
         end
-        app_json["Ineligibility Reason"] = ineligibility_reason
+        if app.outputs["Applicant Dependent Child Covered Indicator"] == "Y"
+          ineligibility_reasons << "Applicant has a dependent child who does not have coverage and is not included on the application"
+        end
+        app_json["Ineligibility Reason"] = ineligibility_reasons
         app_json["Non-MAGI Referral"] = app.outputs["Applicant Medicaid Non-MAGI Referral Indicator"]
       end
       
@@ -41,21 +44,33 @@ module ApplicationResponder
 
       app_json["Determinations"] = {}
 
+      det_json = {}
+      det_json["Indicator"] = app.outputs["Medicaid Residency Indicator"]
+      if app.outputs["Medicaid Residency Indicator"] == 'N'
+        det_json["Ineligibility Code"] = app.outputs["Medicaid Residency Ineligibility Reason"]
+        det_json["Ineligibility Reason"] = MedicaidEligibilityApi::Application.options[:ineligibility_reasons][det_json["Ineligibility Code"]]
+      end
+      app_json["Determinations"]["Residency"] = det_json
+
       for det in ApplicationVariables::DETERMINATIONS
         det_json = {}
         det_json["Indicator"] = app.outputs["Applicant #{det[:name]} Indicator"]
         if app.outputs["Applicant #{det[:name]} Indicator"] == 'N'
           det_json["Ineligibility Code"] = app.outputs["#{det[:name]} Ineligibility Reason"]
+          det_json["Ineligibility Reason"] = MedicaidEligibilityApi::Application.options[:ineligibility_reasons][det_json["Ineligibility Code"]]
         end
         app_json["Determinations"][det[:name]] = det_json
       end
 
-      det_json = {}
-      det_json["Indicator"] = app.outputs["Medicaid Residency Indicator"]
-      if app.outputs["Medicaid Residency Indicator"] == 'N'
-        det_json["Ineligibility Code"] = app.outputs["Medicaid Residency Ineligibility Reason"]
-      end
-      app_json["Determinations"]["Residency"] = det_json
+      if app.outputs["APTC Referral Indicator"]
+        det_json = {}
+        det_json["Indicator"] = app.outputs["APTC Referral Indicator"]
+        if app.outputs["APTC Referral Indicator"] == 'N'
+          det_json["Ineligibility Code"] = app.outputs["APTC Referral Ineligibility Reason"]
+          det_json["Ineligibility Reason"] = MedicaidEligibilityApi::Application.options[:ineligibility_reasons][det_json["Ineligibility Code"]]
+        end
+        app_json["Determinations"]["APTC Referral"] = det_json
+      end  
 
       app_json["Other Outputs"] = {}
       app_json["Other Outputs"]["Qualified Children List"] = []

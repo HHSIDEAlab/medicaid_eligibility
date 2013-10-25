@@ -339,6 +339,7 @@ module ApplicationVariables
     {name: "Unborn Child"},
 
     {name: "Income Medicaid Eligible", eligibility: :MAGI},
+    {name: "Income CHIP Eligible", eligibility: :CHIP},
     
     {name: "CHIPRA 214"},
     {name: "Trafficking Victim"},
@@ -351,7 +352,6 @@ module ApplicationVariables
     {name: "Work Quarters Override Income"},
     {name: "State Health Benefits CHIP"},
     {name: "CHIP Waiting Period Satisfied"},
-    {name: "CHIP Incarceration"},
     {name: "Dependent Child Covered"},
 
     {
@@ -361,8 +361,7 @@ module ApplicationVariables
       date_xpath: "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityDetermination/nc:ActivityDate/nc:DateTime",
       reason_xpath: "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityReasonText"
     },
-    {name: "APTC Referral"},
-
+    
     {name: "CHIP"},
     {name: "Medicaid"},
     {name: "Emergency Medicaid"},

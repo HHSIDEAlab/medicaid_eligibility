@@ -15,6 +15,7 @@ module MAGI
     # Outputs
     determination "Work Quarters Override Income", %w(Y N), %w(999 338 339 340)
     indicator "APTC Referral Indicator", %w(Y N)
+    output "APTC Referral Ineligibility Reason", "Char(3)", %w(406)
     
     rule "Income is greater than or equal to 100% FPL" do
       if v("Calculated Income") >= v("FPL")

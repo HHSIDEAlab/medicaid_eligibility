@@ -21,12 +21,17 @@ module MAGI
     output "Prelim APTC Referral Indicator", "Char(1)", %w(Y N)
 
     rule "Determine Emergency Medicaid eligibility" do
-      if v("Medicaid Residency Indicator") == 'Y' && v("Applicant Medicaid Citizen Or Immigrant Indicator") == 'Y' && v("Applicant Former Foster Care Category Indicator") == 'Y'
+      if v("Medicaid Residency Indicator") == 'Y' && 
+         v("Applicant Medicaid Citizen Or Immigrant Indicator") == 'Y' && 
+         v("Applicant Former Foster Care Category Indicator") == 'Y'
         determination_y "Medicaid"
 
         o["APTC Referral Indicator"] = 'N'
+        o["APTC Referral Ineligibility Reason"] = 406
         o["Prelim APTC Referral Indicator"] = 'N'
-      elsif v("Medicaid Residency Indicator") == 'Y' && v("Applicant Income Medicaid Eligible Indicator") == 'Y' && v("Applicant Medicaid Citizen Or Immigrant Indicator") == 'N'
+      elsif v("Medicaid Residency Indicator") == 'Y' && 
+            v("Applicant Income Medicaid Eligible Indicator") == 'Y' && 
+            v("Applicant Medicaid Citizen Or Immigrant Indicator") == 'N'
         determination_y "Emergency Medicaid"
 
         o["APTC Referral Indicator"] = 'Y'

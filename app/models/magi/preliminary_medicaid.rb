@@ -21,7 +21,9 @@ module MAGI
     code      "Emergency Medicaid Ineligibility Reason", %w(999)
 
     rule "Applicant meets all Medicaid eligibility criteria" do
-      if v("Medicaid Residency Indicator") == 'Y' && v("Applicant Medicaid Citizen Or Immigrant Indicator") == 'Y' && v("Applicant Income Medicaid Eligible Indicator") == 'Y'
+      if v("Medicaid Residency Indicator") == 'Y' && 
+         v("Applicant Medicaid Citizen Or Immigrant Indicator") == 'Y' && 
+         v("Applicant Income Medicaid Eligible Indicator") == 'Y'
         determination_y "Medicaid Prelim"
       else
         o["Applicant Medicaid Prelim Indicator"] = 'N'
@@ -29,7 +31,9 @@ module MAGI
         o["Medicaid Prelim Ineligibility Reason"] = 106
       end
 
-      if v("Medicaid Residency Indicator") == 'Y' && v("Applicant Medicaid Citizen Or Immigrant Indicator") == 'N' && v("Applicant Income Medicaid Eligible Indicator") == 'Y'
+      if v("Medicaid Residency Indicator") == 'Y' && 
+         v("Applicant Medicaid Citizen Or Immigrant Indicator") == 'N' && 
+         v("Applicant Income Medicaid Eligible Indicator") == 'Y'
         determination_y "Emergency Medicaid"
       end
     end

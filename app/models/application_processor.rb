@@ -31,7 +31,6 @@ module ApplicationProcessor
       MAGI::OptionalUnbornChild,
       MAGI::PublicEmployeesBenefits,
       MAGI::CHIPWaitingPeriod,
-      MAGI::DenyCHIPIncarcerated,
       MAGI::CHIPEligibility,
       MAGI::DependentChildCovered,
       MAGI::MedicaidEligibility,
