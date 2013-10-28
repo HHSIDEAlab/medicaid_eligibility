@@ -436,9 +436,9 @@ module ApplicationVariables
 
   CONFIGURATION_CODES = {
     "Count Unborn Children for Household" => {
-      "01" => "Add the number of children expected to household size",
+      "01" => "Do not count unborn children",
       "02" => "Add one child for each pregnant applicant",
-      "03" => "Do not count unborn children"
+      "03" => "Add the number of children expected to household size"
     }
   }.freeze
 

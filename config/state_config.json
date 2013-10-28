@@ -185,7 +185,7 @@
   },
   "MT": {
     "Option Householding Minor Student": "N",
-    "Count Unborn Children for Household": "01",
+    "Count Unborn Children for Household": "03",
     "Option Deny Residency to Temporary Resident Students": "Y",
     "Option Require Work Quarters": "Y",
     "State Applies Seven Year Limit": "Y",
@@ -306,7 +306,7 @@
 
   "ND": {
     "Option Householding Minor Student": "N",
-    "Count Unborn Children for Household": "01",
+    "Count Unborn Children for Household": "03",
     "Option Deny Residency to Temporary Resident Students": "Y",
     "Option Require Work Quarters": "Y",
     "State Applies Seven Year Limit": "N",
