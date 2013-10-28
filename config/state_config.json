@@ -93,10 +93,6 @@
     }
   },
 
-  "AK": {
-     "Base FPL": 14350,
-     "FPL Per Person": 5030
-  },
   "GA": {
     "Option Householding Minor Student": "N",
     "Count Unborn Children for Household": "02",
@@ -477,6 +473,9 @@
   },
 
  "AK": {
+    "Base FPL": 14350,
+    "FPL Per Person": 5030,
+
     "Option Householding Minor Student": "N",
     "Count Unborn Children for Household": "03",
     "Option Deny Residency to Temporary Resident Students": "Y", 
