@@ -1,11 +1,18 @@
  "<%= row['State_code'] %>": {
     "Option Householding Minor Student": "<%= row["under21AndFTSOption"] %>",
-    "Count Unborn Children for Household": "<%= row["medicaidPregnancyInHouseholdIndicator"].rjust(2, '0') %>",
+    "Count Unborn Children for Household": "<%= row["medicaidPregnancyInHouseholdIndicator"] %>",
     "Option Deny Residency to Temporary Resident Students": "<%= row["optionStudent Residency"] %>",
     "Option Require Work Quarters": "<%= row["optionRequireWorkQuarters"] %>",
     "State Applies Seven Year Limit": "<%= row["stateAppliesSevenYearLimit"] %>",
 
     "Option CHIPRA 214 Applicable Program": "<%= row["optionCHIPRA214ApplicableProgram"] %>",
+    <% if %w(01 02).include?(row["optionCHIPRA214ApplicableProgram"]) %>
+    "Option CHIPRA 214 Child Age Threshold": <%= row["optionCHIPRA214ChildAgeThreshold"] %>,
+    "Option CHIPRA 214 Applies To": "<%= row["optionCHIPRA214AppliesTo"] %>",
+    <% if row["optionCHIPRA214ApplicableProgram"] == '01' %>
+    "Option CHIPRA 214 CHIP Applies To": "<%= row["optionCHIPRA214CHIPAppliesTo"] %>",
+    <% end %>
+    <% end %>
 
     "Deprivation Requirement Retained": "<%= row["deprivationRequirementRetained"] %>",
     "Option Caretaker Relative Relationship": "<%= row["optionCaretakerRelativeRelationship"] %>",
@@ -14,16 +21,20 @@
     
     <% if row["percentFPLAdultGroup"] == "0"  %>"Option Adult Group": "N",<% else %>"Option Adult Group": "Y",<% end %>
     "Option Young Adults": "<%= row["optionYoungAdults"] %>",
-    <% if row["optionYoungAdults"] == 'Y' %>"Young Adult Age Threshold": "<%= row["MedicaidChildCategoryHighAgeThreshold"].to_i + 1 %>",<% end %>
+    <% if row["optionYoungAdults"] == 'Y' %>"Young Adult Age Threshold": <%= row["MedicaidChildCategoryHighAgeThreshold"].to_i + 1 %>,<% end %>
     "Foster Care Age Threshold": <%= row["fosterCareAgeThreshold"] %>,
     "In-State Foster Care Required": "<%= row["inStateFosterCareRequired"] %>",
     "State Offers Refugee Medical Assistance": "<%= row["stateOffersRefugeeMedicalAssistance"] %>",
-    "Refugee Medical Assistance Income Requirement": "Y", 
+    <% if row["stateOffersRefugeeMedicalAssistance"] == "Y" %>
+    <% if row["percentFPLRefugeeMedicalAssistance "] == "0" %>"Refugee Medical Assistance Income Requirement": "N",<% else %>"Refugee Medical Assistance Income Requirement": "Y",<% end %>
+    <% if row["percentFPLRefugeeMedicalAssistance "] != "0" %>
     "Refugee Medical Assistance Threshold": {
       "percentage": "Y",
       "method": "standard",
-      <% if row["stateOffersRefugeeMedicalAssistance"] == "Y" %>"threshold": <%= row["percentFPLRefugeeMedicalAssistance "] %><% else %>"threshold": 0<% end %>
+      "threshold": <%= row["percentFPLRefugeeMedicalAssistance "] %>
     },
+    <% end %>
+    <% end %>
     
     <% if row["percentCHIPFPLPregnantWoman"] == "0" %>"CHIP for Pregnant Women": "N",<% else %>"CHIP for Pregnant Women": "Y",<% end %>
     "Option Cover Unborn Child": "<%= row["optionCoverUnbornChild"] %>",
@@ -32,38 +43,63 @@
 
     "Optional Targeted Low Income Child Group": "<%= row["optionalTargetedLowIncomeChildGroup"] %>",
     <% if  row["optionalTargetedLowIncomeChildGroup"]  == "Y" %>
-    "Optional Targeted Low Income Child Age High Threshold": <%= row["optionalTargetLowIncomeChildAgeHighThreshold"] %>,
-    "Optional Targeted Low Income Child Age Low Threshold": <%= row["optionalTargetLowIncomeChildAgeLowThreshold"] %>, 
+    "Optional Targeted Low Income Child Age High Threshold": 18,
+    "Optional Targeted Low Income Child Age Low Threshold": 0,
     <% end %>
 
     "CHIP Targeted Low Income Child Group": "<%= row["CHIPTargetedLowIncomeChildGroup"] %>",
     <% if row["CHIPTargetedLowIncomeChildGroup"] == "Y" %>
-    "CHIP Targeted Low Income Child Age High Threshold": <%= row["CHIPTargetedLowIncomeChildAgeHighThreshold"] %>,
-    "CHIP Targeted Low Income Child Age Low Threshold": <%= row["CHIPTargetedLowIncomeChildAgeLowThreshold"] %>,
+    "CHIP Targeted Low Income Child Age High Threshold": <%= row["CHIPTargetedLowIncomeChildAgeHighThreshold1"] %>,
+    "CHIP Targeted Low Income Child Age Low Threshold": <%= row["CHIPTargetedLowIncomeChildAgeLowThreshold1"] %>,
      <% end %>
 
     "Medicaid Thresholds": {
+      <% if row["percentFPLAdultGroup"] != "0" %>
       "Adult Group Category": {
         "percentage": "Y",
         "method": "standard",
         "threshold": <%= row["percentFPLAdultGroup"] %>
       },
+      <% end %>
       "Parent Caretaker Category": {
         "percentage": "Y",
         "method": "standard",
         "threshold": <%= row["percentFPLParentCaretaker"] %>
       },
+      <% if row["percentCHIPFPLPregnantWoman"] != "0" %>
       "Pregnancy Category": {
         "percentage": "Y",
         "method": "standard",
         "threshold": <%= row["percentMedicaidFPLPregnantWoman"] %>
       },
+      <% end %>
+      <% if row["optionalTargetedLowIncomeChildGroup"] == "Y" %>
+      "Optional Targeted Low Income Child": {
+        "percentage": "Y",
+        "method": "age",
+        "age": [
+          {
+            "minimum": <%= row["optionalTargetLowIncomeChildAgeLowThreshold1"] %>,
+            "maximum": <%= row["optionalTargetLowIncomeChildAgeHighThreshold1"] %>,
+            "threshold": <%= row["percentFPLOptionalTargetedLowIncomeMedicaidChild1"] %>
+          }<% if row["percentFPLOptionalTargetedLowIncomeMedicaidChild2"] %>,{
+            "minimum": <%= row["optionalTargetLowIncomeChildAgeLowThreshold2"] %>,
+            "maximum": <%= row["optionalTargetLowIncomeChildAgeHighThreshold2"] %>,
+            "threshold": <%= row["percentFPLOptionalTargetedLowIncomeMedicaidChild2"] %>
+          }<% end %>
+        ]
+      },
+      <% end %>
       "Child Category": {
         "percentage": "Y",
         "method": "age",
         "age": [
           {
-            "minimum": 0,
+            "minimum": <%= row["MedicaidChildCategoryLowAgeThreshold1"] %>,
+            "maximum": <%= row["MedicaidChildCategoryHighAgeThreshold1"] %>,
+            "threshold": <%= row["percentMedicaidFPLChild1"] %>
+          },{
+            "minimum": <%= row["MedicaidChildCategoryLowAgeThreshold2"] %>,
             "maximum": <%= row["MedicaidChildCategoryHighAgeThreshold2"] %>,
             "threshold": <%= row["percentMedicaidFPLChild2"] %>
           },{
@@ -79,8 +115,14 @@
       <% if row["CHIPTargetedLowIncomeChildGroup"] == "Y" %>
       "CHIP Targeted Low Income Child": {
         "percentage": "Y",
-        "method": "standard",
-        "threshold": 0
+        "method": "age",
+        "age": [
+          {
+            "minimum": <%= row["CHIPTargetedLowIncomeChildAgeLowThreshold1"] %>,
+            "maximum": <%= row["CHIPTargetedLowIncomeChildAgeHighThreshold1"] %>,
+            "threshold": <%= row["percentFPLTargetedLowIncomeCHIPChild1"] %>
+          }
+        ]
       }
       <% end %>
     }
