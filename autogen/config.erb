@@ -1,7 +1,7 @@
  "<%= row['State_code'] %>": {
     "Option Householding Minor Student": "<%= row["under21AndFTSOption"] %>",
     "Count Unborn Children for Household": "<%= row["medicaidPregnancyInHouseholdIndicator"] %>",
-    "Option Deny Residency to Temporary Resident Students": "<%= row["optionStudent Residency"] %>", <%#TODO: CHECK whether this is reversed %>
+    "Option Deny Residency to Temporary Resident Students": "<%= row["optionStudent Residency"] %>",
     "Option Require Work Quarters": "<%= row["optionRequireWorkQuarters"] %>",
     "State Applies Seven Year Limit": "<%= row["stateAppliesSevenYearLimit"] %>",
 
@@ -10,7 +10,9 @@
     "Deprivation Requirement Retained": "<%= row["deprivationRequirementRetained"] %>",
     "Option Caretaker Relative Relationship": "<%= row["optionCaretakerRelativeRelationship"] %>",
     "Option Dependent Student": "<%= row["optionDependentStudent"] %>",
+    <% if row["optionDependentStudent"] == "Y" %>
     "State Unemployed Standard": "<%= row["stateUnemployedStandard"] %>",
+    <% end %>
     <% if row["percentFPLAdultGroup"] == "0"  %>
     "Option Adult Group": "N",
     <% else %>
@@ -18,7 +20,9 @@
     <% end %>
     "Option Young Adults": "<%= row["optionYoungAdults"] %>",
     "Young Adult Age Threshold": "<%= row["MedicaidChildCategoryHighAgeThreshold"] %>",
-    "Foster Care Age Threshold": <%= row["fosterCareAgeThreshold"] %>,
+    <% if row["MedicaidChildCategoryHighAgeThreshold"] == 'Y' %>
+    "Foster Care Age Threshold": <%= row["fosterCareAgeThreshold"].to_i + 1 %>,
+    <% end %>
     "In-State Foster Care Required": "<%= row["inStateFosterCareRequired"] %>",
     "State Offers Refugee Medical Assistance": "<%= row["stateOffersRefugeeMedicalAssistance"] %>",
     "Refugee Medical Assistance Income Requirement": "Y", 
@@ -46,7 +50,7 @@
     "Optional Targeted Low Income Child Age Low Threshold": <%= row["optionalTargetLowIncomeChildAgeLowThreshold"] %>, 
     <% end %>
 
-   "CHIP Targeted Low Income Child Group": "<%= row["CHIPTargetedLowIncomeChildGroup"] %>",
+    "CHIP Targeted Low Income Child Group": "<%= row["CHIPTargetedLowIncomeChildGroup"] %>",
     <% if row["CHIPTargetedLowIncomeChildGroup"] == "Y" %>
     "CHIP Targeted Low Income Child Age High Threshold": <%= row["CHIPTargetedLowIncomeChildAgeHighThreshold"] %>,
     "CHIP Targeted Low Income Child Age Low Threshold": <%= row["CHIPTargetedLowIncomeChildAgeLowThreshold"] %>,
