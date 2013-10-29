@@ -6,7 +6,7 @@
     <br>
     <div class="eligibility-div">
       <span eligibility data-program='Medicaid' data-value='{{applicant["Medicaid Eligible"]}}'></span>
-      <span class="threshold">Eligibility Threshold: {{ applicant["Category Threshold"] }}</span>  
+      <span class="threshold" ng-show="applicant['Category'] != 'None'">Eligibility Threshold: {{ applicant["Category Threshold"] }}</span>  
       <span class="category" ng-show="applicant['Category'] == 'None'">No Category</span>
       <span class="category" ng-show="applicant['Category'] != 'None'">{{applicant["Category"]}}</span>
       <div class="eligibility-explanation" ng-show="applicant['Medicaid Eligible'] == 'N'">
@@ -17,7 +17,7 @@
     </div>
     <div class="eligibility-div" ng-show="applicant['Medicaid Eligible'] == 'N'">
       <span eligibility data-program='CHIP' data-value='{{applicant["CHIP Eligible"]}}'></span>
-      <span class="threshold">Eligibility Threshold: {{ applicant["CHIP Category Threshold"] }}</span>  
+      <span class="threshold" ng-show="applicant['CHIP Category'] != 'None'">Eligibility Threshold: {{ applicant["CHIP Category Threshold"] }}</span>  
       <span class="category" ng-show="applicant['CHIP Category'] == 'None'">No Category</span>
       <span class="category" ng-show="applicant['CHIP Category'] != 'None'">{{applicant["CHIP Category"]}}</span>
       <div class="eligibility-explanation" ng-show="applicant['CHIP Eligible'] == 'N'">

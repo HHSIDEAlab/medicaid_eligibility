@@ -32,7 +32,7 @@ module MAGI
     end
 
     calculated "Parents Work 100 Hours Per Month" do
-      if v("Child Parents").all?{|parent| parent.person_attributes["Hours Worked Per Week"] >= c("State Unemployed Standard")}
+      if v("Child Parents").all?{|parent| parent.person_attributes["Hours Worked Per Week"] * 4.33 >= c("State Unemployed Standard")}
         'Y'
       else
         'N'
