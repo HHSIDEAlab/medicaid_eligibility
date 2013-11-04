@@ -183,6 +183,89 @@
     "Base FPL": 13230,
     "FPL Per Person": 4620
   },
+  "MD": {
+    "Option Householding Minor Student": "Y",
+    "Count Unborn Children for Household": "01",
+    "Option Deny Residency to Temporary Resident Students": "N",
+    "Option Require Work Quarters": "N",
+    "State Applies Seven Year Limit": "N",
+
+    "Option CHIPRA 214 Applicable Program": "01",
+    "Option CHIPRA 214 Child Age Threshold": 21,
+    "Option CHIPRA 214 Applies To": "01",
+    "Option CHIPRA 214 CHIP Applies To": "02",
+    
+    "Deprivation Requirement Retained": "N",
+    "Option Caretaker Relative Relationship": "01",
+    "Option Dependent Student": "Y",
+    "State Unemployed Standard": 100,
+
+    "Option Adult Group": "Y",
+    "Option Young Adults": "Y",
+    "Young Adult Age Threshold": 21,
+    "Foster Care Age Threshold": 18,
+    "In-State Foster Care Required": "Y",
+    "State Offers Refugee Medical Assistance": "Y",
+    "Refugee Medical Assistance Income Requirement": "N",
+    "Refugee Medical Assistance Threshold": {
+      "percentage": "Y",
+      "method": "standard",
+      "threshold": 100
+    },
+
+    "CHIP for Pregnant Women": "N",
+    "Option Cover Unborn Child": "N",
+    "CHIP for State Health Benefits": "02",
+    "State CHIP Waiting Period": 0,
+
+    "Optional Targeted Low Income Child Group": "Y",
+    "Optional Targeted Low Income Child Age High Threshold": 19,
+    "Optional Targeted Low Income Child Age Low Threshold": 0,
+    "CHIP Targeted Low Income Child Group": "Y",
+    "CHIP Targeted Low Income Child Age High Threshold": 19,
+    "CHIP Targeted Low Income Child Age Low Threshold": 0,
+
+    "Medicaid Thresholds": {
+      "Adult Group Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 100
+      },
+      "Parent Caretaker Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 100
+      },
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 100
+      },
+      "Child Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 100
+      },
+      "Optional Targeted Low Income Child": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 100
+      }
+    },
+
+    "CHIP Thresholds": {
+      "Child Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 100
+      },
+      "CHIP Targeted Low Income Child": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 100
+      }
+    }
+  },
   "MT": {
     "Option Householding Minor Student": "N",
     "Count Unborn Children for Household": "03",
