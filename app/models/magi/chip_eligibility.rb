@@ -21,8 +21,7 @@ module MAGI
       elsif (v("Applicant CHIP Prelim Indicator") == 'Y' && 
           %w(Y X).include?(v("Applicant State Health Benefits CHIP Indicator")) && 
           %w(Y X).include?(v("Applicant CHIP Waiting Period Satisfied Indicator"))) || 
-        v("Applicant Unborn Child Indicator") == 'Y' || 
-        v("Applicant CHIP Targeted Low Income Child Indicator") == 'Y'
+        v("Applicant Unborn Child Indicator") == 'Y'
         determination_y "CHIP"
       else
         o["Applicant CHIP Indicator"] = 'N'
