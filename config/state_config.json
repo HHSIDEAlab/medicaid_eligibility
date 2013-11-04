@@ -210,7 +210,7 @@
     "Refugee Medical Assistance Threshold": {
       "percentage": "Y",
       "method": "standard",
-      "threshold": 100
+      "threshold": 200
     },
 
     "CHIP for Pregnant Women": "N",
