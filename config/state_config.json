@@ -206,7 +206,7 @@
     "Foster Care Age Threshold": 18,
     "In-State Foster Care Required": "Y",
     "State Offers Refugee Medical Assistance": "Y",
-    "Refugee Medical Assistance Income Requirement": "N",
+    "Refugee Medical Assistance Income Requirement": "Y",
     "Refugee Medical Assistance Threshold": {
       "percentage": "Y",
       "method": "standard",
@@ -229,27 +229,37 @@
       "Adult Group Category": {
         "percentage": "Y",
         "method": "standard",
-        "threshold": 100
+        "threshold": 133
       },
       "Parent Caretaker Category": {
         "percentage": "Y",
         "method": "standard",
-        "threshold": 100
+        "threshold": 133
       },
       "Pregnancy Category": {
         "percentage": "Y",
         "method": "standard",
-        "threshold": 100
+        "threshold": 250
       },
       "Child Category": {
         "percentage": "Y",
-        "method": "standard",
-        "threshold": 100
+        "method": "age",
+        "age": [
+          {
+            "minimum": 0,
+            "maximum": 0,
+            "threshold": 185
+          },{
+            "minimum": 1,
+            "maximum": 18,
+            "threshold": 133
+          }
+        ]
       },
       "Optional Targeted Low Income Child": {
         "percentage": "Y",
         "method": "standard",
-        "threshold": 100
+        "threshold": 300
       }
     },
 
@@ -257,12 +267,12 @@
       "Child Category": {
         "percentage": "Y",
         "method": "standard",
-        "threshold": 100
+        "threshold": 300
       },
       "CHIP Targeted Low Income Child": {
         "percentage": "Y",
         "method": "standard",
-        "threshold": 100
+        "threshold": 300
       }
     }
   },
