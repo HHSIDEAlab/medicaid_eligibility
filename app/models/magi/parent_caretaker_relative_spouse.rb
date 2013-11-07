@@ -46,7 +46,7 @@ module MAGI
     end
 
     rule "Caretaker Relationship – Spouse/Domestic Partner meets criteria" do
-      if v("Applicant Parent Caretaker Category Indicator") == 'N' && v("Has Spouse/Domestic Partner") == 'Y' && v("Spouse/Domestic Partner").outputs["Applicant Parent Caretaker Category Indicator"] == 'Y' && v("Lives With Spouse/Domestic Partner") == 'Y'
+      if v("Applicant Parent Caretaker Category Indicator") == 'N' && v("Has Spouse/Domestic Partner") == 'Y' && v("Spouse/Domestic Partner").respond_to?(:outputs) && v("Spouse/Domestic Partner").outputs["Applicant Parent Caretaker Category Indicator"] == 'Y' && v("Lives With Spouse/Domestic Partner") == 'Y'
         if v("Spouse Domestic Partner Relationship") == :spouse || (%w(02 03).include?(c("Option Caretaker Relative Relationship")) && v("Has Spouse Domestic Partner Relationship") == :domestic_partner)
           o["Applicant Parent Caretaker Category Indicator"] = 'Y'
           o["Parent Caretaker Category Determination Date"] = current_date
