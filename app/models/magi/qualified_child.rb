@@ -41,7 +41,7 @@ module MAGI
 
     calculated "Valid Relationships" do
       standard_relationships = [:parent, :sibling, :stepparent, :uncle_aunt, :grandparent, :cousin, :sibling_in_law]
-      relative_relationships = [:parent, :sibling, :stepparent, :uncle_aunt, :grandparent, :cousin, :sibling_in_law, :former_spouse, :parent_in_law]
+      relative_relationships = [:parent, :sibling, :stepparent, :uncle_aunt, :grandparent, :cousin, :sibling_in_law, :former_spouse, :parent_in_law, :other_relative]
 
       if c("Option Caretaker Relative Relationship") == '00'
         standard_relationships
