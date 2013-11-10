@@ -432,6 +432,7 @@ module ApplicationVariables
     "27" => :former_spouse,
     "30" => :parent_in_law,
     "70" => :domestic_partners_child,
+    "87" => :other_relative,
     "88" => :other
   }.freeze
 
@@ -463,6 +464,7 @@ module ApplicationVariables
     :former_spouse => :former_spouse,
     :parent_in_law => :child_in_law,
     :domestic_partners_child => :parents_domestic_partner,
+    :other_relative => :other_relative,
     :other => :other
   }
 
