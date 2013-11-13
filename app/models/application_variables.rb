@@ -405,7 +405,7 @@ module ApplicationVariables
 
   OUTPUTS = [
     {
-      :name   => "Category Used to Calculate Income",
+      :name   => "Category Used to Calculate Medicaid Income",
       :type   => :string,
       :group  => :MAGI,
       :xpath  => "CategoryUsedToCalculateIncome"
