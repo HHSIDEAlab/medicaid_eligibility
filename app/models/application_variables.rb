@@ -500,10 +500,6 @@ module ApplicationVariables
     :uncle_aunt => {
       :spouse => [:uncle_aunt]
     },
-    :grandparent => {
-      :child => [:parent, :uncle_aunt],
-      :grandchild => [:self, :sibling, :cousin]
-    },
     :parents_domestic_partner => {
       :domestic_partner => [:parent]
     },
