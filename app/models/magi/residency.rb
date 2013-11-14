@@ -28,7 +28,7 @@ module MAGI
             v("Claimer Is Out of State") == 'Y') ||
            (v("Tax Returns").any?{|tr|
               tr.dependents.any?{|dep| dep.person_id == v("Person ID")} &&
-              tr.filers.any?{|filer| filer.person_attributes("Lives In State") == 'N'}
+              tr.filers.any?{|filer| filer.person_attributes["Lives In State"] == 'N'}
             }))
           o["Medicaid Residency Indicator"] = 'N'
           o["Medicaid Residency Indicator Determination Date"] = current_date
