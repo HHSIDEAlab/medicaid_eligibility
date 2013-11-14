@@ -1426,8 +1426,11 @@
         "method": "standard",
         "threshold": 33
       },
-      
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 166
+      },
       "Child Category": {
         "percentage": "Y",
         "method": "age",
