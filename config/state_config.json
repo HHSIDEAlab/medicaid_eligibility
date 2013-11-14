@@ -520,7 +520,11 @@
         "method": "standard",
         "threshold": 13
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 141
+      },
       
       "Child Category": {
         "percentage": "Y",
@@ -607,7 +611,11 @@
         "method": "standard",
         "threshold": 129
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 200
+      },
       
       "Optional Targeted Low Income Child": {
         "percentage": "Y",
@@ -694,7 +702,11 @@
         "method": "standard",
         "threshold": 106
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 156
+      },
       
       "Child Category": {
         "percentage": "Y",
@@ -775,7 +787,11 @@
         "method": "standard",
         "threshold": 17
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 209
+      },
       
       "Optional Targeted Low Income Child": {
         "percentage": "Y",
@@ -874,7 +890,11 @@
         "method": "standard",
         "threshold": 87
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 209
+      },
       
       "Child Category": {
         "percentage": "Y",
@@ -961,7 +981,11 @@
         "method": "standard",
         "threshold": 31
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 191
+      },
       
       "Child Category": {
         "percentage": "Y",
@@ -1048,7 +1072,11 @@
         "method": "standard",
         "threshold": 24
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 133
+      },
       
       "Child Category": {
         "percentage": "Y",
@@ -1147,7 +1175,11 @@
         "method": "standard",
         "threshold": 133
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 208
+      },
       
       "Child Category": {
         "percentage": "Y",
@@ -1240,7 +1272,11 @@
         "method": "standard",
         "threshold": 100
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 208
+      },
       
       "Child Category": {
         "percentage": "Y",
@@ -1339,7 +1375,11 @@
         "method": "standard",
         "threshold": 56
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 375
+      },
       
       "Child Category": {
         "percentage": "Y",
@@ -1519,7 +1559,11 @@
         "method": "standard",
         "threshold": 19
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 209
+      },
       
       "Optional Targeted Low Income Child": {
         "percentage": "Y",
@@ -1624,7 +1668,11 @@
         "method": "standard",
         "threshold": 100
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 209
+      },
       
       "Child Category": {
         "percentage": "Y",
@@ -1711,7 +1759,11 @@
         "method": "standard",
         "threshold": 54
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 195
+      },
       
       "Child Category": {
         "percentage": "Y",
@@ -1798,7 +1850,11 @@
         "method": "standard",
         "threshold": 24
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 194
+      },
       
       "Child Category": {
         "percentage": "Y",
@@ -1885,7 +1941,11 @@
         "method": "standard",
         "threshold": 20
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 205
+      },
       
       "Child Category": {
         "percentage": "Y",
@@ -1975,7 +2035,11 @@
         "method": "standard",
         "threshold": 63
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 194
+      },
       
       "Optional Targeted Low Income Child": {
         "percentage": "Y",
@@ -2059,7 +2123,11 @@
         "method": "standard",
         "threshold": 70
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 196
+      },
       
       "Optional Targeted Low Income Child": {
         "percentage": "Y",
@@ -2263,7 +2331,11 @@
         "method": "standard",
         "threshold": 48
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 250
+      },
       
       "Optional Targeted Low Income Child": {
         "percentage": "Y",
@@ -2360,7 +2432,11 @@
         "method": "standard",
         "threshold": 90
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 200
+      },
       
       "Optional Targeted Low Income Child": {
         "percentage": "Y",
@@ -2444,7 +2520,11 @@
         "method": "standard",
         "threshold": 43
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 133
+      },
       
       "Child Category": {
         "percentage": "Y",
@@ -2525,7 +2605,11 @@
         "method": "standard",
         "threshold": 33
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 215
+      },
       
       "Child Category": {
         "percentage": "Y",
@@ -2612,7 +2696,11 @@
         "method": "standard",
         "threshold": 62
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 194
+      },
       
       "Optional Targeted Low Income Child": {
         "percentage": "Y",
@@ -2699,7 +2787,11 @@
         "method": "standard",
         "threshold": 59
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 133
+      },
       
       "Child Category": {
         "percentage": "Y",
@@ -2783,7 +2875,11 @@
         "method": "standard",
         "threshold": 106
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 195
+      },
       
       "Child Category": {
         "percentage": "Y",
@@ -2876,7 +2972,11 @@
         "method": "standard",
         "threshold": 15
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 198
+      },
       
       "Child Category": {
         "percentage": "Y",
@@ -2969,7 +3069,11 @@
         "method": "standard",
         "threshold": 100
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 139
+      },
       
       "Child Category": {
         "percentage": "Y",
@@ -3062,7 +3166,11 @@
         "method": "standard",
         "threshold": 49
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 143
+      },
       
       "Child Category": {
         "percentage": "Y",
@@ -3155,7 +3263,11 @@
         "method": "standard",
         "threshold": 20
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 150
+      },
       
       "Child Category": {
         "percentage": "Y",
@@ -3257,7 +3369,11 @@
         "method": "standard",
         "threshold": 95
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 301
+      },
       
       "Optional Targeted Low Income Child": {
         "percentage": "Y",
@@ -3357,7 +3473,11 @@
         "method": "standard",
         "threshold": 57
       },
-      
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 154
+      },
       
       "Child Category": {
         "percentage": "Y",
