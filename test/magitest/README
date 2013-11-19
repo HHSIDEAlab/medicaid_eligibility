@@ -1,0 +1,7 @@
+This directory contains a script, app.pl, which will take the data exported from the Mathematica-developed tests, convert it into JSON format, then pass it to the local instance of the Medicaid Eligibility API, and compare our results to the Mathematica results.  You can run the script directly, which will run all testcases, or pass it the name of a testcase: 
+
+./app.pl TC20070
+
+You can also pass the applicant ID to get a dump of more details:
+
+./app.pl TC20070 A1
