@@ -43,10 +43,10 @@ module MAGI
       if v("Applicant Age") >= c("Child Age Threshold")
         responsible_children = v("Applicant Relationships").select{|rel| 
           rel.relationship_attributes["Attest Primary Responsibility"] == 'Y' && 
-          (rel.person.person_attributes("Applicant Age") < c("Dependent Age Threshold") ||
+          (rel.person.person_attributes["Applicant Age"] < c("Dependent Age Threshold") ||
             (c("Option Dependent Student") == "Y" &&
-              rel.person.person_attributes("Student Indicator") == "Y" &&
-              rel.person.person_attributes("Applicant Age") < c("Dependent Age Threshold")))
+              rel.person.person_attributes["Student Indicator"] == "Y" &&
+              rel.person.person_attributes["Applicant Age"] < c("Dependent Age Threshold")))
           }.map{|rel| rel.person}
 
         # Exception: Exclude if someone else (adult or not) claims the 

@@ -212,7 +212,8 @@ my %relationshipLookup = (
 
     'mother-in-law/father-in-law' => '30',
 
-    'other relative' => '88',
+    'other relative' => '87',
+    'other' => '88'
 );
 
 # Lowercase before you check this list
@@ -384,6 +385,23 @@ sub jsonApp {
 
 	# Non-Citizen Deport Withheld Date: Thrown out
 
+  # Attest Primary Responsibility: HelpUsBYA BV (plus CD)
+  
+        #  Question: you pointed out that this would be on HelpUsBYA in the "ChildCare" column for each tax
+        # household, combined with the "ChildRelationship" column.  Would this be set to "Y" for cases where the
+        # "ChildRelationship" column is "Parent", or only for the cases where it's not "Parent"? 
+  #   Answer: Depending on the state-specific
+        # option for what relationships states allow for the parent/caretaker relative group, the grandparent could be a valid
+        # relationship. There are four different definitions for these valid relationships, a.  Permissible core relatives or
+        # relationships include: (1) Parent, (2) Stepparent (unless dead or absent from home), (3) Grandparent, (4) Sibling, (5)
+        # Stepsibling, (6) Uncles, (7) Aunts, (8) First cousin, (9) Nephew, or (10) Niece. Note: These relationships include the
+        # spouse of each relative listed even after the marriage is terminated by death or divorce.  b.  (In addition to option a)
+        # All relatives of the child based on blood (including those of half-blood), adoption or marriage, c.  (In addition to
+        # option a) The domestic partner of a parent or other relative who is included on the list of core relatives d.  Any adult
+        # with whom the child is living and who assumes primary responsibility for the child’s care. This includes unrelated as
+        # well as related individuals.
+
+
 	# Relationships
 	my $relationships = [];
 	my $whichRelation = 'Relation to Contact Person';
@@ -464,21 +482,7 @@ sub jsonApp {
 	# Seven Year Limit Applies: Model 1.3
 	# Seven Year Limit Start Date: 
 
-	# Attest Primary Responsibility: HelpUsBYA BV (plus CD)
-	$person{'Attest Primary Responsibility'} = 'N';
-        #  Question: you pointed out that this would be on HelpUsBYA in the "ChildCare" column for each tax
-        # household, combined with the "ChildRelationship" column.  Would this be set to "Y" for cases where the
-        # "ChildRelationship" column is "Parent", or only for the cases where it's not "Parent"? 
-	#   Answer: Depending on the state-specific
-        # option for what relationships states allow for the parent/caretaker relative group, the grandparent could be a valid
-        # relationship. There are four different definitions for these valid relationships, a.  Permissible core relatives or
-        # relationships include: (1) Parent, (2) Stepparent (unless dead or absent from home), (3) Grandparent, (4) Sibling, (5)
-        # Stepsibling, (6) Uncles, (7) Aunts, (8) First cousin, (9) Nephew, or (10) Niece. Note: These relationships include the
-        # spouse of each relative listed even after the marriage is terminated by death or divorce.  b.  (In addition to option a)
-        # All relatives of the child based on blood (including those of half-blood), adoption or marriage, c.  (In addition to
-        # option a) The domestic partner of a parent or other relative who is included on the list of core relatives d.  Any adult
-        # with whom the child is living and who assumes primary responsibility for the child’s care. This includes unrelated as
-        # well as related individuals.
+	
 	    
 	# ------------------------------------------------------
 	
@@ -507,11 +511,41 @@ sub jsonApp {
 	    $primaryFilerName = lc($primaryFilerName);
 	    if (!exists($pidLookup{$primaryFilerName})) {
 #	    print Dumper $apps{ $appId };
-		die "Primary $primaryFilerName not found in lookup\n";
+		    die "Primary $primaryFilerName not found in lookup\n";
 	    }
 	    my $primaryFilerId = $pidLookup{$primaryFilerName};
 	    $$filer{'Person ID'} = $primaryFilerId;
 	    push(@$filers, $filer);
+
+      # Update primary responsibility if it shows up
+      if ($$Hh{'ChildCareWho'} ne '') {
+        my $chargeName = $appId . $$Hh{'ChildCareWho'};
+        $chargeName =~ s/\s//g;
+        $chargeName = lc($chargeName);
+        if (!exists($pidLookup{$chargeName})) {
+          die "Child $chargeName not found in lookup\n";
+        }
+        my $childId = $pidLookup{$chargeName};
+        
+        #print "$primaryFilerId $childId $#{$$json{'People'}}\n";
+        for my $j (0 .. $#{$$json{'People'}}) {
+          my %person = %{$$json{'People'}[$j]};
+          #print Dumper %person;
+          if ( $person{'Person ID'} eq $primaryFilerId) {
+            #print "$j\n";
+            for my $k (0 .. $#{$person{'Relationships'}}) {
+            #foreach my $otherPerson (@{$person{'Relationships'}}) {
+              my %otherPerson = %{$person{'Relationships'}[$k]};
+              if ($otherPerson{'Other ID'} eq $childId) {
+                #print "$j $k\n";
+                $$json{'People'}[$j]{'Relationships'}[$k]{'Attest Primary Responsibility'} = 'Y';
+                #$otherPerson{'Attest Primary Responsibility'} = 'Y'
+              }
+            }
+            
+          }
+        }  
+      }
 
 	    if ($$Hh{'JointReturn'} eq 'Yes') {
 		my $coFiler = {};
@@ -1090,7 +1124,9 @@ foreach my $appId (@requestedApps) {
 	$totalAgreements++;
     } else {
 	print "$appId: $failType\n";
-	$totalCaretakerError++;
+  if ($caretakerError == 1) {
+	 $totalCaretakerError++;
+  }
 	$totalDisagreements++;
 	$totalDisagreements{$failType}++;
     } 
