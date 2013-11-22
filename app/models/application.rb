@@ -10,6 +10,8 @@ class Application
     false
   end
 
+  attr_reader :error
+
   XML_NAMESPACES = {
     "exch"     => "http://at.dsh.cms.gov/exchange/1.0",
     "s"        => "http://niem.gov/niem/structures/2.0", 
@@ -26,21 +28,27 @@ class Application
     @content_type = request.content_type
     @determination_date = Date.today
     @return_application = request.query_parameters[:return_application] == 'true'
-    if(request.params.has_key?(:json_request)) 
-      @json_application = JSON.parse(request.params[:json_request])
-      read_json!
-    elsif @content_type == 'application/xml'
-      @xml_application = Nokogiri::XML(@raw_application) do |config|
-        config.default_xml.noblanks
+    @error = nil
+    begin
+      raise "This is an example of an error message."
+      if(request.params.has_key?(:json_request)) 
+        @json_application = JSON.parse(request.params[:json_request])
+        read_json!
+      elsif @content_type == 'application/xml'
+        @xml_application = Nokogiri::XML(@raw_application) do |config|
+          config.default_xml.noblanks
+        end
+        read_xml!
+      elsif @content_type == 'application/json'
+        @json_application = JSON.parse(@raw_application)
+        read_json!
       end
-      read_xml!
-    elsif @content_type == 'application/json'
-      @json_application = JSON.parse(@raw_application)
-      read_json!
+      read_configs!
+      compute_values!
+      process_rules!
+    rescue Exception => e
+      @error = e
     end
-    read_configs!
-    compute_values!
-    process_rules!
   end
 
   private

@@ -1,5 +1,9 @@
 module ApplicationResponder
   def to_json(options={})
+    unless @error.nil?
+      return JSON.pretty_generate({"Error" => @error.message})
+    end
+
     @raw_application
     returned_json = {"Determination Date" => @determination_date, "Applicants" => []}
 
