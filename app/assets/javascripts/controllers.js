@@ -58,6 +58,8 @@ angular.module('MAGI.controllers', []).
                         var serv = $scope.application.checkEligibility();
                         serv.then(function(resp){
                                 $location.path("/results");
+                        }, function(err){
+                          $scope.errorMessage = angular.fromJson(err)["data"]["Error"];                          
                         });
                     } else {
                         $scope.submitted = true;   
