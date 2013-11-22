@@ -6,7 +6,7 @@ class DeterminationsController < ApplicationController
 
     respond_to do |format|
       format.xml { render xml: @app }
-      format.json { render json: @app }
+      format.json { render json: @app, status: (@app.error.nil? ? :ok : :unprocessable_entity) }
     end
   end
 end

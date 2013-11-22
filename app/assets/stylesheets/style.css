@@ -593,6 +593,23 @@ label.error {
   margin-left: 10px;
 }
 
+div.errorbox {
+  background: #e1e3e4;
+  margin: 0;
+  line-height: 80px;
+  text-align: center;
+}
+
+label.toperror {
+  width: 500px;
+  color: #FF9494;
+  background: #e0e0e0;
+  font-size: 20px;
+  text-align: center;
+  border-radius: 5px;
+  padding: 10px 20px;
+}
+
 .form-row.invalid, .form-half-field.invalid {
   background: #ffdddd;
 }
