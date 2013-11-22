@@ -1,6 +1,5 @@
 <form name="applicationForm" id="application_form" method="post" ng-submit="checkEligibility()" novalidate>
   <h1>MAGI in the Cloud</h1>
-
     <div class="form-fields-area">
       <div class="form-row">
         <label for="state">State</label>
@@ -303,7 +302,10 @@
 
     </div>
   </fieldset>
-  
+  <div class="errorbox" ng-show="errorMessage">
+    <label class="toperror">Error: {{errorMessage}}</label>
+  </div>
+    
   <button type="submit">Check Eligibility</button>
   <button class="submitlike" ng-click="exportApplication()">Export Application</button>
 
