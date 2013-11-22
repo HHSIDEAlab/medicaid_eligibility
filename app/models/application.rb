@@ -30,7 +30,6 @@ class Application
     @return_application = request.query_parameters[:return_application] == 'true'
     @error = nil
     begin
-      raise "This is an example of an error message."
       if(request.params.has_key?(:json_request)) 
         @json_application = JSON.parse(request.params[:json_request])
         read_json!
