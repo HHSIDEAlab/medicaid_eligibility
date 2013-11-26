@@ -58,7 +58,8 @@ module ApplicationVariables
       :name       => "Hours Worked Per Week",
       :type       => :integer,
       :group      => :person,
-      :xpath      => :unimplemented
+      :xpath      => :unimplemented,
+      :required   => true
     },
     {
       :name       => "Incarceration Status",
@@ -73,7 +74,7 @@ module ApplicationVariables
       :values     => %w(Y N),
       :group      => :person,
       :xpath      => :unimplemented,
-      :required   => :true
+      :required   => true
     },
     {
       :name       => "Medicare Entitlement Indicator",
@@ -118,7 +119,7 @@ module ApplicationVariables
       :values     => %w(Y N),
       :group      => :person,
       :xpath      => :unimplemented,
-      :required   => :true
+      :required   => true
     },
     {
       :name       => "State Health Benefits Through Public Employee",
