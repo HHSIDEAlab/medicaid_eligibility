@@ -26,6 +26,10 @@ module MAGI
 
         o["Percentage for CHIP Category Used"] = c("Percent FPL Unborn Child")
         o["FPL * Percentage CHIP"] = v("FPL") * (c("Percent FPL Unborn Child") + 5) * 0.01
+      else
+        o["Applicant Unborn Child Indicator"] = 'N'
+        o["Unborn Child Determination Date"] = current_date
+        o["Unborn Child Ineligibility Reason"] = 151
       end
     end
   end
