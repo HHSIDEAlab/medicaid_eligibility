@@ -33,7 +33,7 @@ module ApplicationResponder
         elsif app.outputs["Applicant Income Medicaid Eligible Indicator"] == 'N'
           ineligibility_reasons << "Applicant's MAGI above the threshold for category"
         end
-        if app.outputs["Applicant Dependent Child Covered Indicator"] == "Y"
+        if app.outputs["Applicant Dependent Child Covered Indicator"] == 'N'
           ineligibility_reasons << "Applicant has a dependent child who does not have coverage and is not included on the application"
         end
         app_json["Ineligibility Reason"] = ineligibility_reasons
