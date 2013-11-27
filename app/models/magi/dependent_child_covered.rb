@@ -13,7 +13,7 @@ module MAGI
     rule "Determine eligibility - Dependent Child Covered" do
       if v("Applicant Adult Group Category Indicator") == 'N' || v("Qualified Children List").empty?
         determination_na "Dependent Child Covered"
-      elsif v("Qualified Children List").all?{|child| v("Applicant List").any?{|app| app.person_id == child["Person ID"]} || v("Person List").find{|p| p.person_id == child["Person ID"]}.applicant_attributes["Has Insurance"] == 'Y'}
+      elsif v("Qualified Children List").all?{|child| v("Applicant List").any?{|app| app.person_id == child["Person ID"]} || v("Person List").find{|p| p.person_id == child["Person ID"]}.person_attributes["Has Insurance"] == 'Y'}
         determination_y "Dependent Child Covered"
       else
         o["Applicant Dependent Child Covered Indicator"] = 'N'

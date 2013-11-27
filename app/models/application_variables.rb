@@ -51,7 +51,7 @@ module ApplicationVariables
       :name       => "Has Insurance",
       :type       => :flag,
       :values     => %w(Y N),
-      :group      => :applicant,
+      :group      => :person,
       :xpath      => :unimplemented
     },
     {
