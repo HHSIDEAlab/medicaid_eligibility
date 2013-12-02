@@ -35,7 +35,7 @@
         <input type="checkbox" checker ng-model = "applicant.isApplicant" id="applicant_{{ $index }}_is_applicant" name="applicant_is_applicant" >
     </div>
     <div class="form-row-expandable">
-      <label for="applicant_{{ $index }}_age">Age</label>
+      <label for="applicant_{{ $index }}_age">Age as of 1/1/14</label>
       <input type="number" ng-model = "applicant.age" id="applicant_{{ $index }}_age" name="applicant_age" required>
       <label for="applicant_{{ $index }}_age" class="error" ng-show="(applicantForm.applicant_age.$dirty  || submitted)  && applicantForm.applicant_age.$invalid">This field is required.</label>
       <div class="form-row-expandable-fields2" ng-show="checkResponsibility()">
