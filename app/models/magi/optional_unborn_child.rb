@@ -29,7 +29,7 @@ module MAGI
       else
         o["Applicant Unborn Child Indicator"] = 'N'
         o["Unborn Child Determination Date"] = current_date
-        o["Unborn Child Ineligibility Reason"] = 151
+        o["Unborn Child Ineligibility Reason"] = 408
       end
     end
   end

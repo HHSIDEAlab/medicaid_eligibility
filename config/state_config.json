@@ -762,7 +762,9 @@
     
     "CHIP for Pregnant Women": "N",
     "Option Cover Unborn Child": "Y",
+    "Percent FPL Unborn Child": 209,
     "CHIP for State Health Benefits": "03",
+    "State Health Benefits FPL Standard": 211,
     "State CHIP Waiting Period": 3,
 
     "Optional Targeted Low Income Child Group": "Y",
@@ -963,6 +965,7 @@
     "CHIP for Pregnant Women": "N",
     "Option Cover Unborn Child": "N",
     "CHIP for State Health Benefits": "03",
+    "State Health Benefits FPL Standard": 210,
     "State CHIP Waiting Period": 2,
 
     "Optional Targeted Low Income Child Group": "N",
@@ -1150,6 +1153,7 @@
     
     "CHIP for Pregnant Women": "N",
     "Option Cover Unborn Child": "Y",
+    "Percent FPL Unborn Child": 208,
     "CHIP for State Health Benefits": "01",
     "State CHIP Waiting Period": 12,
 
@@ -1537,6 +1541,7 @@
     
     "CHIP for Pregnant Women": "N",
     "Option Cover Unborn Child": "Y",
+    "Percent FPL Unborn Child": 209,
     "CHIP for State Health Benefits": "01",
     "State CHIP Waiting Period": 3,
 
@@ -1740,6 +1745,7 @@
     
     "CHIP for Pregnant Women": "N",
     "Option Cover Unborn Child": "Y",
+    "Percent FPL Unborn Child": 195,
     "CHIP for State Health Benefits": "01",
     "State CHIP Waiting Period": 3,
 
@@ -1832,6 +1838,7 @@
     "CHIP for Pregnant Women": "N",
     "Option Cover Unborn Child": "N",
     "CHIP for State Health Benefits": "03",
+    "State Health Benefits FPL Standard": 209,
     "State CHIP Waiting Period": 0,
 
     "Optional Targeted Low Income Child Group": "N",
@@ -2016,6 +2023,7 @@
     
     "CHIP for Pregnant Women": "N",
     "Option Cover Unborn Child": "Y",
+    "Percent FPL Unborn Child": 197,
     "CHIP for State Health Benefits": "01",
     "State CHIP Waiting Period": 0,
 
@@ -2504,6 +2512,7 @@
     
     "CHIP for Pregnant Women": "N",
     "Option Cover Unborn Child": "Y",
+    "Percent FPL Unborn Child": 205,
     "CHIP for State Health Benefits": "01",
     "State CHIP Waiting Period": 0,
 
@@ -2856,6 +2865,7 @@
     
     "CHIP for Pregnant Women": "N",
     "Option Cover Unborn Child": "Y",
+    "Percent FPL Unborn Child": 250,
     "CHIP for State Health Benefits": "01",
     "State CHIP Waiting Period": 0,
 
@@ -2953,7 +2963,9 @@
     
     "CHIP for Pregnant Women": "N",
     "Option Cover Unborn Child": "Y",
+    "Percent FPL Unborn Child": 202,
     "CHIP for State Health Benefits": "03",
+    "State Health Benefits FPL Standard": 201,
     "State CHIP Waiting Period": 3,
 
     "Optional Targeted Low Income Child Group": "N",
@@ -3341,7 +3353,9 @@
     
     "CHIP for Pregnant Women": "N",
     "Option Cover Unborn Child": "Y",
+    "Percent FPL Unborn Child": 301,
     "CHIP for State Health Benefits": "03",
+    "State Health Benefits FPL Standard": 151,
     "State CHIP Waiting Period": 3,
 
     "Optional Targeted Low Income Child Group": "Y",
