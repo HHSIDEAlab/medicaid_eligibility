@@ -224,15 +224,17 @@
 
         <button ng-click="showOtherIncome = !showOtherIncome" type="button" class="add-applicant">Other income and deductions</button>
         <div class="form-row-expandable-fields2 cf" ng-show="showOtherIncome">
-            <div incomegroup monthlyLabel="Monthly Capital gains or loss" annualLabel="Annual Capital gains or loss" ng-model="applicant.incomeTaxes.capitalGains"></div>      
-            <div incomegroup monthlyLabel="Monthly Taxable interest" annualLabel="Annual Taxable interest" ng-model="applicant.incomeTaxes.taxableInterest"></div>      
-            <div incomegroup monthlyLabel="Monthly Pensions and annuities taxable amount" annualLabel="Annual Pensions and annuities taxable amount" ng-model="applicant.incomeTaxes.pensions"></div>
-            <div incomegroup monthlyLabel="Monthly Tax-exempt interest" annualLabel="Annual Tax-exempt interest" ng-model="applicant.incomeTaxes.taxExemptInterest"></div>
-            <div incomegroup monthlyLabel="Monthly Farm Income or Loss" annualLabel="Annual Farm Income or Loss" ng-model="applicant.incomeTaxes.farmIncome"></div>
+            <div incomegroup monthlyLabel="Monthly capital gains" annualLabel="Annual capital gains" ng-model="applicant.incomeTaxes.capitalGains"></div>
+            <div incomegroup monthlyLabel="Monthly capital losses" annualLabel="Annual capital losses" ng-model="applicant.incomeTaxes.capitalLosses"></div>                  
+            <div incomegroup monthlyLabel="Monthly taxable interest" annualLabel="Annual taxable interest" ng-model="applicant.incomeTaxes.taxableInterest"></div>      
+            <div incomegroup monthlyLabel="Monthly pensions and annuities taxable amount" annualLabel="Annual pensions and annuities taxable amount" ng-model="applicant.incomeTaxes.pensions"></div>
+            <div incomegroup monthlyLabel="Monthly tax-exempt interest" annualLabel="Annual tax-exempt interest" ng-model="applicant.incomeTaxes.taxExemptInterest"></div>
+            <div incomegroup monthlyLabel="Monthly farm income" annualLabel="Annual farm income" ng-model="applicant.incomeTaxes.farmIncome"></div>
+            <div incomegroup monthlyLabel="Monthly farm loss" annualLabel="Annual farm loss" ng-model="applicant.incomeTaxes.farmLoss"></div>
             <div incomegroup monthlyLabel="Monthly taxable refunds, credits, or offsets of state and local income taxes" annualLabel="Annual taxable refunds, credits, or offsets of state and local income taxes" ng-model="applicant.incomeTaxes.taxableRefunds"></div>
-            <div incomegroup monthlyLabel="Monthly Unemployment Compensation" annualLabel="Annual Unemployment Compensation" ng-model="applicant.incomeTaxes.unemployment"></div>
-            <div incomegroup monthlyLabel="Monthly Alimony" annualLabel="Annual Alimony" ng-model="applicant.incomeTaxes.alimony"></div>
-            <div incomegroup monthlyLabel="Other Monthly Income" annualLabel="Other Annual Income" ng-model="applicant.incomeTaxes.other"></div>
+            <div incomegroup monthlyLabel="Monthly unemployment compensation" annualLabel="Annual unemployment compensation" ng-model="applicant.incomeTaxes.unemployment"></div>
+            <div incomegroup monthlyLabel="Monthly alimony" annualLabel="Annual alimony" ng-model="applicant.incomeTaxes.alimony"></div>
+            <div incomegroup monthlyLabel="Other monthly income" annualLabel="Other annual income" ng-model="applicant.incomeTaxes.other"></div>
             <div incomegroup monthlyLabel="Monthly MAGI deductions" annualLabel="Annual MAGI deductions" ng-model="applicant.incomeTaxes.MAGIDeductions"></div>
           </div>
         </div>

@@ -385,14 +385,16 @@ module ApplicationVariables
         "Tax-Exempt Interest",
         "Taxable Refunds, Credits, or Offsets of State and Local Income Taxes",
         "Alimony",
-        "Capital Gain or Loss",
+        "Capital Gain",
         "Pensions and Annuities Taxable Amount",
-        "Farm Income or Loss",
+        "Farm Income",
         "Unemployment Compensation",
         "Other Income"
       ],
       :deductions => [
-        "MAGI Deductions"
+        "MAGI Deductions",
+        "Capital Loss",
+        "Farm Loss"
       ]
     }
   }.freeze

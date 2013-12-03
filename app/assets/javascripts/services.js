@@ -51,9 +51,11 @@ angular.module('MAGI.services',[]).
 		    {app: 'taxExemptInterest',  api:'Tax-Exempt Interest'},
 		    {app: 'taxableRefunds',     api: 'Taxable Refunds, Credits, or Offsets of State and Local Income Taxes'},
 		    {app: 'alimony',            api: 'Alimony'},
-		    {app: 'capitalGains',       api: 'Capital Gain or Loss'},
+		    {app: 'capitalGains',       api: 'Capital Gain'},
+        {app: 'capitalLosses',      api: 'Capital Loss'},
 		    {app: 'pensions',           api: 'Pensions and Annuities Taxable Amount'},
-		    {app: 'farmIncome',         api: 'Farm Income or Loss'},
+		    {app: 'farmIncome',         api: 'Farm Income'},
+        {app: 'farmLoss',           api: 'Farm Loss'},
 		    {app: 'unemployment',       api: 'Unemployment Compensation'},
 		    {app: 'other',              api: 'Other Income'},
 		    {app: 'MAGIDeductions',     api: 'MAGI Deductions'}
