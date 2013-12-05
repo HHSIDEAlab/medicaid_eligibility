@@ -18,8 +18,7 @@ angular.module('MAGI.services',[]).
 		}
 
 		function Applicant(){
-		    this.hours = 0;
-			this.citizen = true;
+		  this.citizen = true;
 			this.livesInState = true;
 			this.isApplicant = true;
 			this.numberOfChildrenExpected = 1;
@@ -39,9 +38,9 @@ angular.module('MAGI.services',[]).
 
 		function IncomeTaxes(){
 			var me = this;
-			angular.forEach(this.fields, function(field){
-				me[field.app] = 0;
-			});
+			// angular.forEach(this.fields, function(field){
+			// 	me[field.app] = 0;
+			// });
 		}
 
 		IncomeTaxes.prototype.fields = [

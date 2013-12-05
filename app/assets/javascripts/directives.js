@@ -108,9 +108,13 @@ angular.module('MAGI.directives',[]).
   			annualLabel.text(attrs['annuallabel']);
 
   			ngModelCtrl.$render = function() {
-  				annual.val(ngModelCtrl.$viewValue || 0);
-  				monthly.val(Math.floor(ngModelCtrl.$viewValue / 12) || 0);
-            };
+  				annual.val(ngModelCtrl.$viewValue);
+          if (annual.val() == '') {
+            monthly.val('');
+          } else {
+            monthly.val(Math.floor(ngModelCtrl.$viewValue / 12));
+          }
+        };
 
   			monthly.bind('input change', function(evt){
   				scope.$apply(updateViaMonthly);
@@ -121,13 +125,27 @@ angular.module('MAGI.directives',[]).
   			});
 
   			function updateViaMonthly(){
-  				ngModelCtrl.$setViewValue(monthly.val() * 12);
-  				ngModelCtrl.$render();
+          if (monthly.val() * 12 != annual.val()) {
+            if (monthly.val() == '') {
+              ngModelCtrl.$setViewValue('');
+              ngModelCtrl.$render();
+            } else {
+      				ngModelCtrl.$setViewValue(monthly.val() * 12);
+      				ngModelCtrl.$render();
+            }
+          }
   			}
 
   			function updateViaAnnual(){
-  				ngModelCtrl.$setViewValue(annual.val() * 1);
-  				ngModelCtrl.$render();
+          if (monthly.val() * 12 != annual.val()) {
+            if (annual.val() == '') {
+      				ngModelCtrl.$setViewValue('');
+              ngModelCtrl.$render();
+            } else {
+              ngModelCtrl.$setViewValue(annual.val() * 1);
+              ngModelCtrl.$render();
+            }
+          }
   			}
   		}
   	}
