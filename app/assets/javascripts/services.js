@@ -38,9 +38,6 @@ angular.module('MAGI.services',[]).
 
 		function IncomeTaxes(){
 			var me = this;
-			// angular.forEach(this.fields, function(field){
-			// 	me[field.app] = 0;
-			// });
 		}
 
 		IncomeTaxes.prototype.fields = [
