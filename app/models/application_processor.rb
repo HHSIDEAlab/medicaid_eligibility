@@ -159,26 +159,36 @@ module ApplicationProcessor
     parents = person.get_relationships(:parent)
     parents_stepparents = parents + person.get_relationships(:stepparent)
 
-    # If person files a return and no one claims person as dependent, add tax
-    # return people (435.603.f1)
+    # If person files a return and no one claims person as dependent, household consists
+    # of filers and dependents on tax return (435.603.f1)
     if filed_tax_return && !dependent_tax_return && 
       person.person_attributes["Claimed as Dependent by Person Not on Application"] != 'Y'
+
       med_household_members = filed_tax_return.filers + filed_tax_return.dependents
-    # If spouse claims person as a dependent, include spouse (435.603.f2)
+    # If spouse claims person as a dependent, household is spouse's household (435.603.f2)
     elsif dependent_tax_return && 
       dependent_tax_return.filers.any?{|filer| filer == person.get_relationship(:spouse)}
+
       med_household_members = determine_household(person.get_relationship(:spouse)).people
-    # If parent claims person as a dependent, include filers, unless person is 
-    # a minor and lives with another parent (not stepparent) not on the tax return 
-    # (435.603.f2)
+    # If parent/stepparent(s) claims person as a dependent, household is household of 
+    # parent/stepparent(s) claiming person (435.603.f2)
     elsif dependent_tax_return && 
-      dependent_tax_return.filers.any?{|filer| parents_stepparents.include?(filer)} && 
-      !(is_minor?(person) &&
-        parents.any?{|parent| live_together?(person, parent) && !(dependent_tax_return.filers.include?(parent))})
+      dependent_tax_return.filers.any?{|filer| parents_stepparents.include?(filer)} &&
+      # except if the person is a minor (as defined by 435.603.f3.iv) and 
+      # either the person's parents live together and do not file jointly (435.603.f2.ii)
+      # or the claiming parent does not live with the claimed person (435.603.f2.iii)
+      !(
+        is_minor?(person) &&
+        (
+          parents.any?{|parent| live_together?(person, parent) && !(dependent_tax_return.filers.include?(parent))} ||
+          parents.any?{|parent| !(live_together?(person, parent)) && dependent_tax_return.filers.include?(parent)}
+        )
+      )
+
       filers = dependent_tax_return.filers.select{|filer| parents_stepparents.include?(filer)}
       med_household_members = filers.map{|filer| determine_household(filer).people}.reduce(:+)
     # In all other cases, the household is person's children who are minors and,
-    # if person is a minor, person's siblings and parents (435.603.f3)
+    # if person is a minor, person's siblings who are minors and the person's parents (435.603.f3)
     else
       med_household_members = person.get_relationships(:child) + person.get_relationships(:stepchild)
       med_household_members.select!{|member| is_minor?(member)}
