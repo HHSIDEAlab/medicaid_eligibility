@@ -17,6 +17,8 @@ browse to http://localhost:3000/
 
 You can post determinations JSON to http://localhost:3000/determinations/eval
 
+Additional information about how to integrate the project using the API can be found in doc/MitC integration.docx
+
 This project is licensed with a BSD license, open source with attribution. Details in the LICENSE file.
 
 (c) 2013 BlueLabs.
