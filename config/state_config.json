@@ -251,7 +251,7 @@
             "threshold": 185
           },{
             "minimum": 1,
-            "maximum": 18,
+            "maximum": 20,
             "threshold": 133
           }
         ]
@@ -623,7 +623,7 @@
         "age": [
           {
             "minimum": 0,
-            "maximum": 18,
+            "maximum": 20,
             "threshold": 203
           }
         ]
@@ -1004,7 +1004,7 @@
             "threshold": 140
           },{
             "minimum": 6,
-            "maximum": 18,
+            "maximum": 20,
             "threshold": 140
           }
         ]
@@ -1399,7 +1399,7 @@
             "threshold": 167
           },{
             "minimum": 6,
-            "maximum": 18,
+            "maximum": 20,
             "threshold": 167
           }
         ]
@@ -1693,7 +1693,7 @@
             "threshold": 157
           },{
             "minimum": 6,
-            "maximum": 18,
+            "maximum": 20,
             "threshold": 157
           }
         ]
@@ -2256,7 +2256,7 @@
             "threshold": 142
           },{
             "minimum": 6,
-            "maximum": 18,
+            "maximum": 20,
             "threshold": 142
           }
         ]
@@ -2472,7 +2472,7 @@
             "threshold": 156
           },{
             "minimum": 6,
-            "maximum": 18,
+            "maximum": 20,
             "threshold": 156
           }
         ]
@@ -2634,7 +2634,7 @@
             "threshold": 157
           },{
             "minimum": 6,
-            "maximum": 18,
+            "maximum": 20,
             "threshold": 133
           }
         ]
