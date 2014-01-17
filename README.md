@@ -17,7 +17,7 @@ browse to http://localhost:3000/
 
 You can post determinations JSON to http://localhost:3000/determinations/eval
 
-You can also evaluate a specific ruleset on specified inputs/configs. POST the JSON to `http://localhost:3000/rulesets/MAGI/{ruleset}/eval`. For example:
+You can also evaluate a specific ruleset on specified inputs/configs. POST the JSON to http://localhost:3000/rulesets/MAGI/{ruleset}/eval For example:
 ```
 ~ $ curl -d '{"config": {"Option Adult Group": "Y"}, "inputs":{"Applicant Age": 25, "Applicant Pregnancy Category Indicator": "N", "Medicare Entitlement Indicator": "N"}}' http://0.0.0:3000/rulesets/MAGI/adult_group/eval --header "Content-Type: application/json" -H 'Accept: application/json'; echo
 {"Applicant Adult Group Category Indicator":"Y","Adult Group Category Determination Date":"2014-01-17","Adult Group Category Ineligibility Reason":999}
