@@ -2,7 +2,7 @@ class RulesetsController < ApplicationController
   rescue_from RuleContext::MissingVariableError, :with => :missing_variable_error
 
   def eval
-    @context = RuleContext.new(params[:config], params[:inputs])
+    @context = RuleContext.new(params[:config], params[:inputs], Date.today)
     render json: ruleset.run(@context).output
   end
 
