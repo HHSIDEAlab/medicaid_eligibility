@@ -483,7 +483,7 @@ module ApplicationVariables
       :child => [:self, :sibling],
       :stepchild => [:sibling],
       :sibling => [:uncle_aunt],
-      :domestic_partner => [:parents_domestic_partner]
+      :domestic_partner => [:parent, :parents_domestic_partner]
     },
     :child => {
       :spouse => [:child_in_law],
