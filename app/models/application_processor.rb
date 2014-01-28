@@ -140,7 +140,9 @@ module ApplicationProcessor
         raise "Invalid tax returns: #{person.person_id} is a dependent on two returns"
       end
     end
-    if @tax_returns.any?{|tr| tr.filers.count > 2}
+    if @tax_returns.any?{|tr| tr.dependents.count > 0 && tr.filers.empty?}
+      raise "Invalid tax returns: Tax return has dependents but no filer"
+    elsif @tax_returns.any?{|tr| tr.filers.count > 2}
       raise "Invalid tax returns: Tax return has more than two filers"
     elsif @tax_returns.any?{|tr| tr.filers.count == 2 && tr.filers[0].get_relationship(:spouse) != tr.filers[1]}
       raise "Invalid tax returns: Tax return has joint filers who are not married"

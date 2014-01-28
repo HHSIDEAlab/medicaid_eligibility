@@ -185,12 +185,20 @@ angular.module('MAGI.controllers', []).
                 }
             });
 
+            $scope.removeFiler = function(filer){
+              return $scope.taxReturn.removeFiler(filer);
+            };
+
             $scope.$watch('inputs.newDependent', function(newDependent, oldVal){
                 if(newDependent.id){
                     $scope.taxReturn.addDependent(newDependent);
                     $scope.inputs.newDependent = {};
                 }
             });
+
+            $scope.removeDependent = function(dependent){
+              return $scope.taxReturn.removeDependent(dependent);
+            };
 
 
         }]);

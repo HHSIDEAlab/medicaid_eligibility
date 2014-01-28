@@ -19,12 +19,12 @@ body {
   width: 740px;
 }
 
-button[type=submit], input::-webkit-outer-spin-button, input::-webkit-inner-spin-button, .add-applicant, .remove-applicant, .submitlike {
+button[type=submit], input::-webkit-outer-spin-button, input::-webkit-inner-spin-button, .add-applicant, .remove-applicant, .remove-filer, .submitlike {
   -webkit-appearance: none;
   appearance: none;
 }
 
-button[type=submit], .add-applicant, .remove-applicant, .submitlike {
+button[type=submit], .add-applicant, .remove-applicant, .remove-filer, .submitlike {
   border: none;
 }
 
@@ -153,6 +153,20 @@ h2 {
   top: 16px;
   white-space: nowrap;
   width: 30px;
+}
+
+.remove-filer {
+  background: url('/assets/close.png') no-repeat 0 0;
+  background-size: 100%;
+  height: 20px;
+  /*overflow: hidden;*/
+  /*padding: 0;*/
+  /*position: absolute;*/
+  /*right: 21px;*/
+  /*text-indent: 100%;*/
+  /*top: 16px;*/
+  /*white-space: nowrap;*/
+  width: 20px;
 }
 
 .form-row-expandable-fields {
@@ -602,7 +616,7 @@ div.errorbox {
 
 label.toperror {
   width: 500px;
-  color: #FF9494;
+  color: #b00000;
   background: #e0e0e0;
   font-size: 20px;
   text-align: center;

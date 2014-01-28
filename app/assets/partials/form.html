@@ -252,37 +252,33 @@
     <div ng-show="!showFilers()">
       Please enter some applicants.
     </div>
-    <div ng-show="showFilers()">
-    <h3>Filers</h3>
-    <div class="form-row" ng-repeat="filer in taxReturn.filers">
-      <label for="filer_{$index}">Filer</label>
-      <select id="filer_{$index}" selector ng-model="taxReturn.filers[$index]" ng-options="applicant.id for applicant in applicants">
-        <option value=""></option>
-      </select>
-    </div>
-    <div class="form-row" ng-show="canAddFiler()">
-      <label for="filer_{$index}">Filer</label>
-      <select id="filer_{$index}" selector ng-model="inputs.newFiler" ng-options="applicant.id for applicant in applicants">
-        <option value=""></option>
-      </select>
-    </div>
-    </div>
-      <div ng-show="showDependents()">
-        <h3>Dependents</h3>
-        <div class="form-row" ng-repeat="dependent in taxReturn.dependents">
-          <label for="dependent_{$index}">Dependent</label>
-          <select id="dependent_{$index}" selector ng-model="taxReturn.dependents[$index]" ng-options="applicant.id for  applicant in applicants">
-            <option value=""></option>
-          </select>
-        </div>
-        <div class="form-row" ng-show="canAddDependent()">
-          <label for="newdependent_{$index}">Dependent</label>
-          <select id="newdependent_{$index}" selector ng-model="inputs.newDependent" ng-options="applicant.id for applicant in applicants">
-            <option value=""></option>
-          </select>
-        </div>
 
+    <div ng-show="showFilers()">
+      <h3>Filers</h3>
+      <div class="form-row" ng-repeat="filer in taxReturn.filers">
+        <label for="filer_{$index}">Filer</label>
+        <select id="filer_{$index}" selector ng-model="taxReturn.filers[$index]" ng-options="applicant.id for applicant in applicants"></select>
+        <button type="button" class="remove-filer" ng-click="removeFiler(filer)" tabindex="-1"></button>
+      </div>
+      <div class="form-row" ng-show="canAddFiler()">
+        <label for="filer_{$index}">Filer</label>
+        <select id="filer_{$index}" selector ng-model="inputs.newFiler" ng-options="applicant.id for applicant in applicants"></select>
+      </div>
     </div>
+
+    <div ng-show="showDependents()">
+      <h3>Dependents</h3>
+      <div class="form-row" ng-repeat="dependent in taxReturn.dependents">
+        <label for="dependent_{$index}">Dependent</label>
+        <select id="dependent_{$index}" selector ng-model="taxReturn.dependents[$index]" ng-options="applicant.id for  applicant in applicants"></select>
+        <button type="button" class="remove-filer" ng-click="removeDependent(dependent)" tabindex="-1"></button>
+      </div>
+      <div class="form-row" ng-show="canAddDependent()">
+        <label for="newdependent_{$index}">Dependent</label>
+        <select id="newdependent_{$index}" selector ng-model="inputs.newDependent" ng-options="applicant.id for applicant in applicants"></select>
+      </div>
+    </div>
+
     <button type="button" class="remove-applicant" ng-click="removeTaxReturn(taxReturn)" tabindex="-1">Remove This Tax Return</button>
 
     </fieldset>

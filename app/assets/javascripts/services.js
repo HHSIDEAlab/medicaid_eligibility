@@ -105,10 +105,18 @@ angular.module('MAGI.services',[]).
 			this.filers.push(applicant);
 		};
 
+    TaxReturn.prototype.removeFiler = function(applicant){
+      //this.filers.pop(applicant);
+      this.filers.splice(this.filers.indexOf(applicant), 1);
+    };
+
 		TaxReturn.prototype.addDependent = function(applicant){
 			this.dependents.push(applicant);
 		};
 
+    TaxReturn.prototype.removeDependent = function(applicant){
+      this.dependents.splice(this.dependents.indexOf(applicant), 1)
+    };
 
 		Application.prototype.addTaxReturn = function(){
 			var taxReturn = new TaxReturn();
