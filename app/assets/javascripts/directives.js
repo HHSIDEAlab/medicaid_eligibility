@@ -128,10 +128,8 @@ angular.module('MAGI.directives',[]).
           if (monthly.val() * 12 != annual.val()) {
             if (monthly.val().search(/^\-?[0-9]+$/) != -1) {
               ngModelCtrl.$setViewValue(monthly.val() * 12);
-            } else if (monthly.val() == '') {
-              ngModelCtrl.$setViewValue('');
+              ngModelCtrl.$render();
             }
-            ngModelCtrl.$render();
           }
   			}
 
@@ -139,10 +137,8 @@ angular.module('MAGI.directives',[]).
           if (monthly.val() * 12 != annual.val()) {
             if (annual.val().search(/^\-?[0-9]+$/) != -1) {
               ngModelCtrl.$setViewValue(annual.val() * 1);
-            } else if (annual.val() == '') {
-              ngModelCtrl.$setViewValue('');
+              ngModelCtrl.$render();
             }
-            ngModelCtrl.$render();
           }
   			}
   		}
