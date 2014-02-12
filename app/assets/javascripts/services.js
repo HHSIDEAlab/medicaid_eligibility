@@ -597,7 +597,7 @@ angular.module('MAGI.services',[]).
             {code: '14', label: 'Nephew/Niece', opposite: '13'},
             {code: '15', label: 'Grandparent', opposite: '06'},
             {code: '16', label: 'Cousin', opposite: '16'},
-            {code: '17', label: "Parent's domestic partner", opposite: 'XX'},
+            {code: '17', label: "Parent's domestic partner", opposite: '70'},
             {code: '23', label: 'Sibling-in-law', opposite: '23'},
             {code: '26', label: 'Child-in-law', opposite: '30'},
             {code: '27', label: 'Former spouse', opposite: '27'},
