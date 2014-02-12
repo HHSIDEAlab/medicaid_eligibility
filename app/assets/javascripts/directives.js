@@ -1,44 +1,35 @@
 angular.module('MAGI.directives',[]).
-	directive('checker', function($timeout){
-		// Runs during compile
-		return {
-			restrict: 'A',
-			scope: {
-				ngModel: '=',
-				id: '@'
-			}, 
-			template: '<div class="checker"><span ng-class="{checked:ngModel}" ng-click="toggle()" ><input type="checkbox" id="{{id}}" name="{{id}}" ng-model="ngModel" ng-change="setFocus()" ng-focus="gotFocus()" ng-blur="lostFocus()" /></span></div>',
-			replace: true,
-			link: function(scope, element, attrs) {
-				attrs.$observe('id', function(value) {				    
-					element.attr('id','uniform-'+value);
-				});
+    directive('checker', function($timeout){
+        return {
+            template: '<button type="button" class="checker"><span></span></button>',
+            replace: true,
+            require:"?ngModel",
+            priority: 10,
+            link: function(scope, element, attr, ngModel){
+                if(!ngModel) return;
 
-				scope.toggle = function(){
-					scope.setFocus();
-					return false;
-				}
+                attr.$set('type', 'button');
+                var elm = element;
+                ngModel.$render = function(){
+                    if(ngModel.$viewValue){
+                        elm.addClass("checked");
+                    } else {
+                        elm.removeClass("checked");
+                    };
+                };
 
-				scope.setFocus = function(){
-					$timeout(function(){element[0].children[0].children[0].focus();});
-				}
-
-				var setFocus = function(){
-					element.addClass('focus');
-				}
-
-				var removeFocus = function(){
-					element.removeClass('focus');
-				}
-
-
-				angular.element(element[0].children[0].children[0]).bind('focus',setFocus);
-				angular.element(element[0].children[0].children[0]).bind('blur',removeFocus);
-
-
-			}
-		};
-	}).
+                elm.bind('click', function(){
+                    scope.$apply(function(){
+                        ngModel.$setViewValue(!elm.hasClass("checked"));
+                        ngModel.$render();
+                    });
+                    $timeout(function(){
+                        elm[0].focus();
+                    });
+                });
+            }
+        }
+    }).
 	directive('selector', function($interpolate,$timeout){
 		return {
 			restrict: 'A',
