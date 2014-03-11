@@ -30,10 +30,11 @@ angular.module('MAGI.services',[]).
 		    };
 		}
 
-		function Relationship(applicant, otherApplicant, code){
+		function Relationship(applicant, otherApplicant, code, primaryResponsibility){
 			this.applicant = applicant;
 			this.otherApplicant = otherApplicant;
 			this.code = code;
+      this.primaryResponsibility = primaryResponsibility;
 		}
 
 		function IncomeTaxes(){
@@ -157,7 +158,7 @@ angular.module('MAGI.services',[]).
 		};
 
 		Applicant.prototype.addRelationship = function(other){
-			this.relationships.push(new Relationship(this, other, ''));
+			this.relationships.push(new Relationship(this, other, '', false));
 		};
 
 		Applicant.prototype.getRelationship = function(otherApplicant){
@@ -177,6 +178,19 @@ angular.module('MAGI.services',[]).
 				rel.otherApplicant.removeRelationship(this);
 			});
 		};
+
+    Applicant.prototype.addResponsibility = function(otherApplicant) {
+      this.getRelationship(otherApplicant).primaryResponsibility = true;
+    }
+
+    Application.prototype.clearResponsibility = function(dependent) {
+      angular.forEach(this.applicants, function(applicant) {
+        rel = applicant.getRelationship(dependent);
+        if (rel) {
+          applicant.getRelationship(dependent).primaryResponsibility = false;
+        }
+      });
+    }
 
 		Application.prototype.removeApplicant = function(applicant){
 			var me = this;
@@ -457,7 +471,8 @@ angular.module('MAGI.services',[]).
 		Relationship.prototype.serialize = function(){
 			return {
 	          "Other ID": this.otherApplicant.id,
-	          "Relationship Code": this.code
+	          "Relationship Code": this.code,
+            "Attest Primary Responsibility": (this.primaryResponsibility ? "Y" : "N")
 	        };
 		};
 
@@ -541,9 +556,19 @@ angular.module('MAGI.services',[]).
 			angular.forEach(application["People"], function(person){
 				var pers = me.getApplicantById(person["Person ID"]);
 				pers.relationships = _.map(person["Relationships"], function(rel){
-					return new Relationship(pers, me.getApplicantById(rel["Other ID"]), rel['Relationship Code']);
+					return new Relationship(pers, me.getApplicantById(rel["Other ID"]), rel['Relationship Code'], (rel['Attest Primary Responsibility'] == 'Y'));
 				});
 			});
+
+      angular.forEach(this.applicants, function(person){
+        person.nonParentResponsibility = false;
+        angular.forEach(this.applicants, function(person2) {
+          rel = person2.getRelationship(person);
+          if (rel.primaryResponsibility) {
+            person.nonParentResponsibility = true;
+          }
+        });
+      });
 
 			$log.info("Deserializing");
 			$log.info(this);

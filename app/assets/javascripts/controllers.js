@@ -96,7 +96,10 @@ angular.module('MAGI.controllers', []).
                 };
 
                 $scope.$watch('checkResponsibility()', function(newValue,oldValue){
-                        $scope.applicant.nonParentResponsibility = false;
+                  if (!newValue) {
+                    $scope.applicant.nonParentResponsibility = false;
+                    $scope.application.clearResponsibility($scope.applicant);
+                  }
                 });
 
                 $scope.$watch('applicant.pregnantThreeMonths', function(newValue,oldValue){
@@ -113,6 +116,17 @@ angular.module('MAGI.controllers', []).
 
                 $scope.updateRelationship = function(relationship){
                         relationship.updateOpposite();
+                };
+
+                $scope.clearResponsibility = function(dependent){
+                  $scope.application.clearResponsibility(dependent);
+                };
+
+                $scope.updateResponsibility = function(dependent){
+                  $scope.application.clearResponsibility(dependent);
+                  if (dependent.nonParentResponsibility && dependent.nonParentResponsibilityPerson) {
+                    dependent.nonParentResponsibilityPerson.addResponsibility(dependent);
+                  }
                 };
 
                 $scope.updateMonthly = function(applicant){
