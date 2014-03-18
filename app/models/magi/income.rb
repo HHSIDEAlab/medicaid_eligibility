@@ -4,6 +4,7 @@ include IncomeThreshold
 
 module MAGI
   class Income < Ruleset
+    input "Application Year", "From application", "Integer", [2013, 2014]
     input "Applicant Adult Group Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
     input "Applicant Pregnancy Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
     input "Applicant Parent Caretaker Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
@@ -16,6 +17,7 @@ module MAGI
 
     config "Base FPL", "State Configuration", "Integer"
     config "FPL Per Person", "State Configuration", "Integer"
+    config "FPL", "State Configuration", "Hash"
     config "Option CHIP Pregnancy Category", "State Configuration", "Char(1)", %w(Y N)
     config "Medicaid Thresholds", "State Configuration", "Hash"
     config "CHIP Thresholds", "State Configuration", "Hash"
@@ -36,7 +38,8 @@ module MAGI
     end
 
     calculated "FPL" do
-      c("FPL")[v("Application Year")]["Base FPL"] + (v("Medicaid Household").household_size - 1) * c("FPL")[v("Application Year")]["FPL Per Person"]
+      fpl = c("FPL")[v("Application Year").to_s]
+      fpl["Base FPL"] + (v("Medicaid Household").household_size - 1) * fpl["FPL Per Person"]
     end
 
     calculated "Max Eligible Medicaid Category" do

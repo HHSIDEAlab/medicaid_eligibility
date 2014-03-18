@@ -13,6 +13,13 @@ module ApplicationParser
 
   def read_json!
     @state = @json_application["State"]
+    if @json_application["Application Year"]
+      @application_year = @json_application["Application Year"]
+    elsif Date.today >= Date.new(Date.today.year, 4, 1)
+      @application_year = Date.today.year
+    else
+      @application_year = Date.today.year - 1
+    end
     @people = []
     @applicants = []
     for json_person in @json_application["People"]

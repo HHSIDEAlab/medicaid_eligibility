@@ -68,6 +68,7 @@ module ApplicationProcessor
     input = applicant.applicant_attributes.merge(applicant.person_attributes).merge(applicant.outputs)
     input.merge!({
       "State" => @state,
+      "Application Year" => @application_year,
       "Applicant ID" => applicant.applicant_id,
       "Person ID" => applicant.person_id,
       "Applicant List" => @applicants,

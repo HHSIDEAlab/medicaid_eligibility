@@ -8,6 +8,11 @@ angular.module('MAGI.services',[]).
 			this.state = _.find(states, function(st){
 				return st.abbr == ($location.search()).state;
 			});
+      if (($location.search()).year) {
+        this.applicationYear = ($location.search()).year;  
+      } else {
+        this.applicationYear = 2013;
+      }
 			this.determination = {};
 			this.households = [[]];
 		}
@@ -509,6 +514,7 @@ angular.module('MAGI.services',[]).
 
 			return {
 				"State": st,
+        "Application Year": this.applicationYear,
 				"Name": this.applicationId,
 				"People": _.map(this.applicants,
 					function(applicant){return applicant.serialize();}),
