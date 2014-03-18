@@ -36,7 +36,7 @@ module MAGI
     end
 
     calculated "FPL" do
-      c("Base FPL") + (v("Medicaid Household").household_size - 1) * c("FPL Per Person")
+      c("FPL")[v("Application Year")]["Base FPL"] + (v("Medicaid Household").household_size - 1) * c("FPL")[v("Application Year")]["FPL Per Person"]
     end
 
     calculated "Max Eligible Medicaid Category" do
