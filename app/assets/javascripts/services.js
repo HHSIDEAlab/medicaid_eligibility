@@ -9,7 +9,7 @@ angular.module('MAGI.services',[]).
 				return st.abbr == ($location.search()).state;
 			});
       if (($location.search()).year) {
-        this.applicationYear = ($location.search()).year;  
+        this.applicationYear = parseInt(($location.search()).year);  
       } else {
         this.applicationYear = 2013;
       }
@@ -689,4 +689,5 @@ angular.module('MAGI.services',[]).
             {abbr: 'WV', name: 'West Virginia', inApp: true},
             {abbr: 'WI', name: 'Wisconsin', inApp: true},
             {abbr: 'WY', name: 'Wyoming', inApp: true}
-		]);
+		]).
+  constant('applicationYears', [2013,2014]);

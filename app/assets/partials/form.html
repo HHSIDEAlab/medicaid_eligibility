@@ -9,6 +9,11 @@
         <label for="state" class="error" ng-show="(applicationForm.state.$dirty  || submitted) && applicationForm.state.$invalid">Please enter a State</label>
       </div>
       <div class="form-row">
+        <label for="applicationYear">Application year<br>(year starts April 1)</label>
+        <select selector ng-model="application.applicationYear" name="applicationYear" id="applicationYear" ng-options="year for year in appYears" required>
+        </select>
+      </div>
+      <div class="form-row">
         <label for="id">Application Name or ID</label>
         <input id="applicationId" ng-model="application.applicationId" type="text" name="id" required>
         <label for="id" class="error" ng-show="(applicationForm.id.$dirty  || submitted) && applicationForm.id.$invalid">This field is required.</label>
