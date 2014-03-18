@@ -1,7 +1,5 @@
 {
   "default": {
-    "Base FPL": 11490,
-    "FPL Per Person": 4020,
     "FPL": {
       "2013": {
         "Base FPL": 11490,
@@ -190,8 +188,6 @@
     }
   },
   "HI": {
-    "Base FPL": 13230,
-    "FPL Per Person": 4620,
     "FPL": {
       "2013": {
         "Base FPL": 13230,
@@ -585,8 +581,6 @@
   },
 
  "AK": {
-    "Base FPL": 14350,
-    "FPL Per Person": 5030,
     "FPL": {
       "2013": {
         "Base FPL": 14350,
