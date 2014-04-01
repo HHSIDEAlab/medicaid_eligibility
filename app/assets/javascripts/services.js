@@ -11,7 +11,7 @@ angular.module('MAGI.services',[]).
       if (($location.search()).year) {
         this.applicationYear = parseInt(($location.search()).year);  
       } else {
-        this.applicationYear = 2013;
+        this.applicationYear = 2014;
       }
 			this.determination = {};
 			this.households = [[]];
