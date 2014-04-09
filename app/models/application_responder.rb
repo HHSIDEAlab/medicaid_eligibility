@@ -46,7 +46,7 @@ module ApplicationResponder
         if app.outputs["Medicaid Residency Indicator"] == 'N'
           ineligibility_reasons << "Applicant did not meet residency requirements"
         end
-        if app.outputs["Applicant Medicaid Citizen Or Immigrant Indicator"] == 'N'
+        if app.outputs["Applicant CHIP Citizen Or Immigrant Indicator"] == 'N'
           ineligibility_reasons << "Applicant did not meet citizenship/immigration requirements"
         end
         if app.outputs["Category Used to Calculate CHIP Income"] == "None"

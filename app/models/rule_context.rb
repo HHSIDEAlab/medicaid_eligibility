@@ -24,6 +24,12 @@ class RuleContext
     o["#{determination} Ineligibility Reason"] = 999
   end
 
+  def determination_n(determination, reason)
+    o["Applicant #{determination} Indicator"] = 'N'
+    o["#{determination} Determination Date"] = current_date
+    o["#{determination} Ineligibility Reason"] = reason
+  end
+
   def determination_na(determination)
     o["Applicant #{determination} Indicator"] = 'X'
     o["#{determination} Determination Date"] = current_date

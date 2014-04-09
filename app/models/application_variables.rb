@@ -214,6 +214,14 @@ module ApplicationVariables
       :required   => true
     },
     {
+      :name       => "Amerasian Immigrant",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :applicant,
+      :required_if => "Immigration Status Code",
+      :required_if_value => "01"
+    },
+    {
       :name       => "Five Year Bar Applies",
       :type       => :flag,
       :values     => %w(Y N),
@@ -230,20 +238,17 @@ module ApplicationVariables
       :required_if_value => "Y"
     },
     {
+      :name       => "Immigration Status Code",
+      :type       => :string,
+      :values     => %w(01 02 03 04 05 06 07 08 09 10 99),
+      :group      => :applicant
+    },
+    {
       :name       => "Lawful Presence Attested",
       :type       => :flag,
       :values     => %w(Y N),
       :group      => :applicant,
       :xpath      => :unimplemented
-    },
-    {
-      :name       => "Legal Permanent Resident",
-      :type       => :flag,
-      :values     => %w(Y N),
-      :group      => :applicant,
-      :xpath      => :unimplemented,
-      :required_if => "US Citizen Indicator",
-      :required_if_value => "N"
     },
     {
       :name       => "Non-Citizen Deport Withheld Date",
@@ -260,13 +265,6 @@ module ApplicationVariables
     {
       :name       => "Non-Citizen Status Grant Date",
       :type       => :date,
-      :group      => :applicant,
-      :xpath      => :unimplemented
-    },
-    {
-      :name       => "Qualified Non-Citizen Status",
-      :type       => :flag,
-      :values     => %w(Y N),
       :group      => :applicant,
       :xpath      => :unimplemented
     },
@@ -335,12 +333,14 @@ module ApplicationVariables
     {name: "Income Medicaid Eligible", eligibility: :MAGI},
     {name: "Income CHIP Eligible", eligibility: :CHIP},
     
-    {name: "CHIPRA 214"},
+    {name: "Medicaid CHIPRA 214"},
+    {name: "CHIP CHIPRA 214"},
     {name: "Trafficking Victim"},
     {name: "Seven Year Limit"},
     {name: "Five Year Bar"},
     {name: "Title II Work Quarters Met"},
     {name: "Medicaid Citizen Or Immigrant"},
+    {name: "CHIP Citizen Or Immigrant"},
     
     {name: "Former Foster Care Category"},
     {name: "Work Quarters Override Income"},
@@ -435,6 +435,20 @@ module ApplicationVariables
     "87" => :other_relative,
     "88" => :other
   }.freeze
+
+  IMMIGRATION_STATUS_CODES = {
+    "01" => "Lawful Permanent Resident (LPR/Green Card Holder)",
+    "02" => "Asylee",
+    "03" => "Refugee",
+    "04" => "Cuban/Haitian entrant",
+    "05" => "Paroled into the U.S. for at least one year",
+    "06" => "Conditional entrant granted before 1980",
+    "07" => "Battered non-citizen, spouse, child, or parent",
+    "08" => "Victim of trafficking or his or her spouse, child, sibling, or parent or individual with a pending application for a victim of trafficking visa",
+    "09" => "Granted withholding of deportation",
+    "10" => "Member of a federally recognized Indian tribe or American Indian born in Canada",
+    "99" => "Other"
+  }
 
   CONFIGURATION_CODES = {
     "Count Unborn Children for Household" => {

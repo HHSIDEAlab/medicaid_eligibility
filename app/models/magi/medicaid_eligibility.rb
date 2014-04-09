@@ -5,7 +5,6 @@ module MAGI
     input "Applicant Medicaid Prelim Indicator", "From Determine Preliminary Medicaid & CHIP Eligibility Rule", "Char(1)", %w(Y N)
     input "Applicant Dependent Child Covered Indicator", "From Dependent Child Covered Rule", "Char(1)", %w(Y N)
     input "Medicaid Residency Indicator", "From Residency Logic", "Char(1)", %w(Y N)
-    input "Applicant Medicaid Citizen or Immigrant Indicator", "From Immigration Status logic", "Char(1)", %w(Y N)
     input "Applicant Income Medicaid Eligible Indicator", "From Verify Household Income Rule", "Char(1)", %w(Y N)
 
     # Outputs 
