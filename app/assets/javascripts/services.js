@@ -8,10 +8,13 @@ angular.module('MAGI.services',[]).
 			this.state = _.find(states, function(st){
 				return st.abbr == ($location.search()).state;
 			});
+			var today = new Date();
       if (($location.search()).year) {
         this.applicationYear = parseInt(($location.search()).year);  
+      } else if (today.getMonth() >= 3) {
+      	this.applicationYear = today.getFullYear();
       } else {
-        this.applicationYear = 2013;
+      	this.applicationYear = today.getFullYear() + 1;
       }
 			this.determination = {};
 			this.households = [[]];
@@ -270,14 +273,14 @@ angular.module('MAGI.services',[]).
 			{app: 'hours', api: 'Hours Worked Per Week', type: 'string'}
 		];
 
-	    Applicant.prototype.residencyFields = [
-	      {app: 'temporarilyOutOfState', api: 'Temporarily Out of State', type: 'checkbox'},
-	      {app: 'noFixedAddress', api: 'No Fixed Address', type: 'checkbox'}
-	    ];
+		Applicant.prototype.residencyFields = [
+      {app: 'temporarilyOutOfState', api: 'Temporarily Out of State', type: 'checkbox'},
+      {app: 'noFixedAddress', api: 'No Fixed Address', type: 'checkbox'}
+    ];
 
-	    Applicant.prototype.claimedFields = [
-	      {app: 'claimerIsOutOfState', api: 'Claimer Is Out of State', type: 'checkbox'}
-	    ];
+    Applicant.prototype.claimedFields = [
+      {app: 'claimerIsOutOfState', api: 'Claimer Is Out of State', type: 'checkbox'}
+    ];
 
 		Applicant.prototype.priorInsuranceFields = [
 				{app: 'EndDate', api: 'Prior Insurance End Date', type: 'date'}
@@ -294,24 +297,26 @@ angular.module('MAGI.services',[]).
 		];
 
 		Applicant.prototype.nonCitizenFields = [
-      		{app: 'legalPermanentResident', api: 'Legal Permanent Resident', type: 'checkbox'},
-			{app: 'lawful', api: 'Lawful Presence Attested', type: 'checkbox'},
+      {app: 'lawful', api: 'Lawful Presence Attested', type: 'checkbox'}
+		];
+
+		Applicant.prototype.lawfulPresentFields = [
+			{app: 'immigrationStatus', api: 'Immigration Status', type: 'immigrationStatus'},
+			{app: 'refugeeMedicalAssistanceEligible', api: 'Refugee Status', type: 'checkbox'}
+		];
+
+		Applicant.prototype.qualifiedNonCitizenFields = [
+			{app: 'amerasian', api: 'Amerasian Immigrant', type: 'checkbox'},
+			{app: 'veteran', api: 'Veteran Status', type: 'checkbox'},
+			{app: 'humanTraffickingVictim', api: 'Victim of Trafficking', type: 'checkbox'},
+			{app: 'sevenYearStartDate', api: 'Seven Year Limit Start Date', type: 'date'},
 			{app: 'fiveYearBar', api: 'Five Year Bar Applies', type: 'checkbox'},
-			{app: 'fortyQuarters', api: 'Applicant Has 40 Title II Work Quarters', type: 'checkbox'},
 			{app: 'fiveYearBarMet', api: 'Five Year Bar Met', type: 'checkbox'},
-			{app: 'refugeeMedicalAssistanceEligible', api: 'Refugee Status', type: 'checkbox'},
-			{app: 'humanTraffickingVictim', api: 'Victim of Trafficking', type: 'checkbox'}
+			{app: 'fortyQuarters', api: 'Applicant Has 40 Title II Work Quarters', type: 'checkbox'}
 		];
 
 		Applicant.prototype.refugeeMedicalAssistanceFields = [
 			{app: 'StartDate', api: 'Refugee Medical Assistance Start Date', type: 'date'}
-		];
-
-		Applicant.prototype.humanTraffickingFields = [
-			{app: 'qualified', api: 'Qualified Non-Citizen Status', type: 'checkbox'},
-			{app: 'deportWithheldDate', api: 'Non-Citizen Deport Withheld Date', type: 'date'},
-			{app: 'entryDate', api: 'Non-Citizen Entry Date', type: 'date'},
-			{app: 'statusGrantDate', api: 'Non-Citizen Status Grant Date', type: 'date'}
 		];
 
 		var serializeField = function(field, baseObject){
@@ -325,8 +330,10 @@ angular.module('MAGI.services',[]).
 				var year = baseObject[field.app].substring(4,8);
 				return [field.api, year + "-" + month + "-" + day];
 			} else if(field.type == 'state'){
-		        return [field.api, baseObject[field.app].abbr];
-      		}
+		    return [field.api, baseObject[field.app].abbr];
+      } else if(field.type == 'immigrationStatus') {
+      	return [field.api, baseObject[field.app].code];
+      }
 		};
 
 		var deserializeField = function(field, serializedObject){
@@ -356,17 +363,17 @@ angular.module('MAGI.services',[]).
 				return serializeField(field,me);
 			});
 
-		    if(!(this.livesInState)){
-        		rv = rv.concat(_.map(this.residencyFields, function(field){
-            		return serializeField(field,me);
-          		}));
-      		}
+	    if(!(this.livesInState)){
+    		rv = rv.concat(_.map(this.residencyFields, function(field){
+        		return serializeField(field,me);
+      		}));
+  		}
 
-	        if(this.claimedByNonApplicant){
-	        	rv = rv.concat(_.map(this.claimedFields, function(field){
-	            	return serializeField(field,me);
-	          	}));
-		    }
+      if(this.claimedByNonApplicant){
+      	rv = rv.concat(_.map(this.claimedFields, function(field){
+          	return serializeField(field,me);
+        	}));
+	    }
 
 			if(this.priorInsuranceIndicator){
 				rv = rv.concat(_.map(this.priorInsuranceFields, function(field){
@@ -374,11 +381,11 @@ angular.module('MAGI.services',[]).
 				}));
 			}
 
-	    	if(this.pregnant){
-        		rv = rv.concat(_.map(this.pregnantFields, function(field){
-            		return serializeField(field,me);
-		        }));
-	        }
+	    if(this.pregnant){
+    		rv = rv.concat(_.map(this.pregnantFields, function(field){
+        		return serializeField(field,me);
+        }));
+      }
 
 			if(this.formerlyFosterCare){
 				rv = rv.concat(_.map(this.fosterCareFields, function(field){
@@ -391,16 +398,20 @@ angular.module('MAGI.services',[]).
 			if(!this.citizen){
 				var ncOut = _.map(this.nonCitizenFields, function(field){
 					return serializeField(field,me.nonCitizen);});
-				if(this.nonCitizen.refugeeMedicalAssistanceEligible){
-					$log.info('Eligible for Refugee Medical Assistance');
-					ncOut = ncOut.concat(_.map(this.refugeeMedicalAssistanceFields, function(field){
-						return serializeField(field,me.nonCitizen.refugeeMedicalAssistance);
+				if (this.nonCitizen.lawful) {
+					ncOut = ncOut.concat(_.map(this.lawfulPresentFields, function(field){
+						return serializeField(field, me.lawful);
 					}));
-				}
-				if(this.nonCitizen.humanTraffickingVictim){
-					ncOut = ncOut.concat(_.map(this.humanTraffickingFields, function(field){
-						return serializeField(field,me.nonCitizen.humanTrafficking);
-					}));
+					if (this.lawful.immigrationStatus.qnc) {
+						ncOut = ncOut.concat(_.map(this.qualifiedNonCitizenFields, function(field){
+							return serializeField(field, me.qnc);
+						}));
+					}
+					if(this.lawful.refugeeMedicalAssistanceEligible){
+						ncOut = ncOut.concat(_.map(this.refugeeMedicalAssistanceFields, function(field){
+							return serializeField(field,me.refugeeMedicalAssistance);
+						}));
+					}
 				}
 
 				rv = rv.concat(ncOut);
@@ -446,21 +457,28 @@ angular.module('MAGI.services',[]).
 
 			me.incomeTaxes = new IncomeTaxes().deserialize(person['Income']);
 
-			me.nonCitizen = {
-				refugeeMedicalAssistance: {},
-				humanTrafficking: {}
-			};
+			me.nonCitizen = {};
+
+			me.lawful = {};
+
+			me.qnc = {};
+
+			me.refugeeMedicalAssistance = {};
 
 			angular.forEach(this.nonCitizenFields, function(field){
 				me.nonCitizen[field.app] = deserializeField(field, person);
 			});
 
-			angular.forEach(this.refugeeMedicalAssistanceFields, function(field){
-				me.nonCitizen.refugeeMedicalAssistance[field.app] = deserializeField(field, person);
+			angular.forEach(this.lawfulPresentFields, function(field){
+				me.lawful[field.app] = deserializeField(field, person);
 			});
 
-			angular.forEach(this.humanTraffickingFields, function(field){
-				me.nonCitizen.humanTrafficking[field.app] = deserializeField(field, person);
+			angular.forEach(this.qualifiedNonCitizenFields, function(field){
+				me.qnc[field.app] = deserializeField(field, person);
+			});
+
+			angular.forEach(this.refugeeMedicalAssistanceFields, function(field){
+				me.refugeeMedicalAssistance[field.app] = deserializeField(field, person);
 			});
 
 			return this;
@@ -690,4 +708,17 @@ angular.module('MAGI.services',[]).
             {abbr: 'WI', name: 'Wisconsin', inApp: true},
             {abbr: 'WY', name: 'Wyoming', inApp: true}
 		]).
-  constant('applicationYears', [2013,2014]);
+  constant('applicationYears', [2013,2014]).
+  constant('applicationStatuses', [
+  	{code: "01", name: "Lawful Permanent Resident (LPR/Green Card Holder)", qnc: true, startDate: "Entry date"},
+    {code: "02", name: "Asylee", qnc: true, startDate: "Asylum grant date"},
+    {code: "03", name: "Refugee", qnc: true, startDate: "Refugee admit date"},
+    {code: "04", name: "Cuban/Haitian entrant", qnc: true, startDate: "Status grant date"},
+    {code: "05", name: "Paroled into the U.S. for at least one year", qnc: true},
+    {code: "06", name: "Conditional entrant granted before 1980", qnc: true},
+    {code: "07", name: "Battered non-citizen, spouse, child, or parent", qnc: true},
+    {code: "08", name: "Victim of trafficking", qnc: true},
+    {code: "09", name: "Granted withholding of deportation", qnc: true, startDate: "Deportation withheld date"},
+    {code: "10", name: "Member of a federally recognized Indian tribe or American Indian born in Canada", qnc: true},
+    {code: "99", name: "Other", qnc: false}
+  ]);

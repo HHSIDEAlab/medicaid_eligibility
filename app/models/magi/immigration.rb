@@ -4,13 +4,11 @@ module MAGI
   class Immigration < Ruleset
     input "US Citizen Indicator", "Application", "Char(1)", %w(Y N)
     input "Lawful Presence Attested", "Application", "Char(1)", %w(Y N)
-    input "Immigration Status Code", "Application", "Char(2)", %w(01 02 03 04 05 06 07 08 09 10 99)
+    input "Immigration Status", "Application", "Char(2)", %w(01 02 03 04 05 06 07 08 09 10 99)
     input "Amerasian Immigrant", "Application", "Char(1)", %w(Y N)
-    input "Applicant Income Medicaid Eligible Indicator", "Income Rule", "Char(1)", %w(Y N)
     input "Applicant Age", "Application", "Number"  
     input "Applicant Pregnancy Category Indicator", "Pregnancy Rule", "Char(1)", %w(Y N)
     input "Victim of Trafficking", "Application", "Char(1)", %w(Y N)
-    input "Applicant Seven Year Limit Applies", "Application", "Char(1)", %w(Y N)
     input "Seven Year Limit Start Date", "Application", "Date"
     input "Five Year Bar Applies", "Application", "Char(1)", %w(Y N)
     input "Five Year Bar Met", "Application", "Char(1)", %w(Y N)
@@ -26,7 +24,7 @@ module MAGI
     
     calculated "Qualified Non-Citizen Status" do
       if v("US Citizen Indicator") == "N" && v("Lawful Presence Attested") == "Y" &&
-         %w(01 02 03 04 05 06 07 08 09 10).include?(v("Immigration Status Code"))
+         %w(01 02 03 04 05 06 07 08 09 10).include?(v("Immigration Status"))
         "Y"
       else
         "N"
@@ -131,8 +129,8 @@ module MAGI
 
         # Seven Year Limit
         if c("State Applies Seven Year Limit") == 'Y' &&
-           (%w(02 03 04 09).include?(v("Immigration Status Code")) || 
-            (v("Immigration Status Code") == "01" && v("Amerasian Immigrant") == 'Y'))
+           (%w(02 03 04 09).include?(v("Immigration Status")) || 
+            (v("Immigration Status") == "01" && v("Amerasian Immigrant") == 'Y'))
           if v("Applicant Seven Year Limit End Date") > current_date
             determination_y "Seven Year Limit"
           else
@@ -157,7 +155,7 @@ module MAGI
             determination_na "Five Year Bar"
           end
 
-          if c("Option Require Work Quarters") == 'Y' && v("Immigration Status Code") == '01'
+          if c("Option Require Work Quarters") == 'Y' && v("Immigration Status") == '01'
             if v("Applicant Has 40 Title II Work Quarters") == 'Y'
               determination_y "Title II Work Quarters Met"
             else

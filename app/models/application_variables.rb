@@ -218,7 +218,7 @@ module ApplicationVariables
       :type       => :flag,
       :values     => %w(Y N),
       :group      => :applicant,
-      :required_if => "Immigration Status Code",
+      :required_if => "Immigration Status",
       :required_if_value => "01"
     },
     {
@@ -238,7 +238,7 @@ module ApplicationVariables
       :required_if_value => "Y"
     },
     {
-      :name       => "Immigration Status Code",
+      :name       => "Immigration Status",
       :type       => :string,
       :values     => %w(01 02 03 04 05 06 07 08 09 10 99),
       :group      => :applicant

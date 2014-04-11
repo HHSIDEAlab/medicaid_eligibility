@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('MAGI.controllers', []).
-	controller('FormController',['$scope','$location','$anchorScroll','$timeout','$log','filterFilter', 'Application','relationshipCodes','states','applicationYears', function($scope,$location,$anchorScroll,$timeout,$log,filterFilter, Application, relationshipCodes,states,applicationYears){		
+	controller('FormController',['$scope','$location','$anchorScroll','$timeout','$log',
+		'filterFilter', 'Application','relationshipCodes','states','applicationYears','applicationStatuses', 
+		function($scope,$location,$anchorScroll,$timeout,$log,filterFilter, Application, relationshipCodes,states,applicationYears,applicationStatuses){		
                 Application.resetResults();
                 $scope.submitted = false;
                 $scope.applicants = Application.applicants;
@@ -90,6 +92,8 @@ angular.module('MAGI.controllers', []).
 		$scope.states = states;
         $scope.appStates = _.filter(states, function(state){return state.inApp;});
     $scope.appYears = applicationYears;
+    $scope.appStatuses = applicationStatuses;
+    $scope.qualNonCitizenStatuses = _.filter(applicationStatuses, function(status){return status.qnc;});
 	}]).
         controller('ApplicantController',['$scope',function($scope){
                 $scope.checkResponsibility = function(){

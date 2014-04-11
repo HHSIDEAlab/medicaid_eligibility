@@ -163,61 +163,58 @@
       <label for="applicant_{{ $index }}_citizen">US citizen</label>
       <input type="checkbox" checker ng-model="applicant.citizen" id="applicant_{{ $index }}_citizen" name="applicant_citizen">
       <div class="form-row-expandable-fields2" ng-show="!applicant.citizen">
-        <div class="form-half-field">
-          <label for="applicant_{{ $index }}_citizen_legal_permanent_resident">Legal Permanent Resident</label>
-          <input type="checkbox" checker ng-model="applicant.nonCitizen.legalPermanentResident" id="applicant_{{ $index }}_citizen_legal_permanent_resident" name="applicant_citizen_legal_permanent_resident">
-        </div>
-        <div class="form-half-field">
+      	<div class="form-row form-row-expandable">
           <label for="applicant_{{ $index }}_citizen_lawful">Lawfully present in the US</label>
           <input type="checkbox" checker ng-model="applicant.nonCitizen.lawful" id="applicant_{{ $index }}_citizen_lawful" name="applicant_citizen_lawful">
         </div>
-        <div class="form-half-field">
-          <label for="applicant_{{ $index }}_citizen_five_year_bar">Subject to a 5 year bar</label>
-          <input type="checkbox" checker ng-model="applicant.nonCitizen.fiveYearBar" id="applicant_{{ $index }}_citizen_five_year_bar" name="applicant_citizen_five_year_bar">
-        </div>
-        <div class="form-half-field">
-          <label for="applicant_{{ $index }}_citizen_forty_quarters">Worked in the US for 40 quarters (120 months)</label>
-          <input type="checkbox" checker ng-model="applicant.nonCitizen.fortyQuarters" id="applicant_{{ $index }}_citizen_forty_quarters" name="applicant_citizen_forty_quarters">
-        </div>
-        <div class="form-half-field">
-          <label for="applicant_{{ $index }}_citizen_five_year_bar_met">5 year bar met</label>
-          <input type="checkbox" checker ng-model="applicant.nonCitizen.fiveYearBarMet" id="applicant_{{ $index }}_citizen_five_year_bar_met" name="applicant_citizen_five_year_bar_met">
-        </div>
-        <div class="form-row form-row-expandable">
-          <label for="applicant_{{ $index }}_citizen_refugee_assistance">Eligible for refugee medical assistance</label>
-          <input type="checkbox" checker ng-model="applicant.nonCitizen.refugeeMedicalAssistanceEligible" id="applicant_{{ $index }}_citizen_refugee_assistance" name="applicant_citizen_refugee_assistance">
-
-          <div class="form-row-expandable-fields2" ng-show="applicant.nonCitizen.refugeeMedicalAssistanceEligible">
-            <div class="form-row">
-              <label for="applicant_{{ $index }}_citizen_refugee_assistance_start_date">Refugee medical assistance start date</label>
-          <input type="text" ng-model="applicant.nonCitizen.refugeeMedicalAssistance.StartDate" id="applicant_{{ $index }}_citizen_refugee_assistance_start_date" name="applicant_citizen_refugee_assistance_start_date" class="date" ui-mask="99 / 99 / 9999" placeholder="mm / dd / yyyy">
-            </div>
+        <div class="form-row-expandable-fields2" ng-show="applicant.nonCitizen.lawful">
+					<div class="form-row">
+            <label for="applicant_{{ $index }}_lawful_immigration_status_code">Immigration status</label>
+            <select selector ng-model="applicant.lawful.immigrationStatus" name="applicant_{{ $index }}_lawful_immigration_status" id="applicant_{{ $index }}_lawful_immigration_status" ng-options="status as status.name for status in appStatuses">
+            </select>
           </div>
-        </div>
-
-        <div class="form-row form-row-expandable">
-          <label for="applicant_{{ $index }}_citizen_human_trafficking">Victim of human trafficking</label>
-          <input type="checkbox" checker ng-model="applicant.nonCitizen.humanTraffickingVictim" id="applicant_{{ $index }}_citizen_human_trafficking" name="applicant_citizen_human_trafficking">
-          <div class="form-row-expandable-fields2" ng-show="applicant.nonCitizen.humanTraffickingVictim">
-            <div class="form-row">
-              <label for="applicant_{{ $index }}_citizen_human_trafficking_non_citizen">Qualified non-citizen</label>
-              <input type="checkbox" checker ng-model="applicant.nonCitizen.humanTrafficking.qualified" id="applicant_{{ $index }}_citizen_human_trafficking_non_citizen" name="applicant_citizen_human_trafficking_non_citizen">
-            </div>
-            <div class="form-row">
-              <label for="applicant_{{ $index }}_citizen_human_trafficking_deport_withheld_date">Non-citizen deport withheld date</label>
-              <input type="text" ng-model="applicant.nonCitizen.humanTrafficking.deportWithheldDate" id="applicant_{{ $index }}_citizen_human_trafficking_deport_withheld_date" name="applicant_citizen_human_trafficking_deport_withheld_date" class="date" ui-mask="99 / 99 / 9999" placeholder="mm / dd / yyyy">
-            </div>
-            <div class="form-row">
-              <label for="applicant_{{ $index }}_citizen_human_trafficking_entry_date">Non-citizen entry date</label>
-              <input type="text" ng-model="applicant.nonCitizen.humanTrafficking.entryDate" id="applicant_{{ $index }}_citizen_human_trafficking_entry_date" name="applicant_citizen_human_trafficking_entry_date" class="date" ui-mask="99 / 99 / 9999" placeholder="mm / dd / yyyy" >
-            </div>
-            <div class="form-row">
-              <label for="applicant_{{ $index }}_citizen_human_trafficking_status_grant_date">Non-citizen status grant date</label>
-              <input type="text" ng-model="applicant.nonCitizen.humanTrafficking.statusGrantDate" id="applicant_{{ $index }}_citizen_human_trafficking_status_grant_date" name="applicant_citizen_human_trafficking_status_grant_date" class="date" ui-mask="99 / 99 / 9999" placeholder="mm / dd / yyyy">
-            </div>
+          <div class="form-row-expandable-fields2" ng-show="qualNonCitizenStatuses.indexOf(applicant.lawful.immigrationStatus) != -1">
+          	<div class="form-row" ng-show="applicant.lawful.immigrationStatus.code == '01'">
+          		<label for="applicant_{{ $index }}_qnc_amerasian">Amerasian status</label>
+	          	<input type="checkbox" checker ng-model="applicant.qnc.amerasian" id="applicant_{{ $index }}_qnc_amerasian" name="applicant_qnc_amerasian">
+          	</div>
+          	<div class="form-row">
+          		<label for="applicant_{{ $index }}_qnc_veteran">Veteran status</label>
+	          	<input type="checkbox" checker ng-model="applicant.qnc.veteran" id="applicant_{{ $index }}_qnc_veteran" name="applicant_qnc_veteran">
+          	</div>
+          	<div class="form-row">
+          		<label for="applicant_{{ $index }}_qnc_human_trafficking">Victim of human trafficking</label>
+	          	<input type="checkbox" checker ng-model="applicant.qnc.humanTraffickingVictim" id="applicant_{{ $index }}_qnc_human_trafficking" name="applicant_qnc_human_trafficking">
+          	</div>
+          	<div class="form-row" ng-show="['02', '03', '04', '09'].indexOf(applicant.lawful.immigrationStatus.code) != -1 || (applicant.lawful.immigrationStatus.code == '01' && applicant.qnc.amerasian)">
+	            <label for="applicant_{{ $index }}_qnc_seven_year_start_date">{{ applicant.lawful.immigrationStatus.startDate }}</label>
+	            <input type="text" ng-model="applicant.qnc.sevenYearStartDate" id="applicant_{{ $index }}_qnc_seven_year_start_date" name="applicant_qnc_seven_year_start_date" class="date" ui-mask="99 / 99 / 9999" placeholder="mm / dd / yyyy">
+	          </div>
+	          <div class="form-row">
+          		<label for="applicant_{{ $index }}_qnc_five_year_bar">Five Year Bar applies to applicant</label>
+	          	<input type="checkbox" checker ng-model="applicant.qnc.fiveYearBar" id="applicant_{{ $index }}_qnc_five_year_bar" name="applicant_qnc_five_year_bar">
+          	</div>
+          	<div class="form-row">
+          		<label for="applicant_{{ $index }}_qnc_five_year_bar_met">Five Year Bar has been met</label>
+	          	<input type="checkbox" checker ng-model="applicant.qnc.fiveYearBarMet" id="applicant_{{ $index }}_qnc_five_year_bar_met" name="applicant_qnc_five_year_bar_met">
+          	</div>
+          	<div class="form-row">
+          		<label for="applicant_{{ $index }}_qnc_forty_quarters">Applicant has 40 Title II work quarters</label>
+	          	<input type="checkbox" checker ng-model="applicant.qnc.fortyQuarters" id="applicant_{{ $index }}_qnc_fortyQuarters" name="applicant_qnc_fortyQuarters">
+          	</div>
           </div>
-        </div>
-      </div>
+          <div class="form-row">
+	          <label for="applicant_{{ $index }}_lawful_refugee_assistance">Eligible for refugee medical assistance</label>
+	          <input type="checkbox" checker ng-model="applicant.lawful.refugeeMedicalAssistanceEligible" id="applicant_{{ $index }}_lawful_refugee_assistance" name="applicant_lawful_refugee_assistance">
+	          <div class="form-row-expandable-fields2" ng-show="applicant.lawful.refugeeMedicalAssistanceEligible">
+	            <div class="form-row">
+	              <label for="applicant_{{ $index }}_refugee_assistance_start_date">Refugee medical assistance start date</label>
+	          		<input type="text" ng-model="applicant.refugeeMedicalAssistance.startDate" id="applicant_{{ $index }}_refugee_assistance_start_date" name="applicant_refugee_assistance_start_date" class="date" ui-mask="99 / 99 / 9999" placeholder="mm / dd / yyyy">
+	            </div>
+	          </div>
+	        </div>
+        </div>        
+      </div>        
     </div>
     <div class="form-row form-row-expandable">
       <label for="applicant_{{ $index }}_income_taxes_required">Required to file income
