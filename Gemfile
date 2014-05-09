@@ -27,10 +27,11 @@ gem "uglifier"
 # gem 'jbuilder'
 
 # Use unicorn as the app server
- gem 'unicorn'
+ #gem 'unicorn'
 
 # Deploy with Capistrano
-gem 'capistrano', :group => :development
+#gem 'capistrano-ext'
+gem 'capistrano', '~> 3.1.0'
 
 group :development, :test do
   gem 'jasmine'

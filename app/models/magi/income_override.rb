@@ -10,6 +10,7 @@ module MAGI
     determination "Work Quarters Override Income", %w(Y N), %w(999 338 339 340)
     indicator "APTC Referral Indicator", %w(Y N)
     output "APTC Referral Ineligibility Reason", "Char(3)", %w(406)
+    output "APTC Income Override Indicator", "Char(1)", %w(Y N)
     
     rule "Income is greater than or equal to 100% FPL" do
       if v("Calculated Income") >= v("FPL")
@@ -38,6 +39,9 @@ module MAGI
         o["CHIP Determination Date"] = current_date
         o["CHIP Ineligibility Reason"] = 340
         o["APTC Referral Indicator"] = 'Y'
+        o["APTC Income Override Indicator"] = 'Y'
+      else
+        o["APTC Income Override Indicator"] = 'N'
       end
     end
   end
