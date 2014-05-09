@@ -35,7 +35,13 @@ module ApplicationProcessor
       MAGI::DependentChildCovered,
       MAGI::MedicaidEligibility,
       MAGI::EmergencyMedicaid,
-      MAGI::RefugeeAssistance
+      MAGI::RefugeeAssistance,
+      MAGI::ExchangeEligibility,
+      MAGI::PreliminaryAPTC,
+      MAGI::APTCEligibility,
+      MAGI::CSREligibility,
+      MAGI::CSRCategory,
+      MAGI::MaxAPTC
     ].map{|ruleset_class| ruleset_class.new()}
 
     for ruleset in rulesets
@@ -68,7 +74,8 @@ module ApplicationProcessor
     input = applicant.applicant_attributes.merge(applicant.person_attributes).merge(applicant.outputs)
     input.merge!({
       "State" => @state,
-      "Application Year" => @application_year,
+      "County"=> @county,
+      "Applicant" => applicant,
       "Applicant ID" => applicant.applicant_id,
       "Person ID" => applicant.person_id,
       "Applicant List" => @applicants,

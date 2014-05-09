@@ -1,15 +1,7 @@
 {
   "default": {
-    "FPL": {
-      "2013": {
-        "Base FPL": 11490,
-        "FPL Per Person": 4020
-      },
-      "2014": {
-        "Base FPL": 11670,
-        "FPL Per Person": 4060
-      }
-    },
+    "Base FPL": 11490,
+    "FPL Per Person": 4020,
 
     "Option Householding Minor Student": "Y",
     "Count Unborn Children for Household": "02",
@@ -188,16 +180,8 @@
     }
   },
   "HI": {
-    "FPL": {
-      "2013": {
-        "Base FPL": 13230,
-        "FPL Per Person": 4620
-      },
-      "2014": {
-        "Base FPL": 13420,
-        "FPL Per Person": 4670
-      }
-    }
+    "Base FPL": 13230,
+    "FPL Per Person": 4620
   },
   "MD": {
     "Option Householding Minor Student": "Y",
@@ -581,16 +565,8 @@
   },
 
  "AK": {
-    "FPL": {
-      "2013": {
-        "Base FPL": 14350,
-        "FPL Per Person": 5030
-      },
-      "2014": {
-        "Base FPL": 14580,
-        "FPL Per Person": 5080
-      }
-    },
+    "Base FPL": 14350,
+    "FPL Per Person": 5030,
 
     "Option Householding Minor Student": "N",
     "Count Unborn Children for Household": "03",

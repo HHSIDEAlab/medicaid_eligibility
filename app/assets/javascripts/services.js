@@ -8,11 +8,6 @@ angular.module('MAGI.services',[]).
 			this.state = _.find(states, function(st){
 				return st.abbr == ($location.search()).state;
 			});
-      if (($location.search()).year) {
-        this.applicationYear = parseInt(($location.search()).year);  
-      } else {
-        this.applicationYear = 2014;
-      }
 			this.determination = {};
 			this.households = [[]];
 		}
@@ -35,11 +30,10 @@ angular.module('MAGI.services',[]).
 		    };
 		}
 
-		function Relationship(applicant, otherApplicant, code, primaryResponsibility){
+		function Relationship(applicant, otherApplicant, code){
 			this.applicant = applicant;
 			this.otherApplicant = otherApplicant;
 			this.code = code;
-      this.primaryResponsibility = primaryResponsibility;
 		}
 
 		function IncomeTaxes(){
@@ -163,7 +157,7 @@ angular.module('MAGI.services',[]).
 		};
 
 		Applicant.prototype.addRelationship = function(other){
-			this.relationships.push(new Relationship(this, other, '', false));
+			this.relationships.push(new Relationship(this, other, ''));
 		};
 
 		Applicant.prototype.getRelationship = function(otherApplicant){
@@ -183,19 +177,6 @@ angular.module('MAGI.services',[]).
 				rel.otherApplicant.removeRelationship(this);
 			});
 		};
-
-    Applicant.prototype.addResponsibility = function(otherApplicant) {
-      this.getRelationship(otherApplicant).primaryResponsibility = true;
-    }
-
-    Application.prototype.clearResponsibility = function(dependent) {
-      angular.forEach(this.applicants, function(applicant) {
-        rel = applicant.getRelationship(dependent);
-        if (rel) {
-          applicant.getRelationship(dependent).primaryResponsibility = false;
-        }
-      });
-    }
 
 		Application.prototype.removeApplicant = function(applicant){
 			var me = this;
@@ -267,7 +248,12 @@ angular.module('MAGI.services',[]).
 			{app: 'citizen', api: 'US Citizen Indicator', type: 'checkbox'},
 			{app: 'id', api: 'Person ID', type: 'string'},
 			{app: 'age', api: 'Applicant Age', type: 'string'},
-			{app: 'hours', api: 'Hours Worked Per Week', type: 'string'}
+			{app: 'hours', api: 'Hours Worked Per Week', type: 'string'},
+			{app: 'native', api: 'Native American or Alaskan Native', type: 'checkbox'},
+			{app: 'other_mec_offer', api: 'Other MEC Offer', type: 'checkbox'},
+			{app: 'previousAPTC', api: 'Previous APTC', type: 'checkbox'},
+			{app: 'repaidAPTC', api: 'Repaid APTC', type: 'checkbox'}
+
 		];
 
 	    Applicant.prototype.residencyFields = [
@@ -476,8 +462,7 @@ angular.module('MAGI.services',[]).
 		Relationship.prototype.serialize = function(){
 			return {
 	          "Other ID": this.otherApplicant.id,
-	          "Relationship Code": this.code,
-            "Attest Primary Responsibility": (this.primaryResponsibility ? "Y" : "N")
+	          "Relationship Code": this.code
 	        };
 		};
 
@@ -514,7 +499,6 @@ angular.module('MAGI.services',[]).
 
 			return {
 				"State": st,
-        "Application Year": this.applicationYear,
 				"Name": this.applicationId,
 				"People": _.map(this.applicants,
 					function(applicant){return applicant.serialize();}),
@@ -562,19 +546,9 @@ angular.module('MAGI.services',[]).
 			angular.forEach(application["People"], function(person){
 				var pers = me.getApplicantById(person["Person ID"]);
 				pers.relationships = _.map(person["Relationships"], function(rel){
-					return new Relationship(pers, me.getApplicantById(rel["Other ID"]), rel['Relationship Code'], (rel['Attest Primary Responsibility'] == 'Y'));
+					return new Relationship(pers, me.getApplicantById(rel["Other ID"]), rel['Relationship Code']);
 				});
 			});
-
-      angular.forEach(this.applicants, function(person){
-        person.nonParentResponsibility = false;
-        angular.forEach(this.applicants, function(person2) {
-          rel = person2.getRelationship(person);
-          if (rel.primaryResponsibility) {
-            person.nonParentResponsibility = true;
-          }
-        });
-      });
 
 			$log.info("Deserializing");
 			$log.info(this);
@@ -628,7 +602,7 @@ angular.module('MAGI.services',[]).
             {code: '14', label: 'Nephew/Niece', opposite: '13'},
             {code: '15', label: 'Grandparent', opposite: '06'},
             {code: '16', label: 'Cousin', opposite: '16'},
-            {code: '17', label: "Parent's domestic partner", opposite: '70'},
+            {code: '17', label: "Parent's domestic partner", opposite: 'XX'},
             {code: '23', label: 'Sibling-in-law', opposite: '23'},
             {code: '26', label: 'Child-in-law', opposite: '30'},
             {code: '27', label: 'Former spouse', opposite: '27'},
@@ -689,5 +663,4 @@ angular.module('MAGI.services',[]).
             {abbr: 'WV', name: 'West Virginia', inApp: true},
             {abbr: 'WI', name: 'Wisconsin', inApp: true},
             {abbr: 'WY', name: 'Wyoming', inApp: true}
-		]).
-  constant('applicationYears', [2013,2014]);
+		]);

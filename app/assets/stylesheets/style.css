@@ -67,15 +67,11 @@ label {
   text-align: right;
 }
 
-input, button.checker, div.selector span, .form-row-expandable-fields {
+input, div.checker span, div.selector span, .form-row-expandable-fields {
   border: 1px solid #c5c9cb;
 }
 
-button.checker input:focus{
-  outline: none;
-}
-
-input, button.checker, div.selector span {
+input, div.checker span, div.selector span {
   background: #f0f1f2;
   font-size: 18px;
   line-height: 20px;
@@ -329,23 +325,17 @@ div.selector select {
   height: 40px;
 }
 
-input:focus, div.selector.focus, button.checker:focus {
+input:focus, div.selector.focus, div.checker.focus {
   outline: 2px solid #80c0ff;
 }
 
-
-.checked span:before{
-  content: url('/assets/check.png');
+div.checker span.checked, div.checker.focus span.checked, div.checker span.checked:hover {
+  background-image: url('/assets/check.png');
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
 }
 
-button.checker{
-  width: 23px;
-  height: 24px;
-  padding-top: 1px;
-  background-color: ;
-}
-
-button.checker input {
+div.checker input {
   vertical-align: top;
 }
 
@@ -454,7 +444,7 @@ button.checker input {
 
 .person .head:hover{
   background-color: #efefef;
-  cursor: pointer;
+  cursor: pointer; 
 }
 
 

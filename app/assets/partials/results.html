@@ -26,6 +26,29 @@
         </div>
       </div>
     </div>
+
+    <div class="eligibility-div" >
+      <span eligibility data-program='APTC' data-value='{{applicant["APTC Eligible"]}}'></span>
+      <span class="category" ng-show="applicant['Max APTC'] > 0 && applicant['APTC Eligible'] == 'Y'">${{applicant["Max APTC"]}}</span>
+      <span class="category" ng-show="applicant['Max APTC'] <= 0 && applicant['APTC Eligible'] == 'Y'">$0</span>
+      <div class="eligibility-explanation" ng-show="applicant['APTC Eligible'] == 'N'">
+        <div ng-repeat="reason in applicant['APTC Ineligibility Reason']">
+          {{ reason }}
+        </div>
+      </div>
+    </div>
+
+     <div class="eligibility-div" >
+      <span eligibility data-program='CSR' data-value='{{applicant["CSR Eligible"]}}'></span> 
+      <span class="category" ng-show="applicant['CSR Category'] == 'None'">No Category</span>
+      <span class="category" ng-show="applicant['CSR Category'] != 'None'">{{applicant["CSR Category"]}}</span>
+      <div class="eligibility-explanation" ng-show="applicant['CSR Eligible'] == 'N'">
+        <div ng-repeat="reason in applicant['CSR Ineligibility Reason']">
+          {{ reason }}
+        </div>
+      </div>
+    </div>
+    
     <div class="eligibility-div" ng-show="applicant['Determinations']['Emergency Medicaid']['Indicator'] == 'Y'">
       <span eligibility data-program='Emergency Medicaid' data-value="{{applicant['Determinations']['Emergency Medicaid']['Indicator']}}"></span>
     </div>

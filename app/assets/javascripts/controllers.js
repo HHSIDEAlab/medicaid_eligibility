@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('MAGI.controllers', []).
-	controller('FormController',['$scope','$location','$anchorScroll','$timeout','$log','filterFilter', 'Application','relationshipCodes','states','applicationYears', function($scope,$location,$anchorScroll,$timeout,$log,filterFilter, Application, relationshipCodes,states,applicationYears){		
+	controller('FormController',['$scope','$location','$anchorScroll','$timeout','$log','filterFilter', 'Application','relationshipCodes','states', function($scope,$location,$anchorScroll,$timeout,$log,filterFilter, Application, relationshipCodes,states){		
                 Application.resetResults();
                 $scope.submitted = false;
                 $scope.applicants = Application.applicants;
@@ -89,7 +89,6 @@ angular.module('MAGI.controllers', []).
 
 		$scope.states = states;
         $scope.appStates = _.filter(states, function(state){return state.inApp;});
-    $scope.appYears = applicationYears;
 	}]).
         controller('ApplicantController',['$scope',function($scope){
                 $scope.checkResponsibility = function(){
@@ -97,10 +96,7 @@ angular.module('MAGI.controllers', []).
                 };
 
                 $scope.$watch('checkResponsibility()', function(newValue,oldValue){
-                  if (!newValue) {
-                    $scope.applicant.nonParentResponsibility = false;
-                    $scope.application.clearResponsibility($scope.applicant);
-                  }
+                        $scope.applicant.nonParentResponsibility = false;
                 });
 
                 $scope.$watch('applicant.pregnantThreeMonths', function(newValue,oldValue){
@@ -117,17 +113,6 @@ angular.module('MAGI.controllers', []).
 
                 $scope.updateRelationship = function(relationship){
                         relationship.updateOpposite();
-                };
-
-                $scope.clearResponsibility = function(dependent){
-                  $scope.application.clearResponsibility(dependent);
-                };
-
-                $scope.updateResponsibility = function(dependent){
-                  $scope.application.clearResponsibility(dependent);
-                  if (dependent.nonParentResponsibility && dependent.nonParentResponsibilityPerson) {
-                    dependent.nonParentResponsibilityPerson.addResponsibility(dependent);
-                  }
                 };
 
                 $scope.updateMonthly = function(applicant){
