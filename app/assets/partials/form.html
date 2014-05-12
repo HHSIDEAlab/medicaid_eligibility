@@ -188,7 +188,8 @@
           	</div>
           	<div class="form-row" ng-show="['02', '03', '04', '09'].indexOf(applicant.lawful.immigrationStatus.code) != -1 || (applicant.lawful.immigrationStatus.code == '01' && applicant.qnc.amerasian)">
 	            <label for="applicant_{{ $index }}_qnc_seven_year_start_date">{{ applicant.lawful.immigrationStatus.startDate }}</label>
-	            <input type="text" ng-model="applicant.qnc.sevenYearStartDate" id="applicant_{{ $index }}_qnc_seven_year_start_date" name="applicant_qnc_seven_year_start_date" class="date" ui-mask="99 / 99 / 9999" placeholder="mm / dd / yyyy">
+	            <input type="text" ng-model="applicant.qnc.sevenYearStartDate" id="applicant_{{ $index }}_qnc_seven_year_start_date" name="applicant_qnc_seven_year_start_date" class="date" ui-mask="99 / 99 / 9999" placeholder="mm / dd / yyyy" ng-required="['01', '02', '03', '04', '09'].indexOf(applicant.lawful.immigrationStatus.code) != -1 || (applicant.lawful.immigrationStatus.code == '01' && applicant.qnc.amerasian)">
+	            <label for="applicant_{{ $index }}_qnc_seven_year_start_date" class="error" ng-show="(applicant.lawful.immigrationStatus.startDate.$dirty  || submitted)">This field is required.</label>
 	          </div>
 	          <div class="form-row">
           		<label for="applicant_{{ $index }}_qnc_five_year_bar">Five Year Bar applies to applicant</label>
@@ -209,7 +210,8 @@
 	          <div class="form-row-expandable-fields2" ng-show="applicant.lawful.refugeeMedicalAssistanceEligible">
 	            <div class="form-row">
 	              <label for="applicant_{{ $index }}_refugee_assistance_start_date">Refugee medical assistance start date</label>
-	          		<input type="text" ng-model="applicant.refugeeMedicalAssistance.startDate" id="applicant_{{ $index }}_refugee_assistance_start_date" name="applicant_refugee_assistance_start_date" class="date" ui-mask="99 / 99 / 9999" placeholder="mm / dd / yyyy">
+	          		<input type="text" ng-model="applicant.refugeeMedicalAssistance.startDate" id="applicant_{{ $index }}_refugee_assistance_start_date" name="applicant_refugee_assistance_start_date" class="date" ui-mask="99 / 99 / 9999" placeholder="mm / dd / yyyy" ng-required="applicant.lawful.refugeeMedicalAssistanceEligible">
+	          		<label for="applicant_{{ $index }}_refugee_assistance_start_date" class="error" ng-show="(applicant.refugeeMedicalAssistance.startDate.$dirty  || submitted)">This field is required.</label>
 	            </div>
 	          </div>
 	        </div>

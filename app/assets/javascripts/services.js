@@ -33,6 +33,8 @@ angular.module('MAGI.services',[]).
 			this.incomeTaxes = new IncomeTaxes();
 			this.relationships = [];
 			this.nonCitizen = {};
+			this.qnc = {};
+			this.refugeeMedicalAssistance = {};
 			this.fosterCare = {
 				state: {}
 		    };
@@ -316,7 +318,7 @@ angular.module('MAGI.services',[]).
 		];
 
 		Applicant.prototype.refugeeMedicalAssistanceFields = [
-			{app: 'StartDate', api: 'Refugee Medical Assistance Start Date', type: 'date'}
+			{app: 'startDate', api: 'Refugee Medical Assistance Start Date', type: 'date'}
 		];
 
 		var serializeField = function(field, baseObject){
@@ -325,10 +327,14 @@ angular.module('MAGI.services',[]).
 			} else if(field.type == 'string'){
 				return [field.api, baseObject[field.app]];
 			} else if(field.type == 'date'){
-				var month = baseObject[field.app].substring(0,2);
-				var day = baseObject[field.app].substring(2,4);
-				var year = baseObject[field.app].substring(4,8);
-				return [field.api, year + "-" + month + "-" + day];
+				if(baseObject[field.app]){
+					var month = baseObject[field.app].substring(0,2);
+					var day = baseObject[field.app].substring(2,4);
+					var year = baseObject[field.app].substring(4,8);
+					return [field.api, year + "-" + month + "-" + day];
+				} else {
+					return [field.api, null];
+				}
 			} else if(field.type == 'state'){
 		    return [field.api, baseObject[field.app].abbr];
       } else if(field.type == 'immigrationStatus') {
