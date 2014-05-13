@@ -170,9 +170,8 @@
         <div class="form-row-expandable-fields2" ng-show="applicant.nonCitizen.lawful">
 					<div class="form-row">
             <label for="applicant_{{ $index }}_lawful_immigration_status_code">Immigration status</label>
-            <select selector ng-model="applicant.lawful.immigrationStatus" name="applicant_{{ $index }}_lawful_immigration_status" id="applicant_{{ $index }}_lawful_immigration_status" ng-options="status as status.name for status in appStatuses" ng-required="applicant.nonCitizen.lawful">
+            <select selector ng-model="applicant.lawful.immigrationStatus" name="applicant_{{ $index }}_lawful_immigration_status" id="applicant_{{ $index }}_lawful_immigration_status" ng-options="status as status.name for status in appStatuses" ng-init="applicant.lawful.immigrationStatus = appStatuses[10]">
             </select>
-            <label for="applicant_{{ $index }}_lawful_immigration_status_code" class="error" ng-show="(!(applicant.lawful.immigrationStatus) || submitted)">This field is required.</label>
           </div>
           <div class="form-row-expandable-fields2" ng-show="qualNonCitizenStatuses.indexOf(applicant.lawful.immigrationStatus) != -1">
           	<div class="form-row" ng-show="applicant.lawful.immigrationStatus.code == '01'">
