@@ -1,0 +1,219 @@
+<html>
+<head>
+	<title>Medicaid MAGI Eligibility</title>
+	<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">	
+	<link href="bootstrap/css/bootstrap-formhelpers.css" rel="stylesheet" media="screen">	
+	
+</head>
+<body>
+	<script src="http://code.jquery.com/jquery.js"></script>
+    <script src="bootstrap/js/bootstrap.js"></script>
+<h1>
+	Medicaid eligibility determination
+</h1>
+This form accepts medicaid application JSON and returns eligibility details.
+
+<form action="/determinations/eval.json" method="post">
+<textarea style="width: 80%; height: 80%;" name="json_request">
+{
+  "State": "WV",
+  "People": [
+    {
+      "Person ID": "Father",
+      "Is Applicant": "Y",
+      "Applicant Age": 30,
+      "Has Insurance": "N",
+      "Hours Worked Per Week": 30,
+      "Incarceration Status": "N",
+      "Medicare Entitlement Indicator": "N",
+      "Medicaid Residency Indicator": "Y",
+      "Prior Insurance": "N",
+      "Required to File Taxes": "Y",
+      "Student Indicator": "N",
+
+      "Former Foster Care": "N",
+      
+      "US Citizen Indicator": "Y",
+
+      "Refugee Status": "N",
+      
+      "Income": {
+        "Wages, Salaries, Tips": 8000
+      },
+      
+      "Relationships": [
+        {
+          "Other ID": "Mother",
+          "Relationship Code": "02"
+        },
+        {
+          "Other ID": "Child",
+          "Relationship Code": "04"
+        },
+        {
+          "Other ID": "Grandfather",
+          "Relationship Code": "03"
+        }
+      ]
+    },
+    {
+      "Person ID": "Mother",
+      "Is Applicant": "Y",
+      "Applicant Age": 30,
+      "Has Insurance": "N",
+      "Hours Worked Per Week": 30,
+      "Incarceration Status": "N",
+      "Medicare Entitlement Indicator": "N",
+      "Medicaid Residency Indicator": "Y",
+      "Prior Insurance": "N",
+      "Required to File Taxes": "Y",
+      "Student Indicator": "N",
+
+      "Applicant Pregnant Indicator": "Y",
+
+      "Former Foster Care": "N",
+      
+      "US Citizen Indicator": "Y",
+
+      "Refugee Status": "N",
+      
+      "Income": {
+        "Wages, Salaries, Tips": 15000
+      },
+      
+      "Relationships": [
+        {
+          "Other ID": "Father",
+          "Relationship Code": "02"
+        },
+        {
+          "Other ID": "Child",
+          "Relationship Code": "04"
+        },
+        {
+          "Other ID": "Grandfather",
+          "Relationship Code": "30"
+        }
+      ]
+    },
+    {
+      "Person ID": "Child",
+      "Is Applicant": "Y",
+      "Applicant Age": 5,
+      "Has Insurance": "N",
+      "Hours Worked Per Week": 0,
+      "Incarceration Status": "N",
+      "Medicare Entitlement Indicator": "N",
+      "Medicaid Residency Indicator": "Y",
+      "Prior Insurance": "N",
+      "Required to File Taxes": "Y",
+      "Student Indicator": "Y",
+
+      "Former Foster Care": "N",
+      
+      "US Citizen Indicator": "Y",
+
+      "Refugee Status": "N",
+      
+      "Income": {
+        "MAGI": 0
+      },
+      
+      "Relationships": [
+        {
+          "Other ID": "Father",
+          "Relationship Code": "03"
+        },
+        {
+          "Other ID": "Mother",
+          "Relationship Code": "03"
+        },
+        {
+          "Other ID": "Grandfather",
+          "Relationship Code": "15"
+        }
+      ]
+    },
+    {
+      "Person ID": "Grandfather",
+      "Is Applicant": "Y",
+      "Applicant Age": 63,
+      "Applicant Attest Disabled": "Y",
+      "Has Insurance": "N",
+      "Hours Worked Per Week": 40,
+      "Incarceration Status": "N",
+      "Medicare Entitlement Indicator": "N",
+      "Medicaid Residency Indicator": "Y",
+      "Prior Insurance": "N",
+      "Required to File Taxes": "Y",
+      "Student Indicator": "N",
+
+      "Former Foster Care": "N",
+      
+      "US Citizen Indicator": "N",
+      "Applicant Has 40 Title II Work Quarters": "Y",
+      "Five Year Bar Applies": "N",
+      "Immigrant Status": "12",
+      "Lawful Presence Attested": "Y",
+      "Qualified Non-Citizen Status": "Y",
+      "Veteran Status": "Y",
+      
+      "Refugee Status": "N",
+
+      "Income": {
+        "AGI": 50000,
+        "Social Security Benefits Taxable Amount": 10000
+      },
+      
+      "Relationships": [
+        {
+          "Other ID": "Father",
+          "Relationship Code": "04"
+        },
+        {
+          "Other ID": "Mother",
+          "Relationship Code": "26"
+        },
+        {
+          "Other ID": "Child",
+          "Relationship Code": "06"
+        }
+      ]
+    }
+  ],
+  "Tax Returns": [
+    {
+      "Filers": [
+        {"Person ID": "Father"},
+        {"Person ID": "Mother"}
+      ],
+      "Dependents": [
+        {"Person ID": "Child"}
+      ]
+    },
+    {
+      "Filers": [
+        {"Person ID": "Grandfather"}
+      ],
+      "Dependents": []
+    }
+  ],
+  "Physical Households": [
+    {
+      "Household ID": "Household1",
+      "People": [
+        {"Person ID": "Father"},
+        {"Person ID": "Mother"},
+        {"Person ID": "Child"},
+        {"Person ID": "Grandfather"}
+      ]
+    }
+  ]
+}
+
+</textarea><br/>
+<input type = "submit" value="Submit">
+
+</form>
+</body>
+</html>

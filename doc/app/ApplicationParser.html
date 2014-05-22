@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+<title>module ApplicationParser - Rails Application Documentation</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="module">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/models/application_parser.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    
+    <!-- Included Modules -->
+<nav id="includes-section" class="section">
+  <h3 class="section-header">Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="ApplicationComponents.html">ApplicationComponents</a>
+  
+  
+  </ul>
+</nav>
+
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-read_configs-21">#read_configs!</a>
+    
+    <li><a href="#method-i-read_json-21">#read_json!</a>
+    
+    <li><a href="#method-i-read_xml-21">#read_xml!</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./MAGI.html">MAGI</a>
+  
+    <li><a href="./MAGI/AdultGroup.html">MAGI::AdultGroup</a>
+  
+    <li><a href="./MAGI/AptcEligibility.html">MAGI::AptcEligibility</a>
+  
+    <li><a href="./MAGI/CHIPEligibility.html">MAGI::CHIPEligibility</a>
+  
+    <li><a href="./MAGI/CHIPWaitingPeriod.html">MAGI::CHIPWaitingPeriod</a>
+  
+    <li><a href="./MAGI/Child.html">MAGI::Child</a>
+  
+    <li><a href="./MAGI/DependentChildCovered.html">MAGI::DependentChildCovered</a>
+  
+    <li><a href="./MAGI/EmergencyMedicaid.html">MAGI::EmergencyMedicaid</a>
+  
+    <li><a href="./MAGI/FormerFosterCare.html">MAGI::FormerFosterCare</a>
+  
+    <li><a href="./MAGI/Immigration.html">MAGI::Immigration</a>
+  
+    <li><a href="./MAGI/Income.html">MAGI::Income</a>
+  
+    <li><a href="./MAGI/IncomeOverride.html">MAGI::IncomeOverride</a>
+  
+    <li><a href="./MAGI/MedicaidEligibility.html">MAGI::MedicaidEligibility</a>
+  
+    <li><a href="./MAGI/OptionalTargetedLowIncomeChildren.html">MAGI::OptionalTargetedLowIncomeChildren</a>
+  
+    <li><a href="./MAGI/OptionalUnbornChild.html">MAGI::OptionalUnbornChild</a>
+  
+    <li><a href="./MAGI/ParentCaretakerRelative.html">MAGI::ParentCaretakerRelative</a>
+  
+    <li><a href="./MAGI/ParentCaretakerRelativeSpouse.html">MAGI::ParentCaretakerRelativeSpouse</a>
+  
+    <li><a href="./MAGI/Pregnant.html">MAGI::Pregnant</a>
+  
+    <li><a href="./MAGI/PreliminaryCHIP.html">MAGI::PreliminaryCHIP</a>
+  
+    <li><a href="./MAGI/PreliminaryMedicaid.html">MAGI::PreliminaryMedicaid</a>
+  
+    <li><a href="./MAGI/PublicEmployeesBenefits.html">MAGI::PublicEmployeesBenefits</a>
+  
+    <li><a href="./MAGI/QualifiedChild.html">MAGI::QualifiedChild</a>
+  
+    <li><a href="./MAGI/ReferralType.html">MAGI::ReferralType</a>
+  
+    <li><a href="./MAGI/RefugeeAssistance.html">MAGI::RefugeeAssistance</a>
+  
+    <li><a href="./MAGI/Residency.html">MAGI::Residency</a>
+  
+    <li><a href="./MAGI/TargetedLowIncomeChildren.html">MAGI::TargetedLowIncomeChildren</a>
+  
+    <li><a href="./ApplicationComponents.html">ApplicationComponents</a>
+  
+    <li><a href="./ApplicationComponents/Applicant.html">ApplicationComponents::Applicant</a>
+  
+    <li><a href="./ApplicationComponents/Household.html">ApplicationComponents::Household</a>
+  
+    <li><a href="./ApplicationComponents/MedicaidHousehold.html">ApplicationComponents::MedicaidHousehold</a>
+  
+    <li><a href="./ApplicationComponents/Person.html">ApplicationComponents::Person</a>
+  
+    <li><a href="./ApplicationComponents/Relationship.html">ApplicationComponents::Relationship</a>
+  
+    <li><a href="./ApplicationComponents/TaxReturn.html">ApplicationComponents::TaxReturn</a>
+  
+    <li><a href="./Ruleset.html">Ruleset</a>
+  
+    <li><a href="./Ruleset/CalculatedVariable.html">Ruleset::CalculatedVariable</a>
+  
+    <li><a href="./Ruleset/Rule.html">Ruleset::Rule</a>
+  
+    <li><a href="./ApplicationProcessor.html">ApplicationProcessor</a>
+  
+    <li><a href="./ApplicationProcessor/RelationshipError.html">ApplicationProcessor::RelationshipError</a>
+  
+    <li><a href="./RuleContext.html">RuleContext</a>
+  
+    <li><a href="./RuleContext/MissingVariableError.html">RuleContext::MissingVariableError</a>
+  
+    <li><a href="./Application.html">Application</a>
+  
+    <li><a href="./ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="./ApplicationParser.html">ApplicationParser</a>
+  
+    <li><a href="./ApplicationResponder.html">ApplicationResponder</a>
+  
+    <li><a href="./ApplicationVariables.html">ApplicationVariables</a>
+  
+    <li><a href="./DeterminationsController.html">DeterminationsController</a>
+  
+    <li><a href="./IncomeThreshold.html">IncomeThreshold</a>
+  
+    <li><a href="./Object.html">Object</a>
+  
+    <li><a href="./RulesetsController.html">RulesetsController</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="module">module ApplicationParser</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-read_configs-21" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_configs!</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="read_configs-21-source">
+            <pre><span class="ruby-comment"># File app/models/application_parser.rb, line 4</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_configs!</span>
+  <span class="ruby-identifier">config</span> = <span class="ruby-constant">MedicaidEligibilityApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Application</span>.<span class="ruby-identifier">options</span>[<span class="ruby-value">:state_config</span>]
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">config</span>[<span class="ruby-ivar">@state</span>]
+    <span class="ruby-ivar">@config</span> = <span class="ruby-identifier">config</span>[<span class="ruby-value">:default</span>].<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">config</span>[<span class="ruby-ivar">@state</span>])
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@config</span> = <span class="ruby-identifier">config</span>[<span class="ruby-value">:default</span>]
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@config</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-constant">MedicaidEligibilityApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Application</span>.<span class="ruby-identifier">options</span>[<span class="ruby-value">:system_config</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_configs-21-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_configs-21-method -->
+
+    
+      <div id="method-i-read_json-21" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_json!</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="read_json-21-source">
+            <pre><span class="ruby-comment"># File app/models/application_parser.rb, line 14</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_json!</span>
+  <span class="ruby-ivar">@state</span> = <span class="ruby-ivar">@json_application</span>[<span class="ruby-string">&quot;State&quot;</span>]
+  <span class="ruby-ivar">@people</span> = []
+  <span class="ruby-ivar">@applicants</span> = []
+  <span class="ruby-keyword">for</span> <span class="ruby-identifier">json_person</span> <span class="ruby-keyword">in</span> <span class="ruby-ivar">@json_application</span>[<span class="ruby-string">&quot;People&quot;</span>]
+    <span class="ruby-identifier">person_id</span> = <span class="ruby-identifier">json_person</span>[<span class="ruby-string">&quot;Person ID&quot;</span>]
+    <span class="ruby-identifier">person_attributes</span> = {}
+    <span class="ruby-identifier">applicant_id</span> = <span class="ruby-identifier">json_person</span>[<span class="ruby-string">&quot;Applicant ID&quot;</span>]
+    <span class="ruby-identifier">applicant_attributes</span> = {}
+    <span class="ruby-identifier">is_applicant</span> = <span class="ruby-identifier">json_person</span>[<span class="ruby-string">&quot;Is Applicant&quot;</span>] <span class="ruby-operator">==</span> <span class="ruby-string">'Y'</span>
+    
+    <span class="ruby-keyword">for</span> <span class="ruby-identifier">input</span> <span class="ruby-keyword">in</span> <span class="ruby-constant">ApplicationVariables</span><span class="ruby-operator">::</span><span class="ruby-constant">PERSON_INPUTS</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">input</span>[<span class="ruby-value">:group</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:relationship</span> <span class="ruby-operator">||</span> (<span class="ruby-operator">!</span>(<span class="ruby-identifier">is_applicant</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">input</span>[<span class="ruby-value">:group</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:applicant</span>)
+        <span class="ruby-keyword">next</span>
+      <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">input</span>[<span class="ruby-value">:group</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:person</span>
+        <span class="ruby-identifier">person_attributes</span>[<span class="ruby-identifier">input</span>[<span class="ruby-value">:name</span>]] = <span class="ruby-identifier">get_json_variable</span>(<span class="ruby-identifier">json_person</span>, <span class="ruby-identifier">input</span>, <span class="ruby-identifier">person_attributes</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">applicant_attributes</span>))
+      <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">input</span>[<span class="ruby-value">:group</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:applicant</span>
+        <span class="ruby-identifier">applicant_attributes</span>[<span class="ruby-identifier">input</span>[<span class="ruby-value">:name</span>]] = <span class="ruby-identifier">get_json_variable</span>(<span class="ruby-identifier">json_person</span>, <span class="ruby-identifier">input</span>, <span class="ruby-identifier">person_attributes</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">applicant_attributes</span>))
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Variable #{input[:name]} has unimplemented group #{input[:group]}&quot;</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># get income</span>
+    <span class="ruby-identifier">income</span> = <span class="ruby-identifier">get_json_income</span>(<span class="ruby-identifier">json_person</span>[<span class="ruby-string">&quot;Income&quot;</span>], <span class="ruby-value">:personal</span>)
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_applicant</span>
+      <span class="ruby-identifier">person</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">person_id</span>, <span class="ruby-identifier">person_attributes</span>, <span class="ruby-identifier">applicant_id</span>, <span class="ruby-identifier">applicant_attributes</span>, <span class="ruby-identifier">income</span>)
+      <span class="ruby-ivar">@applicants</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">person</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">person</span> = <span class="ruby-constant">Person</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">person_id</span>, <span class="ruby-identifier">person_attributes</span>, <span class="ruby-identifier">income</span>)
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-ivar">@people</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">person</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># get relationships</span>
+  <span class="ruby-keyword">for</span> <span class="ruby-identifier">person</span> <span class="ruby-keyword">in</span> <span class="ruby-ivar">@people</span>
+    <span class="ruby-identifier">json_person</span> = <span class="ruby-ivar">@json_application</span>[<span class="ruby-string">&quot;People&quot;</span>].<span class="ruby-identifier">find</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">jp</span><span class="ruby-operator">|</span> <span class="ruby-identifier">jp</span>[<span class="ruby-string">&quot;Person ID&quot;</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">person</span>.<span class="ruby-identifier">person_id</span>}
+    <span class="ruby-identifier">relationships</span> = <span class="ruby-identifier">json_person</span>[<span class="ruby-string">&quot;Relationships&quot;</span>]
+
+    <span class="ruby-keyword">for</span> <span class="ruby-identifier">relationship</span> <span class="ruby-keyword">in</span> <span class="ruby-identifier">relationships</span>
+      <span class="ruby-identifier">other_id</span> = <span class="ruby-identifier">relationship</span>[<span class="ruby-string">&quot;Other ID&quot;</span>]
+      
+      <span class="ruby-identifier">other_person</span> = <span class="ruby-ivar">@people</span>.<span class="ruby-identifier">find</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">person_id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other_id</span>}
+      <span class="ruby-identifier">relationship_type</span> = <span class="ruby-constant">ApplicationVariables</span><span class="ruby-operator">::</span><span class="ruby-constant">RELATIONSHIP_INVERSE</span>[<span class="ruby-constant">ApplicationVariables</span><span class="ruby-operator">::</span><span class="ruby-constant">RELATIONSHIP_CODES</span>[<span class="ruby-identifier">relationship</span>[<span class="ruby-string">&quot;Relationship Code&quot;</span>]]]
+      <span class="ruby-identifier">relationship_attributes</span> = {}
+      <span class="ruby-keyword">for</span> <span class="ruby-identifier">input</span> <span class="ruby-keyword">in</span> <span class="ruby-constant">ApplicationVariables</span><span class="ruby-operator">::</span><span class="ruby-constant">PERSON_INPUTS</span>.<span class="ruby-identifier">select</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">i</span>[<span class="ruby-value">:group</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:relationship</span>}
+        <span class="ruby-identifier">relationship_attributes</span>[<span class="ruby-identifier">input</span>[<span class="ruby-value">:name</span>]] = <span class="ruby-identifier">get_json_variable</span>(<span class="ruby-identifier">relationship</span>, <span class="ruby-identifier">input</span>, <span class="ruby-identifier">person_attributes</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">applicant_attributes</span>))
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-identifier">person</span>.<span class="ruby-identifier">relationships</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Relationship</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">other_person</span>, <span class="ruby-identifier">relationship_type</span>, <span class="ruby-identifier">relationship_attributes</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># get tax returns</span>
+  <span class="ruby-ivar">@tax_returns</span> = []
+  <span class="ruby-keyword">for</span> <span class="ruby-identifier">json_return</span> <span class="ruby-keyword">in</span> <span class="ruby-ivar">@json_application</span>[<span class="ruby-string">&quot;Tax Returns&quot;</span>]
+    <span class="ruby-identifier">filers</span> = []
+    <span class="ruby-identifier">json_filers</span> = <span class="ruby-identifier">json_return</span>[<span class="ruby-string">&quot;Filers&quot;</span>]
+
+    <span class="ruby-identifier">filers</span> = <span class="ruby-identifier">json_return</span>[<span class="ruby-string">&quot;Filers&quot;</span>].<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">jf</span><span class="ruby-operator">|</span>
+      <span class="ruby-ivar">@people</span>.<span class="ruby-identifier">find</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">person_id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">jf</span>[<span class="ruby-string">&quot;Person ID&quot;</span>]}
+    }
+    
+    <span class="ruby-identifier">dependents</span> = <span class="ruby-identifier">json_return</span>[<span class="ruby-string">&quot;Dependents&quot;</span>].<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">jd</span><span class="ruby-operator">|</span>
+      <span class="ruby-ivar">@people</span>.<span class="ruby-identifier">find</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">person_id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">jd</span>[<span class="ruby-string">&quot;Person ID&quot;</span>]}
+    }
+
+    <span class="ruby-identifier">income</span> = <span class="ruby-identifier">get_json_income</span>(<span class="ruby-identifier">json_return</span>[<span class="ruby-string">&quot;Income&quot;</span>], <span class="ruby-value">:tax_return</span>)
+
+    <span class="ruby-ivar">@tax_returns</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">TaxReturn</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">filers</span>, <span class="ruby-identifier">dependents</span>, <span class="ruby-identifier">income</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># get physical households</span>
+  <span class="ruby-ivar">@physical_households</span> = []
+  <span class="ruby-keyword">for</span> <span class="ruby-identifier">json_household</span> <span class="ruby-keyword">in</span> <span class="ruby-ivar">@json_application</span>[<span class="ruby-string">&quot;Physical Households&quot;</span>]
+    <span class="ruby-ivar">@physical_households</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Household</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">json_household</span>[<span class="ruby-string">&quot;Household ID&quot;</span>], <span class="ruby-identifier">json_household</span>[<span class="ruby-string">&quot;People&quot;</span>].<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">jp</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@people</span>.<span class="ruby-identifier">find</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">person_id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">jp</span>[<span class="ruby-string">&quot;Person ID&quot;</span>]}})
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_json-21-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_json-21-method -->
+
+    
+      <div id="method-i-read_xml-21" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_xml!</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="read_xml-21-source">
+            <pre><span class="ruby-comment"># File app/models/application_parser.rb, line 94</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">read_xml!</span>
+  <span class="ruby-ivar">@state</span> = <span class="ruby-identifier">get_node</span>(<span class="ruby-string">&quot;/exch:AccountTransferRequest/ext:TransferHeader/ext:TransferActivity/ext:RecipientTransferActivityStateCode&quot;</span>).<span class="ruby-identifier">inner_text</span>
+  <span class="ruby-ivar">@people</span> = []
+  <span class="ruby-ivar">@applicants</span> = []
+  
+  <span class="ruby-identifier">xml_people</span> = <span class="ruby-identifier">get_nodes</span> <span class="ruby-string">&quot;/exch:AccountTransferRequest/hix-core:Person&quot;</span>
+  
+  <span class="ruby-keyword">for</span> <span class="ruby-identifier">xml_person</span> <span class="ruby-keyword">in</span> <span class="ruby-identifier">xml_people</span>
+    <span class="ruby-identifier">person_id</span> = <span class="ruby-identifier">xml_person</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-string">'id'</span>).<span class="ruby-identifier">value</span>
+    <span class="ruby-identifier">person_attributes</span> = {}
+
+    <span class="ruby-identifier">xml_app</span> = <span class="ruby-identifier">get_nodes</span>(<span class="ruby-string">&quot;/exch:AccountTransferRequest/hix-ee:InsuranceApplication/hix-ee:InsuranceApplicant&quot;</span>).<span class="ruby-identifier">find</span>{
+      <span class="ruby-operator">|</span><span class="ruby-identifier">x_app</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x_app</span>.<span class="ruby-identifier">at_xpath</span>(<span class="ruby-string">&quot;hix-core:RoleOfPersonReference&quot;</span>).<span class="ruby-identifier">attribute</span>(<span class="ruby-string">'ref'</span>).<span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">person_id</span>
+    }
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">xml_app</span>
+      <span class="ruby-identifier">applicant_id</span> = <span class="ruby-identifier">xml_app</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-string">'id'</span>).<span class="ruby-identifier">value</span>
+      <span class="ruby-identifier">applicant_attributes</span> = {}
+    <span class="ruby-keyword">end</span>
+    
+    <span class="ruby-keyword">for</span> <span class="ruby-identifier">input</span> <span class="ruby-keyword">in</span> <span class="ruby-constant">ApplicationVariables</span><span class="ruby-operator">::</span><span class="ruby-constant">PERSON_INPUTS</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">input</span>[<span class="ruby-value">:xpath</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:unimplemented</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Variable #{input[:name]} has unimplemented xpath&quot;</span>
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">input</span>[<span class="ruby-value">:group</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:person</span>
+        <span class="ruby-identifier">node</span> = <span class="ruby-identifier">xml_person</span>.<span class="ruby-identifier">at_xpath</span>(<span class="ruby-identifier">input</span>[<span class="ruby-value">:xpath</span>])
+      <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">input</span>[<span class="ruby-value">:group</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:applicant</span>
+        <span class="ruby-keyword">unless</span> <span class="ruby-identifier">xml_app</span>
+          <span class="ruby-keyword">next</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">node</span> = <span class="ruby-identifier">xml_app</span>.<span class="ruby-identifier">at_xpath</span>(<span class="ruby-identifier">input</span>[<span class="ruby-value">:xpath</span>])
+      <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">input</span>[<span class="ruby-value">:group</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:relationship</span>
+        <span class="ruby-keyword">next</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Variable #{input[:name]} has unimplemented xml group #{input[:group]}&quot;</span>
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-identifier">attr_value</span> = <span class="ruby-identifier">get_xml_variable</span>(<span class="ruby-identifier">node</span>, <span class="ruby-identifier">input</span>, <span class="ruby-identifier">person_attributes</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">applicant_attributes</span>))
+      
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">input</span>[<span class="ruby-value">:group</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:person</span>
+        <span class="ruby-identifier">person_attributes</span>[<span class="ruby-identifier">input</span>[<span class="ruby-value">:name</span>]] = <span class="ruby-identifier">attr_value</span>
+      <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">input</span>[<span class="ruby-value">:group</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:applicant</span>
+        <span class="ruby-identifier">applicant_attributes</span>[<span class="ruby-identifier">input</span>[<span class="ruby-value">:name</span>]] = <span class="ruby-identifier">attr_value</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">xml_app</span>
+      <span class="ruby-identifier">person</span> = <span class="ruby-constant">Applicant</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">person_id</span>, <span class="ruby-identifier">person_attributes</span>, <span class="ruby-identifier">applicant_id</span>, <span class="ruby-identifier">applicant_attributes</span>)
+      <span class="ruby-ivar">@applicants</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">person</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">person</span> = <span class="ruby-constant">Person</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">person_id</span>, <span class="ruby-identifier">person_attributes</span>)
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-ivar">@people</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">person</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># get relationships</span>
+  <span class="ruby-keyword">for</span> <span class="ruby-identifier">person</span> <span class="ruby-keyword">in</span> <span class="ruby-ivar">@people</span>
+    <span class="ruby-identifier">xml_person</span> = <span class="ruby-identifier">get_nodes</span>(<span class="ruby-string">&quot;/exch:AccountTransferRequest/hix-core:Person&quot;</span>).<span class="ruby-identifier">find</span>{
+      <span class="ruby-operator">|</span><span class="ruby-identifier">x_person</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x_person</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-string">'id'</span>).<span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">person</span>.<span class="ruby-identifier">person_id</span>
+    }
+    <span class="ruby-identifier">relationships</span> = <span class="ruby-identifier">get_nodes</span>(<span class="ruby-string">&quot;hix-core:PersonAugmentation/hix-core:PersonAssociation&quot;</span>, <span class="ruby-identifier">xml_person</span>)
+
+    <span class="ruby-keyword">for</span> <span class="ruby-identifier">relationship</span> <span class="ruby-keyword">in</span> <span class="ruby-identifier">relationships</span>
+      <span class="ruby-identifier">other_id</span> = <span class="ruby-identifier">get_node</span>(<span class="ruby-string">&quot;nc:PersonReference&quot;</span>, <span class="ruby-identifier">relationship</span>).<span class="ruby-identifier">attribute</span>(<span class="ruby-string">'ref'</span>).<span class="ruby-identifier">value</span>
+      
+      <span class="ruby-identifier">other_person</span> = <span class="ruby-ivar">@people</span>.<span class="ruby-identifier">find</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">person_id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other_id</span>}
+      <span class="ruby-identifier">relationship_type</span> = <span class="ruby-constant">ApplicationVariables</span><span class="ruby-operator">::</span><span class="ruby-constant">RELATIONSHIP_CODES</span>[<span class="ruby-identifier">get_node</span>(<span class="ruby-string">&quot;hix-core:FamilyRelationshipCode&quot;</span>, <span class="ruby-identifier">relationship</span>).<span class="ruby-identifier">inner_text</span>]
+      <span class="ruby-identifier">relationship_attributes</span> = {}
+      <span class="ruby-keyword">for</span> <span class="ruby-identifier">input</span> <span class="ruby-keyword">in</span> <span class="ruby-constant">ApplicationVariables</span><span class="ruby-operator">::</span><span class="ruby-constant">PERSON_INPUTS</span>.<span class="ruby-identifier">select</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">i</span>[<span class="ruby-value">:group</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:relationship</span>}
+        <span class="ruby-identifier">node</span> = <span class="ruby-identifier">get_node</span>(<span class="ruby-identifier">input</span>[<span class="ruby-value">:xpath</span>], <span class="ruby-identifier">relationship</span>)
+
+        <span class="ruby-identifier">relationship_attributes</span>[<span class="ruby-identifier">input</span>[<span class="ruby-value">:name</span>]] = <span class="ruby-identifier">get_xml_variable</span>(<span class="ruby-identifier">node</span>, <span class="ruby-identifier">input</span>, <span class="ruby-identifier">person_attributes</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">applicant_attributes</span>))
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-identifier">person</span>.<span class="ruby-identifier">relationships</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Relationship</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">other_person</span>, <span class="ruby-identifier">relationship_type</span>, <span class="ruby-identifier">relationship_attributes</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># get tax returns</span>
+  <span class="ruby-ivar">@tax_returns</span> = []
+  <span class="ruby-identifier">xml_tax_returns</span> = <span class="ruby-identifier">get_nodes</span>(<span class="ruby-string">&quot;/exch:AccountTransferRequest/hix-ee:TaxReturn&quot;</span>)
+  <span class="ruby-keyword">for</span> <span class="ruby-identifier">xml_return</span> <span class="ruby-keyword">in</span> <span class="ruby-identifier">xml_tax_returns</span>
+    <span class="ruby-identifier">filers</span> = []
+    <span class="ruby-identifier">xml_filers</span> = [
+      <span class="ruby-identifier">get_node</span>(<span class="ruby-string">&quot;hix-ee:TaxHousehold/hix-ee:PrimaryTaxFiler&quot;</span>, <span class="ruby-identifier">xml_return</span>),
+      <span class="ruby-identifier">get_node</span>(<span class="ruby-string">&quot;hix-ee:TaxHousehold/hix-ee:SpouseTaxFiler&quot;</span>, <span class="ruby-identifier">xml_return</span>)
+    ]
+
+    <span class="ruby-identifier">filers</span> = <span class="ruby-identifier">xml_filers</span>.<span class="ruby-identifier">select</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">xf</span><span class="ruby-operator">|</span> <span class="ruby-identifier">xf</span>}.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">xf</span><span class="ruby-operator">|</span>
+      <span class="ruby-ivar">@people</span>.<span class="ruby-identifier">find</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">person_id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">get_node</span>(<span class="ruby-string">&quot;hix-core:RoleOfPersonReference&quot;</span>, <span class="ruby-identifier">xf</span>).<span class="ruby-identifier">attribute</span>(<span class="ruby-string">'ref'</span>).<span class="ruby-identifier">value</span>}
+    }
+    
+    <span class="ruby-identifier">dependents</span> = <span class="ruby-identifier">get_nodes</span>(<span class="ruby-string">&quot;hix-ee:TaxHousehold/hix-ee:PrimaryTaxFiler/RoleOfPersonReference&quot;</span>, <span class="ruby-identifier">xml_return</span>).<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">node</span><span class="ruby-operator">|</span>
+      <span class="ruby-ivar">@people</span>.<span class="ruby-identifier">find</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">person_id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-string">'ref'</span>).<span class="ruby-identifier">value</span>}
+    }
+
+    <span class="ruby-ivar">@tax_returns</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">TaxReturn</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">filers</span>, <span class="ruby-identifier">dependents</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># get physical households</span>
+  <span class="ruby-ivar">@physical_households</span> = []
+  <span class="ruby-identifier">xml_physical_households</span> = <span class="ruby-identifier">get_nodes</span>(<span class="ruby-string">&quot;/exch:AccountTransferRequest/ext:PhysicalHousehold&quot;</span>)
+  <span class="ruby-keyword">for</span> <span class="ruby-identifier">xml_household</span> <span class="ruby-keyword">in</span> <span class="ruby-identifier">xml_physical_households</span>
+    <span class="ruby-identifier">person_references</span> = <span class="ruby-identifier">get_nodes</span>(<span class="ruby-string">&quot;hix-ee:HouseholdMemberReference&quot;</span>, <span class="ruby-identifier">xml_household</span>).<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">node</span><span class="ruby-operator">|</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-string">'ref'</span>).<span class="ruby-identifier">value</span>}
+
+    <span class="ruby-ivar">@physical_households</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Household</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">person_references</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">ref</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@people</span>.<span class="ruby-identifier">find</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">person_id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">ref</span>}})
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_xml-21-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_xml-21-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.2.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

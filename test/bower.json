@@ -1,0 +1,8 @@
+{
+  "name": "MAGI-UI",
+  "dependencies": {
+    "angular": "~1.0.8",
+    "angular-ui-utils": "~0.0.4",
+    "angular-dragon-drop": "~0.3.1"
+  }
+}

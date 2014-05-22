@@ -1,0 +1,698 @@
+/*
+  Common colors:
+    94% gray: #f0f1f2
+*/
+
+body, button, input, div.selector span {
+  color: #231f20;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+body, button {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+body {
+  background: #e1e3e4;
+  margin: 30px auto;
+  width: 740px;
+}
+
+button[type=submit], input::-webkit-outer-spin-button, input::-webkit-inner-spin-button, .add-applicant, .remove-applicant, .remove-filer, .submitlike {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+button[type=submit], .add-applicant, .remove-applicant, .remove-filer, .submitlike {
+  border: none;
+}
+
+h1 {
+  background: #414958;
+  color: #fff;
+  font-weight: 300;
+  margin: 0;
+  line-height: 80px;
+  text-align: center;
+}
+
+fieldset {
+  border: none;
+  margin: 2px 0 0;
+  position: relative;
+}
+
+legend, .add-applicant, h2 {
+  color: #61708c;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+legend {
+  position: absolute;
+  top: 22px;
+}
+
+label, input {
+  vertical-align: middle;
+}
+
+label {
+  color: #58585b;
+  display: inline-block;
+  line-height: 1em;
+  padding: 0 20px;
+  width: 156px;
+  text-align: right;
+}
+
+input, div.checker span, div.selector span, .form-row-expandable-fields {
+  border: 1px solid #c5c9cb;
+}
+
+input, div.checker span, div.selector span {
+  background: #f0f1f2;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+input, div.selector span {
+  font-weight: 400;
+  height: 20px;
+  padding: 10px;
+}
+
+input[type=number] {
+  text-align: right;
+  width: 40px;
+}
+
+.long-number[type=number] {
+  width: 80px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    margin: 0;
+}
+
+input[type=text] {
+  width: 280px;
+}
+
+fieldset, .form-fields-area {
+  background: white;
+  padding: 30px 21px;
+}
+
+fieldset {
+  padding-top: 80px;
+}
+
+h2 {
+  font-size: 1em;
+  margin-top: 0;
+}
+
+.form-row, .form-half-field {
+  padding: 10px 0;
+}
+
+.form-row {
+  clear: both;
+}
+
+.form-half-field {
+  float: left;
+  margin-right: 27px;
+  width: 255px;
+}
+
+.add-applicant {
+  background: #f0f1f2;
+  display: block;
+  line-height: 80px;
+  padding: 0 22px;
+  text-align: left;
+  width: 100%;
+}
+
+.add-applicant:before {
+  content: '+ ';
+}
+
+.remove-applicant {
+  background: url('/assets/close.png') no-repeat 0 0;
+  height: 30px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  right: 21px;
+  text-indent: 100%;
+  top: 16px;
+  white-space: nowrap;
+  width: 30px;
+}
+
+.remove-filer {
+  background: url('/assets/close.png') no-repeat 0 0;
+  background-size: 100%;
+  height: 20px;
+  /*overflow: hidden;*/
+  /*padding: 0;*/
+  /*position: absolute;*/
+  /*right: 21px;*/
+  /*text-indent: 100%;*/
+  /*top: 16px;*/
+  /*white-space: nowrap;*/
+  width: 20px;
+}
+
+.form-row-expandable-fields {
+  display: none;
+  margin-top: 18px;
+  padding: 10px 0;
+  position: relative;
+}
+
+.form-row-expandable-fields.expanded {
+  display: block;
+}
+
+.form-row-expandable-fields label {
+  width: 155px;
+}
+
+.form-row-expandable-fields:before {
+  background: #fff url('/assets/tail.png') no-repeat 0 0;
+  bottom: 100%;
+  content: '';
+  display: block;
+  height: 12px;
+  left: 199px;
+  position: absolute;
+  width: 22px;
+}
+
+.form-row-expandable-fields2 {
+  margin-top: 18px;
+  padding: 10px 0;
+  position: relative;
+}
+
+.form-row-expandable-fields .form-row-expandable-fields {
+  margin-left: 22px;
+  margin-right: 22px;
+}
+
+.form-row-expandable-fields .form-row-expandable-fields label {
+  width: 132px;
+}
+
+.form-row-expandable-fields .form-row-expandable-fields:before {
+  left: 177px;
+}
+
+.form-row-expandable-fields .form-half-field {
+  width: 321px;
+}
+
+
+
+.form-row-expandable-fields2.expanded {
+  display: block;
+}
+
+.form-row-expandable-fields2 label {
+  width: 155px;
+}
+
+.form-row-expandable-fields2:before {
+  background: #fff url('/assets/tail.png') no-repeat 0 0;
+  bottom: 100%;
+  content: '';
+  display: block;
+  height: 12px;
+  left: 199px;
+  position: absolute;
+  width: 22px;
+}
+
+.form-row-expandable-fields2 {
+  border: 1px solid #c5c9cb;
+}
+
+.form-row-expandable-fields2 .form-half-field {
+  width: 321px;
+}
+
+.form-row-expandable-fields2 .form-row-expandable-fields2 {
+  margin-left: 22px;
+  margin-right: 22px;
+}
+
+.form-row-expandable-fields2 .form-row-expandable-fields2 label {
+  width: 132px;
+}
+
+.form-row-expandable-fields2 .form-row-expandable-fields2:before {
+  left: 177px;
+}
+
+.showOtherIncome .form-half-field {
+  margin-right: 4px;
+}
+
+
+.filer-2-row {
+  display: none;
+}
+
+.date[type=text] {
+  width: 120px;
+}
+
+.last-applicant-only {
+  display: none;
+}
+
+.last-applicant .last-applicant-only {
+  display: block;
+}
+
+.first-applicant.last-applicant .last-applicant-only {
+  display: none;
+}
+
+button[type=submit], button.submitlike {
+  background: #24bbbe;
+  -webkit-border-radius: 5px;
+          border-radius: 5px;
+  background-clip: padding-box;
+  color: #fff;
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 20px 85px;
+  margin: 40px auto 0;
+  text-align: center;
+  width: 350px;
+}
+
+div.selector {
+  height: 42px;
+  padding: 0;
+}
+
+div.selector.fixedWidth {
+  width: 302px;
+}
+
+div.selector.fixedWidth span {
+  width: 280px;
+}
+
+div.selector span, div.selector.hover span, div.selector.focus span, div.selector.focus.active span {
+  background-image: url('/assets/arrow.png');
+  background-position: 100% 0;
+  background-repeat: no-repeat;
+  height: 20px;
+  text-shadow: none;
+}
+
+div.selector select {
+  height: 40px;
+}
+
+input:focus, div.selector.focus, div.checker.focus {
+  outline: 2px solid #80c0ff;
+}
+
+div.checker span.checked, div.checker.focus span.checked, div.checker span.checked:hover {
+  background-image: url('/assets/check.png');
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+
+div.checker input {
+  vertical-align: top;
+}
+
+.clear {
+  clear: both;
+}
+
+.cf:before,
+.cf:after {
+    content: " ";
+    display: table;
+}
+
+.cf:after {
+    clear: both;
+}
+
+.cf {
+    *zoom: 1;
+}
+
+.determinations table td {
+  vertical-align: top;
+  padding: 0px 3px 6px 0px;
+}
+
+.determinations table td.item{
+    text-align: left;
+}
+
+.determinations table td.code{
+  text-align: right;
+}
+
+
+.person {
+  background-color: #fff;
+  padding: 0px;
+  margin: 10px 0;
+  border-top: 1px solid #999;
+}
+
+.household .people {
+  list-style-type: none;
+}
+
+.household h2 {
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-right: 20px;
+  text-align: right;
+}
+
+.household .people>li {
+  margin: 15px;
+  border-left: 2px solid #999;
+}
+
+.household .people {
+  padding: 0;
+}
+
+.household .name {
+  font-weight: bold;
+}
+
+.eligibility {
+  border-radius: 5px;
+  border: 3px solid;
+  margin: 2px;
+  padding: 2px;
+}
+
+.eligibility i {
+  margin-right: 3px;
+}
+
+.eligibility.eligible {
+  background-color: rgb(223, 240, 216);
+  border-color: rgb(214, 233, 198);
+  color: rgb(70, 136, 71);
+}
+
+.eligibility.ineligible {
+  background-color: rgb(242, 222, 222);
+  border-color: rgb(238, 211, 215);
+  color: rgb(185, 74, 72);
+}
+
+.eligibility {
+  border-radius: 5px;
+  border: 1px solid;
+}
+
+.household {
+  width: 100%;
+}
+
+.household tr.selected td, .household tr.selected th{
+  background-color: rgb(65, 73, 88);
+}
+
+.household tr.selected th {
+  color: white;
+}
+
+.person .head:hover{
+  background-color: #efefef;
+  cursor: pointer; 
+}
+
+
+.person{
+  margin: 2px 15px;
+  padding: 5px;
+  border-top: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+}
+
+.person h3{
+  display: inline-block;
+  margin: 0;
+}
+
+.person h4{
+  font-size: 12px;
+  margin: 12px 0 4px;
+}
+
+.person h5{
+  font-size: 12px;
+  margin: 2px 0 4px 0
+}
+
+.person .category, .person .threshold{
+  color: #58585b;
+  margin-left: 15px;
+  float: right;
+}
+
+.person .eligibility {
+  margin-left: 15px;
+}
+
+.person.threshold{
+  margin-left: 10px;
+}
+
+.determinations li, .determinations td{
+  font-size: 11px;
+  margin-bottom: 6px;
+}
+
+
+.determinations {
+  width: 220px;
+  float: left;
+  margin-right: 10px;
+}
+
+
+.determinations ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.determinations li {  
+  margin-bottom: 6px;
+}
+
+.household{
+  padding: 10px;
+}
+
+.person.collapsed .details{
+  display: none;
+  transition: height 2s;
+}
+
+#results {
+  display: none;
+}
+
+
+/* When hiding an element */
+
+.form-row-expandable-fields2.ng-hide-add {
+  -webkit-transition:0.1s linear all;
+  -moz-transition:0.1s linear all;
+  -o-transition:0.1s linear all;
+  transition:0.1s linear all;
+  -webkit-transform: scaleY(1);
+  -moz-transform: scaleY(1);
+  -o-transform: scaleY(1);
+  transform: scaleY(1);
+  -webkit-transform-origin: top center;
+  transform-origin: top center;
+}
+
+.form-row-expandable-fields2.ng-hide-add.ng-hide-add-active {
+  -webkit-transform: scaleY(0);
+  -moz-transform: scaleY(0);
+  -o-transform: scaleY(0);
+  transform: scaleY(0);
+  transform-origin: top center;
+}
+
+/* When showing an element */
+.form-row-expandable-fields2.ng-hide-remove {
+  -webkit-transition:0.3s linear all;
+  -moz-transition:0.3s linear all;
+  -o-transition:0.3s linear all;
+  transition:0.3s linear all;
+  -webkit-transform: scaleY(0);
+  -moz-transform: scaleY(0);
+  -o-transform: scaleY(0);
+  transform: scaleY(0);
+  -webkit-transform-origin: top center;
+  transform-origin: top center;
+
+  /* this needs to be here to make it visible during the animation
+     since the .ng-hide class is already on the element rendering
+     it as hidden. */
+  display:block!important;
+}
+.form-row-expandable-fields2,
+.form-row-expandable-fields2.ng-hide-remove.ng-hide-remove-active {
+  -webkit-transform: scaleY(1);
+  -moz-transform: scaleY(1);
+  -o-transform: scaleY(1);
+  transform: scaleY(1);
+}
+
+fieldset h3, .export h3{
+  color: #61708c;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 13px;
+  text-align: right;
+  width: 156px;
+  padding: 0 20px;
+}
+
+.export {
+  background-color: #fff;
+  background: solid;
+  padding: 0px;
+  margin: 10px 0;
+  border-top: 1px solid #999;
+}
+
+.export textarea {
+  margin: 10px 20px;
+  width: 700px;
+  height: 300px;
+}
+
+.export h2 {
+  margin: 30px 20px 5px;
+}
+
+label.error {
+  width: 150px;
+  text-align: left;
+  background-color: #f2dede;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-left: 10px;
+}
+
+div.errorbox {
+  background: #e1e3e4;
+  margin: 0;
+  line-height: 80px;
+  text-align: center;
+}
+
+label.toperror {
+  width: 500px;
+  color: #b00000;
+  background: #e0e0e0;
+  font-size: 20px;
+  text-align: center;
+  border-radius: 5px;
+  padding: 10px 20px;
+}
+
+.form-row.invalid, .form-half-field.invalid {
+  background: #ffdddd;
+}
+
+.householdbucket{
+  padding: 10px;  
+  width: 190px;
+  min-height: 190px;
+}
+
+.householdbucket, .newHouseholdBucketWrapper{
+  border: 1px solid #333;
+  border-radius: 10px;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.newHouseholdBucket{
+  height: 200px;
+  width: 200px;
+  position: relative;
+  z-index: 2;
+}
+
+.newHouseholdBucketWrapper{
+  position: relative;
+  border: 1px dashed #999;
+  width: 210px;
+  height: 210px;
+
+
+}
+
+.newHouseholdBucketLabel{
+  position: absolute;
+  top: 80px;
+  left: 10px;
+  width: 150px;
+  padding: 0 25px;
+  text-align: center;
+  color: #999;
+  z-index: 1;
+  -webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+  cursor: default;
+
+}
+
+.householdperson{
+  background-color: #414958;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  width: 180px;
+  margin-bottom: 3px;
+  cursor: move;
+}
+
+.eligibility-div {
+  padding-top: 5px;
+}
+
+.eligibility-explanation {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 45px;
+}

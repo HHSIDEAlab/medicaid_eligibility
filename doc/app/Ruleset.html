@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+<title>class Ruleset - Rails Application Documentation</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/models/ruleset.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link"><a href="Object.html">Object</a>
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-c-applies_to">::applies_to</a>
+    
+    <li><a href="#method-c-assumption">::assumption</a>
+    
+    <li><a href="#method-c-assumptions">::assumptions</a>
+    
+    <li><a href="#method-c-calculated">::calculated</a>
+    
+    <li><a href="#method-c-calculateds">::calculateds</a>
+    
+    <li><a href="#method-c-code">::code</a>
+    
+    <li><a href="#method-c-config">::config</a>
+    
+    <li><a href="#method-c-configs">::configs</a>
+    
+    <li><a href="#method-c-date">::date</a>
+    
+    <li><a href="#method-c-description">::description</a>
+    
+    <li><a href="#method-c-determination">::determination</a>
+    
+    <li><a href="#method-c-indicator">::indicator</a>
+    
+    <li><a href="#method-c-input">::input</a>
+    
+    <li><a href="#method-c-inputs">::inputs</a>
+    
+    <li><a href="#method-c-mandatory">::mandatory</a>
+    
+    <li><a href="#method-c-name">::name</a>
+    
+    <li><a href="#method-c-output">::output</a>
+    
+    <li><a href="#method-c-outputs">::outputs</a>
+    
+    <li><a href="#method-c-purpose">::purpose</a>
+    
+    <li><a href="#method-c-references">::references</a>
+    
+    <li><a href="#method-c-rule">::rule</a>
+    
+    <li><a href="#method-c-rules">::rules</a>
+    
+    <li><a href="#method-c-special_instruction">::special_instruction</a>
+    
+    <li><a href="#method-c-special_instructions">::special_instructions</a>
+    
+    <li><a href="#method-i-run">#run</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./MAGI.html">MAGI</a>
+  
+    <li><a href="./MAGI/AdultGroup.html">MAGI::AdultGroup</a>
+  
+    <li><a href="./MAGI/AptcEligibility.html">MAGI::AptcEligibility</a>
+  
+    <li><a href="./MAGI/CHIPEligibility.html">MAGI::CHIPEligibility</a>
+  
+    <li><a href="./MAGI/CHIPWaitingPeriod.html">MAGI::CHIPWaitingPeriod</a>
+  
+    <li><a href="./MAGI/Child.html">MAGI::Child</a>
+  
+    <li><a href="./MAGI/DependentChildCovered.html">MAGI::DependentChildCovered</a>
+  
+    <li><a href="./MAGI/EmergencyMedicaid.html">MAGI::EmergencyMedicaid</a>
+  
+    <li><a href="./MAGI/FormerFosterCare.html">MAGI::FormerFosterCare</a>
+  
+    <li><a href="./MAGI/Immigration.html">MAGI::Immigration</a>
+  
+    <li><a href="./MAGI/Income.html">MAGI::Income</a>
+  
+    <li><a href="./MAGI/IncomeOverride.html">MAGI::IncomeOverride</a>
+  
+    <li><a href="./MAGI/MedicaidEligibility.html">MAGI::MedicaidEligibility</a>
+  
+    <li><a href="./MAGI/OptionalTargetedLowIncomeChildren.html">MAGI::OptionalTargetedLowIncomeChildren</a>
+  
+    <li><a href="./MAGI/OptionalUnbornChild.html">MAGI::OptionalUnbornChild</a>
+  
+    <li><a href="./MAGI/ParentCaretakerRelative.html">MAGI::ParentCaretakerRelative</a>
+  
+    <li><a href="./MAGI/ParentCaretakerRelativeSpouse.html">MAGI::ParentCaretakerRelativeSpouse</a>
+  
+    <li><a href="./MAGI/Pregnant.html">MAGI::Pregnant</a>
+  
+    <li><a href="./MAGI/PreliminaryCHIP.html">MAGI::PreliminaryCHIP</a>
+  
+    <li><a href="./MAGI/PreliminaryMedicaid.html">MAGI::PreliminaryMedicaid</a>
+  
+    <li><a href="./MAGI/PublicEmployeesBenefits.html">MAGI::PublicEmployeesBenefits</a>
+  
+    <li><a href="./MAGI/QualifiedChild.html">MAGI::QualifiedChild</a>
+  
+    <li><a href="./MAGI/ReferralType.html">MAGI::ReferralType</a>
+  
+    <li><a href="./MAGI/RefugeeAssistance.html">MAGI::RefugeeAssistance</a>
+  
+    <li><a href="./MAGI/Residency.html">MAGI::Residency</a>
+  
+    <li><a href="./MAGI/TargetedLowIncomeChildren.html">MAGI::TargetedLowIncomeChildren</a>
+  
+    <li><a href="./ApplicationComponents.html">ApplicationComponents</a>
+  
+    <li><a href="./ApplicationComponents/Applicant.html">ApplicationComponents::Applicant</a>
+  
+    <li><a href="./ApplicationComponents/Household.html">ApplicationComponents::Household</a>
+  
+    <li><a href="./ApplicationComponents/MedicaidHousehold.html">ApplicationComponents::MedicaidHousehold</a>
+  
+    <li><a href="./ApplicationComponents/Person.html">ApplicationComponents::Person</a>
+  
+    <li><a href="./ApplicationComponents/Relationship.html">ApplicationComponents::Relationship</a>
+  
+    <li><a href="./ApplicationComponents/TaxReturn.html">ApplicationComponents::TaxReturn</a>
+  
+    <li><a href="./Ruleset.html">Ruleset</a>
+  
+    <li><a href="./Ruleset/CalculatedVariable.html">Ruleset::CalculatedVariable</a>
+  
+    <li><a href="./Ruleset/Rule.html">Ruleset::Rule</a>
+  
+    <li><a href="./ApplicationProcessor.html">ApplicationProcessor</a>
+  
+    <li><a href="./ApplicationProcessor/RelationshipError.html">ApplicationProcessor::RelationshipError</a>
+  
+    <li><a href="./RuleContext.html">RuleContext</a>
+  
+    <li><a href="./RuleContext/MissingVariableError.html">RuleContext::MissingVariableError</a>
+  
+    <li><a href="./Application.html">Application</a>
+  
+    <li><a href="./ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="./ApplicationParser.html">ApplicationParser</a>
+  
+    <li><a href="./ApplicationResponder.html">ApplicationResponder</a>
+  
+    <li><a href="./ApplicationVariables.html">ApplicationVariables</a>
+  
+    <li><a href="./DeterminationsController.html">DeterminationsController</a>
+  
+    <li><a href="./IncomeThreshold.html">IncomeThreshold</a>
+  
+    <li><a href="./Object.html">Object</a>
+  
+    <li><a href="./RulesetsController.html">RulesetsController</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Ruleset</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-applies_to" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">applies_to</span><span
+            class="method-args">(text)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="applies_to-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 73</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">applies_to</span>(<span class="ruby-identifier">text</span>)
+  <span class="ruby-ivar">@applies_to</span> = <span class="ruby-identifier">text</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- applies_to-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- applies_to-method -->
+
+    
+      <div id="method-c-assumption" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">assumption</span><span
+            class="method-args">(text)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="assumption-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 85</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">assumption</span>(<span class="ruby-identifier">text</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">assumptions</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">text</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- assumption-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- assumption-method -->
+
+    
+      <div id="method-c-assumptions" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">assumptions</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="assumptions-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 45</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">assumptions</span>
+  <span class="ruby-ivar">@assumptions</span> <span class="ruby-operator">||=</span> []
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- assumptions-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- assumptions-method -->
+
+    
+      <div id="method-c-calculated" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">calculated</span><span
+            class="method-args">(variable, &blk)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="calculated-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 57</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">calculated</span>(<span class="ruby-identifier">variable</span>, &amp;<span class="ruby-identifier">blk</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">calculateds</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">CalculatedVariable</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">variable</span>, <span class="ruby-identifier">blk</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- calculated-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- calculated-method -->
+
+    
+      <div id="method-c-calculateds" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">calculateds</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="calculateds-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 29</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">calculateds</span>
+  <span class="ruby-ivar">@calculateds</span> <span class="ruby-operator">||=</span> []
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- calculateds-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- calculateds-method -->
+
+    
+      <div id="method-c-code" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">code</span><span
+            class="method-args">(name, possible_values=nil)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="code-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 139</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">code</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">possible_values</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">outputs</span>[<span class="ruby-identifier">name</span>] = {
+    <span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">name</span>,
+    <span class="ruby-value">:type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Code&quot;</span>
+  }
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">possible_values</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">outputs</span>[<span class="ruby-identifier">name</span>][<span class="ruby-value">:possible_values</span>] = <span class="ruby-identifier">possible_values</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- code-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- code-method -->
+
+    
+      <div id="method-c-config" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">config</span><span
+            class="method-args">(name, source, type, possible_values=nil, default=nil)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="config-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 106</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">config</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">source</span>, <span class="ruby-identifier">type</span>, <span class="ruby-identifier">possible_values</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">default</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">configs</span>[<span class="ruby-identifier">name</span>] = {
+    <span class="ruby-value">:name</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">name</span>,
+    <span class="ruby-value">:source</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">source</span>,
+    <span class="ruby-value">:type</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">type</span>
+  }
+  
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">possible_values</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">configs</span>[<span class="ruby-identifier">name</span>][<span class="ruby-value">:possible_values</span>] = <span class="ruby-identifier">possible_values</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">default</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">configs</span>[<span class="ruby-identifier">name</span>][<span class="ruby-value">:default</span>] = <span class="ruby-identifier">default</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- config-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- config-method -->
+
+    
+      <div id="method-c-configs" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">configs</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="configs-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 37</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">configs</span>
+  <span class="ruby-ivar">@configs</span> <span class="ruby-operator">||=</span> {}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- configs-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- configs-method -->
+
+    
+      <div id="method-c-date" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">date</span><span
+            class="method-args">(name)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="date-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 132</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">date</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">outputs</span>[<span class="ruby-identifier">name</span>] = {
+    <span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">name</span>,
+    <span class="ruby-value">:type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Date&quot;</span>
+  }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- date-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- date-method -->
+
+    
+      <div id="method-c-description" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">description</span><span
+            class="method-args">(text)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="description-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 81</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">description</span>(<span class="ruby-identifier">text</span>)
+  <span class="ruby-ivar">@description</span> = <span class="ruby-identifier">text</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- description-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- description-method -->
+
+    
+      <div id="method-c-determination" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">determination</span><span
+            class="method-args">(name, possible_values=nil, ineligibility_codes = nil)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="determination-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 150</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">determination</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">possible_values</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">ineligibility_codes</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">outputs</span>[<span class="ruby-identifier">name</span>] = {}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- determination-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- determination-method -->
+
+    
+      <div id="method-c-indicator" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">indicator</span><span
+            class="method-args">(name, possible_values=nil)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="indicator-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 121</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">indicator</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">possible_values</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">outputs</span>[<span class="ruby-identifier">name</span>] = {
+    <span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">name</span>,
+    <span class="ruby-value">:type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Indicator&quot;</span>
+  }
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">possible_values</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">outputs</span>[<span class="ruby-identifier">name</span>][<span class="ruby-value">:possible_values</span>] = <span class="ruby-identifier">possible_values</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- indicator-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- indicator-method -->
+
+    
+      <div id="method-c-input" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">input</span><span
+            class="method-args">(name, source, type, possible_values=nil, options={})</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="input-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 93</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">input</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">source</span>, <span class="ruby-identifier">type</span>, <span class="ruby-identifier">possible_values</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">options</span>={})
+  <span class="ruby-comment"># options may include the type of element for list inputs</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">inputs</span>[<span class="ruby-identifier">name</span>] = {
+    <span class="ruby-value">:name</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">name</span>,
+    <span class="ruby-value">:source</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">source</span>,
+    <span class="ruby-value">:type</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">type</span>
+  }
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">possible_values</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">inputs</span>[<span class="ruby-identifier">name</span>][<span class="ruby-value">:possible_values</span>] = <span class="ruby-identifier">possible_values</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- input-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- input-method -->
+
+    
+      <div id="method-c-inputs" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">inputs</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="inputs-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 33</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">inputs</span>
+  <span class="ruby-ivar">@inputs</span> <span class="ruby-operator">||=</span> {}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- inputs-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- inputs-method -->
+
+    
+      <div id="method-c-mandatory" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">mandatory</span><span
+            class="method-args">(text)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="mandatory-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 65</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">mandatory</span>(<span class="ruby-identifier">text</span>)
+  <span class="ruby-ivar">@mandatory</span> = <span class="ruby-identifier">text</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- mandatory-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- mandatory-method -->
+
+    
+      <div id="method-c-name" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">name</span><span
+            class="method-args">(text)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="name-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 61</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">name</span>(<span class="ruby-identifier">text</span>)
+  <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">text</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- name-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- name-method -->
+
+    
+      <div id="method-c-output" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">output</span><span
+            class="method-args">(name, type, possible_values=nil, options={})</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="output-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 154</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">output</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">type</span>, <span class="ruby-identifier">possible_values</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">options</span>={})
+  <span class="ruby-comment"># options may include the type of element for list outputs</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">outputs</span>[<span class="ruby-identifier">name</span>] = {
+    <span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">name</span>,
+    <span class="ruby-value">:type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">type</span>
+  }
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">possible_values</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">outputs</span>[<span class="ruby-identifier">name</span>][<span class="ruby-value">:possible_values</span>] = <span class="ruby-identifier">possible_values</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- output-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- output-method -->
+
+    
+      <div id="method-c-outputs" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">outputs</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="outputs-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 41</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">outputs</span>
+  <span class="ruby-ivar">@outputs</span> <span class="ruby-operator">||=</span> {}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- outputs-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- outputs-method -->
+
+    
+      <div id="method-c-purpose" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">purpose</span><span
+            class="method-args">(text)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="purpose-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 77</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">purpose</span>(<span class="ruby-identifier">text</span>)
+  <span class="ruby-ivar">@purpose</span> = <span class="ruby-identifier">text</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- purpose-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- purpose-method -->
+
+    
+      <div id="method-c-references" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">references</span><span
+            class="method-args">(text)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="references-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 69</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">references</span>(<span class="ruby-identifier">text</span>)
+  <span class="ruby-ivar">@references</span> = <span class="ruby-identifier">text</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- references-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- references-method -->
+
+    
+      <div id="method-c-rule" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">rule</span><span
+            class="method-args">(rule_name, &blk)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="rule-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 53</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">rule</span>(<span class="ruby-identifier">rule_name</span>, &amp;<span class="ruby-identifier">blk</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">rules</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Rule</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">rule_name</span>, <span class="ruby-identifier">blk</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- rule-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- rule-method -->
+
+    
+      <div id="method-c-rules" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">rules</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="rules-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 25</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">rules</span>
+  <span class="ruby-ivar">@rules</span> <span class="ruby-operator">||=</span> []
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- rules-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- rules-method -->
+
+    
+      <div id="method-c-special_instruction" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">special_instruction</span><span
+            class="method-args">(text)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="special_instruction-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 89</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">special_instruction</span>(<span class="ruby-identifier">text</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">special_instructions</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">text</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- special_instruction-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- special_instruction-method -->
+
+    
+      <div id="method-c-special_instructions" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">special_instructions</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="special_instructions-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 49</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">special_instructions</span>
+  <span class="ruby-ivar">@special_instructions</span> <span class="ruby-operator">||=</span> []
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- special_instructions-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- special_instructions-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-run" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">run</span><span
+            class="method-args">(context)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="run-source">
+            <pre><span class="ruby-comment"># File app/models/ruleset.rb, line 167</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">run</span>(<span class="ruby-identifier">context</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">calculateds</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cvar</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">cvar</span>.<span class="ruby-identifier">run</span>(<span class="ruby-identifier">context</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">rules</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">rule</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">rule</span>.<span class="ruby-identifier">run</span>(<span class="ruby-identifier">context</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">context</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- run-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- run-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.2.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+
