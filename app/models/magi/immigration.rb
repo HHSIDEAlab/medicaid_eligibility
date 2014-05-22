@@ -50,11 +50,11 @@ module MAGI
     end
 
     # Outputs
-    determination "Medicaid Citizen Or Immigrant", %w(Y N), %w(999 101 409)
-    determination "CHIP Citizen Or Immigrant", %w(Y N), %w(999 101 409)
+    determination "Medicaid Citizen Or Immigrant", %w(Y N), %w(999 101 420)
+    determination "CHIP Citizen Or Immigrant", %w(Y N), %w(999 101 420)
     determination "Medicaid CHIPRA 214", %w(Y N X), %w(999 555 118 119 120)
     determination "CHIP CHIPRA 214", %w(Y N X), %w(999 555 118 119 120)
-    determination "Trafficking Victim", %w(Y N X), %w(999 555 410)
+    determination "Trafficking Victim", %w(Y N X), %w(999 555 421)
     determination "Seven Year Limit", %w(Y N X), %w(999 555 111)
     determination "Five Year Bar", %w(Y N X), %w(999 555 143)
     determination "Title II Work Quarters Met", %w(Y N X), %w(999 555 104)
@@ -72,8 +72,8 @@ module MAGI
         determination_na "Five Year Bar"
         determination_na "Title II Work Quarters Met"
       elsif v("Lawful Presence Attested") == 'N' || v("Qualified Non-Citizen Status") == 'N'
-        determination_n "Medicaid Citizen Or Immigrant", 409
-        determination_n "CHIP Citizen Or Immigrant", 409
+        determination_n "Medicaid Citizen Or Immigrant", 420
+        determination_n "CHIP Citizen Or Immigrant", 420
 
         determination_na "Medicaid CHIPRA 214"
         determination_na "CHIP CHIPRA 214"
@@ -134,7 +134,7 @@ module MAGI
         if v("Victim of Trafficking") == 'Y'
           determination_y "Trafficking Victim"
         else
-          determination_n "Trafficking Victim", 410
+          determination_n "Trafficking Victim", 421
         end
 
         # Seven Year Limit

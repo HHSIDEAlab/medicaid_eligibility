@@ -11,7 +11,10 @@
       <div class="form-row">
         <label for="applicationYear">Application year<br>(year starts April 1)</label>
         <select selector ng-model="application.applicationYear" name="applicationYear" id="applicationYear" ng-options="year for year in appYears" required>
+        <label for="county">County</label>
+        <input id="county" ng-model="application.county" type="text" name="county" required>
         </select>
+        <label for="county" class="error" ng-show="(applicationForm.county.$dirty  || submitted) && applicationForm.county.$invalid">Please enter a County</label>
       </div>
       <div class="form-row">
         <label for="id">Application Name or ID</label>
@@ -63,6 +66,7 @@
       <input type="number" ng-model="applicant.hours" id="applicant_{{ $index }}_hours" name="applicant_hours" required>
       <label for="applicant_{{ $index }}_hours" class="error" ng-show="(applicantForm.applicant_hours.$dirty || submitted) && applicantForm.applicant_hours.$invalid">This field is required.</label>
     </div>
+    
     <div class="form-half-field">
       <label for="applicant_{{ $index }}_disabled" >Disabled</label>
       <input type="checkbox" checker id="applicant_{{ $index }}_disabled" name="applicant_disabled" ng-model="applicant.disabled">
@@ -107,14 +111,35 @@
       <label for="applicant_{{ $index }}_long_term_care">In long-term care</label>
       <input type="checkbox" checker id="applicant_{{ $index }}_long_term_care" name="applicant_long_term_care" ng-model="applicant.longTermCare">
     </div>
+    <div class="form-half-field">
+      <label for="applicant_{{ $index }}_native_american_or_alaskan_native">Native American or Alaskan native</label>
+      <input type="checkbox" checker id="applicant_{{ $index }}_native_american_or_alaskan_native" name="native_american_or_alaskan_native" ng-model="applicant.native">
+    </div>
+    <div class="form-half-field">
+      <label for="applicant_{{ $index }}_other_mec_offer">Eligibile for TRICARE, COBRA, VA Benefits, or Employer Sponsored Coverage (ESC)</label>
+      <input type="checkbox" checker id="applicant_{{ $index }}_other_mec_offer" name="other_mec_offer" ng-model="applicant.other_mec_offer">
+    </div>
+    <div class="form-half-field">
+      <label for="applicant_{{ $index }}_previous_aptc">Recieved APTC previously</label>
+      <input type="checkbox" checker id="applicant_{{ $index }}_previous_aptc" name="previous_aptc" ng-model="applicant.previousAPTC">
+      <div class="form-row-expandable-fields2" ng-show="applicant.previousAPTC">
+        <div class="form-row">
+          <label for="applicant_{{ $index }}_repaid_aptc">Any APTC recieved that exceeded the qualified amount has been repaid to the IRS by the tax filer(s)</label>
+          <input type="checkbox" checker id="applicant_{{ $index }}_repaid_aptc" name="applicant_{{ $index }}_repaid_aptc" ng-model="applicant.repaidAPTC">
+        </div>
+      </div>
+    </div>
     <div class="form-half-field clear">
       <label for="applicant_{{ $index }}_has_insurance">Has insurance</label>
       <input type="checkbox" checker id="applicant_{{ $index }}_has_insurance" name="applicant_has_insurance" ng-model="applicant.hasInsurance">
+
     </div>
+    
     <div class="form-half-field">
       <label for="applicant_{{ $index }}_state_employee_health_benefits">Received state employee health benefits</label>
       <input type="checkbox" checker id="applicant_{{ $index }}_state_employee_health_benefits" name="applicant_state_employee_health_benefits" ng-model="applicant.stateEmployeeHealthBenefits">
     </div>
+
     <div class="form-row form-row-expandable">
       <label for="applicant_{{ $index }}_prior_insurance">Prior insurance</label>
       <input type="checkbox" checker id="applicant_{{ $index }}_prior_insurance" name="applicant_prior_insurance" ng-model="applicant.priorInsuranceIndicator">
@@ -125,6 +150,7 @@
         </div>
       </div>
     </div>
+
     <div class="form-row">
       <label for="applicant_{{ $index }}_pregnant">Pregnant</label>
       <input type="checkbox" checker id="applicant_{{ $index }}_pregnant" name="applicant_pregnant" ng-model="applicant.pregnant" data-exclusive="pregnant">
@@ -135,6 +161,7 @@
         </div>
       </div>
     </div>
+
     <div class="form-row">
       <label for="applicant_{{ $index }}_pregnant_three_months">Pregnant within the last 3 months</label>
       <input type="checkbox" checker id="applicant_{{ $index }}_pregnant_three_months" name="applicant_pregnant_three_months" ng-model="applicant.pregnantThreeMonths" data-exclusive="pregnant">
@@ -159,6 +186,7 @@
         </div>
       </div>
     </div>
+
     <div class="form-row form-row-expandable">
       <label for="applicant_{{ $index }}_citizen">US citizen</label>
       <input type="checkbox" checker ng-model="applicant.citizen" id="applicant_{{ $index }}_citizen" name="applicant_citizen">

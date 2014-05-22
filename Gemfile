@@ -27,14 +27,8 @@ gem "uglifier"
 # gem 'jbuilder'
 
 # Use unicorn as the app server
- gem 'unicorn'
-
-# Deploy with Capistrano
-gem 'capistrano', :group => :development
+  gem 'unicorn'
 
 group :development, :test do
   gem 'jasmine'
 end
-
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'

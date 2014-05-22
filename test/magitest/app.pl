@@ -342,7 +342,7 @@ sub jsonApp {
 	    $person{'Applicant Has 40 Title II Work Quarters'} = 'Y';
 	} else {
 	    $person{'Applicant Has 40 Title II Work Quarters'} = 'N';
-	}	    
+	}
 
 	# Medicaid Residency Indicator
 	$person{'Medicaid Residency Indicator'} = 'N';
@@ -362,7 +362,35 @@ sub jsonApp {
 	    } elsif ($fiveYearMet eq 'N') {
 		$person{'Five Year Bar Met'} = 'N';
 	    }
-	}	    
+	}	
+
+	#New CSR and APTC inputs
+	#Applicant is Native American or Alaskan
+	if (exists($apps{ $appId }{ $applicantId }{'Race'})
+	&& ($apps{ $appId }{ $applicantId }{'Race'} eq "American Indian or Alaskan Native")) {
+	    $person{'Native American or Alaskan Native'} = 'Y';
+	} else {
+	    $person{'Native American or Alaskan Native'} = 'N';
+	}
+
+	#Other MEC
+	if($apps{ $appId }{ $applicantId }{'Health Insurance from Other Sources (Medicaid)'} eq ""){
+		$person{'Other MEC Offer'} = 'N';
+    } else{
+    	$person{'Other MEC Offer'} = 'Y';
+    }
+
+    #Joint filing for married
+	#if ($apps{ $appId }{ $applicantId }{'Tax Filing Status'} eq "Married, filing jointly"){
+    #  $person{'Joint Filing for Married Indicator'} = "N";
+    #}elsif($apps{ $appId }{ $applicantId }{'Tax Filing Status'} eq "Married, filing separately"){
+    #  $person{'Joint Filing for Married Indicator'} = "Y";
+    #}else{
+    #  $person{'Joint Filing for Married Indicator'} = "X";
+    #}
+
+	#Previous APTC- This doesn't go in effect until 2015? so this will be N for all test applicants
+	$person{'Previous APTC'} = 'N';
 	
 	# Is Applicant
 	# look up by the first and last name only
@@ -384,23 +412,6 @@ sub jsonApp {
 	}
 
 	# Non-Citizen Deport Withheld Date: Thrown out
-
-  # Attest Primary Responsibility: HelpUsBYA BV (plus CD)
-  
-        #  Question: you pointed out that this would be on HelpUsBYA in the "ChildCare" column for each tax
-        # household, combined with the "ChildRelationship" column.  Would this be set to "Y" for cases where the
-        # "ChildRelationship" column is "Parent", or only for the cases where it's not "Parent"? 
-  #   Answer: Depending on the state-specific
-        # option for what relationships states allow for the parent/caretaker relative group, the grandparent could be a valid
-        # relationship. There are four different definitions for these valid relationships, a.  Permissible core relatives or
-        # relationships include: (1) Parent, (2) Stepparent (unless dead or absent from home), (3) Grandparent, (4) Sibling, (5)
-        # Stepsibling, (6) Uncles, (7) Aunts, (8) First cousin, (9) Nephew, or (10) Niece. Note: These relationships include the
-        # spouse of each relative listed even after the marriage is terminated by death or divorce.  b.  (In addition to option a)
-        # All relatives of the child based on blood (including those of half-blood), adoption or marriage, c.  (In addition to
-        # option a) The domestic partner of a parent or other relative who is included on the list of core relatives d.  Any adult
-        # with whom the child is living and who assumes primary responsibility for the child’s care. This includes unrelated as
-        # well as related individuals.
-
 
 	# Relationships
 	my $relationships = [];
@@ -482,7 +493,21 @@ sub jsonApp {
 	# Seven Year Limit Applies: Model 1.3
 	# Seven Year Limit Start Date: 
 
-	
+	# Attest Primary Responsibility: HelpUsBYA BV (plus CD)
+	$person{'Attest Primary Responsibility'} = 'N';
+        #  Question: you pointed out that this would be on HelpUsBYA in the "ChildCare" column for each tax
+        # household, combined with the "ChildRelationship" column.  Would this be set to "Y" for cases where the
+        # "ChildRelationship" column is "Parent", or only for the cases where it's not "Parent"? 
+	#   Answer: Depending on the state-specific
+        # option for what relationships states allow for the parent/caretaker relative group, the grandparent could be a valid
+        # relationship. There are four different definitions for these valid relationships, a.  Permissible core relatives or
+        # relationships include: (1) Parent, (2) Stepparent (unless dead or absent from home), (3) Grandparent, (4) Sibling, (5)
+        # Stepsibling, (6) Uncles, (7) Aunts, (8) First cousin, (9) Nephew, or (10) Niece. Note: These relationships include the
+        # spouse of each relative listed even after the marriage is terminated by death or divorce.  b.  (In addition to option a)
+        # All relatives of the child based on blood (including those of half-blood), adoption or marriage, c.  (In addition to
+        # option a) The domestic partner of a parent or other relative who is included on the list of core relatives d.  Any adult
+        # with whom the child is living and who assumes primary responsibility for the child’s care. This includes unrelated as
+        # well as related individuals.
 	    
 	# ------------------------------------------------------
 	
@@ -511,41 +536,12 @@ sub jsonApp {
 	    $primaryFilerName = lc($primaryFilerName);
 	    if (!exists($pidLookup{$primaryFilerName})) {
 #	    print Dumper $apps{ $appId };
-		    die "Primary $primaryFilerName not found in lookup\n";
+		die "Primary $primaryFilerName not found in lookup\n";
 	    }
 	    my $primaryFilerId = $pidLookup{$primaryFilerName};
 	    $$filer{'Person ID'} = $primaryFilerId;
 	    push(@$filers, $filer);
 
-      # Update primary responsibility if it shows up
-      if ($$Hh{'ChildCareWho'} ne '') {
-        my $chargeName = $appId . $$Hh{'ChildCareWho'};
-        $chargeName =~ s/\s//g;
-        $chargeName = lc($chargeName);
-        if (!exists($pidLookup{$chargeName})) {
-          die "Child $chargeName not found in lookup\n";
-        }
-        my $childId = $pidLookup{$chargeName};
-        
-        #print "$primaryFilerId $childId $#{$$json{'People'}}\n";
-        for my $j (0 .. $#{$$json{'People'}}) {
-          my %person = %{$$json{'People'}[$j]};
-          #print Dumper %person;
-          if ( $person{'Person ID'} eq $primaryFilerId) {
-            #print "$j\n";
-            for my $k (0 .. $#{$person{'Relationships'}}) {
-            #foreach my $otherPerson (@{$person{'Relationships'}}) {
-              my %otherPerson = %{$person{'Relationships'}[$k]};
-              if ($otherPerson{'Other ID'} eq $childId) {
-                #print "$j $k\n";
-                $$json{'People'}[$j]{'Relationships'}[$k]{'Attest Primary Responsibility'} = 'Y';
-                #$otherPerson{'Attest Primary Responsibility'} = 'Y'
-              }
-            }
-            
-          }
-        }  
-      }
 
 	    if ($$Hh{'JointReturn'} eq 'Yes') {
 		my $coFiler = {};
@@ -997,6 +993,57 @@ foreach my $appId (@requestedApps) {
 	my $oNM = $ourDeterminations{ $applicantId }{ 'Non-MAGI Referral' };
 	my $pf = 'pass';  # Start with this assumption
 
+	
+	#vars for our APTC and CSR+CSR Category Outcomes
+	my $oCSR_cat;
+	my $oAPTC = $ourDeterminations{ $applicantId }{ 'APTC Eligible' };
+	#my $o_aptc_r = $ourDeterminations{ $applicantId }{ 'APTC Ineligibility Reason' };
+	#my $o_csr_r = $ourDeterminations{ $applicantId }{ 'CSR Ineligibility Reason' };
+	
+	if($ourDeterminations{ $applicantId }{ 'CSR Category' } =~ /87/){
+      $oCSR_cat = 05;
+	}
+	elsif($ourDeterminations{ $applicantId }{ 'CSR Category' } =~ /73/){
+      $oCSR_cat = 04;
+	}
+	elsif($ourDeterminations{ $applicantId }{ 'CSR Category' } =~ /Limited/){
+      $oCSR_cat = 03;
+	}
+	elsif($ourDeterminations{ $applicantId }{ 'CSR Category' } =~ /Zero/){
+      $oCSR_cat = 02;
+	}
+	elsif($ourDeterminations{ $applicantId }{ 'CSR Category' } =~ /94/){
+	  $oCSR_cat = 06;
+	}
+
+	
+	my $oCSR = $ourDeterminations{ $applicantId }{ 'CSR Eligible' };
+
+	if($oCSR =~ /Y/){
+		$oCSR = "Yes - 0$oCSR_cat";
+	}
+	elsif($oCSR =~ /N/){
+		$oCSR = "No CSR";
+	}
+
+
+ 	my $pf_aptc = "pass";
+ 	my $pf_csr = "pass";
+
+ 	#mathmatica aptc and csr values
+ 	my $p_id = $apps{ $appId }{ $applicantId }{ 'Person ID' };
+ 	my $m_aptc = $apps{ $appId }{ $applicantId }{ 'Eligible for APTC' };
+ 	my $m_csr = $apps{ $appId }{ $applicantId }{ 'Eligible for CSR' };
+
+ 	#mathmatica aptc and csr ineligibility reasons
+ 	my $m_aptc_r = $apps{ $appId }{ $applicantId }{ 'APTC Outcome Reason Code' };
+ 	my $m_csr_r = $apps{ $appId }{ $applicantId }{ 'CSR Outcome Reason Code' };
+
+ 	my $o_aptc_r = $ourDeterminations{ $applicantId }{ 'APTC Ineligibility Reason' }[0];
+ 	my $o_csr_r = $ourDeterminations{ $applicantId }{ 'CSR Ineligibility Reason' }[0];
+ 	
+
+
 	# In any case where they've flagged an inconsistency, we skip comparing, since we'll go with the attested data, and they with the 
 	# payloads from the external sources
 	if (($apps{ $appId }{ $applicantId }{ 'SSA Inconsistencies Outcome' } =~ /triggered/)
@@ -1066,6 +1113,40 @@ foreach my $appId (@requestedApps) {
 	    print "                      Non-MAGI $oNM\n";
  	}
 
+ 	#print out aptc and csr determinations
+ 	print "Person ID: $p_id / $applicantId\n";
+ 	print "Race: $apps{ $appId }{ $applicantId }{'Race'}\n";
+ 	print "NA or AN: $ourDeterminations{ $applicantId }{ 'Native American or Alaskan Native' }\n";
+ 	print "Filing Status: $ourDeterminations{ $applicantId }{ 'Joint Filing for Married Indicator' }\n";
+ 	print "CSR Cat: $ourDeterminations{ $applicantId }{ 'CSR Category' }\n";
+ 	print "Incarceration: $apps{ $appId}{ $applicantId }{ 'Incarceration Status'}\n";
+ 	
+ 	if (($m_aptc eq "") || ($oAPTC eq "")){
+ 		$pf_aptc = "FAIL";
+ 		print "$pf_aptc Eligible for APTC: 1 or more values are undefined $m_aptc / $oAPTC\n";
+ 	}elsif($m_aptc ne $oAPTC){
+ 		$pf_aptc = "FAIL";
+ 		print "$pf_aptc Eligible for APTC: $m_aptc / $oAPTC\n";
+ 	}else{
+ 		print "$pf_aptc Eligible for APTC: $m_aptc / $oAPTC\n";
+ 	}
+
+ 	print"M APTC Ineligibility Reason: $m_aptc_r\n";
+ 	print"BL APTC Ineligibility Reason: $o_aptc_r\n";
+
+ 	if (($m_csr eq "") || ($oCSR eq "")){
+ 		$pf_csr = "FAIL";
+ 		print "$pf_csr Eligible for CSR: 1 or more values are undefined $m_csr / $oCSR\n";
+ 	}elsif($m_csr ne $oCSR){
+ 		$pf_csr = "FAIL";
+ 		print "$pf_csr Eligible for CSR: $m_csr / $oCSR\n";
+ 	}else{
+ 		print "$pf_csr Eligible for CSR: $m_csr / $oCSR\n";
+ 	}
+
+ 	print"M CSR Ineligibility Reason: $m_csr_r\n";
+ 	print"BL CSR Ineligibility Reason: $o_csr_r\n";
+
 	# Go through the category determinations
 	foreach my $tDet (keys(%dets)) {
 	    my $groupMatch = 'pass'; # assume
@@ -1113,8 +1194,14 @@ foreach my $appId (@requestedApps) {
 # 	      "Emergency Medicaid": {
 # 	      "APTC Referral": {
 
-
 	# if any case fails, fail the whole app
+	if ($pf_aptc eq 'FAIL') {
+	    $agree = 0;
+	}
+	if ($pf_csr eq 'FAIL') {
+	    $agree = 0;
+	}
+
 	if ($pf eq 'FAIL') {
 	    $agree = 0;
 	}
@@ -1124,9 +1211,7 @@ foreach my $appId (@requestedApps) {
 	$totalAgreements++;
     } else {
 	print "$appId: $failType\n";
-  if ($caretakerError == 1) {
-	 $totalCaretakerError++;
-  }
+	$totalCaretakerError++;
 	$totalDisagreements++;
 	$totalDisagreements{$failType}++;
     } 

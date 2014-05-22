@@ -23,6 +23,7 @@ module MAGI
     config "CHIP Thresholds", "State Configuration", "Hash"
 
     # Outputs
+    output    "APTC Max Contribution", "Integer"
     output    "Category Used to Calculate Medicaid Income", "String"
     indicator "Applicant Income Medicaid Eligible Indicator", %w(Y N)
     date      "Income Medicaid Eligible Determination Date"
@@ -31,6 +32,8 @@ module MAGI
     indicator "Applicant Income CHIP Eligible Indicator", %w(Y N)
     date      "Income CHIP Eligible Determination Date"
     code      "Income CHIP Eligible Ineligibility Reason", %w(999 401 402)
+    indicator "Applicant Income APTC Eligible Indicator", %w(Y F O)
+    indicator "Applicant Income CSR Eligible Indicator", %w(Y N)
 
     def run(context)
       context.extend IncomeThreshold
@@ -102,6 +105,34 @@ module MAGI
         o["Applicant Income Medicaid Eligible Indicator"] = "Y"
         o["Income Medicaid Eligible Determination Date"] = current_date
         o["Income Medicaid Eligible Ineligibility Reason"] = 999
+      end
+
+      if ((v("Calculated Income")/v("FPL")) >= 1 && (v("Calculated Income")/v("FPL")) <= 4)
+        o["Applicant Income APTC Eligible Indicator"] = 'Y'
+      elsif (v("Calculated Income")/v("FPL")) < 1
+        o["Applicant Income APTC Eligible Indicator"] = 'O'
+      elsif (v("Calculated Income")/v("FPL")) > 4
+        o["Applicant Income APTC Eligible Indicator"] = 'F'
+      end
+
+      if ( (v("Calculated Income")/v("FPL")) >= 1 && (v("Calculated Income")/v("FPL")) <= 1.33) 
+        o["APTC Max Contribution"] = (0.02*(v("Calculated Income")/v("FPL"))) * v("Calculated Income")
+      elsif ( (v("Calculated Income")/v("FPL")) > 1.33 && (v("Calculated Income")/v("FPL")) <= 1.5) 
+        o["APTC Max Contribution"] = ((0.03/1.33)*(v("Calculated Income")/v("FPL"))) * v("Calculated Income")
+      elsif ( (v("Calculated Income")/v("FPL")) > 1.5 && (v("Calculated Income")/v("FPL")) <= 2)
+        o["APTC Max Contribution"] = ((0.04/1.5)*(v("Calculated Income")/v("FPL"))) * v("Calculated Income")
+      elsif ( (v("Calculated Income")/v("FPL")) > 2 && (v("Calculated Income")/v("FPL")) <= 2.5)
+        o["APTC Max Contribution"] = ((0.063/2)*(v("Calculated Income")/v("FPL"))) * v("Calculated Income")
+      elsif ( (v("Calculated Income")/v("FPL")) > 2.5 && (v("Calculated Income")/v("FPL")) <= 3)
+        o["APTC Max Contribution"] = ((0.0805/2.5)*(v("Calculated Income")/v("FPL"))) * v("Calculated Income")
+      elsif ( (v("Calculated Income")/v("FPL")) > 3 && (v("Calculated Income")/v("FPL")) <= 4)
+        o["APTC Max Contribution"] = ((0.095)*(v("Calculated Income")/v("FPL"))) * v("Calculated Income")
+      end
+
+      if (v("Calculated Income")/v("FPL")) <= 2.5
+        o["Applicant Income CSR Eligible Indicator"] = 'Y'
+      else
+        o["Applicant Income CSR Eligible Indicator"] = 'N'
       end
 
       if v("Max Eligible CHIP Category") == "None"

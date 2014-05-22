@@ -23,6 +23,7 @@ module ApplicationParser
     else
       @application_year = Date.today.year - 1
     end
+    @county = @json_application["County"]
     @people = []
     @applicants = []
     for json_person in @json_application["People"]

@@ -18,7 +18,14 @@ module ApplicationResponder
 
       app_json["Medicaid Eligible"] = app.outputs["Applicant Medicaid Indicator"]
       app_json["CHIP Eligible"] = app.outputs["Applicant CHIP Indicator"]
-      
+      app_json["APTC Eligible"] = app.outputs["Applicant APTC Indicator"]
+      app_json["CSR Eligible"] = app.outputs["Applicant CSR Indicator"]
+      app_json["Max APTC"] = app.outputs["Max APTC"]
+   
+
+      app_json["Joint Filing for Married Indicator"] = app.outputs["Joint Filing for Married Indicator"]
+      app_json["Native American or Alaskan Native"] = app.applicant_attributes["Native American or Alaskan Native"]
+
       # Medicaid ineligibility explanation
       if app.outputs["Applicant Medicaid Indicator"] == 'N'
         ineligibility_reasons = []
@@ -68,13 +75,75 @@ module ApplicationResponder
         end
         app_json["CHIP Ineligibility Reason"] = ineligibility_reasons
       end
-      
+
+      # APTC ineligibility explanation
+      if app.outputs["Applicant APTC Indicator"] == 'N'
+        ineligibility_reasons = []
+        if app.outputs["Exchange Eligibility Indicator"] == 'N'
+            ineligibility_reasons << "Applicant is ineligible to enroll in a QHP"
+        end
+        if app.outputs["Applicant Income APTC Eligible Indicator"] == 'F'
+            ineligibility_reasons << "Tax household attested above the APTC limit"
+        end
+        if app.outputs["Applicant Income APTC Eligible Indicator"] == 'O' && app.outputs["APTC Income Override Indicator"] == "N"
+            ineligibility_reasons << "Tax household attested below the APTC limit and did not qualify for an override statement"
+        end
+        if app.outputs["Other MEC Offer Indicator"] == "Y"
+            ineligibility_reasons << "Applicant is enrolled in or has another offer for other MEC and is therefore not eligble for APTC"
+        end
+        if app.outputs["Joint Filing for Married Indicator"] == "N"
+            ineligibility_reasons << "Tax filers attested to married filing seprate"
+        end
+        if app.outputs["Previous Year Compliance Indicator"] == "N"
+            ineligibility_reasons << "Tax filers did not comply with filing requirements for the previous year"
+        end
+        if app.outputs["Applicant Non-Filer Indicator"] == "Y"
+            ineligibility_reasons << "Applicant did not attest to a filing status"
+        end
+
+        app_json["APTC Ineligibility Reason"] = ineligibility_reasons
+      end
+
+      # CSR ineligibility explanation
+      if app.outputs["Applicant CSR Indicator"] == 'N'
+        ineligibility_reasons = []
+        if app.outputs["Exchange Eligibility Indicator"] == 'N'
+            ineligibility_reasons << "QHP ineligible"
+        end
+
+        if app.applicant_attributes["Native American or Alaskan Native"] == 'N' 
+          if app.outputs["Applicant APTC Indicator"] == "N"
+              ineligibility_reasons << "APTC ineligible"
+          end
+          if app.outputs["Applicant Income CSR Eligible Indicator"] == "N"
+              ineligibility_reasons << "Percent FPL is above 250%"
+          end
+        end
+        
+        app_json["CSR Ineligibility Reason"] = ineligibility_reasons
+      end
+
       app_json["Category"] = app.outputs["Category Used to Calculate Medicaid Income"]
       unless ["None"].include?(app.outputs["Category Used to Calculate Medicaid Income"])
         app_json["Category Threshold"] = app.outputs["FPL * Percentage Medicaid"].to_i
       end
       app_json["CHIP Category"] = app.outputs["Category Used to Calculate CHIP Income"]
       app_json["CHIP Category Threshold"] = app.outputs["FPL * Percentage CHIP"].to_i
+
+      if app.outputs["CSR Category"] == 06
+        app_json["CSR Category"] = "94% Plan Variation"
+      elsif app.outputs["CSR Category"] == 05
+        app_json["CSR Category"] = "87% Plan Variation"
+      elsif app.outputs["CSR Category"] == 04
+        app_json["CSR Category"] = "73% Plan Variation"
+      elsif app.outputs["CSR Category"] == 03
+        app_json["CSR Category"] = "Limited Cost-Sharing Plan Variation"
+      elsif app.outputs["CSR Category"] == 02
+        app_json["CSR Category"] = "Zero Cost-Sharing Plan Variation"
+      elsif app.outputs["CSR Category"] == 00
+        app_json["CSR Category"] = "None"
+      end
+       
 
       app_json["Determinations"] = {}
 
@@ -87,6 +156,8 @@ module ApplicationResponder
       app_json["Determinations"]["Residency"] = det_json
 
       for det in ApplicationVariables::DETERMINATIONS
+        puts "#{det[:name]}"
+
         det_json = {}
         det_json["Indicator"] = app.outputs["Applicant #{det[:name]} Indicator"]
         if app.outputs["Applicant #{det[:name]} Indicator"] == 'N'
@@ -105,6 +176,8 @@ module ApplicationResponder
         end
         app_json["Determinations"]["APTC Referral"] = det_json
       end  
+
+
 
       app_json["Other Outputs"] = {}
       app_json["Other Outputs"]["Qualified Children List"] = []

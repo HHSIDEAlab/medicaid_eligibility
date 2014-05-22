@@ -318,7 +318,47 @@ module ApplicationVariables
       :group      => :relationship,
       :xpath      => "PrimaryResponsibility",
       :default    => "N"
-    }
+    },
+
+    #Native Inputs
+    {
+      :name       => "Native American or Alaskan Native",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :applicant,
+      :xpath      => :unimplemented,
+      :default    => "N"
+    },
+
+    #Other MEC Input
+    {
+      :name       => "Other MEC Offer",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :applicant,
+      :xpath      => :unimplemented,
+      :default    => "N"
+    },
+
+    #APTC Repayment Inputs
+    {
+      :name       => "Previous APTC",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :applicant,
+      :xpath      => :unimplemented,
+      :default    => "N"
+    },
+
+     {
+      :name       => "Repaid APTC",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :applicant,
+      :xpath      => :unimplemented,
+      :default    => "N"
+    }    
+
   ].freeze
 
   DETERMINATIONS = [
@@ -356,6 +396,8 @@ module ApplicationVariables
       reason_xpath: "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityReasonText"
     },
     
+    #{name: "APTC"},
+    #{name: "CSR"},
     {name: "Emergency Medicaid"},
     {name: "Refugee Medical Assistance"}
   ].freeze
