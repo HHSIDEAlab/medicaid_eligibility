@@ -176,7 +176,7 @@ module MAGI
 
         # Medicaid Citizen/Immigrant determinations
         if o["Applicant Medicaid CHIPRA 214 Indicator"] == 'Y' || 
-           o["Applicant Trafficking Indicator"] == 'Y' || 
+           o["Applicant Trafficking Victim Indicator"] == 'Y' || 
            o["Applicant Seven Year Limit Indicator"] == 'Y' || 
            (o["Applicant Seven Year Limit Indicator"] == 'X' && 
             %w(Y X).include?(o["Applicant Five Year Bar Indicator"]) && 
@@ -188,7 +188,7 @@ module MAGI
 
         # Medicaid Citizen/Immigrant determinations
         if o["Applicant CHIP CHIPRA 214 Indicator"] == 'Y' || 
-           o["Applicant Trafficking Indicator"] == 'Y' || 
+           o["Applicant Trafficking Victim Indicator"] == 'Y' || 
            %w(Y X).include?(o["Applicant Five Year Bar Indicator"])
           determination_y "CHIP Citizen Or Immigrant"
         else
