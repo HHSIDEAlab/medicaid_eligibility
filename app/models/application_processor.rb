@@ -75,7 +75,6 @@ module ApplicationProcessor
     input.merge!({
       "State" => @state,
       "Application Year" => @application_year,
-      "County"=> @county,
       "Applicant" => applicant,
       "Applicant ID" => applicant.applicant_id,
       "Person ID" => applicant.person_id,

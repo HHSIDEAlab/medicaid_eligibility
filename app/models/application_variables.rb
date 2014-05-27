@@ -330,6 +330,13 @@ module ApplicationVariables
       :default    => "N"
     },
 
+    {
+      :name       => "County",
+      :type       => :string,
+      :group      => :applicant,
+      :xpath      => :unimplemented,
+    },    
+
     #Other MEC Input
     {
       :name       => "Other MEC Offer",

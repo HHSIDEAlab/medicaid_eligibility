@@ -1,16 +1,7 @@
 <form name="applicationForm" id="application_form" method="post" ng-submit="checkEligibility()" novalidate>
   <h1>MAGI in the Cloud</h1>
     <div class="form-fields-area">
-      <div class="form-row">
-        <label for="id">Application Name or ID</label>
-        <input id="applicationId" ng-model="application.applicationId" type="text" name="id" required>
-        <label for="id" class="error" ng-show="(applicationForm.id.$dirty  || submitted) && applicationForm.id.$invalid">This field is required.</label>
-      </div>
-      <div class="form-row">
-        <label for="applicationYear">Application year<br>(year starts April 1)</label>
-        <select selector ng-model="application.applicationYear" name="applicationYear" id="applicationYear" ng-options="year for year in appYears" required></select>
-      </div>
-      <div class="form-row">
+    	<div class="form-row">
         <label for="state">State</label>
         <select selector ng-model="application.state" name="state" id="state" ng-options="state as state.name for state in appStates" required>
           <option value="" selected></option>
@@ -18,9 +9,13 @@
         <label for="state" class="error" ng-show="(applicationForm.state.$dirty  || submitted) && applicationForm.state.$invalid">Please enter a State</label>
       </div>
       <div class="form-row">
-        <label for="county">County (only required for APTC)</label>
-        <input id="county" ng-model="application.county" type="text" name="county">
-        <label for="county" class="error" ng-show="(applicationForm.county.$dirty  || submitted) && applicationForm.county.$invalid">Please enter a County</label>
+        <label for="applicationYear">Application year<br>(year starts April 1)</label>
+        <select selector ng-model="application.applicationYear" name="applicationYear" id="applicationYear" ng-options="year for year in appYears" required></select>
+      </div>
+      <div class="form-row">
+        <label for="id">Application Name or ID</label>
+        <input id="applicationId" ng-model="application.applicationId" type="text" name="id" required>
+        <label for="id" class="error" ng-show="(applicationForm.id.$dirty  || submitted) && applicationForm.id.$invalid">This field is required.</label>
       </div>
     </div>
   </div>
@@ -42,7 +37,7 @@
       <div class="form-row">
         <label for="applicant_{{ $index }}_is_applicant">Is this individual applying for insurance?</label>
         <input type="checkbox" checker ng-model = "applicant.isApplicant" id="applicant_{{ $index }}_is_applicant" name="applicant_is_applicant" >
-    </div>
+    	</div>
     <div class="form-row-expandable">
       <label for="applicant_{{ $index }}_age">Age</label>
       <input type="number" ng-model = "applicant.age" id="applicant_{{ $index }}_age" name="applicant_age" required>
@@ -259,6 +254,10 @@
 
     <h3>APTC-Only</h3>
 
+    <div class="form-row">
+      <label for="applicant_{{ $index }}_county">County</label>
+      <input type="text" id="applicant_{{ $index }}_county" name="county" ng-model="applicant.county">
+    </div>
     <div class="form-half-field">
       <label for="applicant_{{ $index }}_native_american_or_alaska_native">Native American or Alaska native</label>
       <input type="checkbox" checker id="applicant_{{ $index }}_native_american_or_alaska_native" name="native_american_or_alaska_native" ng-model="applicant.native">
