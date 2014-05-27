@@ -2,6 +2,15 @@
   <h1>MAGI in the Cloud</h1>
     <div class="form-fields-area">
       <div class="form-row">
+        <label for="id">Application Name or ID</label>
+        <input id="applicationId" ng-model="application.applicationId" type="text" name="id" required>
+        <label for="id" class="error" ng-show="(applicationForm.id.$dirty  || submitted) && applicationForm.id.$invalid">This field is required.</label>
+      </div>
+      <div class="form-row">
+        <label for="applicationYear">Application year<br>(year starts April 1)</label>
+        <select selector ng-model="application.applicationYear" name="applicationYear" id="applicationYear" ng-options="year for year in appYears" required></select>
+      </div>
+      <div class="form-row">
         <label for="state">State</label>
         <select selector ng-model="application.state" name="state" id="state" ng-options="state as state.name for state in appStates" required>
           <option value="" selected></option>
@@ -9,17 +18,9 @@
         <label for="state" class="error" ng-show="(applicationForm.state.$dirty  || submitted) && applicationForm.state.$invalid">Please enter a State</label>
       </div>
       <div class="form-row">
-        <label for="applicationYear">Application year<br>(year starts April 1)</label>
-        <select selector ng-model="application.applicationYear" name="applicationYear" id="applicationYear" ng-options="year for year in appYears" required>
-        <label for="county">County</label>
-        <input id="county" ng-model="application.county" type="text" name="county" required>
-        </select>
+        <label for="county">County (only required for APTC determination)</label>
+        <input id="county" ng-model="application.county" type="text" name="county">
         <label for="county" class="error" ng-show="(applicationForm.county.$dirty  || submitted) && applicationForm.county.$invalid">Please enter a County</label>
-      </div>
-      <div class="form-row">
-        <label for="id">Application Name or ID</label>
-        <input id="applicationId" ng-model="application.applicationId" type="text" name="id" required>
-        <label for="id" class="error" ng-show="(applicationForm.id.$dirty  || submitted) && applicationForm.id.$invalid">This field is required.</label>
       </div>
     </div>
   </div>
@@ -116,15 +117,15 @@
       <input type="checkbox" checker id="applicant_{{ $index }}_native_american_or_alaskan_native" name="native_american_or_alaskan_native" ng-model="applicant.native">
     </div>
     <div class="form-half-field">
-      <label for="applicant_{{ $index }}_other_mec_offer">Eligibile for TRICARE, COBRA, VA Benefits, or Employer Sponsored Coverage (ESC)</label>
+      <label for="applicant_{{ $index }}_other_mec_offer">Eligible for TRICARE, COBRA, VA Benefits, or Employer Sponsored Coverage (ESC)</label>
       <input type="checkbox" checker id="applicant_{{ $index }}_other_mec_offer" name="other_mec_offer" ng-model="applicant.other_mec_offer">
     </div>
     <div class="form-half-field">
-      <label for="applicant_{{ $index }}_previous_aptc">Recieved APTC previously</label>
+      <label for="applicant_{{ $index }}_previous_aptc">Received APTC previously</label>
       <input type="checkbox" checker id="applicant_{{ $index }}_previous_aptc" name="previous_aptc" ng-model="applicant.previousAPTC">
       <div class="form-row-expandable-fields2" ng-show="applicant.previousAPTC">
         <div class="form-row">
-          <label for="applicant_{{ $index }}_repaid_aptc">Any APTC recieved that exceeded the qualified amount has been repaid to the IRS by the tax filer(s)</label>
+          <label for="applicant_{{ $index }}_repaid_aptc">Any APTC received that exceeded the qualified amount has been repaid to the IRS by the tax filer(s)</label>
           <input type="checkbox" checker id="applicant_{{ $index }}_repaid_aptc" name="applicant_{{ $index }}_repaid_aptc" ng-model="applicant.repaidAPTC">
         </div>
       </div>
