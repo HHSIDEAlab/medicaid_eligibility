@@ -322,7 +322,7 @@ module ApplicationVariables
 
     #Native Inputs
     {
-      :name       => "Native American or Alaskan Native",
+      :name       => "Native American or Alaska Native",
       :type       => :flag,
       :values     => %w(Y N),
       :group      => :applicant,

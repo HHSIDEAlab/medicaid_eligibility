@@ -1,6 +1,6 @@
 module MAGI
   class CSRCategory < Ruleset
-    input "Native American or Alaskan Native", "Application", %w(Y N)
+    input "Native American or Alaska Native", "Application", %w(Y N)
     input "Calculated Income", "Medicaid Household Income Logic", "Integer"
     input "Applicant CSR Indicator","CSR Eligibility Logic","Char(1)", %w(Y N)
     input "Medicaid Household", "Householding Logic", "Array"
@@ -17,7 +17,7 @@ module MAGI
 
     	rule "Determine CSR Category" do
     		if v("Applicant CSR Indicator")
-    			if v("Native American or Alaskan Native") == "N"
+    			if v("Native American or Alaska Native") == "N"
     				if ((v("Calculated Income")/v("FPL")) >= 1 && (v("Calculated Income")/v("FPL")) <= 1.5)
     					o["CSR Category"] = 06
     				elsif ((v("Calculated Income")/v("FPL")) > 1.5 && (v("Calculated Income")/v("FPL")) <= 2)

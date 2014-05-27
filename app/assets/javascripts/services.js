@@ -273,7 +273,7 @@ angular.module('MAGI.services',[]).
 			{app: 'id', api: 'Person ID', type: 'string'},
 			{app: 'age', api: 'Applicant Age', type: 'string'},
 			{app: 'hours', api: 'Hours Worked Per Week', type: 'string'},
-			{app: 'native', api: 'Native American or Alaskan Native', type: 'checkbox'},
+			{app: 'native', api: 'Native American or Alaska Native', type: 'checkbox'},
 			{app: 'other_mec_offer', api: 'Other MEC Offer', type: 'checkbox'},
 			{app: 'previousAPTC', api: 'Previous APTC', type: 'checkbox'},
 			{app: 'repaidAPTC', api: 'Repaid APTC', type: 'checkbox'}

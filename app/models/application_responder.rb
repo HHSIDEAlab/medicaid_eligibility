@@ -24,7 +24,7 @@ module ApplicationResponder
    
 
       app_json["Joint Filing for Married Indicator"] = app.outputs["Joint Filing for Married Indicator"]
-      app_json["Native American or Alaskan Native"] = app.applicant_attributes["Native American or Alaskan Native"]
+      app_json["Native American or Alaska Native"] = app.applicant_attributes["Native American or Alaska Native"]
 
       # Medicaid ineligibility explanation
       if app.outputs["Applicant Medicaid Indicator"] == 'N'
@@ -111,7 +111,7 @@ module ApplicationResponder
             ineligibility_reasons << "QHP ineligible"
         end
 
-        if app.applicant_attributes["Native American or Alaskan Native"] == 'N' 
+        if app.applicant_attributes["Native American or Alaska Native"] == 'N' 
           if app.outputs["Applicant APTC Indicator"] == "N"
               ineligibility_reasons << "APTC ineligible"
           end
