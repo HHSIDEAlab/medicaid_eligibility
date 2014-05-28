@@ -107,29 +107,32 @@ module MAGI
         o["Income Medicaid Eligible Ineligibility Reason"] = 999
       end
 
-      if ((v("Calculated Income")/v("FPL")) >= 1 && (v("Calculated Income")/v("FPL")) <= 4)
+      pct_fpl = v("Calculated Income")/v("FPL") * 100
+      if pct_fpl >= 100 && pct_fpl <= 400
         o["Applicant Income APTC Eligible Indicator"] = 'Y'
-      elsif (v("Calculated Income")/v("FPL")) < 1
+
+        if pct_fpl < 133
+          max_contrib_pct = 2
+        elsif pct_fpl < 150
+          max_contrib_pct = 3 + ((4 - 3) * (pct_fpl - 133)/(150 - 133))
+        elsif pct_fpl < 200
+          max_contrib_pct = 4 + ((6.3 - 4) * (pct_fpl - 150)/(200 - 150))
+        elsif pct_fpl < 250
+          max_contrib_pct = 6.3 + ((8.05 - 6.3) * (pct_fpl - 200)/(250 - 200))
+        elsif pct_fpl < 300
+          max_contrib_pct = 8.05 + ((9.5 - 8.05) * (pct_fpl - 250)/(300 - 250))
+        else
+          max_contrib_pct = 9.5
+        end
+        
+        o["APTC Max Contribution"] = max_contrib_pct / 100 * v("Calculated Income")
+      elsif pct_fpl < 100
         o["Applicant Income APTC Eligible Indicator"] = 'O'
-      elsif (v("Calculated Income")/v("FPL")) > 4
+      elsif pct_fpl > 400
         o["Applicant Income APTC Eligible Indicator"] = 'F'
       end
 
-      if ( (v("Calculated Income")/v("FPL")) >= 1 && (v("Calculated Income")/v("FPL")) <= 1.33) 
-        o["APTC Max Contribution"] = (0.02*(v("Calculated Income")/v("FPL"))) * v("Calculated Income")
-      elsif ( (v("Calculated Income")/v("FPL")) > 1.33 && (v("Calculated Income")/v("FPL")) <= 1.5) 
-        o["APTC Max Contribution"] = ((0.03/1.33)*(v("Calculated Income")/v("FPL"))) * v("Calculated Income")
-      elsif ( (v("Calculated Income")/v("FPL")) > 1.5 && (v("Calculated Income")/v("FPL")) <= 2)
-        o["APTC Max Contribution"] = ((0.04/1.5)*(v("Calculated Income")/v("FPL"))) * v("Calculated Income")
-      elsif ( (v("Calculated Income")/v("FPL")) > 2 && (v("Calculated Income")/v("FPL")) <= 2.5)
-        o["APTC Max Contribution"] = ((0.063/2)*(v("Calculated Income")/v("FPL"))) * v("Calculated Income")
-      elsif ( (v("Calculated Income")/v("FPL")) > 2.5 && (v("Calculated Income")/v("FPL")) <= 3)
-        o["APTC Max Contribution"] = ((0.0805/2.5)*(v("Calculated Income")/v("FPL"))) * v("Calculated Income")
-      elsif ( (v("Calculated Income")/v("FPL")) > 3 && (v("Calculated Income")/v("FPL")) <= 4)
-        o["APTC Max Contribution"] = ((0.095)*(v("Calculated Income")/v("FPL"))) * v("Calculated Income")
-      end
-
-      if (v("Calculated Income")/v("FPL")) <= 2.5
+      if pct_fpl <= 250
         o["Applicant Income CSR Eligible Indicator"] = 'Y'
       else
         o["Applicant Income CSR Eligible Indicator"] = 'N'
