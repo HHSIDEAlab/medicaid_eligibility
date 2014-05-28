@@ -252,30 +252,32 @@
 
     </div>
 
-    <h3>APTC-Only</h3>
+    <div style="display: none">
+	    <h3>APTC-Only</h3>
 
-    <div class="form-row">
-      <label for="applicant_{{ $index }}_county">County</label>
-      <input type="text" id="applicant_{{ $index }}_county" name="county" ng-model="applicant.county">
-    </div>
-    <div class="form-half-field">
-      <label for="applicant_{{ $index }}_native_american_or_alaska_native">Native American or Alaska native</label>
-      <input type="checkbox" checker id="applicant_{{ $index }}_native_american_or_alaska_native" name="native_american_or_alaska_native" ng-model="applicant.native">
-    </div>
-    <div class="form-half-field">
-      <label for="applicant_{{ $index }}_other_mec_offer">Eligible for TRICARE, COBRA, VA Benefits, or Employer Sponsored Coverage (ESC)</label>
-      <input type="checkbox" checker id="applicant_{{ $index }}_other_mec_offer" name="other_mec_offer" ng-model="applicant.other_mec_offer">
-    </div>
-    <div class="form-half-field">
-      <label for="applicant_{{ $index }}_previous_aptc">Received APTC previously</label>
-      <input type="checkbox" checker id="applicant_{{ $index }}_previous_aptc" name="previous_aptc" ng-model="applicant.previousAPTC">
-      <div class="form-row-expandable-fields2" ng-show="applicant.previousAPTC">
-        <div class="form-row">
-          <label for="applicant_{{ $index }}_repaid_aptc">Any APTC received that exceeded the qualified amount has been repaid to the IRS by the tax filer(s)</label>
-          <input type="checkbox" checker id="applicant_{{ $index }}_repaid_aptc" name="applicant_{{ $index }}_repaid_aptc" ng-model="applicant.repaidAPTC">
-        </div>
-      </div>
-    </div>
+	    <div class="form-row">
+	      <label for="applicant_{{ $index }}_county">County</label>
+	      <input type="text" id="applicant_{{ $index }}_county" name="county" ng-model="applicant.county">
+	    </div>
+	    <div class="form-half-field">
+	      <label for="applicant_{{ $index }}_native_american_or_alaska_native">Native American or Alaska native</label>
+	      <input type="checkbox" checker id="applicant_{{ $index }}_native_american_or_alaska_native" name="native_american_or_alaska_native" ng-model="applicant.native">
+	    </div>
+	    <div class="form-half-field">
+	      <label for="applicant_{{ $index }}_other_mec_offer">Eligible for TRICARE, COBRA, VA Benefits, or Employer Sponsored Coverage (ESC)</label>
+	      <input type="checkbox" checker id="applicant_{{ $index }}_other_mec_offer" name="other_mec_offer" ng-model="applicant.other_mec_offer">
+	    </div>
+	    <div class="form-half-field">
+	      <label for="applicant_{{ $index }}_previous_aptc">Received APTC previously</label>
+	      <input type="checkbox" checker id="applicant_{{ $index }}_previous_aptc" name="previous_aptc" ng-model="applicant.previousAPTC">
+	      <div class="form-row-expandable-fields2" ng-show="applicant.previousAPTC">
+	        <div class="form-row">
+	          <label for="applicant_{{ $index }}_repaid_aptc">Any APTC received that exceeded the qualified amount has been repaid to the IRS by the tax filer(s)</label>
+	          <input type="checkbox" checker id="applicant_{{ $index }}_repaid_aptc" name="applicant_{{ $index }}_repaid_aptc" ng-model="applicant.repaidAPTC">
+	        </div>
+	      </div>
+	    </div>
+  	</div>
     
     <button type="button" class="remove-applicant" ng-click="removeApplicant(applicant)" tabindex="-1">Remove This Applicant</button>
 
