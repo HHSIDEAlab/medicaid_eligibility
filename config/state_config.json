@@ -3156,22 +3156,22 @@
  "VA": {
     "Option Householding Minor Student": "N",
     "Count Unborn Children for Household": "01",
-    "Option Deny Residency to Temporary Resident Students": "Y",
+    "Option Deny Residency to Temporary Resident Students": "N",
     "Option Require Work Quarters": "Y",
     "State Applies Seven Year Limit": "Y",
 
     "Option CHIPRA 214 Applicable Program": "01",
     
     "Option CHIPRA 214 Child Age Threshold": 19,
-    "Option CHIPRA 214 Applies To": "02",
+    "Option CHIPRA 214 Applies To": "01",
     
-    "Option CHIPRA 214 CHIP Applies To": "01",
+    "Option CHIPRA 214 CHIP Applies To": "02",
     
     
 
     "Deprivation Requirement Retained": "N",
     "Option Caretaker Relative Relationship": "01",
-    "Option Dependent Student": "N",
+    "Option Dependent Student": "Y",
     
     
     "Option Adult Group": "N",
