@@ -1179,7 +1179,7 @@
     "Option Cover Unborn Child": "Y",
     "Percent FPL Unborn Child": 208,
     "CHIP for State Health Benefits": "01",
-    "State CHIP Waiting Period": 12,
+    "State CHIP Waiting Period": 3,
 
     "Optional Targeted Low Income Child Group": "N",
     
@@ -1936,7 +1936,7 @@
     
 
     "Deprivation Requirement Retained": "N",
-    "Option Caretaker Relative Relationship": "00",
+    "Option Caretaker Relative Relationship": "01",
     "Option Dependent Student": "Y",
     
     
@@ -2126,7 +2126,7 @@
     "Option Dependent Student": "Y",
     "State Unemployed Standard": 100,
     
-    "Option Adult Group": "N",
+    "Option Adult Group": "Y",
     "Option Young Adults": "N",
     
     "Foster Care Age Threshold": 18,
@@ -2149,11 +2149,15 @@
     
 
     "Medicaid Thresholds": {
-      
+      "Adult Group Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 133
+      },
       "Parent Caretaker Category": {
         "percentage": "Y",
         "method": "standard",
-        "threshold": 70
+        "threshold": 69
       },
       "Pregnancy Category": {
         "percentage": "Y",
@@ -2956,7 +2960,7 @@
  "TX": {
     "Option Householding Minor Student": "N",
     "Count Unborn Children for Household": "03",
-    "Option Deny Residency to Temporary Resident Students": "Y",
+    "Option Deny Residency to Temporary Resident Students": "N",
     "Option Require Work Quarters": "Y",
     "State Applies Seven Year Limit": "Y",
 
@@ -2969,10 +2973,10 @@
     
     
 
-    "Deprivation Requirement Retained": "Y",
+    "Deprivation Requirement Retained": "N",
     "Option Caretaker Relative Relationship": "00",
     "Option Dependent Student": "Y",
-    "State Unemployed Standard": 100,
+    
     
     "Option Adult Group": "N",
     "Option Young Adults": "N",
@@ -3159,7 +3163,7 @@
     "Option CHIPRA 214 Applicable Program": "01",
     
     "Option CHIPRA 214 Child Age Threshold": 19,
-    "Option CHIPRA 214 Applies To": "01",
+    "Option CHIPRA 214 Applies To": "02",
     
     "Option CHIPRA 214 CHIP Applies To": "01",
     
@@ -3184,7 +3188,7 @@
     "CHIP for Pregnant Women": "N",
     "Option Cover Unborn Child": "N",
     "CHIP for State Health Benefits": "01",
-    "State CHIP Waiting Period": 4,
+    "State CHIP Waiting Period": 0,
 
     "Optional Targeted Low Income Child Group": "N",
     
@@ -3378,8 +3382,8 @@
     "CHIP for Pregnant Women": "N",
     "Option Cover Unborn Child": "Y",
     "Percent FPL Unborn Child": 301,
-    "CHIP for State Health Benefits": "03",
-    "State Health Benefits FPL Standard": 151,
+    "CHIP for State Health Benefits": "01",
+    
     "State CHIP Waiting Period": 3,
 
     "Optional Targeted Low Income Child Group": "Y",
