@@ -56,7 +56,8 @@ angular.module('MAGI.controllers', []).
                 $scope.checkEligibility = function(){
                     $log.info("Form Valid: " + $scope.applicationForm.$valid);
                     $log.info(JSON.stringify($scope.application.serialize()));
-                    if($scope.applicationForm.$valid){
+                    var invalid_elements = angular.element(document.querySelector("input.ng-invalid"));
+                    if($scope.applicationForm.$valid || invalid_elements.length == 0){
                         var serv = $scope.application.checkEligibility();
                         serv.then(function(resp){
                                 $location.path("/results");
@@ -64,10 +65,10 @@ angular.module('MAGI.controllers', []).
                           $scope.errorMessage = angular.fromJson(err)["data"]["Error"];                          
                         });
                     } else {
-                        $scope.submitted = true;   
+                        $scope.submitted = true;
                         $timeout(
                                 function(){
-                                    angular.element(document.querySelector("input.ng-invalid"))[0].focus( );  
+                                    invalid_elements[0].focus( );
                         });                           
                     }
                 };

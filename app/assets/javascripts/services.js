@@ -346,7 +346,11 @@ angular.module('MAGI.services',[]).
 			if(field.type == 'checkbox'){
 				return serializedObject[field.api] == 'Y';
 			} else if(field.type == 'string'){
-				return serializedObject[field.api] || '';
+        if(serializedObject[field.api] == 0) {
+          return 0;
+        } else {
+				  return serializedObject[field.api] || '';
+        }
 			} else if(field.type == 'date'){
 				if(serializedObject[field.api]){
 					var month = serializedObject[field.api].substring(5,7);
