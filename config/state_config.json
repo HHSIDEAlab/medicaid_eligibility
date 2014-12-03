@@ -457,9 +457,23 @@
         "threshold": 133
       },
       "Parent Caretaker Category": {
-        "percentage": "Y",
-        "method": "standard",
-        "threshold": 54
+        "percentage": "N",
+        "monthly": "Y",
+        "method": "household_size",
+        "household_size": [
+          0,
+          517,
+          694,
+          871,
+          1048,
+          1226,
+          1403,
+          1580,
+          1757,
+          1934,
+          2111
+        ],
+        "additional person": 178
       },
       "Pregnancy Category": {
         "percentage": "Y",
