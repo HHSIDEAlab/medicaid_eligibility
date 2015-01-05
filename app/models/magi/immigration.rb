@@ -43,7 +43,11 @@ module MAGI
 
     calculated "Seven Year Limit End Date" do
       if v("Seven Year Limit Applies") == 'Y'
-        v("Seven Year Limit Start Date") + 7.years
+        if v("Seven Year Limit Start Date")
+          v("Seven Year Limit Start Date") + 7.years
+        else
+          raise "Applicant #{v("Applicant ID")} is missing Seven Year Limit Start Date"
+        end
       else
         nil
       end

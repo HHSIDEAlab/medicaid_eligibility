@@ -21,7 +21,11 @@ module MAGI
 
     calculated "Applicant Refugee Medical Assistance End Date" do 
       if v("Refugee Status") == 'Y'
-        v("Refugee Medical Assistance Start Date") + 8.months
+        if v("Refugee Medical Assistance Start Date")
+          v("Refugee Medical Assistance Start Date") + 8.months
+        else
+          raise "Applicant #{v("Applicant ID")} is missing Refugee Medical Assistance Start Date"
+        end
       else
         nil
       end
