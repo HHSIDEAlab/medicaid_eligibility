@@ -1,5 +1,11 @@
-<form name="applicationForm" id="application_form" method="post" ng-submit="checkEligibility()" novalidate>
-  <h1>MAGI in the Cloud</h1>
+<h1>MAGI in the Cloud</h1>
+<div id="splash_notice" class="splash-notice-area" ng-show="showSplashNotice()">
+  <div class="splash-text">
+    Splash page text goes here
+  </div>
+  <button class="submitlike" ng-click="acceptNotice()" type="button">Continue to Application</button>
+</div>
+<form name="applicationForm" id="application_form" method="post" ng-submit="checkEligibility()" novalidate ng-show="!showSplashNotice()">
     <div class="form-fields-area">
       <div class="form-row">
         <label for="state">State</label>

@@ -110,6 +110,15 @@ fieldset, .form-fields-area {
   padding: 30px 21px;
 }
 
+.splash-notice-area {
+  background: white;
+  padding: 30px 21px;
+}
+
+.splash-text {
+  padding: 30px;
+}
+
 fieldset {
   padding-top: 80px;
 }

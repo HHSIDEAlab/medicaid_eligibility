@@ -272,12 +272,6 @@ angular.module('btford.dragon-drop', []).
             offsetX = (ev.pageX - offset.left);
             offsetY = (ev.pageY - offset.top);
 
-
-            if(!ev.pageX){
-              offsetX = ev.offsetX;
-              offsetY = ev.offsetY;
-            }
-
             spawnFloaty();
             drag(ev);
           });

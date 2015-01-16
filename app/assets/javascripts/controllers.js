@@ -1,9 +1,20 @@
 'use strict';
 
-angular.module('MAGI.controllers', []).
-	controller('FormController',['$scope','$location','$anchorScroll','$timeout','$log',
+angular.module('MAGI.controllers', ['ngCookies']).
+	controller('FormController',['$scope','$location','$anchorScroll','$timeout','$log', '$cookies',
 		'filterFilter', 'Application','relationshipCodes','states','applicationYears','applicationStatuses', 
-		function($scope,$location,$anchorScroll,$timeout,$log,filterFilter, Application, relationshipCodes,states,applicationYears,applicationStatuses){		
+		function($scope, $location, $anchorScroll, $timeout, $log, $cookies, filterFilter, Application, relationshipCodes, states, applicationYears, applicationStatuses){
+                showSplashNotice = false;
+
+                $scope.showSplashNotice = function() {
+                    return showSplashNotice && !($cookies.acceptedNotice == "accepted");
+                };
+
+                $scope.acceptNotice = function() {
+                    showSplashNotice = false;
+                    $cookies.acceptedNotice = "accepted";
+                };
+
                 Application.resetResults();
                 $scope.submitted = false;
                 $scope.applicants = Application.applicants;
