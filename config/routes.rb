@@ -7,5 +7,7 @@ MedicaidEligibilityApi::Application.routes.draw do
     post 'eval', :on => :member
   end
 
-  root :to => 'determinations#eval'
+  get '/', to: 'home#index'
+  post '/', to: 'determinations#eval'
+
 end

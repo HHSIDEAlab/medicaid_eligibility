@@ -4,8 +4,6 @@ angular.module('MAGI.controllers', ['ngCookies']).
 	controller('FormController',['$scope','$location','$anchorScroll','$timeout','$log', '$cookies',
 		'filterFilter', 'Application','relationshipCodes','states','applicationYears','applicationStatuses', 
 		function($scope, $location, $anchorScroll, $timeout, $log, $cookies, filterFilter, Application, relationshipCodes, states, applicationYears, applicationStatuses){
-                showSplashNotice = false;
-
                 $scope.showSplashNotice = function() {
                     return showSplashNotice && !($cookies.acceptedNotice == "accepted");
                 };
