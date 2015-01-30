@@ -116,7 +116,12 @@ fieldset, .form-fields-area {
 }
 
 .splash-text {
-  padding: 30px;
+  padding: 10px 30px;
+}
+
+.splash-header {
+  text-align: center;
+  font-size: 18px; 
 }
 
 fieldset {
