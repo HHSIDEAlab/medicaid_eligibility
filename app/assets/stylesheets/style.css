@@ -29,12 +29,16 @@ button[type=submit], .add-applicant, .remove-applicant, .remove-filer, .submitli
 }
 
 h1 {
-  background: #414958;
+  background: #236995;
   color: #fff;
   font-weight: 300;
   margin: 0;
   line-height: 80px;
   text-align: center;
+}
+
+a {
+  color: #236995;
 }
 
 fieldset {
@@ -44,7 +48,7 @@ fieldset {
 }
 
 legend, .add-applicant, h2 {
-  color: #61708c;
+  color: #236995;
   font-weight: bold;
   text-transform: uppercase;
 }
@@ -132,7 +136,7 @@ fieldset, .form-fields-area {
 
 .splash-emphasis {
   font-weight: bold;
-  color:  #000099;
+  color:  #236995;
 }
 
 fieldset {
@@ -188,13 +192,6 @@ h2 {
   background: url('/assets/close.png') no-repeat 0 0;
   background-size: 100%;
   height: 20px;
-  /*overflow: hidden;*/
-  /*padding: 0;*/
-  /*position: absolute;*/
-  /*right: 21px;*/
-  /*text-indent: 100%;*/
-  /*top: 16px;*/
-  /*white-space: nowrap;*/
   width: 20px;
 }
 
@@ -315,7 +312,7 @@ h2 {
 }
 
 button[type=submit], button.submitlike {
-  background: #24bbbe;
+  background: #42B3DF;
   -webkit-border-radius: 5px;
           border-radius: 5px;
   background-clip: padding-box;
