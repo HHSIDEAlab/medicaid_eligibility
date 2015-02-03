@@ -2,38 +2,54 @@
 <div id="splash_notice" class="splash-notice-area" ng-show="showSplashNotice()">
   <div class="splash-text">
     <h2 class="splash-header">Welcome to MAGI in the Cloud</h2>
+
     Thank you for your interest in this open source application known as "MAGI Software." The MAGI Software determines Medicaid Program and Children's Health Insurance Program income eligibility based on the modified adjusted gross income ("MAGI") calculation as defined by the Affordable Care Act, both as a web interface and as an Application Programming Interface.
+
     </br></br>
+
     The MAGI Software is hosted by NESCSO, a nonprofit membership organization that provides services on a shared basis, including advisory, analytical, consulting and systems development services, to public entities furnishing services under Title XIX of the Social Security Act (the "Medicaid Program").
+
     </br></br>
+
     The MAGI Software was developed by BlueLabs, LLC, through grant funding from the State Health Reform Assistance Network, a Robert Wood Johnson Foundation funded program, and under the direction of the CMS Entrepreneurs Program.
+
     </br></br>
-    NESCSO, in concert with CMS, has determined that the MAGI Software is a cost-effective solution for public entities in determining eligibility for the Medicaid Program. States can access the MAGI Software by becoming a NESCSO member, and in so doing will also be able to access certain technical consulting and support services available pursuant to the terms of the Membership Agreement. You can download a copy of the Membership Agreement by clicking <a href="https://s3.amazonaws.com/bluelabs-mitc/NESCSO+Membership+Agreement.pdf">here</a>. If you have any questions about becoming a member or the Membership Agreement, please email <a href="mailto:Brenda.Harvey@umassmed.edu">Brenda.Harvey@umassmed.edu</a>.
+
+    NESCSO, in concert with CMS, has determined that the MAGI Software is a cost-effective solution for public entities in determining eligibility for the Medicaid Program. <span class="splash-emphasis">States can access the MAGI Software by becoming a NESCSO member</span>, and in so doing will also be able to access certain technical consulting and support services available pursuant to the terms of the Membership Agreement. <span class="splash-emphasis">You can download a copy of the Membership Agreement by clicking <a href="https://s3.amazonaws.com/bluelabs-mitc/NESCSO+Membership+Agreement.pdf">here</a>.</span> If you have any questions about becoming a member or the Membership Agreement, please email <a href="mailto:Brenda.Harvey@umassmed.edu">Brenda.Harvey@umassmed.edu</a>.
+
     </br></br>
-    As of March 1, 2015, the MAGI Software will no longer be publicly supported except to NESCSO members.
+
+    <span class="splash-emphasis">As of March 1, 2015, the MAGI Software will no longer be publicly supported except to NESCSO members.</span>
   </div>
   <button class="submitlike" ng-click="acceptNotice()" type="button">Continue to MAGI in the Cloud</button>
 </div>
+
 <form name="applicationForm" id="application_form" method="post" ng-submit="checkEligibility()" novalidate ng-show="!showSplashNotice()">
   <h1>MAGI in the Cloud</h1>
-    <div class="form-fields-area">
-      <div class="form-row">
-        <label for="state">State</label>
-        <select selector ng-model="application.state" name="state" id="state" ng-options="state as state.name for state in appStates" required>
-          <option value="" selected></option>
-        </select>
-        <label for="state" class="error" ng-show="(applicationForm.state.$dirty  || submitted) && applicationForm.state.$invalid">Please enter a State</label>
-      </div>
-      <div class="form-row">
-        <label for="applicationYear">Application year<br>(year starts April 1)</label>
-        <select selector ng-model="application.applicationYear" name="applicationYear" id="applicationYear" ng-options="year for year in appYears" required>
-        </select>
-      </div>
-      <div class="form-row">
-        <label for="id">Application Name or ID</label>
-        <input id="applicationId" ng-model="application.applicationId" type="text" name="id" required>
-        <label for="id" class="error" ng-show="(applicationForm.id.$dirty  || submitted) && applicationForm.id.$invalid">This field is required.</label>
-      </div>
+  <div id="short_notice" class="short-notice-area" ng-show="showShortNotice()">
+    <span class="splash-emphasis">As of March 1, 2015, MAGI in the Cloud will no longer be publicly supported except to NESCSO members.</span> 
+
+    <br><br>
+
+    Download a copy of the NESCSO Membership Agreement by clicking <a href="https://s3.amazonaws.com/bluelabs-mitc/NESCSO+Membership+Agreement.pdf">here</a> or email <a href="mailto:Brenda.Harvey@umassmed.edu">Brenda.Harvey@umassmed.edu</a> if you have questions.
+  </div>
+  <div class="form-fields-area">
+    <div class="form-row">
+      <label for="state">State</label>
+      <select selector ng-model="application.state" name="state" id="state" ng-options="state as state.name for state in appStates" required>
+        <option value="" selected></option>
+      </select>
+      <label for="state" class="error" ng-show="(applicationForm.state.$dirty  || submitted) && applicationForm.state.$invalid">Please enter a State</label>
+    </div>
+    <div class="form-row">
+      <label for="applicationYear">Application year<br>(year starts April 1)</label>
+      <select selector ng-model="application.applicationYear" name="applicationYear" id="applicationYear" ng-options="year for year in appYears" required>
+      </select>
+    </div>
+    <div class="form-row">
+      <label for="id">Application Name or ID</label>
+      <input id="applicationId" ng-model="application.applicationId" type="text" name="id" required>
+      <label for="id" class="error" ng-show="(applicationForm.id.$dirty  || submitted) && applicationForm.id.$invalid">This field is required.</label>
     </div>
   </div>
   <fieldset ng-form name="applicantForm" ng-repeat="applicant in applicants" ng-controller="ApplicantController">

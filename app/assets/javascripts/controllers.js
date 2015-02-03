@@ -4,14 +4,20 @@ angular.module('MAGI.controllers', ['ngCookies']).
 	controller('FormController',['$scope','$location','$anchorScroll','$timeout','$log', '$cookies',
 		'filterFilter', 'Application','relationshipCodes','states','applicationYears','applicationStatuses', 
 		function($scope, $location, $anchorScroll, $timeout, $log, $cookies, filterFilter, Application, relationshipCodes, states, applicationYears, applicationStatuses){
+                var suppressSplashNotice = false;
+
                 $scope.showSplashNotice = function() {
-                    return showSplashNotice && !($cookies.acceptedNotice == "accepted");
+                    return showSplashNotice && !suppressSplashNotice;
                 };
 
                 $scope.acceptNotice = function() {
-                    showSplashNotice = false;
+                    suppressSplashNotice = true;
                     $cookies.acceptedNotice = "accepted";
                 };
+
+                $scope.showShortNotice = function() {
+                    return showSplashNotice;
+                }
 
                 Application.resetResults();
                 $scope.submitted = false;
