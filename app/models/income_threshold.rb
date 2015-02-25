@@ -14,6 +14,10 @@ module IncomeThreshold
   end
 
   def get_threshold(category)
+    if category["varies_yearly"] == "Y"
+      return get_threshold(category[v("Application Year").to_s])
+    end
+
     if category["method"] == "standard"
       threshold = category["threshold"]
     elsif category["method"] == "household_size"

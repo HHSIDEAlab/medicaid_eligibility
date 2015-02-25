@@ -438,7 +438,7 @@
     "Option Adult Group": "Y",
     "Option Young Adults": "N",
     "Young Adult Age Threshold": 19,
-    "Foster Care Age Threshold": 18,
+    "Foster Care Age Threshold": 21,
     "In-State Foster Care Required": "Y",
     "State Offers Refugee Medical Assistance": "Y",
     "Refugee Medical Assistance Income Requirement": "Y",
@@ -455,7 +455,7 @@
 
     "Optional Targeted Low Income Child Group": "N",
     "CHIP Targeted Low Income Child Group": "Y",
-    "CHIP Targeted Low Income Child Age High Threshold": 19,
+    "CHIP Targeted Low Income Child Age High Threshold": 18,
     "CHIP Targeted Low Income Child Age Low Threshold": 0,
 
     "Medicaid Thresholds": {
@@ -465,23 +465,45 @@
         "threshold": 133
       },
       "Parent Caretaker Category": {
-        "percentage": "N",
-        "monthly": "Y",
-        "method": "household_size",
-        "household_size": [
-          0,
-          517,
-          694,
-          871,
-          1048,
-          1226,
-          1403,
-          1580,
-          1757,
-          1934,
-          2111
-        ],
-        "additional person": 178
+        "varies_yearly": "Y",
+        "2014": {
+          "percentage": "N",
+          "monthly": "Y",
+          "method": "household_size",
+          "household_size": [
+            0,
+            517,
+            694,
+            871,
+            1048,
+            1226,
+            1403,
+            1580,
+            1757,
+            1934,
+            2111
+          ],
+          "additional person": 178
+        },
+        "2015": {
+          "percentage": "N",
+          "monthly": "Y",
+          "method": "household_size",
+          "household_size": [
+            0,
+            566,
+            760,
+            955,
+            1149,
+            1344,
+            1539,
+            1733,
+            1927,
+            2122,
+            2316
+          ],
+          "additional person": 195
+        }
       },
       "Pregnancy Category": {
         "percentage": "Y",
