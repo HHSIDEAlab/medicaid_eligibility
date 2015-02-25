@@ -8,6 +8,10 @@
       "2014": {
         "Base FPL": 11670,
         "FPL Per Person": 4060
+      },
+      "2015": {
+        "Base FPL": 11770,
+        "FPL Per Person": 4160
       }
     },
 
@@ -196,6 +200,10 @@
       "2014": {
         "Base FPL": 13420,
         "FPL Per Person": 4670
+      },
+      "2015": {
+        "Base FPL": 13550,
+        "FPL Per Person": 4780
       }
     }
   },
@@ -603,6 +611,10 @@
       "2014": {
         "Base FPL": 14580,
         "FPL Per Person": 5080
+      },
+      "2015": {
+        "Base FPL": 14720,
+        "FPL Per Person": 5200
       }
     },
 
