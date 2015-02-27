@@ -1,12 +1,14 @@
 module IncomeThreshold
-  def get_income(threshold, percentage, monthly)
+  def get_income(threshold, percentage, monthly, add_disregard=true)
     if percentage == 'Y'
-      return (threshold + 5) * 0.01 * v("FPL")
+      return (threshold + (add_disregard ? 5 : 0)) * 0.01 * v("FPL")
     elsif percentage == 'N'
+      disregard = (add_disregard ? 0.05 * v("FPL") : 0)
+
       if monthly == 'Y'
-        return threshold * 12 + 0.05 * v("FPL")
+        return threshold * 12 + disregard
       else
-        return threshold + 0.05 * v("FPL")
+        return threshold + disregard
       end
     else
       raise "Invalid state config"
@@ -38,6 +40,11 @@ module IncomeThreshold
     else
       raise "Undefined threshold method #{category["method"]}"
     end
-    get_income(threshold, category["percentage"], category["monthly"])
+
+    if category["includes_disregard"] == "Y"
+      get_income(threshold, category["percentage"], category["monthly"], add_disregard=false)
+    else
+      get_income(threshold, category["percentage"], category["monthly"])
+    end
   end
 end

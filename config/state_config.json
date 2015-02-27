@@ -469,6 +469,7 @@
         "2014": {
           "percentage": "N",
           "monthly": "Y",
+          "includes_disregard": "Y",
           "method": "household_size",
           "household_size": [
             0,
@@ -488,6 +489,7 @@
         "2015": {
           "percentage": "N",
           "monthly": "Y",
+          "includes_disregard": "Y",
           "method": "household_size",
           "household_size": [
             0,
