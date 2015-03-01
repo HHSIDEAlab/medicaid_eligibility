@@ -37,11 +37,15 @@
 <div ng-show="!showLogin()">
   <h1>MAGI in the Cloud</h1>
   <div id="short_notice" class="short-notice-area" ng-show="showShortNotice()">
-    <span class="splash-emphasis">As of March 1, 2015, MAGI in the Cloud will no longer be publicly supported except to NESCSO members.</span> 
+    You are logged in with organization <span class="splash-emphasis">{{application.org.name}}</span>.
+    
+    <button class="logout" ng-click="logOut()" type="button">Log Out</button>
 
     <br><br>
 
-    You can download a copy of the Membership Agreement by clicking <a href="https://s3.amazonaws.com/bluelabs-mitc/NESCSO+Membership+Agreement.pdf">here</a>. If you have any questions about becoming a member or the Membership Agreement, please email <a href="mailto:Brenda.Harvey@umassmed.edu">Brenda.Harvey@umassmed.edu</a>.
+    If you have any questions about MITC, please contact the administrator for your organization.
+
+
   </div>
   <div class="form-fields-area">
     <div class="form-row">

@@ -1,22 +1,29 @@
 'use strict';
 
 angular.module('MAGI.controllers', ['ngCookies']).
-	controller('FormController',['$scope','$location','$anchorScroll','$timeout','$log', '$cookies',
+	controller('FormController',['$scope','$location','$anchorScroll','$timeout','$log', '$cookies', '$cookieStore',
 		'filterFilter', 'Application','relationshipCodes','orgs','states','applicationYears','applicationStatuses', 
-		function($scope, $location, $anchorScroll, $timeout, $log, $cookies, filterFilter, Application, relationshipCodes, orgs, states, applicationYears, applicationStatuses){
+		function($scope, $location, $anchorScroll, $timeout, $log, $cookies, $cookieStore, filterFilter, Application, relationshipCodes, orgs, states, applicationYears, applicationStatuses){
                 var acceptedNoticeSession = false;
-
+                
                 $scope.showLogin = function() {
-                    return showSplashNotice && !acceptedNoticeSession && !(_.contains(orgs, $cookies.mitcOrg));
+                    return showSplashNotice && !acceptedNoticeSession && !(_.any(orgs, function(org){ return org.name == $cookies.mitcOrg}));
                 };
 
                 $scope.acceptNotice = function() {
-                    acceptedNoticeSession = true;
-                    $cookies.acceptedNotice = "accepted";
+                    if (_.contains(orgs, $scope.application.org)) {
+                        acceptedNoticeSession = true;
+                        $cookies.mitcOrg = $scope.application.org.name;
+                    }
                 };
 
                 $scope.showShortNotice = function() {
                     return showSplashNotice;
+                }
+
+                $scope.logOut = function() {
+                    acceptedNoticeSession = false;
+                    $cookieStore.remove('mitcOrg');
                 }
 
                 Application.resetResults();
@@ -106,11 +113,23 @@ angular.module('MAGI.controllers', ['ngCookies']).
                 }
 
 
-		$scope.states = states;
-        $scope.appStates = _.filter(states, function(state){return state.inApp;});
-    $scope.appYears = applicationYears;
-    $scope.appStatuses = applicationStatuses;
-    $scope.qualNonCitizenStatuses = _.filter(applicationStatuses, function(status){return status.qnc;});
+        		$scope.states = states;
+                $scope.appStates = _.filter(states, function(state){return state.inApp;});
+                $scope.appYears = applicationYears;
+                $scope.appStatuses = applicationStatuses;
+                $scope.qualNonCitizenStatuses = _.filter(applicationStatuses, function(status){return status.qnc;});
+
+                if (showSplashNotice) {
+                    $scope.$watch('application.org', function(newValue, oldValue){
+                        if ($scope.application.org) {
+                            $scope.appStates = _.filter($scope.states, function(state){return state.inApp && _.contains($scope.application.org.states, state.abbr);});
+                        }
+                    });
+
+                    if ($cookies.mitcOrg) {
+                        $scope.application.org = _.filter(orgs, function(org){ return org.name == $cookies.mitcOrg})[0];
+                    }
+                }
 	}]).
         controller('ApplicantController',['$scope',function($scope){
                 $scope.checkResponsibility = function(){
@@ -134,12 +153,6 @@ angular.module('MAGI.controllers', ['ngCookies']).
                         if(newValue){
                                 $scope.applicant.pregnantThreeMonths = false;
                         }
-                });
-
-                $scope.$watch('org', function(newValue, oldValue){
-                    if(newValue){
-                        $scope.appStates = _.filter($scope.states, function(state){return state.inApp && _.contains($scope.org.states, state.abbr);});
-                    }
                 });
 
                 $scope.updateRelationship = function(relationship){
