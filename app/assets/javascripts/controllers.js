@@ -2,12 +2,12 @@
 
 angular.module('MAGI.controllers', ['ngCookies']).
 	controller('FormController',['$scope','$location','$anchorScroll','$timeout','$log', '$cookies',
-		'filterFilter', 'Application','relationshipCodes','states','applicationYears','applicationStatuses', 
-		function($scope, $location, $anchorScroll, $timeout, $log, $cookies, filterFilter, Application, relationshipCodes, states, applicationYears, applicationStatuses){
+		'filterFilter', 'Application','relationshipCodes','orgs','states','applicationYears','applicationStatuses', 
+		function($scope, $location, $anchorScroll, $timeout, $log, $cookies, filterFilter, Application, relationshipCodes, orgs, states, applicationYears, applicationStatuses){
                 var acceptedNoticeSession = false;
 
-                $scope.showSplashNotice = function() {
-                    return showSplashNotice && !acceptedNoticeSession && !($cookies.acceptedNotice == "accepted");
+                $scope.showLogin = function() {
+                    return showSplashNotice && !acceptedNoticeSession && !(_.contains(orgs, $cookies.mitcOrg));
                 };
 
                 $scope.acceptNotice = function() {
@@ -33,6 +33,7 @@ angular.module('MAGI.controllers', ['ngCookies']).
 
                 $scope.removeTaxReturn = Application.removeTaxReturn;
                 $scope.relationshipCodes = relationshipCodes;
+                $scope.orgs = orgs;
 
                 $scope.newHousehold = [];
 
@@ -133,7 +134,13 @@ angular.module('MAGI.controllers', ['ngCookies']).
                         if(newValue){
                                 $scope.applicant.pregnantThreeMonths = false;
                         }
-                }); 
+                });
+
+                $scope.$watch('org', function(newValue, oldValue){
+                    if(newValue){
+                        $scope.appStates = _.filter($scope.states, function(state){return state.inApp && _.contains($scope.org.states, state.abbr);});
+                    }
+                });
 
                 $scope.updateRelationship = function(relationship){
                         relationship.updateOpposite();

@@ -1,5 +1,5 @@
 angular.module('MAGI.services',[]).
-    factory('Application', ['$http','$log','relationshipCodes','states', '$location', function($http,$log,relationshipCodes, states, $location){
+    factory('Application', ['$http','$log','relationshipCodes','states','orgs', '$location', function($http,$log,relationshipCodes,orgs, states, $location){
 		function Application(){
 			this.applicationId = "";
 			this.applicants = [];
@@ -731,4 +731,5 @@ angular.module('MAGI.services',[]).
     {code: "09", name: "Granted withholding of deportation", qnc: true, startDate: "Deportation withheld date"},
     {code: "10", name: "Member of a federally recognized Indian tribe or American Indian born in Canada", qnc: true},
     {code: "99", name: "Other", qnc: false}
-  ]);
+  ]).
+  constant('orgs', [{name: 'North Dakota Department of Human Services', states: ['ND']}]);

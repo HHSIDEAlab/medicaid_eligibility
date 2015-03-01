@@ -1,11 +1,21 @@
-
-<div id="splash_notice" class="splash-notice-area" ng-show="showSplashNotice()">
+<form name="applicationForm" id="application_form" method="post" ng-submit="checkEligibility()" novalidate >
+<div id="splash_notice" class="splash-notice-area" ng-show="showLogin()">
   <div class="splash-text">
     <h2 class="splash-header">Welcome to MAGI in the Cloud</h2>
 
-    Thank you for your interest in this open source application known as "MAGI Software." The MAGI Software determines Medicaid Program and Children's Health Insurance Program income eligibility based on the modified adjusted gross income ("MAGI") calculation as defined by the Affordable Care Act, both as a web interface and as an Application Programming Interface.
+    <span class="splash-emphasis">As of March 1, 2015, the MAGI Software will no longer be publicly supported except to NESCSO members.</span> If you are a NESCSO member, please choose your organization. If you are not a NESCSO member, please see the notice below.
 
-    </br></br>
+    <br><br>
+
+    <div class="form-row">
+      <label for="org">Choose your organization</label>
+      <select selector ng-model="application.org" name="org" id="org" ng-options="org as org.name for org in orgs" >
+        <option value="" selected></option>
+      </select>
+      <label for="org" class="error" ng-show="(applicationForm.org.$dirty  || submitted) && applicationForm.org.$invalid">Please enter your organization</label>
+    </div>
+
+    <br><br>
 
     The MAGI Software is hosted by NESCSO, a nonprofit membership organization that provides services on a shared basis, including advisory, analytical, consulting and systems development services, to public entities furnishing services under Title XIX of the Social Security Act (the "Medicaid Program").
 
@@ -19,12 +29,12 @@
 
     </br></br>
 
-    <span class="splash-emphasis">As of March 1, 2015, the MAGI Software will no longer be publicly supported except to NESCSO members.</span>
+    
   </div>
   <button class="submitlike" ng-click="acceptNotice()" type="button">Continue to MAGI in the Cloud</button>
 </div>
 
-<form name="applicationForm" id="application_form" method="post" ng-submit="checkEligibility()" novalidate ng-show="!showSplashNotice()">
+<div ng-show="!showLogin()">
   <h1>MAGI in the Cloud</h1>
   <div id="short_notice" class="short-notice-area" ng-show="showShortNotice()">
     <span class="splash-emphasis">As of March 1, 2015, MAGI in the Cloud will no longer be publicly supported except to NESCSO members.</span> 
@@ -60,16 +70,16 @@
         <select selector ng-model="relationship.code" ng-options="rc.code as rc.label for rc in relationshipCodes" ng-change="updateRelationship(relationship)">
         </select>
       </div>
-      </div>
-      <div class="form-row">
-        <label for="applicant_id">Applicant Name or ID</label>
-        <input type="text" ng-model="applicant.id" name="applicant_id"
-             class="applicant-id-field" required applicant_id_unique="true">
-        <label for="applicant_id" class="error" ng-show="(applicantForm.applicant_id.$dirty || submitted)  && applicantForm.applicant_id.$invalid">This field is required.</label>
-      </div>
-      <div class="form-row">
-        <label for="applicant_{{ $index }}_is_applicant">Is this individual applying for insurance?</label>
-        <input type="checkbox" checker ng-model = "applicant.isApplicant" id="applicant_{{ $index }}_is_applicant" name="applicant_is_applicant" >
+    </div>
+    <div class="form-row">
+      <label for="applicant_id">Applicant Name or ID</label>
+      <input type="text" ng-model="applicant.id" name="applicant_id"
+           class="applicant-id-field" required applicant_id_unique="true">
+      <label for="applicant_id" class="error" ng-show="(applicantForm.applicant_id.$dirty || submitted)  && applicantForm.applicant_id.$invalid">This field is required.</label>
+    </div>
+    <div class="form-row">
+      <label for="applicant_{{ $index }}_is_applicant">Is this individual applying for insurance?</label>
+      <input type="checkbox" checker ng-model = "applicant.isApplicant" id="applicant_{{ $index }}_is_applicant" name="applicant_is_applicant" >
     </div>
     <div class="form-row-expandable">
       <label for="applicant_{{ $index }}_age">Age</label>
@@ -77,18 +87,18 @@
       <label for="applicant_{{ $index }}_age" class="error" ng-show="(applicantForm.applicant_age.$dirty  || submitted)  && applicantForm.applicant_age.$invalid">This field is required.</label>
       <div class="form-row-expandable-fields2" ng-show="checkResponsibility()">
 
-      <div class="form-row" >
-        <label for="applicant_{{ $index }}_nonParentResponsibility" >Someone other than a parent claims primary responsibility for this person</label>
-        <input type="checkbox" checker id="applicant_{{ $index }}_nonParentResponsibility" name="applicant_nonParentResponsibility" ng-model="applicant.nonParentResponsibility" ng-change="updateResponsibility(applicant)">
-      </div>
-          <div class="form-row" ng-show="applicant.nonParentResponsibility">
-            <label for="applicant_{{ $index }}_nonParentResponsibilityPerson">Who?</label>
-            <select id="applicant_{{ $index }}_nonParentResponsibilityPerson" selector ng-model="applicant.nonParentResponsibilityPerson" ng-options="appl.id for appl in applicants | filter:notMe" ng-change="updateResponsibility(applicant)">
-            <option value="">Not on this application</option>
+        <div class="form-row" >
+          <label for="applicant_{{ $index }}_nonParentResponsibility" >Someone other than a parent claims primary responsibility for this person</label>
+          <input type="checkbox" checker id="applicant_{{ $index }}_nonParentResponsibility" name="applicant_nonParentResponsibility" ng-model="applicant.nonParentResponsibility" ng-change="updateResponsibility(applicant)">
+        </div>
+        <div class="form-row" ng-show="applicant.nonParentResponsibility">
+          <label for="applicant_{{ $index }}_nonParentResponsibilityPerson">Who?</label>
+          <select id="applicant_{{ $index }}_nonParentResponsibilityPerson" selector ng-model="applicant.nonParentResponsibilityPerson" ng-options="appl.id for appl in applicants | filter:notMe" ng-change="updateResponsibility(applicant)">
+          <option value="">Not on this application</option>
           </select>
 
-          </div>
         </div>
+      </div>
     </div>
     <div class="form-row">
       <label for="applicant_{{ $index }}_hours">Hours worked per week</label>
@@ -270,7 +280,7 @@
             <div incomegroup monthlyLabel="Monthly alimony" annualLabel="Annual alimony" ng-model="applicant.incomeTaxes.alimony"></div>
             <div incomegroup monthlyLabel="Other monthly income" annualLabel="Other annual income" ng-model="applicant.incomeTaxes.other"></div>
             <div incomegroup monthlyLabel="Monthly MAGI deductions" annualLabel="Annual MAGI deductions" ng-model="applicant.incomeTaxes.MAGIDeductions"></div>
-          </div>
+          
         </div>
 
       </div>
@@ -317,9 +327,9 @@
 
     <button type="button" class="remove-applicant" ng-click="removeTaxReturn(taxReturn)" tabindex="-1">Remove This Tax Return</button>
 
-    </fieldset>
-  </div>
-    <button ng-click="addTaxReturn()" type="button" class="add-applicant">Add Another Tax Return</button>
+  </fieldset>
+  
+  <button ng-click="addTaxReturn()" type="button" class="add-applicant">Add Another Tax Return</button>
   <fieldset ng-show="showHouseholds()">
     <legend>Physical Households</legend>
 
@@ -340,5 +350,5 @@
     
   <button type="submit">Check Eligibility</button>
   <button class="submitlike" ng-click="exportApplication()">Export Application</button>
-
+</div>
 </form>
