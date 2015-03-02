@@ -19,12 +19,12 @@ body {
   width: 740px;
 }
 
-button[type=submit], input::-webkit-outer-spin-button, input::-webkit-inner-spin-button, .add-applicant, .remove-applicant, .remove-filer, .submitlike, .logout {
+button[type=submit], input::-webkit-outer-spin-button, input::-webkit-inner-spin-button, .add-applicant, .remove-applicant, .remove-filer, .submitlike, .logout, .disabledbutton {
   -webkit-appearance: none;
   appearance: none;
 }
 
-button[type=submit], .add-applicant, .remove-applicant, .remove-filer, .submitlike, .logout {
+button[type=submit], .add-applicant, .remove-applicant, .remove-filer, .submitlike, .logout, .disabledbutton {
   border: none;
 }
 
@@ -313,6 +313,21 @@ h2 {
 
 button[type=submit], button.submitlike {
   background: #42B3DF;
+  -webkit-border-radius: 5px;
+          border-radius: 5px;
+  background-clip: padding-box;
+  color: #fff;
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 20px 85px;
+  margin: 40px auto 0;
+  text-align: center;
+  width: 350px;
+}
+
+button.disabledbutton {
+  background: gray;
   -webkit-border-radius: 5px;
           border-radius: 5px;
   background-clip: padding-box;

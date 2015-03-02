@@ -46,7 +46,7 @@
     If you have any questions about MITC, please contact the administrator for your organization.
 
 
-  </div>
+  </div>  
   <div class="form-fields-area">
     <div class="form-row">
       <label for="state">State</label>
@@ -65,6 +65,13 @@
       <input id="applicationId" ng-model="application.applicationId" type="text" name="id" required>
       <label for="id" class="error" ng-show="(applicationForm.id.$dirty  || submitted) && applicationForm.id.$invalid">This field is required.</label>
     </div>
+  </div>
+  <div id="submit_disabled_text" class="short-notice-area" ng-show="disableSubmit()">
+    As of March 1, 2015, the MAGI Software is no longer publicly supported except to NESCSO members. The state you have chosen is not a member of NESCSO at this time. <span class="splash-emphasis">The MAGI Software tool is available for demonstration purposes to non-members, but you will not be able to submit the application and view eligibility.</span>
+
+    <br><br>
+
+    States can access the MAGI Software by becoming a NESCSO member, and in so doing will also be able to access certain technical consulting and support services available pursuant to the terms of the Membership Agreement. <span class="splash-emphasis">You can download a copy of the Membership Agreement by clicking <a href="https://s3.amazonaws.com/bluelabs-mitc/NESCSO+Membership+Agreement.pdf">here</a>.</span> If you have any questions about becoming a member or the Membership Agreement, please email <a href="mailto:Brenda.Harvey@umassmed.edu">Brenda.Harvey@umassmed.edu</a>.
   </div>
   <fieldset ng-form name="applicantForm" ng-repeat="applicant in applicants" ng-controller="ApplicantController">
     <legend>Applicant <span class="applicant-number">{{$index+1}}</span></legend>
@@ -351,8 +358,13 @@
   <div class="errorbox" ng-show="errorMessage">
     <label class="toperror">Error: {{errorMessage}}</label>
   </div>
-    
-  <button type="submit">Check Eligibility</button>
-  <button class="submitlike" ng-click="exportApplication()">Export Application</button>
+  <div ng-show="!disableSubmit() && application.state"> 
+    <button type="submit">Check Eligibility</button>
+    <button class="submitlike" ng-click="exportApplication()">Export Application</button>
+  </div>
+  <div ng-show="disableSubmit() || !(application.state)"> 
+    <button class="disabledbutton" ng-click="" disabled>Check Eligibility</button>
+    <button class="disabledbutton" ng-click="" disabled>Export Application</button>
+  </div>
 </div>
 </form>

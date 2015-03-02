@@ -26,6 +26,10 @@ angular.module('MAGI.controllers', ['ngCookies']).
                     $cookieStore.remove('mitcOrg');
                 }
 
+                $scope.disableSubmit = function() {
+                    return restrictStates && $scope.application.state && !($scope.application.state.member);
+                }
+
                 Application.resetResults();
                 $scope.submitted = false;
                 $scope.applicants = Application.applicants;
