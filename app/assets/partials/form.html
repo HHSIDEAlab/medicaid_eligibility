@@ -67,11 +67,13 @@
     </div>
   </div>
   <div id="submit_disabled_text" class="short-notice-area" ng-show="disableSubmit()">
-    As of March 1, 2015, the MAGI Software is no longer publicly supported except to NESCSO members. The state you have chosen is not a member of NESCSO at this time. <span class="splash-emphasis">The MAGI Software tool is available for demonstration purposes to non-members, but you will not be able to submit the application and view eligibility.</span>
+    <h2 class="splash-header" style="text-align: center">SORRY!</h2>
+
+    <span class="splash-emphasis">As of March 1, 2015, the MAGI Software is no longer publicly supported except to NESCSO members.</span> The state you have selected is not a NESCSO member at this time. The MAGI Software is available for demonstration purposes to non-members, but you will not be able to submit the application or view eligibility results.
 
     <br><br>
 
-    States can access the MAGI Software by becoming a NESCSO member, and in so doing will also be able to access certain technical consulting and support services available pursuant to the terms of the Membership Agreement. <span class="splash-emphasis">You can download a copy of the Membership Agreement by clicking <a href="https://s3.amazonaws.com/bluelabs-mitc/NESCSO+Membership+Agreement.pdf">here</a>.</span> If you have any questions about becoming a member or the Membership Agreement, please email <a href="mailto:Brenda.Harvey@umassmed.edu">Brenda.Harvey@umassmed.edu</a>.
+    States may access the MAGI Software and certain technical consulting and support services pursuant to the terms of the NESCSO Membership Agreement. <span class="splash-emphasis">You can download a copy of the Membership Agreement by clicking <a href="https://s3.amazonaws.com/bluelabs-mitc/NESCSO+Membership+Agreement.pdf">here</a>.</span> If you have any questions about becoming a member or the Membership Agreement, please email <a href="mailto:Brenda.Harvey@umassmed.edu">Brenda.Harvey@umassmed.edu</a>.
   </div>
   <fieldset ng-form name="applicantForm" ng-repeat="applicant in applicants" ng-controller="ApplicantController">
     <legend>Applicant <span class="applicant-number">{{$index+1}}</span></legend>
