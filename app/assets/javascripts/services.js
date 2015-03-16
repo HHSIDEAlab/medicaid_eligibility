@@ -619,7 +619,8 @@ angular.module('MAGI.services',[]).
 			return $http({
 				url: "/determinations/eval.json",
 				method: "POST",
-				data: app
+				data: app,
+        headers: {"Authorization": "Token token=".concat(accessToken)}
 			}).success(function(response){
 				$log.info(response);
 				me.determination = response;
