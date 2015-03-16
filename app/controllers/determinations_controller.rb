@@ -4,7 +4,7 @@ class DeterminationsController < ApplicationController
 
   before_filter :restrict_access
 
-  @@access_tokens ||= ENV['ACCESS_TOKENS'].split(';')
+  @@access_tokens ||= ENV['ACCESS_TOKENS'] ? ENV['ACCESS_TOKENS'].split(';') : []
 
   def eval
     @app = Application.new(request)
