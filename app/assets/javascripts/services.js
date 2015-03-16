@@ -697,7 +697,7 @@ angular.module('MAGI.services',[]).
             {abbr: 'NE', name: 'Nebraska', inApp: true, member: false},
             {abbr: 'NV', name: 'Nevada'},
             {abbr: 'NH', name: 'New Hampshire', inApp: true, member: false},
-            {abbr: 'NJ', name: 'New Jersey', inApp: true, member: false},
+            {abbr: 'NJ', name: 'New Jersey', inApp: true, member: true},
             {abbr: 'NM', name: 'New Mexico', inApp: true, member: false},
             {abbr: 'NY', name: 'New York'},
             {abbr: 'NC', name: 'North Carolina', inApp: true, member: false},
