@@ -2262,7 +2262,7 @@
 
     "Option CHIPRA 214 Applicable Program": "01",
     
-    "Option CHIPRA 214 Child Age Threshold": 19,
+    "Option CHIPRA 214 Child Age Threshold": 21,
     "Option CHIPRA 214 Applies To": "01",
     
     "Option CHIPRA 214 CHIP Applies To": "01",
@@ -2271,11 +2271,11 @@
 
     "Deprivation Requirement Retained": "N",
     "Option Caretaker Relative Relationship": "04",
-    "Option Dependent Student": "N",
+    "Option Dependent Student": "Y",
     
     
     "Option Adult Group": "Y",
-    "Option Young Adults": "Y",
+    "Option Young Adults": "N",
     "Young Adult Age Threshold": 21,
     "Foster Care Age Threshold": 21,
     "In-State Foster Care Required": "Y",
@@ -2288,7 +2288,7 @@
     "CHIP for Pregnant Women": "Y",
     "Option Cover Unborn Child": "N",
     "CHIP for State Health Benefits": "01",
-    "State CHIP Waiting Period": 0,
+    "State CHIP Waiting Period": 3,
 
     "Optional Targeted Low Income Child Group": "N",
     
@@ -2310,7 +2310,7 @@
       "Parent Caretaker Category": {
         "percentage": "Y",
         "method": "standard",
-        "threshold": 63
+        "threshold": 33
       },
       
       "Pregnancy Category": {
@@ -2318,7 +2318,7 @@
         "method": "standard",
         "threshold": 194
       },
-      
+ 
       
       "Child Category": {
         "percentage": "Y",
@@ -2353,8 +2353,12 @@
             "threshold": 350
           }
         ]
+      },
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 200
       }
-      
     }
   },
 
@@ -2930,7 +2934,7 @@
 
     "Deprivation Requirement Retained": "N",
     "Option Caretaker Relative Relationship": "00",
-    "Option Dependent Student": "N",
+    "Option Dependent Student": "Y",
     
     
     "Option Adult Group": "N",
@@ -2961,7 +2965,7 @@
       "Parent Caretaker Category": {
         "percentage": "Y",
         "method": "standard",
-        "threshold": 106
+        "threshold": 105
       },
       "Pregnancy Category": {
         "percentage": "Y",
