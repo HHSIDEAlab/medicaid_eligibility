@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>MAGI in the Cloud</title>
     <link href="/assets/application.css" rel="stylesheet">
+    <%= include_gon %>
   </head>
   <body>
   <script>
@@ -15,10 +16,6 @@
 
   ga('create', 'UA-43175884-2', 'medicaideligibilityapi.org');
   ga('send', 'pageview');
-
-  var showSplashNotice = <%= @show_splash_notice %>;
-  var restrictStates = <%= @restrict_states %>;
-  var accessToken = "<%= @access_token %>";
 
   </script>
   <div ng-view></div>

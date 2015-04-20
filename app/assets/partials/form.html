@@ -1,52 +1,5 @@
 <form name="applicationForm" id="application_form" method="post" ng-submit="checkEligibility()" novalidate >
-<div id="splash_notice" class="splash-notice-area" ng-show="showLogin()">
-  <div class="splash-text">
-    <h2 class="splash-header">Welcome to MAGI in the Cloud</h2>
-
-    <span class="splash-emphasis">As of March 1, 2015, the MAGI Software will no longer be publicly supported except to NESCSO members.</span> If you are a NESCSO member, please choose your organization. If you are not a NESCSO member, please see the notice below.
-
-    <br><br>
-
-    <div class="form-row">
-      <label for="org">Choose your organization</label>
-      <select selector ng-model="application.org" name="org" id="org" ng-options="org as org.name for org in orgs" >
-        <option value="" selected></option>
-      </select>
-      <label for="org" class="error" ng-show="(applicationForm.org.$dirty  || submitted) && applicationForm.org.$invalid">Please enter your organization</label>
-    </div>
-
-    <br><br>
-
-    The MAGI Software is hosted by NESCSO, a nonprofit membership organization that provides services on a shared basis, including advisory, analytical, consulting and systems development services, to public entities furnishing services under Title XIX of the Social Security Act (the "Medicaid Program").
-
-    </br></br>
-
-    The MAGI Software was developed by BlueLabs, LLC, through grant funding from the State Health Reform Assistance Network, a Robert Wood Johnson Foundation funded program, and under the direction of the CMS Entrepreneurs Program.
-
-    </br></br>
-
-    NESCSO, in concert with CMS, has determined that the MAGI Software is a cost-effective solution for public entities in determining eligibility for the Medicaid Program. <span class="splash-emphasis">States can access the MAGI Software by becoming a NESCSO member</span>, and in so doing will also be able to access certain technical consulting and support services available pursuant to the terms of the Membership Agreement. <span class="splash-emphasis">You can download a copy of the Membership Agreement by clicking <a href="https://s3.amazonaws.com/bluelabs-mitc/NESCSO+Membership+Agreement.pdf">here</a>.</span> If you have any questions about becoming a member or the Membership Agreement, please email <a href="mailto:Brenda.Harvey@umassmed.edu">Brenda.Harvey@umassmed.edu</a>.
-
-    </br></br>
-
-    
-  </div>
-  <button class="submitlike" ng-click="acceptNotice()" type="button">Continue to MAGI in the Cloud</button>
-</div>
-
-<div ng-show="!showLogin()">
   <h1>MAGI in the Cloud</h1>
-  <div id="short_notice" class="short-notice-area" ng-show="showShortNotice()">
-    You are logged in with organization <span class="splash-emphasis">{{application.org.name}}</span>.
-    
-    <button class="logout" ng-click="logOut()" type="button">Log Out</button>
-
-    <br><br>
-
-    If you have any questions about MITC, please contact the administrator for your organization.
-
-
-  </div>  
   <div class="form-fields-area">
     <div class="form-row">
       <label for="state">State</label>
@@ -368,5 +321,4 @@
     <button class="disabledbutton" ng-click="" disabled>Check Eligibility</button>
     <button class="disabledbutton" ng-click="" disabled>Export Application</button>
   </div>
-</div>
 </form>

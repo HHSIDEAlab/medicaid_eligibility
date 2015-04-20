@@ -1,5 +1,5 @@
 angular.module('MAGI.services',[]).
-    factory('Application', ['$http','$log','relationshipCodes','states','orgs','$location', function($http,$log,relationshipCodes,states,orgs,$location){
+    factory('Application', ['$http','$log','relationshipCodes','states','$location', function($http,$log,relationshipCodes,states,$location){
 		function Application(){
 			this.applicationId = "";
 			this.applicants = [];
@@ -620,7 +620,7 @@ angular.module('MAGI.services',[]).
 				url: "/determinations/eval.json",
 				method: "POST",
 				data: app,
-        headers: {"Authorization": "Token token=".concat(accessToken)}
+        headers: {"Authorization": "Token token=".concat(gon.accessToken)}
 			}).success(function(response){
 				$log.info(response);
 				me.determination = response;
@@ -666,58 +666,58 @@ angular.module('MAGI.services',[]).
             {code: '88', label: "Other", opposite: '88'}
         ]).
 	constant('states',[
-	    {abbr: 'AL', name: 'Alabama', inApp: true, member: false},
-            {abbr: 'AK', name: 'Alaska', inApp: true, member: false},
-            {abbr: 'AZ', name: 'Arizona', inApp: true, member: false},
-            {abbr: 'AR', name: 'Arkansas', inApp: true, member: false},
+	    {abbr: 'AL', name: 'Alabama', inApp: true},
+            {abbr: 'AK', name: 'Alaska', inApp: true},
+            {abbr: 'AZ', name: 'Arizona', inApp: true},
+            {abbr: 'AR', name: 'Arkansas', inApp: true},
             {abbr: 'CA', name: 'California'},
             {abbr: 'CO', name: 'Colorado'},
             {abbr: 'CT', name: 'Connecticut'},
-            {abbr: 'DE', name: 'Delaware', inApp: true, member: false},
+            {abbr: 'DE', name: 'Delaware', inApp: true},
             {abbr: 'DC', name: 'District Of Columbia'},
-            {abbr: 'FL', name: 'Florida', inApp: true, member: false},
-            {abbr: 'GA', name: 'Georgia', inApp: true, member: false},
+            {abbr: 'FL', name: 'Florida', inApp: true},
+            {abbr: 'GA', name: 'Georgia', inApp: true},
             {abbr: 'GU', name: 'Guam'},
             {abbr: 'HI', name: 'Hawaii'},
-            {abbr: 'ID', name: 'Idaho', inApp: true, member: false},
-            {abbr: 'IL', name: 'Illinois', inApp: true, member: false},
-            {abbr: 'IN', name: 'Indiana', inApp: true, member: false},
-            {abbr: 'IA', name: 'Iowa', inApp: true, member: false},
-            {abbr: 'KS', name: 'Kansas', inApp: true, member: false},
+            {abbr: 'ID', name: 'Idaho', inApp: true},
+            {abbr: 'IL', name: 'Illinois', inApp: true},
+            {abbr: 'IN', name: 'Indiana', inApp: true},
+            {abbr: 'IA', name: 'Iowa', inApp: true},
+            {abbr: 'KS', name: 'Kansas', inApp: true},
             {abbr: 'KY', name: 'Kentucky'},
-            {abbr: 'LA', name: 'Louisiana', inApp: true, member: false},
-            {abbr: 'ME', name: 'Maine', inApp: true, member: false},
-            {abbr: 'MD', name: 'Maryland', inApp: true, member: false},
+            {abbr: 'LA', name: 'Louisiana', inApp: true},
+            {abbr: 'ME', name: 'Maine', inApp: true},
+            {abbr: 'MD', name: 'Maryland', inApp: true},
             {abbr: 'MA', name: 'Massachusetts'},
-            {abbr: 'MI', name: 'Michigan', inApp: true, member: false},
+            {abbr: 'MI', name: 'Michigan', inApp: true},
             {abbr: 'MN', name: 'Minnesota'},
-            {abbr: 'MS', name: 'Mississippi', inApp: true, member: false},
-            {abbr: 'MO', name: 'Missouri', inApp: true, member: false},
-            {abbr: 'MT', name: 'Montana', inApp: true, member: false},
-            {abbr: 'NE', name: 'Nebraska', inApp: true, member: false},
+            {abbr: 'MS', name: 'Mississippi', inApp: true},
+            {abbr: 'MO', name: 'Missouri', inApp: true},
+            {abbr: 'MT', name: 'Montana', inApp: true},
+            {abbr: 'NE', name: 'Nebraska', inApp: true},
             {abbr: 'NV', name: 'Nevada'},
-            {abbr: 'NH', name: 'New Hampshire', inApp: true, member: false},
-            {abbr: 'NJ', name: 'New Jersey', inApp: true, member: true},
-            {abbr: 'NM', name: 'New Mexico', inApp: true, member: false},
+            {abbr: 'NH', name: 'New Hampshire', inApp: true},
+            {abbr: 'NJ', name: 'New Jersey', inApp: true,},
+            {abbr: 'NM', name: 'New Mexico', inApp: true},
             {abbr: 'NY', name: 'New York'},
-            {abbr: 'NC', name: 'North Carolina', inApp: true, member: false},
-            {abbr: 'ND', name: 'North Dakota', inApp: true, member: true},
-            {abbr: 'OH', name: 'Ohio', inApp: true, member: false},
-            {abbr: 'OK', name: 'Oklahoma', inApp: true, member: false},
+            {abbr: 'NC', name: 'North Carolina', inApp: true},
+            {abbr: 'ND', name: 'North Dakota', inApp: true,},
+            {abbr: 'OH', name: 'Ohio', inApp: true},
+            {abbr: 'OK', name: 'Oklahoma', inApp: true},
             {abbr: 'OR', name: 'Oregon'},
-            {abbr: 'PA', name: 'Pennsylvania', inApp: true, member: false},
+            {abbr: 'PA', name: 'Pennsylvania', inApp: true},
             {abbr: 'RI', name: 'Rhode Island'},
-            {abbr: 'SC', name: 'South Carolina', inApp: true, member: false},
-            {abbr: 'SD', name: 'South Dakota', inApp: true, member: false},
-            {abbr: 'TN', name: 'Tennessee', inApp: true, member: true},
-            {abbr: 'TX', name: 'Texas', inApp: true, member: false},
-            {abbr: 'UT', name: 'Utah', inApp: true, member: false},
+            {abbr: 'SC', name: 'South Carolina', inApp: true},
+            {abbr: 'SD', name: 'South Dakota', inApp: true},
+            {abbr: 'TN', name: 'Tennessee', inApp: true,},
+            {abbr: 'TX', name: 'Texas', inApp: true},
+            {abbr: 'UT', name: 'Utah', inApp: true},
             {abbr: 'VT', name: 'Vermont'},
-            {abbr: 'VA', name: 'Virginia', inApp: true, member: false},
+            {abbr: 'VA', name: 'Virginia', inApp: true},
             {abbr: 'WA', name: 'Washington'},
-            {abbr: 'WV', name: 'West Virginia', inApp: true, member: false},
-            {abbr: 'WI', name: 'Wisconsin', inApp: true, member: false},
-            {abbr: 'WY', name: 'Wyoming', inApp: true, member: false}
+            {abbr: 'WV', name: 'West Virginia', inApp: true},
+            {abbr: 'WI', name: 'Wisconsin', inApp: true},
+            {abbr: 'WY', name: 'Wyoming', inApp: true}
 		]).
   constant('applicationYears', [2013,2014,2015]).
   constant('applicationStatuses', [
@@ -732,5 +732,4 @@ angular.module('MAGI.services',[]).
     {code: "09", name: "Granted withholding of deportation", qnc: true, startDate: "Deportation withheld date"},
     {code: "10", name: "Member of a federally recognized Indian tribe or American Indian born in Canada", qnc: true},
     {code: "99", name: "Other", qnc: false}
-  ]).
-  constant('orgs', [{name: 'North Dakota Department of Human Services', states: ['ND']}]);
+  ]);

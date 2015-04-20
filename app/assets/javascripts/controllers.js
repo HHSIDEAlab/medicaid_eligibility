@@ -2,32 +2,12 @@
 
 angular.module('MAGI.controllers', ['ngCookies']).
 	controller('FormController',['$scope','$location','$anchorScroll','$timeout','$log', '$cookies', '$cookieStore',
-		'filterFilter', 'Application','relationshipCodes','orgs','states','applicationYears','applicationStatuses', 
-		function($scope, $location, $anchorScroll, $timeout, $log, $cookies, $cookieStore, filterFilter, Application, relationshipCodes, orgs, states, applicationYears, applicationStatuses){
+		'filterFilter', 'Application','relationshipCodes','states','applicationYears','applicationStatuses', 
+		function($scope, $location, $anchorScroll, $timeout, $log, $cookies, $cookieStore, filterFilter, Application, relationshipCodes, states, applicationYears, applicationStatuses){
                 var acceptedNoticeSession = false;
                 
-                $scope.showLogin = function() {
-                    return showSplashNotice && !acceptedNoticeSession && !(_.any(orgs, function(org){ return org.name == $cookies.mitcOrg}));
-                };
-
-                $scope.acceptNotice = function() {
-                    if (_.contains(orgs, $scope.application.org)) {
-                        acceptedNoticeSession = true;
-                        $cookies.mitcOrg = $scope.application.org.name;
-                    }
-                };
-
-                $scope.showShortNotice = function() {
-                    return showSplashNotice;
-                }
-
-                $scope.logOut = function() {
-                    acceptedNoticeSession = false;
-                    $cookieStore.remove('mitcOrg');
-                }
-
                 $scope.disableSubmit = function() {
-                    return restrictStates && $scope.application.state && !($scope.application.state.member);
+                    return gon.restrictStates && $scope.application.state && !(_.contains(gon.enabledStates, $scope.application.state.abbr));
                 }
 
                 Application.resetResults();
@@ -44,7 +24,6 @@ angular.module('MAGI.controllers', ['ngCookies']).
 
                 $scope.removeTaxReturn = Application.removeTaxReturn;
                 $scope.relationshipCodes = relationshipCodes;
-                $scope.orgs = orgs;
 
                 $scope.newHousehold = [];
 
@@ -123,17 +102,6 @@ angular.module('MAGI.controllers', ['ngCookies']).
                 $scope.appStatuses = applicationStatuses;
                 $scope.qualNonCitizenStatuses = _.filter(applicationStatuses, function(status){return status.qnc;});
 
-                if (showSplashNotice) {
-                    $scope.$watch('application.org', function(newValue, oldValue){
-                        if ($scope.application.org) {
-                            $scope.appStates = _.filter($scope.states, function(state){return state.inApp && _.contains($scope.application.org.states, state.abbr);});
-                        }
-                    });
-
-                    if ($cookies.mitcOrg) {
-                        $scope.application.org = _.filter(orgs, function(org){ return org.name == $cookies.mitcOrg})[0];
-                    }
-                }
 	}]).
         controller('ApplicantController',['$scope',function($scope){
                 $scope.checkResponsibility = function(){
