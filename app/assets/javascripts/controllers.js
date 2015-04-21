@@ -155,6 +155,7 @@ angular.module('MAGI.controllers', ['ngCookies']).
                 };
         }]).
         controller('ResultsController',['$scope','$location','Application', function($scope,$location,Application){
+                $scope.application = Application;
                 $scope.applicants = Application.determination['Applicants'];
                 $scope.expandByDefault = function(){
                         // return $scope.applicants.length == 1;
@@ -206,7 +207,7 @@ angular.module('MAGI.controllers', ['ngCookies']).
 
             $scope.$watch('inputs.newFiler', function(newFiler, oldVal){
                 $log.info(newFiler);
-                if(newFiler.id){
+                if(newFiler.uid){
                     $scope.taxReturn.addFiler(newFiler);
                     $scope.inputs.newFiler = {};
                 }
@@ -217,7 +218,7 @@ angular.module('MAGI.controllers', ['ngCookies']).
             };
 
             $scope.$watch('inputs.newDependent', function(newDependent, oldVal){
-                if(newDependent.id){
+                if(newDependent.uid){
                     $scope.taxReturn.addDependent(newDependent);
                     $scope.inputs.newDependent = {};
                 }
