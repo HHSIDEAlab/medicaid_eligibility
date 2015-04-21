@@ -186,42 +186,42 @@ angular.module('MAGI.services',[]).
     Application.prototype.removeApplicant = function(applicant){
       var me = this;
 
-            angular.forEach(me.households, function(hh, idx){
-              var hhri = hh.indexOf(applicant);
-              if(hhri >= 0){
-                me.households[idx].splice(hhri,1);
-              }
-            });
+      angular.forEach(me.households, function(hh, idx){
+        var hhri = hh.indexOf(applicant);
+        if(hhri >= 0){
+          me.households[idx].splice(hhri,1);
+        }
+      });
 
-            angular.forEach(me.taxReturns, function(tr, idx){
-              var trfri = tr.filers.indexOf(applicant);
-              if(trfri >= 0){
-                tr.filers.splice(trfri, 1);
-              }
+      angular.forEach(me.taxReturns, function(tr, idx){
+        var trfri = tr.filers.indexOf(applicant);
+        if(trfri >= 0){
+          tr.filers.splice(trfri, 1);
+        }
 
-              var trdri = tr.dependents.indexOf(applicant);
-              if(trdri >= 0){
-                tr.dependents.splice(trdri, 1);
-              }
-            });
+        var trdri = tr.dependents.indexOf(applicant);
+        if(trdri >= 0){
+          tr.dependents.splice(trdri, 1);
+        }
+      });
 
-            applicant.removeRelationships();
+      applicant.removeRelationships();
 
-            var removeIndex = this.applicants.indexOf(applicant);
+      var removeIndex = this.applicants.indexOf(applicant);
 
-            angular.forEach(me.applicants, function(appl, idx){
-              if (idx > removeIndex && appl.id.startsWith("Applicant ")) {
-                appl.id = "Applicant ".concat(idx.toString());
-              }
-            });
+      angular.forEach(me.applicants, function(appl, idx){
+        if (idx > removeIndex && appl.id == "Applicant ".concat(idx + 1)) {
+          appl.id = "Applicant ".concat(idx);
+        }
+      });
 
-            this.applicants.splice(removeIndex,1);
+      this.applicants.splice(removeIndex,1);
 
       me.cleanHouseholds();
 
-            if( this.applicants.length === 0 ){
-                this.addApplicant('Applicant 1');
-            }
+      if( this.applicants.length === 0 ){
+        this.addApplicant('Applicant 1');
+      }
     };
 
     Relationship.prototype.getOpposite = function(){
