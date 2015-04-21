@@ -49,7 +49,7 @@
     </div>
     <div class="form-row-expandable">
       <label for="applicant_{{ $index }}_age">Age</label>
-      <input type="number" ng-model = "applicant.age" id="applicant_{{ $index }}_age" name="applicant_age" required>
+      <input type="number" numberinput ng-model = "applicant.age" id="applicant_{{ $index }}_age" name="applicant_age" required>
       <label for="applicant_{{ $index }}_age" class="error" ng-show="(applicantForm.applicant_age.$dirty  || submitted)  && applicantForm.applicant_age.$invalid">This field is required.</label>
       <div class="form-row-expandable-fields2" ng-show="checkResponsibility()">
 
@@ -68,7 +68,7 @@
     </div>
     <div class="form-row">
       <label for="applicant_{{ $index }}_hours">Hours worked per week</label>
-      <input type="number" ng-model="applicant.hours" id="applicant_{{ $index }}_hours" name="applicant_hours" required>
+      <input type="number" numberinput ng-model="applicant.hours" id="applicant_{{ $index }}_hours" name="applicant_hours">
       <label for="applicant_{{ $index }}_hours" class="error" ng-show="(applicantForm.applicant_hours.$dirty || submitted) && applicantForm.applicant_hours.$invalid">This field is required.</label>
     </div>
     <div class="form-half-field">
@@ -139,7 +139,7 @@
       <div class="form-row-expandable-fields2" ng-show="applicant.pregnant">
         <div class="form-row">
           <label for="applicant_{{ $index }}_number_of_children_expected">Number of Children Expected</label>
-          <input type="number" ng-model = "applicant.numberOfChildrenExpected" id="applicant_{{ $index }}_number_of_children_expected" name="number_of_children_expected">
+          <input type="number" numberinput ng-model = "applicant.numberOfChildrenExpected" id="applicant_{{ $index }}_number_of_children_expected" name="number_of_children_expected">
         </div>
       </div>
     </div>
@@ -158,7 +158,7 @@
         </div>
         <div class="form-row">
           <label for="applicant_{{ $index }}_foster_care_age_left">Age left foster care</label>
-          <input type="number" id="applicant_{{ $index }}_foster_care_age_left" name="applicant_foster_care_age_left" ng-model="applicant.fosterCare.ageLeftFosterCare" ng-required="applicant.formerlyFosterCare">
+          <input type="number" numberinput id="applicant_{{ $index }}_foster_care_age_left" name="applicant_foster_care_age_left" ng-model="applicant.fosterCare.ageLeftFosterCare" ng-required="applicant.formerlyFosterCare">
         </div>
         <div class="form-row">
           <label for="applicant_{{ $index }}_foster_care_state">Foster care state</label>

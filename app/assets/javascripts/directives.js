@@ -134,4 +134,30 @@ angular.module('MAGI.directives',[]).
         }
       }
     }
+  }).
+  directive('numberinput', function(){
+    return {
+      restrict: 'EA',
+      require: 'ngModel',
+      template: '',
+      replace: true,
+      link: function(scope, element, attrs, ngModelCtrl){
+        var numberInput = angular.element(element[0]);
+
+        numberInput.bind('input change', function(evt){
+          scope.$apply(trimZeroes);
+        });
+
+        function trimZeroes(){
+          if (numberInput.val() == '') {
+            ngModelCtrl.$setViewValue(0);
+            ngModelCtrl.$render();
+          } else if (numberInput.val() != parseInt(numberInput.val()).toString()) {
+            ngModelCtrl.$setViewValue(999);
+            ngModelCtrl.$setViewValue(parseInt(numberInput.val()).toString());
+            ngModelCtrl.$render();
+          }
+        }
+      }
+    }
   });

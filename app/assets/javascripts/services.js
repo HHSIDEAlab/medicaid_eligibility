@@ -28,6 +28,7 @@ angular.module('MAGI.services',[]).
     }
 
     function Applicant(){
+      this.hours = 0;
       this.citizen = true;
       this.livesInState = true;
       this.isApplicant = true;
