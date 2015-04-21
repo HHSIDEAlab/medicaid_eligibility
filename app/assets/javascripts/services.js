@@ -85,27 +85,6 @@ angular.module('MAGI.services',[]).
 			return this;
 		};
 
-		// Note. Remove this eventually. UI should not have to deal with service
-		// For now, sets the number of filers and dependents in a tax return to 
-		// be an appropriate amount for the number of applicants
-		TaxReturn.prototype.checkNumFilers = function(numApplicants){
-			// var numFilers = Math.min(numApplicants,2);
-			// while(this.filers.length < numFilers){
-   //                  this.filers.push({});
-   //          }
-   //          while(this.filers.length > numFilers){
-   //                  this.filers.pop();
-   //          }
-            
-   //          var numDependents = Math.max(numApplicants-1,0);
-   //          while(this.dependents.length < numDependents){
-   //                  this.dependents.push({});
-   //          }
-   //          while(this.dependents.length > numDependents){
-   //                  this.dependents.pop();
-   //          }
-		};
-
 		TaxReturn.prototype.canAddFiler = function(application){
 			return (this.filers.length < 2 ) && (this.filers.length < application.applicants.length);
 		};
@@ -133,7 +112,6 @@ angular.module('MAGI.services',[]).
 
 		Application.prototype.addTaxReturn = function(){
 			var taxReturn = new TaxReturn();
-			taxReturn.checkNumFilers(this.applicants.length);
 			this.taxReturns.push(taxReturn);
 		};
 
@@ -166,10 +144,6 @@ angular.module('MAGI.services',[]).
 			this.applicants.push(applicant);
 			this.households[0].push(applicant);
 			var appl = this;
-
-			angular.forEach(this.taxReturns, function(taxReturn){
-				taxReturn.checkNumFilers(appl.applicants.length);
-			});
 		};
 
 		Applicant.prototype.addRelationship = function(other){
@@ -183,14 +157,15 @@ angular.module('MAGI.services',[]).
 		};
 
 		Applicant.prototype.removeRelationship = function(otherApplicant){
-			var toRemove = this.getRelationship(otherApplicant);
+      var toRemove = this.getRelationship(otherApplicant);
 			var idx = this.relationships.indexOf(toRemove);
-            this.relationships.splice(idx, 1);
+      this.relationships.splice(idx, 1);
 		};
 
 		Applicant.prototype.removeRelationships = function(){
+      var me = this;
 			angular.forEach(this.relationships, function(rel){
-				rel.otherApplicant.removeRelationship(this);
+				rel.otherApplicant.removeRelationship(me);
 			});
 		};
 
@@ -229,6 +204,8 @@ angular.module('MAGI.services',[]).
             	}
             });
 
+            applicant.removeRelationships();
+
             var removeIndex = this.applicants.indexOf(applicant);
 
             angular.forEach(me.applicants, function(appl, idx){
@@ -238,14 +215,6 @@ angular.module('MAGI.services',[]).
             });
 
             this.applicants.splice(removeIndex,1);
-
-            angular.forEach(me.taxReturns, function(tr){
-            	tr.checkNumFilers(me.applicants.length);
-            });
-
-
-
-			applicant.removeRelationships();
 
 			me.cleanHouseholds();
 
@@ -590,7 +559,6 @@ angular.module('MAGI.services',[]).
 
 			this.taxReturns = _.map(application["Tax Returns"], function(taxReturn){
 				var tr = new TaxReturn().deserialize(me, taxReturn);
-				tr.checkNumFilers(application["People"].length);
 				return tr;
 			});
 
