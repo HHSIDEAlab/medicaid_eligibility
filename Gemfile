@@ -33,5 +33,12 @@ group :development, :test do
   gem 'jasmine'
 end
 
+group :test do 
+	gem 'minitest-rails', '~> 1.0'
+	gem 'minitest-reporters'
+	gem 'mini_backtrace'
+	gem 'faker'
+	gem 'sqlite3'
+end
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
