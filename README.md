@@ -25,6 +25,12 @@ You can also evaluate a specific ruleset on specified inputs/configs. POST the J
 
 Additional information about how to integrate the project using the API can be found in doc/MitC integration.docx
 
+The test suite is Minitest. To run: 
+```
+~ $ rake test
+```
+In the event that this returns a Gem::LoadError or a mysterious error about how `+' is an undefined method, run bundle update first.
+
 This project is licensed with a BSD license, open source with attribution. Details in the LICENSE file.
 
 (c) 2013 BlueLabs.
