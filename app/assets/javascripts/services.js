@@ -536,7 +536,7 @@ angular.module('MAGI.services',[]).
       return {
         "State": st,
         "Application Year": this.applicationYear,
-        "Name": this.applicationId,
+        "Name": "Frontend Application",
         "People": _.map(this.applicants,
           function(applicant){return applicant.serialize();}),
         "Physical Households": _.map(this.households, function(hh, idx){
@@ -570,7 +570,6 @@ angular.module('MAGI.services',[]).
       });
 
 
-      this.applicationId = application["Name"];
       this.state = _.find(states, function(st){
         return st.abbr == application["State"];
       });
