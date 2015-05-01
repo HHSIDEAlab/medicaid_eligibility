@@ -170,6 +170,10 @@ angular.module('MAGI.controllers', ['ngCookies']).
         $scope.returnToForm = function(){
             $location.path("/application");
         };
+
+        $scope.yDetermination = function(other) {
+            return other.indicator == 'Y' && !(other.hide);
+        };
     }]).
     controller('ExportImportController',['$scope','$location','$log','Application', function($scope,$location,$log,Application){
         $scope.applicationJson = angular.toJson(Application.serialize(), true);

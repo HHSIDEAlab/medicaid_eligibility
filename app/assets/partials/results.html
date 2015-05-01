@@ -46,7 +46,7 @@
     <div class="determinations">
       <h5>Yes</h5>
       <ul>
-        <li ng-repeat="determination in applicant.cleanDets | filter:{ indicator: 'Y'}">{{determination.item}}</li>
+        <li ng-repeat="determination in applicant.cleanDets | filter:yDetermination">{{determination.item}}</li>
       </ul>
     </div>
     <div class="determinations">

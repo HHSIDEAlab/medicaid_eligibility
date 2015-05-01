@@ -617,11 +617,24 @@ angular.module('MAGI.services',[]).
         me.determination = response;
         angular.forEach(me.determination["Applicants"], function(applicant){
           applicant.cleanDets = _.map(_.pairs(applicant.Determinations), function(item){
+            // Suppress some stuff for North Dakota
+            var hide = false;
+            var indicator = item[1]["Indicator"];
+
+            if (me.state.abbr == 'ND') {
+              if (item[0] == "Medicaid Citizen Or Immigrant" && indicator == "Y" && applicant["Medicaid Eligible"] == "N") {
+                hide = true;
+              } else if (item[0] == "CHIP Citizen Or Immigrant" && indicator == "Y" && applicant["CHIP Eligible"] == "N") {
+                hide = true;
+              }
+            }
+
             return {
               item: item[0], 
-              indicator: item[1]["Indicator"],
+              indicator: indicator,
               code: item[1]["Ineligibility Code"],
-              reason: item[1]["Ineligibility Reason"]
+              reason: item[1]["Ineligibility Reason"],
+              hide: hide
             };
           });          
         });
