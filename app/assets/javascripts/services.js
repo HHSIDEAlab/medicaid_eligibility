@@ -622,9 +622,9 @@ angular.module('MAGI.services',[]).
             var indicator = item[1]["Indicator"];
 
             if (me.state.abbr == 'ND') {
-              if (item[0] == "Medicaid Citizen Or Immigrant" && indicator == "Y" && applicant["Medicaid Category"] == "None") {
+              if (item[0] == "Medicaid Citizen Or Immigrant" && applicant["Medicaid Category"] == "None") {
                 hide = true;
-              } else if (item[0] == "CHIP Citizen Or Immigrant" && indicator == "Y" && (applicant["CHIP Category"] == "None" || applicant["Medicaid Eligible"] == "Y")) {
+              } else if (item[0] == "CHIP Citizen Or Immigrant" && (applicant["CHIP Category"] == "None" || applicant["Medicaid Eligible"] == "Y")) {
                 hide = true;
               }
             }
