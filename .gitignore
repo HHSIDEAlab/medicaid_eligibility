@@ -23,6 +23,7 @@
 
 *.json
 !bower.json
+!/test/fixtures/*.json
 *.xml
 
 .idea
