@@ -39,7 +39,7 @@ end
 group :test do 
 	gem 'minitest-rails', '~> 1.0'
 	gem 'minitest-reporters'
-	gem 'mini_backtrace'
+	# gem 'mini_backtrace'
 	gem 'faker'
 	gem 'sqlite3'
 end
