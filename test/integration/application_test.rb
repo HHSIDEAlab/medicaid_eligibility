@@ -18,14 +18,16 @@ class ApplicationTest < ActionDispatch::IntegrationTest
 	end
 
   test 'the response should contain the determination date' do
-  	# fundamentals: determination date is present and set to today
+  	# determination date is present 
   	assert_match /Determination Date/, @@curl
+  	# determination date is set to today
   	assert_match Time.now.strftime('%Y-%m-%d'), @@curl
   end
 
-  test 'the response should contain the correct number of applicants'
+  test 'the response should contain the correct number of applicants' do 
   	# the return string has 'applicants'
   	assert_match /Applicants/, @@curl
+  	# there are an equal number of people on application and applicants with decision
   	assert_equal @json['People'].count, @@curl_parsed['Applicants'].count
   end
 
