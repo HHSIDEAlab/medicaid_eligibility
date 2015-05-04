@@ -34,6 +34,7 @@ gem 'capistrano', :group => :development
 group :development, :test do
   gem 'jasmine'
   gem 'spring'
+  gem 'curb'
 end
 
 group :test do 

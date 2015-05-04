@@ -1,0 +1,135 @@
+{
+  "Determination Date": "2015-05-04",
+  "Applicants": [
+    {
+      "Person ID": "Applicant 1",
+      "Medicaid Household": {
+        "People": [
+          "Applicant 1"
+        ],
+        "MAGI": 20000,
+        "Size": 1
+      },
+      "Medicaid Eligible": "N",
+      "CHIP Eligible": "N",
+      "Ineligibility Reason": [
+        "Applicant did not meet the requirements for any Medicaid category"
+      ],
+      "Non-MAGI Referral": "N",
+      "CHIP Ineligibility Reason": [
+        "Applicant did not meet the requirements for any CHIP category"
+      ],
+      "Category": "None",
+      "CHIP Category": "None",
+      "CHIP Category Threshold": 0,
+      "Determinations": {
+        "Residency": {
+          "Indicator": "Y"
+        },
+        "Adult Group Category": {
+          "Indicator": "X"
+        },
+        "Parent Caretaker Category": {
+          "Indicator": "N",
+          "Ineligibility Code": 146,
+          "Ineligibility Reason": "No child met all criteria for parent caretaker category"
+        },
+        "Pregnancy Category": {
+          "Indicator": "N",
+          "Ineligibility Code": 124,
+          "Ineligibility Reason": "Applicant not pregnant or within postpartum period"
+        },
+        "Child Category": {
+          "Indicator": "N",
+          "Ineligibility Code": 115,
+          "Ineligibility Reason": "Applicant is 19 years of age or older and the state does not cover young adults under age 20 or 21"
+        },
+        "Optional Targeted Low Income Child": {
+          "Indicator": "X"
+        },
+        "CHIP Targeted Low Income Child": {
+          "Indicator": "N",
+          "Ineligibility Code": 127,
+          "Ineligibility Reason": "Applicant's age is not within the allowed age range"
+        },
+        "Unborn Child": {
+          "Indicator": "X"
+        },
+        "Income Medicaid Eligible": {
+          "Indicator": "N",
+          "Ineligibility Code": 401,
+          "Ineligibility Reason": "Applicant did not meet the requirements for any eligibility category"
+        },
+        "Income CHIP Eligible": {
+          "Indicator": "N",
+          "Ineligibility Code": 401,
+          "Ineligibility Reason": "Applicant did not meet the requirements for any eligibility category"
+        },
+        "Medicaid CHIPRA 214": {
+          "Indicator": "X"
+        },
+        "CHIP CHIPRA 214": {
+          "Indicator": "X"
+        },
+        "Trafficking Victim": {
+          "Indicator": "X"
+        },
+        "Seven Year Limit": {
+          "Indicator": "X"
+        },
+        "Five Year Bar": {
+          "Indicator": "X"
+        },
+        "Title II Work Quarters Met": {
+          "Indicator": "X"
+        },
+        "Medicaid Citizen Or Immigrant": {
+          "Indicator": "Y"
+        },
+        "CHIP Citizen Or Immigrant": {
+          "Indicator": "Y"
+        },
+        "Former Foster Care Category": {
+          "Indicator": "N",
+          "Ineligibility Code": 400,
+          "Ineligibility Reason": "Applicant was not formerly in foster care"
+        },
+        "Work Quarters Override Income": {
+          "Indicator": "N",
+          "Ineligibility Code": 340,
+          "Ineligibility Reason": "Income is greater than 100% FPL"
+        },
+        "State Health Benefits CHIP": {
+          "Indicator": "X"
+        },
+        "CHIP Waiting Period Satisfied": {
+          "Indicator": "X"
+        },
+        "Dependent Child Covered": {
+          "Indicator": "X"
+        },
+        "Medicaid Non-MAGI Referral": {
+          "Indicator": "N",
+          "Ineligibility Code": 108,
+          "Ineligibility Reason": "Applicant does not meet requirements for a non-MAGI referral"
+        },
+        "Emergency Medicaid": {
+          "Indicator": "N",
+          "Ineligibility Code": 109,
+          "Ineligibility Reason": "Applicant does not meet the eligibility criteria for emergency Medicaid"
+        },
+        "Refugee Medical Assistance": {
+          "Indicator": "X"
+        },
+        "APTC Referral": {
+          "Indicator": "Y"
+        }
+      },
+      "Other Outputs": {
+        "Qualified Children List": [
+
+        ]
+      }
+    }
+  ]
+}
