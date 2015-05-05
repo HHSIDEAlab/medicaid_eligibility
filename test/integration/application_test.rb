@@ -33,11 +33,10 @@ class ApplicationTest < ActionDispatch::IntegrationTest
 
   test 'the response should contain a yes or no determination for medicaid and CHIP' do
   	@@curl_parsed['Applicants'].each do |applicant|
+  		# check for yes-no on medicaid for each applicant
   		assert ["Y","N"].include? applicant['Medicaid Eligible']
+  		# check for yes-no on chip for each applicant
   		assert ["Y","N"].include? applicant['CHIP Eligible']
   	end
-
   end
-
-
 end
