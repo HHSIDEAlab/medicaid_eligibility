@@ -31,6 +31,13 @@ class ApplicationTest < ActionDispatch::IntegrationTest
   	assert_equal @json['People'].count, @@curl_parsed['Applicants'].count
   end
 
+  test 'the response should contain a yes or no determination for medicaid and CHIP' do
+  	@@curl_parsed['Applicants'].each do |applicant|
+  		assert ["Y","N"].include? applicant['Medicaid Eligible']
+  		assert ["Y","N"].include? applicant['CHIP Eligible']
+  	end
+
+  end
 
 
 end
