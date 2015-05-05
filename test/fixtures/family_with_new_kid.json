@@ -1,0 +1,177 @@
+{
+  "State": "MD",
+  "Application Year": 2015,
+  "Name": "Frontend Application",
+  "People": [
+    {
+      "Is Applicant": "Y",
+      "Applicant Attest Blind or Disabled": "N",
+      "Student Indicator": "N",
+      "Medicare Entitlement Indicator": "N",
+      "Incarceration Status": "N",
+      "Lives In State": "Y",
+      "Claimed as Dependent by Person Not on Application": "N",
+      "Applicant Attest Long Term Care": "N",
+      "Has Insurance": "N",
+      "State Health Benefits Through Public Employee": "N",
+      "Prior Insurance": "N",
+      "Applicant Pregnant Indicator": "N",
+      "Applicant Post Partum Period Indicator": "Y",
+      "Former Foster Care": "N",
+      "Required to File Taxes": "N",
+      "US Citizen Indicator": "Y",
+      "Applicant Age": 25,
+      "Hours Worked Per Week": 0,
+      "Person ID": "Applicant 1",
+      "Income": {
+        "Monthly Income": 0,
+        "Wages, Salaries, Tips": 3,
+        "Taxable Interest": 0,
+        "Tax-Exempt Interest": 0,
+        "Taxable Refunds, Credits, or Offsets of State and Local Income Taxes": 0,
+        "Alimony": 0,
+        "Capital Gain or Loss": 0,
+        "Pensions and Annuities Taxable Amount": 0,
+        "Farm Income or Loss": 0,
+        "Unemployment Compensation": 0,
+        "Other Income": 0,
+        "MAGI Deductions": 0
+      },
+      "Relationships": [
+        {
+          "Other ID": "Applicant 2",
+          "Relationship Code": "02",
+          "Attest Primary Responsibility": "N"
+        },
+        {
+          "Other ID": "Applicant 3",
+          "Relationship Code": "03",
+          "Attest Primary Responsibility": "N"
+        }
+      ]
+    },
+    {
+      "Is Applicant": "Y",
+      "Applicant Attest Blind or Disabled": "N",
+      "Student Indicator": "N",
+      "Medicare Entitlement Indicator": "N",
+      "Incarceration Status": "N",
+      "Lives In State": "Y",
+      "Claimed as Dependent by Person Not on Application": "N",
+      "Applicant Attest Long Term Care": "N",
+      "Has Insurance": "N",
+      "State Health Benefits Through Public Employee": "N",
+      "Prior Insurance": "N",
+      "Applicant Pregnant Indicator": "N",
+      "Applicant Post Partum Period Indicator": "N",
+      "Former Foster Care": "N",
+      "Required to File Taxes": "N",
+      "US Citizen Indicator": "Y",
+      "Applicant Age": 28,
+      "Hours Worked Per Week": 0,
+      "Person ID": "Applicant 2",
+      "Income": {
+        "Monthly Income": 0,
+        "Wages, Salaries, Tips": 20000,
+        "Taxable Interest": 0,
+        "Tax-Exempt Interest": 0,
+        "Taxable Refunds, Credits, or Offsets of State and Local Income Taxes": 0,
+        "Alimony": 0,
+        "Capital Gain or Loss": 0,
+        "Pensions and Annuities Taxable Amount": 0,
+        "Farm Income or Loss": 0,
+        "Unemployment Compensation": 0,
+        "Other Income": 0,
+        "MAGI Deductions": 0
+      },
+      "Relationships": [
+        {
+          "Other ID": "Applicant 1",
+          "Relationship Code": "02",
+          "Attest Primary Responsibility": "N"
+        },
+        {
+          "Other ID": "Applicant 3",
+          "Relationship Code": "03",
+          "Attest Primary Responsibility": "N"
+        }
+      ]
+    },
+    {
+      "Is Applicant": "Y",
+      "Applicant Attest Blind or Disabled": "N",
+      "Student Indicator": "N",
+      "Medicare Entitlement Indicator": "N",
+      "Incarceration Status": "N",
+      "Lives In State": "Y",
+      "Claimed as Dependent by Person Not on Application": "N",
+      "Applicant Attest Long Term Care": "N",
+      "Has Insurance": "N",
+      "State Health Benefits Through Public Employee": "N",
+      "Prior Insurance": "N",
+      "Applicant Pregnant Indicator": "N",
+      "Applicant Post Partum Period Indicator": "N",
+      "Former Foster Care": "N",
+      "Required to File Taxes": "N",
+      "US Citizen Indicator": "Y",
+      "Applicant Age": 1,
+      "Hours Worked Per Week": 0,
+      "Person ID": "Applicant 3",
+      "Income": {
+        "Monthly Income": 0,
+        "Wages, Salaries, Tips": 0,
+        "Taxable Interest": 0,
+        "Tax-Exempt Interest": 0,
+        "Taxable Refunds, Credits, or Offsets of State and Local Income Taxes": 0,
+        "Alimony": 0,
+        "Capital Gain or Loss": 0,
+        "Pensions and Annuities Taxable Amount": 0,
+        "Farm Income or Loss": 0,
+        "Unemployment Compensation": 0,
+        "Other Income": 0,
+        "MAGI Deductions": 0
+      },
+      "Relationships": [
+        {
+          "Other ID": "Applicant 1",
+          "Relationship Code": "04",
+          "Attest Primary Responsibility": "N"
+        },
+        {
+          "Other ID": "Applicant 2",
+          "Relationship Code": "04",
+          "Attest Primary Responsibility": "N"
+        }
+      ]
+    }
+  ],
+  "Physical Households": [
+    {
+      "Household ID": "Household1",
+      "People": [
+        {
+          "Person ID": "Applicant 1"
+        },
+        {
+          "Person ID": "Applicant 2"
+        },
+        {
+          "Person ID": "Applicant 3"
+        }
+      ]
+    }
+  ],
+  "Tax Returns": [
+    {
+      "Filers": [
+        {
+          "Person ID": "Applicant 2"
+        },
+        {
+          "Person ID": "Applicant 1"
+        }
+      ],
+      "Dependents": []
+    }
+  ]
+}
