@@ -4,6 +4,7 @@ class ApplicationTest < ActionDispatch::IntegrationTest
 	def setup
 	end
 
+  # for each fixture, check this stuff
   @@fixtures.each do |app|
     test "the response should contain major fields like determination date and applicants #{app[:name]}" do
     	# determination date is present 
@@ -29,7 +30,7 @@ class ApplicationTest < ActionDispatch::IntegrationTest
     end
   end
 
-  # just for a single -- no need 
+  # just for a single -- no need to run for all possible, and it slows 
   test 'an application should initialize properly from the POST' do 
     new_app = Application.new(Request.new(post_request(@@fixtures[0][:application])))
     # app is an Application object
@@ -45,7 +46,7 @@ class ApplicationTest < ActionDispatch::IntegrationTest
   end
 
   test 'an application should reject malformed data' do 
-    # bad json
+    # try with bad json / post body
     new_app = Application.new(Request.new(post_request('yolo goat')))
     refute_nil new_app.error
     assert_match /yolo goat/, new_app.error.to_s
