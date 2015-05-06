@@ -30,7 +30,7 @@ class Request
 	def initialize(curl)
 		@raw_post = curl[:payload]
 		@content_type = curl[:headers]['Content-Type'].split(';')[0]
-		@query_parameters = true
+		@query_parameters = {return_application: 'true'}
 	end
 end
 
@@ -39,5 +39,5 @@ def post_request(payload)
 		c.headers['Content-Type'] = 'application/json;charset=UTF-8'
 		c.headers['Accept'] = 'application/json'
 	end
-	return {payload: payload, headers: curl.headers, query_parameters: true}
+	return {payload: payload, headers: curl.headers, query_parameters: 'true'}
 end
