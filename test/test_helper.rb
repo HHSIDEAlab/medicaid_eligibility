@@ -24,3 +24,10 @@ class ActiveSupport::TestCase
     @@fixtures << {name: file.gsub(/\.json/,'').gsub(/#{Rails.root.to_s}\/test\/fixtures\//,''), application: json, application_json: parsed_json, response: curl, response_json: parsed_curl}
   end
 end
+
+def post_request(payload)
+	curl = Curl::Easy.http_post('http://localhost:3000/determinations/eval.json', payload) do |c|
+    c.headers['Content-Type'] = 'application/json;charset=UTF-8'
+    c.headers['Accept'] = 'application/json'
+  end
+end
