@@ -5,6 +5,7 @@ require 'minitest/reporters'
 require 'minitest/spec'
 Minitest::Reporters.use!
 require 'curb' 
+ActiveRecord::Base.logger.level = 1
 
 class ActiveSupport::TestCase
 	Rails.backtrace_cleaner.remove_silencers! # for messier errors
