@@ -28,4 +28,31 @@ class ApplicationTest < ActionDispatch::IntegrationTest
       end
     end
   end
+
+  # just for a single -- no need 
+  test 'an application should initialize properly from the POST' do 
+    new_app = Application.new(Request.new(post_request(@@fixtures[0][:application])))
+    # app is an Application object
+    assert_kind_of Application, new_app
+    # app should be able to read errors, json!, read configs!, compute values!, and process rules!
+    assert new_app.respond_to? :error
+    assert new_app.respond_to? :read_json!
+    assert new_app.respond_to? :read_configs!
+    assert new_app.respond_to? :compute_values!
+    assert new_app.respond_to? :process_rules!
+    # app errors should be empty on a valid app submit
+    assert_nil new_app.error
+  end
+
+  test 'an application should reject malformed data' do 
+    # bad json
+    new_app = Application.new(Request.new(post_request('yolo goat')))
+    refute_nil new_app.error
+    assert_match /yolo goat/, new_app.error.to_s
+    assert_kind_of JSON::ParserError, new_app.error
+
+    # TODO: test that it's properly going to read_json or read_xml
+  end
+
+
 end

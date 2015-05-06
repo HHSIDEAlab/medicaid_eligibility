@@ -27,11 +27,12 @@ class ActiveSupport::TestCase
 end
 
 class Request
-	attr_accessor :raw_post, :content_type, :query_parameters
+	attr_accessor :raw_post, :content_type, :query_parameters, :params
 	def initialize(curl)
 		@raw_post = curl[:payload]
 		@content_type = curl[:headers]['Content-Type'].split(';')[0]
 		@query_parameters = {return_application: 'true'}
+		@params = {}
 	end
 end
 
