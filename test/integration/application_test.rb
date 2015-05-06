@@ -1,25 +1,10 @@
 require 'test_helper'
 
 class ApplicationTest < ActionDispatch::IntegrationTest
-	# load every fixture into an array and have the test suite loop thru them 
-  @fixtures = []
-  Dir.glob(Rails.root.to_s + '/test/fixtures/*.json') do |file|
-    puts 'loading ' + file
-    json = File.read(file).to_s
-    parsed_json = JSON.parse(File.read(file))
-    curl = Curl::Easy.http_post('http://localhost:3000/determinations/eval.json', File.read(file)) do |c|
-      c.headers['Content-Type'] = 'application/json;charset=UTF-8'
-      c.headers['Accept'] = 'application/json'
-    end
-    curl = curl.body_str
-    parsed_curl = JSON.parse(curl)
-    @fixtures << {name: file.gsub(/\.json/,'').gsub(/#{Rails.root.to_s}\/test\/fixtures\//,''), application: json, application_json: parsed_json, response: curl, response_json: parsed_curl}
-  end
-
 	def setup
 	end
 
-  @fixtures.each do |app|
+  @@fixtures.each do |app|
     test "the response should contain major fields like determination date and applicants #{app[:name]}" do
     	# determination date is present 
     	assert_match /Determination Date/, app[:response]
