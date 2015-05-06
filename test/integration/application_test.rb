@@ -1,11 +1,8 @@
 require 'test_helper'
 
 class ApplicationTest < ActionDispatch::IntegrationTest
-	Rails.backtrace_cleaner.remove_silencers!
-
-	# load every fixture into an array 
+	# load every fixture into an array and have the test suite loop thru them 
   @fixtures = []
-
   Dir.glob(Rails.root.to_s + '/test/fixtures/*.json') do |file|
     puts 'loading ' + file
     json = File.read(file).to_s
