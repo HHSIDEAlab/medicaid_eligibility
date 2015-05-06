@@ -25,9 +25,19 @@ class ActiveSupport::TestCase
   end
 end
 
+class Request
+	attr_accessor :raw_post, :content_type, :query_parameters
+	def initialize(curl)
+		@raw_post = curl[:payload]
+		@content_type = curl[:headers]['Content-Type'].split(';')[0]
+		@query_parameters = true
+	end
+end
+
 def post_request(payload)
 	curl = Curl::Easy.http_post('http://localhost:3000/determinations/eval.json', payload) do |c|
-    c.headers['Content-Type'] = 'application/json;charset=UTF-8'
-    c.headers['Accept'] = 'application/json'
-  end
+		c.headers['Content-Type'] = 'application/json;charset=UTF-8'
+		c.headers['Accept'] = 'application/json'
+	end
+	return {payload: payload, headers: curl.headers, query_parameters: true}
 end
