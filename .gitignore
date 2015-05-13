@@ -29,3 +29,5 @@
 .idea
 .DS_Store
 .ruby-version
+STOUT
+STDOUT
