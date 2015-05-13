@@ -10,7 +10,7 @@ class Application
     false
   end
 
-  attr_reader :error
+  attr_reader :error, :people, :state
 
   XML_NAMESPACES = {
     "exch"     => "http://at.dsh.cms.gov/exchange/1.0",
@@ -23,24 +23,23 @@ class Application
     "scr"      => "http://niem.gov/niem/domains/screening/2.1"
   }
 
-  def initialize(request)
-    @raw_application = request.raw_post
-    @content_type = request.content_type
+  def initialize(raw_application, content_type)
     @determination_date = Date.today
-    @return_application = request.query_parameters[:return_application] == 'true'
     @error = nil
+
     begin
-      if(request.params.has_key?(:json_request)) 
-        @json_application = JSON.parse(request.params[:json_request])
+      if content_type == 'application/json'
+        @json_application = JSON.parse(raw_application)
         read_json!
-      elsif @content_type == 'application/xml'
-        @xml_application = Nokogiri::XML(@raw_application) do |config|
+      elsif content_type == 'application/xml'
+        @xml_application = Nokogiri::XML(raw_application) do |config|
           config.default_xml.noblanks
         end
         read_xml!
-      elsif @content_type == 'application/json'
-        @json_application = JSON.parse(@raw_application)
-        read_json!
+      elsif content_type
+        raise "Invalid content type #{content_type}"
+      else
+        raise "Missing content type"
       end
       read_configs!
       compute_values!
@@ -53,6 +52,6 @@ class Application
   private
 
   def return_application?
-    @return_application
+    true
   end
 end

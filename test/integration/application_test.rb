@@ -32,7 +32,7 @@ class ApplicationTest < ActionDispatch::IntegrationTest
 
   # just for a single -- no need to run for all possible, and it slows 
   test 'an application should initialize properly from the POST' do 
-    new_app = Application.new(Request.new(post_request(@@fixtures[0][:application])))
+    new_app = Application.new(@@fixtures[0][:application], 'application/json')
     # app is an Application object
     assert_kind_of Application, new_app
     # app should be able to read errors, json!, read configs!, compute values!, and process rules!
@@ -47,7 +47,7 @@ class ApplicationTest < ActionDispatch::IntegrationTest
 
   test 'an application should reject malformed data' do 
     # try with bad json / post body
-    new_app = Application.new(Request.new(post_request('yolo goat')))
+    new_app = Application.new('yolo goat', 'application/json')
     refute_nil new_app.error
     assert_match /yolo goat/, new_app.error.to_s
     assert_kind_of JSON::ParserError, new_app.error

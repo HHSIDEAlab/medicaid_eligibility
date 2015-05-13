@@ -15,31 +15,7 @@ class ActiveSupport::TestCase
   Dir.glob(Rails.root.to_s + '/test/fixtures/*.json') do |file|
     puts 'loading ' + file
     json = File.read(file).to_s
-    parsed_json = JSON.parse(File.read(file))
-    curl = Curl::Easy.http_post('http://localhost:3000/determinations/eval.json', File.read(file)) do |c|
-      c.headers['Content-Type'] = 'application/json;charset=UTF-8'
-      c.headers['Accept'] = 'application/json'
-    end
-    curl = curl.body_str
-    parsed_curl = JSON.parse(curl)
-    @@fixtures << {name: file.gsub(/\.json/,'').gsub(/#{Rails.root.to_s}\/test\/fixtures\//,''), application: json, application_json: parsed_json, response: curl, response_json: parsed_curl}
+    response = Application.new(json, 'application/json').to_json
+    @@fixtures << {name: file.gsub(/\.json/,'').gsub(/#{Rails.root.to_s}\/test\/fixtures\//,''), application: JSON.parse(json), response: JSON.parse(response)}
   end
-end
-
-class Request
-	attr_accessor :raw_post, :content_type, :query_parameters, :params
-	def initialize(curl)
-		@raw_post = curl[:payload]
-		@content_type = curl[:headers]['Content-Type'].split(';')[0]
-		@query_parameters = {return_application: 'true'}
-		@params = {}
-	end
-end
-
-def post_request(payload)
-	curl = Curl::Easy.http_post('http://localhost:3000/determinations/eval.json', payload) do |c|
-		c.headers['Content-Type'] = 'application/json;charset=UTF-8'
-		c.headers['Accept'] = 'application/json'
-	end
-	return {payload: payload, headers: curl.headers, query_parameters: 'true'}
 end
