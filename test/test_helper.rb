@@ -4,7 +4,6 @@ require 'rails/test_help'
 require 'minitest/reporters'
 require 'minitest/spec'
 Minitest::Reporters.use!
-require 'curb' 
 ActiveRecord::Base.logger.level = 1
 
 class ActiveSupport::TestCase
