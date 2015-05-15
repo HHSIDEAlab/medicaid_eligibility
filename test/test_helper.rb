@@ -16,6 +16,6 @@ class ActiveSupport::TestCase
     puts 'loading ' + file
     json = File.read(file).to_s
     response = Application.new(json, 'application/json').to_json
-    @@fixtures << {name: file.gsub(/\.json/,'').gsub(/#{Rails.root.to_s}\/test\/fixtures\//,''), application: JSON.parse(json), response: JSON.parse(response)}
+    @@fixtures << {name: file.gsub(/\.json/,'').gsub(/#{Rails.root.to_s}\/test\/fixtures\//,''), application: JSON.parse(json), application_raw: json, response: JSON.parse(response)}
   end
 end

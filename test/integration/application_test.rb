@@ -7,32 +7,28 @@ class ApplicationTest < ActionDispatch::IntegrationTest
   # for each fixture, check this stuff
   @@fixtures.each do |app|
     test "the response should contain major fields like determination date and applicants #{app[:name]}" do
-    	# determination date is present 
-    	assert_match /Determination Date/, app[:response]
     	# determination date is set to today
-    	assert_match Time.now.strftime('%Y-%m-%d'), app[:response]
+      assert_equal Time.now.strftime('%Y-%m-%d'), app[:response]["Determination Date"]
     end
 
     test "the response should contain the correct number of applicants #{app[:name]}" do 
-    	# the return string has 'applicants'
-    	assert_match /Applicants/, app[:response]
-    	# there are an equal number of people on application and applicants with decision
-    	assert_equal app[:application_json]['People'].count, app[:response_json]['Applicants'].count
+      # there are an equal number of applicants on application and applicants with decision
+      assert_equal app[:application]['People'].select{|p| p["Is Applicant"] == 'Y'}.count, app[:response]['Applicants'].count
     end
 
     test "the response should contain a yes or no determination for medicaid and CHIP #{app[:name]}" do
-      app[:response_json]['Applicants'].each do |applicant|
+      app[:response]['Applicants'].each do |applicant|
     		# check for yes-no on medicaid for each applicant
-    		assert ["Y","N"].include? applicant['Medicaid Eligible']
+        assert %w(Y N).include? applicant['Medicaid Eligible']
     		# check for yes-no on chip for each applicant
-    		assert ["Y","N"].include? applicant['CHIP Eligible']
+        assert %w(Y N).include? applicant['CHIP Eligible']
       end
     end
   end
 
   # just for a single -- no need to run for all possible, and it slows 
   test 'an application should initialize properly from the POST' do 
-    new_app = Application.new(@@fixtures[0][:application], 'application/json')
+    new_app = Application.new(@@fixtures[0][:application_raw], 'application/json')
     # app is an Application object
     assert_kind_of Application, new_app
     # app should be able to read errors, json!, read configs!, compute values!, and process rules!
@@ -54,6 +50,4 @@ class ApplicationTest < ActionDispatch::IntegrationTest
 
     # TODO: test that it's properly going to read_json or read_xml
   end
-
-
 end
