@@ -18,7 +18,6 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 
 	test 'check' do 
  	 	# p MedicaidEligibilityApi::Application.options[:state_config][:default][:FPL].keys
-
 	end
 
 	test 'sets state info properly' do
@@ -48,12 +47,10 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
  		read_json!
  		refute_nil @error
  		assert_match /Invalid application year/, @error.to_s
-
- 	 	# assert_raises RuntimeError do 
-			# @json_application['Application Year'] = 'Yolo'
-	 	 	# read_json!
- 	 	# end
  	end
 
- 	 	
+ 	test 'handles people properly' do 
+
+ 	end
+
 end
