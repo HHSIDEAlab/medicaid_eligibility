@@ -50,4 +50,14 @@ class ApplicationTest < ActionDispatch::IntegrationTest
 
     # TODO: test that it's properly going to read_json or read_xml
   end
+
+  test 'an application should raise errors on bad content types' do 
+    new_app = Application.new(@@fixtures[0][:application_raw], 'bad content type')
+    refute_nil new_app.error
+    assert_match /Invalid content type/, new_app.error.to_s
+
+    new_app = Application.new(@@fixtures[0][:application_raw], nil)
+    refute_nil new_app.error
+    assert_match /Missing content type/, new_app.error.to_s
+  end
 end
