@@ -12,96 +12,92 @@ module ApplicationParser
   end
 
   def read_json!
-    begin
-      @state = @json_application["State"]
-      if @json_application["Application Year"]
-        unless MedicaidEligibilityApi::Application.options[:state_config][:default][:FPL].keys.include?(@json_application["Application Year"].to_s)
-          raise "Invalid application year"
-        end
-        @application_year = @json_application["Application Year"]
-      elsif Date.today >= Date.new(Date.today.year, 4, 1)
-        @application_year = Date.today.year
-      else
-        @application_year = Date.today.year - 1
+    @state = @json_application["State"]
+    if @json_application["Application Year"]
+      unless MedicaidEligibilityApi::Application.options[:state_config][:default][:FPL].keys.include?(@json_application["Application Year"].to_s)
+        raise "Invalid application year"
       end
-      @people = []
-      @applicants = []
-      for json_person in @json_application["People"]
-        person_id = json_person["Person ID"]
-        person_attributes = {}
-        applicant_id = json_person["Applicant ID"]
-        applicant_attributes = {}
-        is_applicant = json_person["Is Applicant"] == 'Y'
-        
-        for input in ApplicationVariables::PERSON_INPUTS
-          if input[:group] == :relationship || (!(is_applicant) && input[:group] == :applicant)
-            next
-          elsif input[:group] == :person
-            person_attributes[input[:name]] = get_json_variable(json_person, input, person_attributes.merge(applicant_attributes))
-          elsif input[:group] == :applicant
-            applicant_attributes[input[:name]] = get_json_variable(json_person, input, person_attributes.merge(applicant_attributes))
-          else
-            raise "Variable #{input[:name]} has unimplemented group #{input[:group]}"
-          end
-        end
-
-        # get income
-        income = get_json_income(json_person["Income"], :personal)
-
-        if is_applicant
-          person = Applicant.new(person_id, person_attributes, applicant_id, applicant_attributes, income)
-          @applicants << person
+      @application_year = @json_application["Application Year"]
+    elsif Date.today >= Date.new(Date.today.year, 4, 1)
+      @application_year = Date.today.year
+    else
+      @application_year = Date.today.year - 1
+    end
+    @people = []
+    @applicants = []
+    for json_person in @json_application["People"]
+      person_id = json_person["Person ID"]
+      person_attributes = {}
+      applicant_id = json_person["Applicant ID"]
+      applicant_attributes = {}
+      is_applicant = json_person["Is Applicant"] == 'Y'
+      
+      for input in ApplicationVariables::PERSON_INPUTS
+        if input[:group] == :relationship || (!(is_applicant) && input[:group] == :applicant)
+          next
+        elsif input[:group] == :person
+          person_attributes[input[:name]] = get_json_variable(json_person, input, person_attributes.merge(applicant_attributes))
+        elsif input[:group] == :applicant
+          applicant_attributes[input[:name]] = get_json_variable(json_person, input, person_attributes.merge(applicant_attributes))
         else
-          person = Person.new(person_id, person_attributes, income)
-        end
-        @people << person
-      end
-
-      # get relationships
-      for person in @people
-        json_person = @json_application["People"].find{|jp| jp["Person ID"] == person.person_id}
-        relationships = json_person["Relationships"]
-
-        for relationship in relationships
-          other_id = relationship["Other ID"]
-          
-          other_person = @people.find{|p| p.person_id == other_id}
-          relationship_type = ApplicationVariables::RELATIONSHIP_INVERSE[ApplicationVariables::RELATIONSHIP_CODES[relationship["Relationship Code"]]]
-          relationship_attributes = {}
-          for input in ApplicationVariables::PERSON_INPUTS.select{|i| i[:group] == :relationship}
-            relationship_attributes[input[:name]] = get_json_variable(relationship, input, person_attributes.merge(applicant_attributes))
-          end
-
-          person.relationships << Relationship.new(other_person, relationship_type, relationship_attributes)
+          raise "Variable #{input[:name]} has unimplemented group #{input[:group]}"
         end
       end
 
-      # get tax returns
-      @tax_returns = []
-      for json_return in @json_application["Tax Returns"]
-        filers = []
-        json_filers = json_return["Filers"]
+      # get income
+      income = get_json_income(json_person["Income"], :personal)
 
-        filers = json_return["Filers"].map{|jf|
-          @people.find{|p| p.person_id == jf["Person ID"]}
-        }
+      if is_applicant
+        person = Applicant.new(person_id, person_attributes, applicant_id, applicant_attributes, income)
+        @applicants << person
+      else
+        person = Person.new(person_id, person_attributes, income)
+      end
+      @people << person
+    end
+
+    # get relationships
+    for person in @people
+      json_person = @json_application["People"].find{|jp| jp["Person ID"] == person.person_id}
+      relationships = json_person["Relationships"]
+
+      for relationship in relationships
+        other_id = relationship["Other ID"]
         
-        dependents = json_return["Dependents"].map{|jd|
-          @people.find{|p| p.person_id == jd["Person ID"]}
-        }
+        other_person = @people.find{|p| p.person_id == other_id}
+        relationship_type = ApplicationVariables::RELATIONSHIP_INVERSE[ApplicationVariables::RELATIONSHIP_CODES[relationship["Relationship Code"]]]
+        relationship_attributes = {}
+        for input in ApplicationVariables::PERSON_INPUTS.select{|i| i[:group] == :relationship}
+          relationship_attributes[input[:name]] = get_json_variable(relationship, input, person_attributes.merge(applicant_attributes))
+        end
 
-        income = get_json_income(json_return["Income"], :tax_return)
-
-        @tax_returns << TaxReturn.new(filers, dependents, income)
+        person.relationships << Relationship.new(other_person, relationship_type, relationship_attributes)
       end
+    end
 
-      # get physical households
-      @physical_households = []
-      for json_household in @json_application["Physical Households"]
-        @physical_households << Household.new(json_household["Household ID"], json_household["People"].map{|jp| @people.find{|p| p.person_id == jp["Person ID"]}})
-      end
-    rescue RuntimeError => e 
-      @error = e
+    # get tax returns
+    @tax_returns = []
+    for json_return in @json_application["Tax Returns"]
+      filers = []
+      json_filers = json_return["Filers"]
+
+      filers = json_return["Filers"].map{|jf|
+        @people.find{|p| p.person_id == jf["Person ID"]}
+      }
+      
+      dependents = json_return["Dependents"].map{|jd|
+        @people.find{|p| p.person_id == jd["Person ID"]}
+      }
+
+      income = get_json_income(json_return["Income"], :tax_return)
+
+      @tax_returns << TaxReturn.new(filers, dependents, income)
+    end
+
+    # get physical households
+    @physical_households = []
+    for json_household in @json_application["Physical Households"]
+      @physical_households << Household.new(json_household["Household ID"], json_household["People"].map{|jp| @people.find{|p| p.person_id == jp["Person ID"]}})
     end
   end
 
