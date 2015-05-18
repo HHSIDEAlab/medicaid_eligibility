@@ -8,7 +8,8 @@ class ApplicationComponentsTest < ActionDispatch::IntegrationTest
 
 	# basic object tests to make sure everything initializes properly 
 	test 'person initializes properly' do 
-		person = Person.new app['People'][0]
+		# person = Person.new app['People'][0]
+		
 		# person = Person.new 
 	end
 
