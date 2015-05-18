@@ -13,6 +13,7 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 
 	def setup
 		@json_application = @@fixtures[0][:application]
+		read_json!
 		# @response = @@fixtures[0][:response]
 	end
 
@@ -21,7 +22,6 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 	end
 
 	test 'sets state info properly' do
-		read_json!
  	 	assert_equal @state, @json_application['State']
 
  	 	@json_application['State'] = 'MI'
@@ -36,7 +36,6 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
  	end
 
  	test 'sets application year properly' do 
- 		read_json!
  		assert_equal @application_year, @json_application['Application Year']
 
  		@json_application['Application Year'] = '2013'
@@ -49,7 +48,8 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
  		assert_match /Invalid application year/, @error.to_s
  	end
 
- 	test 'handles people properly' do 
+ 	test 'sets people and applicants properly' do 
+ 		
 
  	end
 
