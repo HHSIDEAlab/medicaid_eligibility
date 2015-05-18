@@ -10,6 +10,11 @@ class ActiveSupport::TestCase
 	Rails.backtrace_cleaner.remove_silencers! # for messier errors
 
 	# make fixtures available as a class variable so it's available in integration tests for looping thru
+	# accessible points:
+	# 	:name - name of fixture loaded
+	# 	:application - parsed JSON blob of application data
+	# 	:application_raw - raw string
+	# 	:response - parsed JSON blob of application response
   @@fixtures = []
   Dir.glob(Rails.root.to_s + '/test/fixtures/*.json') do |file|
     puts 'loading ' + file
