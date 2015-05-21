@@ -56,10 +56,17 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 			required_inputs.each do |input|
 				# each person should have required inputs
 				assert person[input[:name]]
+				# TODO inputs should be set properly 
+
+				# TODO required_if inputs should validate also
+
 			end
+			# TODO same stuff for person inputs
+
+			# TODO same stuff for applicant inputs
 		end
 
-
+		# TODO unimplemented group errors should raise properly
  	end
 
  	test 'sets people and applicants properly' do 
@@ -67,6 +74,11 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
  		# check that everyone makes it to the right array
  		assert_equal @people.count, @json_application['People'].count
 		assert_equal @applicants.count, @json_application['People'].select { |p| p['Is Applicant'] == 'Y'}.count
+
+		# TODO: creates proper object based on applicant status
  	end
 
+ 	# TODO Relationships, tax returns, physical househoulds
+
+ 	# TODO test get_json_variable / get variable
 end
