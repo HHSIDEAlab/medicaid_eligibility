@@ -16,9 +16,6 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 		read_json!
 	end
 
-	test 'check' do 
-	end
-
 	test 'sets state info properly' do
 	 	assert_equal @state, @json_application['State']
 
@@ -47,16 +44,29 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
  		ApplicationParserTest.reload_fixtures
  	end
 
+ 	test 'handles inputs from applicationvariables model properly' do 
+		# for input in applicationvariables... 
+		person_inputs = ApplicationVariables::PERSON_INPUTS
+		required_inputs = ApplicationVariables::PERSON_INPUTS.select { |i| i[:required] }
+		person_inputs = ApplicationVariables::PERSON_INPUTS.select { |i| i[:group] == :person }
+		applicant_inputs = ApplicationVariables::PERSON_INPUTS.select { |i| i[:group] == :applicant }
+
+		@json_application['People'].each do |person|
+			# confirm that applications are parsing required inputs properly 
+			required_inputs.each do |input|
+				# each person should have required inputs
+				assert person[input[:name]]
+			end
+		end
+
+
+ 	end
 
  	test 'sets people and applicants properly' do 
- 		# p @people.count
- 		# p @applicants.count
-
- 		# because of the runtime error 
- 		assert_equal @applicants.count, @json_application['People'].count
- 		# p @people.count
- 		# p @applicants.count
- 		# p @error.to_s
+ 		# all people on an app get put in the people array; only applicants get put into the applicant array
+ 		# check that everyone makes it to the right array
+ 		assert_equal @people.count, @json_application['People'].count
+		assert_equal @applicants.count, @json_application['People'].select { |p| p['Is Applicant'] == 'Y'}.count
  	end
 
 end
