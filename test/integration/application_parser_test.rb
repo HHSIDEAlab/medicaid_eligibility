@@ -11,23 +11,15 @@ require 'test_helper'
 class ApplicationParserTest < ActionDispatch::IntegrationTest
 	include ApplicationParser 
 
-	def reload!
-		@json_application = @@fixtures[0][:application]
-		read_json!
-		@error = nil
-	end
-
 	def setup
 		@json_application = @@fixtures[0][:application]
 		read_json!
-		# @response = @@fixtures[0][:response]
 	end
 
 	test 'check' do 
 	end
 
 	test 'sets state info properly' do
-		reload!
 	 	assert_equal @state, @json_application['State']
 
 	 	@json_application['State'] = 'MI'
@@ -35,29 +27,28 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 	 	assert_equal @state, 'MI'
 
 	 	# TODO: Application side, state might need some validation?
-	 	# assert_raises RuntimeError do 
-	 		# @json_application['State'] = 'Yolo'
-	 		# read_json!
-	 	# end
+ 		# @json_application['State'] = 'Yolo'
+ 		# read_json!
+ 		# assert_match /Invalid application year/, @error.to_s
 	end
 
  	test 'sets application year properly' do 
- 		reload!
  		assert_equal @application_year, @json_application['Application Year']
 
+ 		# should set year to 2013
  		@json_application['Application Year'] = '2013'
  		read_json!
  		assert_equal @application_year, '2013'
-
-
-		# assert_raises RuntimeError do 
- 		# @json_application['Application Year'] = 'Yolo'
- 		# read_json!
- 		# assert_match /Invalid application year/, @error.to_s
+ 		
+ 		# should throw an error when you give it a bad year
+ 		@json_application['Application Year'] = 'Yolo'
+ 		read_json!
+ 		assert_match /Invalid application year/, @error.to_s
+ 		ApplicationParserTest.reload_fixtures
  	end
 
+
  	test 'sets people and applicants properly' do 
- 		reload!
  		# p @people.count
  		# p @applicants.count
 
@@ -65,7 +56,7 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
  		assert_equal @applicants.count, @json_application['People'].count
  		# p @people.count
  		# p @applicants.count
- 		p @error.to_s
+ 		# p @error.to_s
  	end
 
 end
