@@ -67,8 +67,6 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 
 			# TODO same stuff for applicant inputs
 		end
-
-		# TODO unimplemented group errors should raise properly
  	end
 
  	test 'sets people and applicants properly' do 
