@@ -13,6 +13,7 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 
 	def setup
 		@json_application = @@fixtures[0][:application]
+		# ApplicationParserTest.reload_fixture @json_application [:name]
 		read_json!
 	end
 
@@ -22,6 +23,7 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 	 	@json_application['State'] = 'MI'
 	 	read_json!
 	 	assert_equal @state, 'MI'
+
 
 	 	# TODO: Application side, state might need some validation?
 	 	# assert_raises Exception do
@@ -39,11 +41,11 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
  		assert_equal @application_year, '2013'
  		
  		# should throw an error when you give it a bad year -- there 
- 		# assert_raises Exception do 
-	 	# 	@json_application['Application Year'] = 'Yolo'
-	 	# 	read_json!
-	 	# end
- 		ApplicationParserTest.reload_fixtures
+ 		assert_raises RuntimeError do 
+	 		@json_application['Application Year'] = 'Yolo'
+	 		read_json!
+	 	end
+ 		ApplicationParserTest.reload_fixture @@fixtures[0][:name]
  	end
 
  	test 'handles inputs from applicationvariables model properly' do 
