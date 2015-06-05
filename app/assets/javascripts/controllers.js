@@ -115,6 +115,21 @@ angular.module('MAGI.controllers', ['ngCookies']).
          }
         });
 
+        $scope.showAgeField = function() {
+          return !($scope.applicant.age >= 90 || $scope.applicant.age90OrOlder);
+        };
+
+        $scope.showAgeCheckbox = function() {
+          return $scope.applicant.age90OrOlder;
+        };
+
+        $scope.updateAge = function(applicant) {
+          if (applicant.age >= 90) {
+            $scope.applicant.age90OrOlder = true;
+            $scope.applicant.age = null;
+          }
+        }
+
         $scope.$watch('applicant.pregnantThreeMonths', function(newValue,oldValue){
             if(newValue){
                 $scope.applicant.pregnant = false;

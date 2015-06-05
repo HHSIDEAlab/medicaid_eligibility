@@ -33,7 +33,7 @@ module ApplicationParser
       is_applicant = json_person["Is Applicant"] == 'Y'
       
       for input in ApplicationVariables::PERSON_INPUTS
-        if input[:group] == :relationship || (!(is_applicant) && input[:group] == :applicant)
+        if [:relationship, :special].include? input[:group] || (!(is_applicant) && input[:group] == :applicant)
           next
         elsif input[:group] == :person
           person_attributes[input[:name]] = get_json_variable(json_person, input, person_attributes.merge(applicant_attributes))
@@ -42,6 +42,17 @@ module ApplicationParser
         else
           raise "Variable #{input[:name]} has unimplemented group #{input[:group]}"
         end
+      end
+
+      # get age
+      if json_person["Applicant Age >= 90"] == "Y"
+        person_attributes["Applicant Age"] = 90
+      elsif json_person["Applicant Age"].nil?
+        raise "Missing Applicant Age"
+      # elsif json_person["Applicant Age"] >= 90
+      #   raise "MITC cannot accept ages >= 90. Please resubmit with 'Applicant Age >= 90' set to 'Y'"
+      else
+        person_attributes["Applicant Age"] = json_person["Applicant Age"]
       end
 
       # get income

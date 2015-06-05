@@ -3,9 +3,17 @@ module ApplicationVariables
     {
       :name       => "Applicant Age",
       :type       => :integer,
-      :group      => :person,
+      :group      => :special,
       :xpath      => "PersonAge",
-      :required   => true
+      :required   => false
+    },
+    {
+      :name       => "Applicant Age >= 90",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :special,
+      :xpath      => :unimplemented,
+      :required   => false
     },
     {
       :name       => "Applicant Attest Blind or Disabled",

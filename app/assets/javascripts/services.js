@@ -254,6 +254,7 @@ angular.module('MAGI.services',[]).
       {app: 'citizen', api: 'US Citizen Indicator', type: 'checkbox'},
       //{app: 'id', api: 'Person ID', type: 'string'},
       {app: 'age', api: 'Applicant Age', type: 'string'},
+      {app: 'age90OrOlder', api: 'Applicant Age >= 90', type: 'checkbox'},
       {app: 'hours', api: 'Hours Worked Per Week', type: 'string'}
     ];
 

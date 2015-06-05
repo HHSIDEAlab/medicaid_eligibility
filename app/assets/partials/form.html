@@ -37,19 +37,20 @@
       </div>
     </div>
     <div class="form-row">
-      <label for="applicant_id">Applicant Name or ID</label>
-      <input type="text" ng-model="applicant.id" name="applicant_id"
-           class="applicant-id-field" required applicant_id_unique="true">
-      <label for="applicant_id" class="error" ng-show="(applicantForm.applicant_id.$dirty || submitted)  && applicantForm.applicant_id.$invalid">This field is required.</label>
-    </div>
-    <div class="form-row">
       <label for="applicant_{{ $index }}_is_applicant">Is this individual applying for insurance?</label>
       <input type="checkbox" checker ng-model = "applicant.isApplicant" id="applicant_{{ $index }}_is_applicant" name="applicant_is_applicant" >
     </div>
     <div class="form-row-expandable">
-      <label for="applicant_{{ $index }}_age">Age</label>
-      <input type="number" numberinput ng-model = "applicant.age" id="applicant_{{ $index }}_age" name="applicant_age" required>
-      <label for="applicant_{{ $index }}_age" class="error" ng-show="(applicantForm.applicant_age.$dirty  || submitted)  && applicantForm.applicant_age.$invalid">This field is required.</label>
+      <div class="form-row" ng-show="showAgeField()">
+        <label for="applicant_{{ $index }}_age">Age</label>
+        <input type="number" ng-model="applicant.age" id="applicant_{{ $index }}_age" name="applicant_age" ng-change="updateAge(applicant)">
+      </div>
+
+      <div class="form-row" ng-show="showAgeCheckbox()">
+        <label for="applicant_{{ $index }}_age90OrOlder">Applicant is 90 or older</label>
+        <input type="checkbox" checker id="applicant_{{ $index }}_age90OrOlder" name="applicant_age90OrOlder" ng-model="applicant.age90OrOlder">
+      </div>
+
       <div class="form-row-expandable-fields2" ng-show="checkResponsibility()">
 
         <div class="form-row" >
