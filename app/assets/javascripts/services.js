@@ -3,7 +3,6 @@ angular.module('MAGI.services',[]).
     applicant_ids = 0;
 
     function Application(){
-      this.applicationId = "";
       this.applicants = [];
       this.taxReturns = [];
       // get the state from the URL if it is set

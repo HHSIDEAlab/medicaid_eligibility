@@ -13,10 +13,6 @@
       <select selector ng-model="application.applicationYear" name="applicationYear" id="applicationYear" ng-options="year for year in appYears" required>
       </select>
     </div>
-    <div class="form-row">
-      <label for="id">Application Name or ID</label>
-      <input id="applicationId" ng-model="application.applicationId" type="text" name="id">
-    </div>
   </div>
   <div id="submit_disabled_text" class="short-notice-area" ng-show="disableSubmit()">
     <h2 class="splash-header" style="text-align: center">SORRY!</h2>
