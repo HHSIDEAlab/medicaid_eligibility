@@ -105,7 +105,7 @@ angular.module('MAGI.controllers', ['ngCookies']).
   }]).
     controller('ApplicantController',['$scope',function($scope){
         $scope.checkResponsibility = function(){
-            return $scope.applicant.age <= 19;
+            return $scope.applicant.age !== null && $scope.applicant.age <= 19;
         };
 
         $scope.$watch('checkResponsibility()', function(newValue,oldValue){
