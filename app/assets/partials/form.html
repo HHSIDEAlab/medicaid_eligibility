@@ -23,6 +23,18 @@
 
     States may access the MAGI Software and certain technical consulting and support services pursuant to the terms of the NESCSO Membership Agreement. <span class="splash-emphasis">You can download a copy of the Membership Agreement by clicking <a href="https://s3.amazonaws.com/bluelabs-mitc/NESCSO+Membership+Agreement.pdf">here</a>.</span> If you have any questions about becoming a member or the Membership Agreement, please email <a href="mailto:Brenda.Harvey@umassmed.edu">Brenda.Harvey@umassmed.edu</a>.
   </div>
+  <div id="privacy_notice_text" class="short-notice-area" ng-show="!(disableSubmit())">
+    <h2 class="splash-header" style="text-align: center">IMPORTANT NOTICE</h2>
+    The form below collects information about applicants in order to determine whether they are eligible for the Medicaid or Children's Health Insurance Programs.
+
+    <br><br>
+
+    We do not collect an applicant's name, address, birthdate, Social Security number or any other 'personally identifying information' as defined by the Health Insurance Portability and Accountability Act of 1996.
+
+    <br><br>
+
+    <span class="splash-emphasis">Please do <u>not</u> enter any personally identifying information in the form below.</span>
+  </div>
   <fieldset ng-form name="applicantForm" ng-repeat="applicant in applicants" ng-controller="ApplicantController">
     <legend>Applicant <span class="applicant-number">{{$index+1}}</span></legend>
     <div class="applicant-relationship-fields" ng-repeat="relationship in applicant.relationships">
