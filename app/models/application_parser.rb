@@ -47,12 +47,12 @@ module ApplicationParser
       # get age
       if json_person["Applicant Age >= 90"] == "Y"
         person_attributes["Applicant Age"] = 90
-      elsif json_person["Applicant Age"].nil?
-        raise "Missing Applicant Age"
+      elsif json_person["Applicant Age"].nil? || !(json_person["Applicant Age"].instance_of? Fixnum)
+        raise "Missing or invalid Applicant Age"
       # elsif json_person["Applicant Age"] >= 90
       #   raise "MITC cannot accept ages >= 90. Please resubmit with 'Applicant Age >= 90' set to 'Y'"
       else
-        person_attributes["Applicant Age"] = json_person["Applicant Age"]
+        person_attributes["Applicant Age"] = json_person["Applicant Age"].to_i
       end
 
       # get income

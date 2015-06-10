@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('MAGI.controllers', ['ngCookies']).
-  controller('FormController',['$scope','$location','$anchorScroll','$timeout','$log', '$cookies', '$cookieStore',
+  controller('FormController',['$scope','$location','$anchorScroll','$timeout','$log','$filter','$cookies', '$cookieStore',
     'filterFilter', 'Application','relationshipCodes','states','applicationYears','applicationStatuses', 
-    function($scope, $location, $anchorScroll, $timeout, $log, $cookies, $cookieStore, filterFilter, Application, relationshipCodes, states, applicationYears, applicationStatuses){
+    function($scope, $location, $anchorScroll, $timeout, $log, $filter, $cookies, $cookieStore, filterFilter, Application, relationshipCodes, states, applicationYears, applicationStatuses){
         var acceptedNoticeSession = false;
         
         $scope.disableSubmit = function() {
@@ -28,7 +28,22 @@ angular.module('MAGI.controllers', ['ngCookies']).
         $scope.newHousehold = [];
 
         $scope.exportApplication = function(){
-             $location.path("/exportimport");
+          if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )) {
+            $location.path("/exportraw");
+          } else {
+            applicationJson = angular.toJson(Application.serialize(), true);
+
+            var a = window.document.createElement('a');
+            a.href = window.URL.createObjectURL(new Blob([applicationJson], {type: 'application/json'}));
+            a.download = 'mitcexport_' + $filter('date')(new Date(), "yyyyMMdd") + '.json';
+
+            // Append anchor to body.
+            document.body.appendChild(a)
+            a.click();
+
+            // Remove anchor from body
+            document.body.removeChild(a)
+          }
         };
 
         $scope.$watch('newHousehold.length', function(newVal,oldVal){
@@ -169,7 +184,7 @@ angular.module('MAGI.controllers', ['ngCookies']).
             return other !== $scope.applicant; 
         };
     }]).
-    controller('ResultsController',['$scope','$location','Application', function($scope,$location,Application){
+    controller('ResultsController',['$scope','$location','$filter','Application', function($scope,$location,$filter,Application){
         $scope.application = Application;
         $scope.applicants = Application.determination['Applicants'];
         $scope.expandByDefault = function(){
@@ -178,7 +193,22 @@ angular.module('MAGI.controllers', ['ngCookies']).
         };
 
         $scope.exportApplication = function(){
-             $location.path("/exportimport");
+          if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )) {
+            $location.path("/exportraw");
+          } else {
+            applicationJson = angular.toJson(Application.serialize(), true) + "\n\n" + angular.toJson(Application.determination, true);
+
+            var a = window.document.createElement('a');
+            a.href = window.URL.createObjectURL(new Blob([applicationJson], {type: 'application/json'}));
+            a.download = 'mitcexport_' + $filter('date')(new Date(), "yyyyMMdd") + '.json';
+
+            // Append anchor to body.
+            document.body.appendChild(a)
+            a.click();
+
+            // Remove anchor from body
+            document.body.removeChild(a)
+          }
         };
 
 
@@ -204,6 +234,14 @@ angular.module('MAGI.controllers', ['ngCookies']).
             // Redirect to application
             $location.path("/application");
         };
+
+        $scope.returnToForm = function(){
+            $location.path("/application");
+        };
+    }]).
+    controller('ExportRawController',['$scope','$location','$log','Application', function($scope,$location,$log,Application){
+        $scope.applicationJson = angular.toJson(Application.serialize(), true);
+        $scope.resultsJson = angular.toJson(Application.determination, true);
 
         $scope.returnToForm = function(){
             $location.path("/application");

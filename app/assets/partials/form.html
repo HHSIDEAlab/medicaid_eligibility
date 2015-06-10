@@ -323,7 +323,7 @@
   </div>
   <div ng-show="!disableSubmit() && application.state"> 
     <button type="submit">Check Eligibility</button>
-    <button class="submitlike" ng-click="exportApplication()">Export Application</button>
+    <button type="button" class="submitlike" ng-click="exportApplication()">Export Application</button>
   </div>
   <div ng-show="disableSubmit() || !(application.state)"> 
     <button class="disabledbutton" ng-click="" disabled>Check Eligibility</button>
