@@ -243,6 +243,8 @@ angular.module('MAGI.controllers', ['ngCookies']).
         $scope.applicationJson = angular.toJson(Application.serialize(), true);
         $scope.resultsJson = angular.toJson(Application.determination, true);
 
+        $scope.showResults = _.keys(Application.determination).length > 0;
+
         $scope.returnToForm = function(){
             $location.path("/application");
         };
