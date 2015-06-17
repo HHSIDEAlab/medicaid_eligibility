@@ -37,7 +37,7 @@ h1 {
   text-align: center;
 }
 
-a {
+.splash-link {
   color: #236995;
 }
 
@@ -137,6 +137,16 @@ fieldset, .form-fields-area {
 .splash-emphasis {
   font-weight: bold;
   color:  #236995;
+}
+
+.footer {
+  font-weight: bold;
+  text-align: center;
+  font-size: 18px;
+}
+
+.footer-link {
+  text-decoration: none;
 }
 
 fieldset {
