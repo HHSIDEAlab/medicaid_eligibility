@@ -11,30 +11,19 @@ require 'test_helper'
 class ApplicationParserTest < ActionDispatch::IntegrationTest
 	include ApplicationParser 
 
-	# def setup
-			# @json_application = app[:application]
-			# read_json!
-	# end
-
 	@@fixtures.each do |app|
-
-		# p app[:application]['State']
+		# doing this to access app in setup -- probably a better way to do this
 		@@app = app
-		# @@appname = app[:]
-		# p @@app[:application]['State'] 
-
-		# p @app[:name]
 
 		def setup
-			# p @@app
-			# p app.inspect
 			@json_application = @@app[:application]
-			# p @@app[:application]['State']
 			read_json!
 		end
 
 		test "sets state info properly #{app[:name]}" do
 			read_json!
+			initial_value = @state
+
 		 	assert_equal @state, @json_application['State']
 
 		 	@json_application['State'] = 'MI'
@@ -50,26 +39,24 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 
 	 	test "sets application year properly #{app[:name]}" do 
 	 		read_json!
-	 		p @json_application['Application Year']
+	 		initial_value = @application_year
+
+			# make sure app year works
 	 		assert_equal @application_year, @json_application['Application Year']
 
 	 		# should set year to 2013
-	 		@json_application['Application Year'] = '2013'
+	 		@json_application['Application Year'] = 2013
 	 		read_json!
-	 		p @json_application['Application Year']
+	 		assert_equal @application_year, 2013
 
-	 		assert_equal @application_year, '2013'
-	 		
 	 		# should throw an error when you give it a bad year -- there 
 	 		assert_raises RuntimeError do 
 		 		@json_application['Application Year'] = 'Yolo'
-		 		read_json!
+		 		read_json!		 		
 		 	end
-	 		p @json_application['Application Year']
 
-	 		ApplicationParserTest.reload_fixture app[:name]
-	 		p @json_application['Application Year']
-
+	 		# Reload_fixture refuses to work here so I'm just hard-setting. Let this be a lesson to me about not using class variables
+			@json_application['Application Year'] = initial_value 
 	 	end
 
 	 	test "handles inputs from applicationvariables model properly #{app[:name]}" do 
