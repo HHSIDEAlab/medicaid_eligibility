@@ -1,11 +1,16 @@
 require 'test_helper'
 
 class ApplicationTest < ActionDispatch::IntegrationTest
+
+	@fixtures = load_fixtures
+
 	def setup
+		@fixture = reload_fixture '4_person_family'
+		# @fixtures = 
 	end
 
   # for each fixture, check this stuff
-  @@fixtures.each do |app|
+  @fixtures.each do |app|
     test "the response should contain major fields like determination date and applicants #{app[:name]}" do
     	# determination date is set to today
       assert_equal Time.now.strftime('%Y-%m-%d'), app[:response]["Determination Date"]
@@ -28,7 +33,7 @@ class ApplicationTest < ActionDispatch::IntegrationTest
 
   # just for a single -- no need to run for all possible, and it slows 
   test 'an application should initialize properly from the POST' do 
-    new_app = Application.new(@@fixtures[0][:application_raw], 'application/json')
+    new_app = Application.new(@fixture[:application_raw], 'application/json')
     # app is an Application object
     assert_kind_of Application, new_app
     # app should be able to read errors, json!, read configs!, compute values!, and process rules!
@@ -52,11 +57,11 @@ class ApplicationTest < ActionDispatch::IntegrationTest
   end
 
   test 'an application should raise errors on bad content types' do 
-    new_app = Application.new(@@fixtures[0][:application_raw], 'bad content type')
+    new_app = Application.new(@fixture[:application_raw], 'bad content type')
     refute_nil new_app.error
     assert_match /Invalid content type/, new_app.error.to_s
 
-    new_app = Application.new(@@fixtures[0][:application_raw], nil)
+    new_app = Application.new(@fixture[:application_raw], nil)
     refute_nil new_app.error
     assert_match /Missing content type/, new_app.error.to_s
   end
