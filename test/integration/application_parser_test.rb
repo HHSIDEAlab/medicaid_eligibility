@@ -19,6 +19,7 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 		read_json!
 	end
 
+	# restore to default
 	def teardown_app(app) 
 		app = reload_fixture app[:name]
 		setup_app app
@@ -94,6 +95,20 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 			assert_equal @applicants.count, @json_application['People'].select { |p| p['Is Applicant'] == 'Y'}.count
 
 			# TODO: creates proper object based on applicant status
+			@applicants.each do |applicant|
+				assert_kind_of Applicant, applicant
+			end
+
+			@people.each do |person|
+				assert_kind_of Person, person
+			end
+
+
+			# p @applicants.count
+			# p @people.count
+			# assert_kind_of @
+
+			teardown_app app
 	 	end
 
 	 	test "handles inputs from applicationvariables model properly #{app[:name]}" do 
@@ -119,6 +134,8 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 
 				# TODO same stuff for applicant inputs
 			end
+
+			teardown_app app 
 	 	end
 	 	# TODO Relationships, tax returns, physical househoulds
 
