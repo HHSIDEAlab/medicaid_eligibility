@@ -21,7 +21,6 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 		end
 
 		test "sets state info properly #{app[:name]}" do
-			read_json!
 			initial_value = @state
 
 		 	assert_equal @state, @json_application['State']
@@ -31,14 +30,16 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 		 	assert_equal @state, 'MI'
 
 		 	# TODO: Application side, state might need some validation?
+		 	# commenting this out for now because it doesn't actually raise an error
 		 	# assert_raises RuntimeError do
 		 		# @json_application['State'] = 'Yolo'
 	 			# read_json!
 	 		# end
+
+	 		@json_application['State'] = initial_value
 		end
 
 	 	test "sets application year properly #{app[:name]}" do 
-	 		read_json!
 	 		initial_value = @application_year
 
 			# make sure app year works
@@ -57,10 +58,20 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 
 	 		# Reload_fixture refuses to work here so I'm just hard-setting. Let this be a lesson to me about not using class variables
 			@json_application['Application Year'] = initial_value 
+
+			# TODO test elsif and else behavior; block starting line 21
+	 	end
+
+	 	test "sets people and applicants properly #{app[:name]}" do 
+	 		# all people on an app get put in the people array; only applicants get put into the applicant array
+	 		# check that everyone makes it to the right array
+	 		assert_equal @people.count, @json_application['People'].count
+			assert_equal @applicants.count, @json_application['People'].select { |p| p['Is Applicant'] == 'Y'}.count
+
+			# TODO: creates proper object based on applicant status
 	 	end
 
 	 	test "handles inputs from applicationvariables model properly #{app[:name]}" do 
-	 		read_json!
 			# for input in applicationvariables... 
 			person_inputs = ApplicationVariables::PERSON_INPUTS
 			required_inputs = ApplicationVariables::PERSON_INPUTS.select { |i| i[:required] }
@@ -83,15 +94,7 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 			end
 	 	end
 
-	 	test "sets people and applicants properly #{app[:name]}" do 
-	 		read_json!
-	 		# all people on an app get put in the people array; only applicants get put into the applicant array
-	 		# check that everyone makes it to the right array
-	 		assert_equal @people.count, @json_application['People'].count
-			assert_equal @applicants.count, @json_application['People'].select { |p| p['Is Applicant'] == 'Y'}.count
 
-			# TODO: creates proper object based on applicant status
-	 	end
 
 	 	# TODO Relationships, tax returns, physical househoulds
 
