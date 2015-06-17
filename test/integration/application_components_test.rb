@@ -3,7 +3,7 @@ include ApplicationComponents
 
 class ApplicationComponentsTest < ActionDispatch::IntegrationTest
 	def setup
-		app = @@fixtures[0][:application]
+		# app = @@fixtures[0][:application]
 	end
 
 	# basic object tests to make sure everything initializes properly 
