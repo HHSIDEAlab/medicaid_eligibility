@@ -94,15 +94,17 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 	 		assert_equal @people.count, @json_application['People'].count
 			assert_equal @applicants.count, @json_application['People'].select { |p| p['Is Applicant'] == 'Y'}.count
 
-			# TODO: creates proper object based on applicant status
+			# check that the people on the app initialize as the proper objects
 			@applicants.each do |applicant|
 				assert_kind_of Applicant, applicant
 			end
-
 			@people.each do |person|
 				assert_kind_of Person, person
 			end
 
+			# @people
+
+			# ApplicationVariables::PERSON_INPUTS.each do |input|
 
 			# p @applicants.count
 			# p @people.count
@@ -115,7 +117,7 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 	 		setup_app app 
 
 			# for input in applicationvariables... 
-			person_inputs = ApplicationVariables::PERSON_INPUTS
+			
 			required_inputs = ApplicationVariables::PERSON_INPUTS.select { |i| i[:required] }
 			person_inputs = ApplicationVariables::PERSON_INPUTS.select { |i| i[:group] == :person }
 			applicant_inputs = ApplicationVariables::PERSON_INPUTS.select { |i| i[:group] == :applicant }
