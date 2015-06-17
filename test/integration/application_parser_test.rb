@@ -11,19 +11,32 @@ require 'test_helper'
 class ApplicationParserTest < ActionDispatch::IntegrationTest
 	include ApplicationParser 
 
-	@@fixtures.each do |app|
-		# doing this to access app in setup -- probably a better way to do this
-		@@app = app
+	@fixtures = load_fixtures
 
-		def setup
-			@json_application = @@app[:application]
-			read_json!
+	# making an adhoc setup and teardown
+	def setup_app(app)
+		@json_application = app[:application]
+		read_json!
+	end
+
+	def teardown_app(app) 
+		app = reload_fixture app[:name]
+		setup_app app
+	end
+
+	@fixtures.each do |app|
+		test "make sure fixtures parse right #{app[:name]}" do 
+			# check that app json is equal to json application. Kind of a stupid safety check 
+			setup_app app 
+			assert_equal app[:application], @json_application
+			teardown_app app 
 		end
 
-		test "sets state info properly #{app[:name]}" do
-			initial_value = @state
 
-		 	assert_equal @state, @json_application['State']
+		test "sets state info properly #{app[:name]}" do
+			setup_app app
+
+	 		assert_equal @state, @json_application['State']
 
 		 	@json_application['State'] = 'MI'
 		 	read_json!
@@ -36,11 +49,12 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 	 			# read_json!
 	 		# end
 
-	 		@json_application['State'] = initial_value
+ 			# restore to default
+ 			teardown_app app
 		end
 
 	 	test "sets application year properly #{app[:name]}" do 
-	 		initial_value = @application_year
+	 		setup_app app 
 
 			# make sure app year works
 	 		assert_equal @application_year, @json_application['Application Year']
@@ -50,19 +64,30 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 	 		read_json!
 	 		assert_equal @application_year, 2013
 
-	 		# should throw an error when you give it a bad year -- there 
+	 		# should throw an error when you give it a bad year
+	 		# WARNING: If you stop it after this, it doesn't reload well for some reason
 	 		assert_raises RuntimeError do 
 		 		@json_application['Application Year'] = 'Yolo'
 		 		read_json!		 		
 		 	end
 
-	 		# Reload_fixture refuses to work here so I'm just hard-setting. Let this be a lesson to me about not using class variables
-			@json_application['Application Year'] = initial_value 
+		 	# if no year, should assume either last year (if before April) or the year prior (if after April)
+		 	@json_application['Application Year'] = nil
+		 	read_json!
 
-			# TODO test elsif and else behavior; block starting line 21
+		 	# TODO: this passes but doesn't actually test the time behavior.
+		 	if Time.now.month >= 4
+		 		assert_equal @application_year, Time.now.year 
+		 	else 
+		 		assert_equal @application_year, Time.now.year - 1
+		 	end
+
+			teardown_app app
 	 	end
 
 	 	test "sets people and applicants properly #{app[:name]}" do 
+	 		setup_app app
+
 	 		# all people on an app get put in the people array; only applicants get put into the applicant array
 	 		# check that everyone makes it to the right array
 	 		assert_equal @people.count, @json_application['People'].count
@@ -72,6 +97,8 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 	 	end
 
 	 	test "handles inputs from applicationvariables model properly #{app[:name]}" do 
+	 		setup_app app 
+
 			# for input in applicationvariables... 
 			person_inputs = ApplicationVariables::PERSON_INPUTS
 			required_inputs = ApplicationVariables::PERSON_INPUTS.select { |i| i[:required] }
@@ -93,9 +120,6 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 				# TODO same stuff for applicant inputs
 			end
 	 	end
-
-
-
 	 	# TODO Relationships, tax returns, physical househoulds
 
 	 	# TODO test get_json_variable / get variable
