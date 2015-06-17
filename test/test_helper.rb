@@ -29,12 +29,36 @@ class ActiveSupport::TestCase
   # reload an individual fixture
   def self.reload_fixture(fixture_name)
   	Dir.glob(Rails.root.to_s + "/test/fixtures/#{fixture_name}.json") do |file| 
-	    # puts 'loading ' + file
+	    puts 'loading ' + file
 	    json = File.read(file).to_s
 	    response = Application.new(json, 'application/json').to_json
 	    @@fixtures[@@fixtures.find_index { |f| f[:name] == fixture_name }] = {name: file.gsub(/\.json/,'').gsub(/#{Rails.root.to_s}\/test\/fixtures\//,''), application: JSON.parse(json), application_raw: json, response: JSON.parse(response)}
+	    p @@fixtures[@@fixtures.find_index { |f| f[:name] == fixture_name }][:application]['State']
 	  end
   end
 
-  reload_fixtures 
+  # reload_fixtures 
+end
+
+def load_fixtures
+	fixtures = []
+  Dir.glob(Rails.root.to_s + '/test/fixtures/*.json') do |file|
+    # puts 'loading ' + file
+    json = File.read(file).to_s
+    response = Application.new(json, 'application/json').to_json
+    fixtures << {name: file.gsub(/\.json/,'').gsub(/#{Rails.root.to_s}\/test\/fixtures\//,''), application: JSON.parse(json), application_raw: json, response: JSON.parse(response)}
+  end
+  return fixtures
+end
+
+def reload_fixture(fixture_name)
+	fixture = {}
+	Dir.glob(Rails.root.to_s + "/test/fixtures/#{fixture_name}.json") do |file| 
+	  # puts 'loading ' + file
+	  json = File.read(file).to_s
+	  response = Application.new(json, 'application/json').to_json
+	  fixture = {name: file.gsub(/\.json/,'').gsub(/#{Rails.root.to_s}\/test\/fixtures\//,''), application: JSON.parse(json), application_raw: json, response: JSON.parse(response)}
+	  # p fixtures[fixtures.find_index { |f| f[:name] == fixture_name }][:application]['State']
+	end
+	return fixture 
 end
