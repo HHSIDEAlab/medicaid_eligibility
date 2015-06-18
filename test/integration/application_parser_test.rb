@@ -201,31 +201,15 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 	 		teardown_app app 
 	 	end
 
-	 	test "handles inputs from applicationvariables model properly #{app[:name]}" do 
+	 	test "get and process physical households properly #{app[:name]}" do 
 	 		setup_app app 
 
-			# for input in applicationvariables... 
-			
-
-			@json_application['People'].each do |person|
-				# confirm that applications are parsing required inputs properly 
-				# required_inputs.each do |input|
-					# each person should have required inputs
-					# assert person[input[:name]]
-					# TODO inputs should be set properly 
-
-					# TODO required_if inputs should validate also
-
-				# end
-				# TODO same stuff for person inputs
-
-				# TODO same stuff for applicant inputs
-			end
+	 		# TODO 
+	 		# test that household counts match
+	 		# test that all households have IDs
+	 		# test that every person is in a household object
 
 			teardown_app app 
 	 	end
-	 	# TODO Relationships, tax returns, physical househoulds
-
-	 	# TODO test get_json_variable / get variable
 	end
 end
