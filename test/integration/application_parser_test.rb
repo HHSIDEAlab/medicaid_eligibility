@@ -89,7 +89,7 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 	 	test "sets people and applicants properly #{app[:name]}" do 
 	 		setup_app app
 
-	 		# some variable definition
+	 		# some variable definition here
 			# KNOWN ISSUE: Application currently not setting US Citizen Indicator despite it being marked as required!
 			required_inputs = ApplicationVariables::PERSON_INPUTS.select { |i| i[:required] && i[:name] != "US Citizen Indicator" }
 			person_inputs = ApplicationVariables::PERSON_INPUTS.select { |i| i[:group] == :person }
@@ -100,27 +100,27 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 	 		assert_equal @people.count, @json_application['People'].count
 			assert_equal @applicants.count, @json_application['People'].select { |p| p['Is Applicant'] == 'Y'}.count
 
-
-
-
-			# check that the people on the app initialize as the proper objects
+			# TODO: I don't really trust the method of checking inputs. Check with Curtis on a good way to do this 
 			@applicants.each do |applicant|
+				# check that 'Is Applicant' ensures that you get initialized as an applicant
 				assert_kind_of Applicant, applicant
 
-
+				# TODO: confirm that all fields from the json object are reflected in the applicant object
 				applicant_inputs.each do |input|
-
+					json_applicant = @json_application['People'].find { |a| a['Person ID'] = applicant.person_id }
+					# TODO: do thing that compares json_applicant to applicant
 				end
+
+				# TODO some method of testing required_if inputs 
 			end
 
 			@people.each do |person|
+				# everyone should be a person
 				assert_kind_of Person, person
 
 				# confirm that required person inputs are all there 
 				required_inputs.each do |input|
 					refute_nil person.person_attributes[input[:name]]
-
-
 				end
 
 				# for non-applicants, should skip applicant inputs
@@ -128,12 +128,12 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 					assert_nil person.person_attributes[input[:name]]
 				end unless @applicants.find { |a| a.person_id == person.person_id }
 
-				# person_inputs.each do |input|
-
-
+				# TODO: 
 			end
 
-			# if you nuke a required variable, it should raise an error
+			# TODO should test unimplemented groups
+
+			# nuking a required variable should raise an error
 			assert_raises RuntimeError do 
 				@json_application['People'][0]['Applicant Age'] = nil 
 				read_json!
@@ -141,26 +141,14 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 			@json_application['People'][0]['Applicant Age'] = 40
 			read_json! 
 
-			# if you set a conflicting datatype, it should raise an error -- KNOWN ISSUE: DOESN'T DO THIS
+			# if you set a conflicting datatype, it should raise an error 
+			# KNOWN ISSUE: Doesn't do this 
 			# assert_raises RuntimeError do 
 				# @json_application['People'][0]['Applicant Age'] = 'Yolo'
 				# read_json!
 			# end
 			# @json_application['People'][0]['Applicant Age'] = 40
 			# read_json! 
-
-
-			# @people
-
-			# checks that required person inputs are there 
-			# required_inputs = ApplicationVariables::PERSON_INPUTS.select { |i| i[:required] }
-
-
-
-
-			# p @applicants.count
-			# p @people.count
-			# assert_kind_of @
 
 			teardown_app app
 	 	end
