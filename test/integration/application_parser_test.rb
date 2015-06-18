@@ -131,6 +131,8 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 
 			# TODO should test unimplemented groups
 
+			# TODO should get income properly 
+
 			# nuking a required variable should raise an error
 			assert_raises RuntimeError do 
 				@json_application['People'][0]['Applicant Age'] = nil 
@@ -150,6 +152,45 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 
 			teardown_app app
 	 	end
+
+	 	test "get and processes tax returns properly #{app[:name]}" do 
+	 		setup_app app 
+
+	 		# tax returns counts should match
+	 		assert_equal @tax_returns.count, @json_application['Tax Returns'].count
+
+	 		@tax_returns.each do |tax_return|
+	 			# filers and dependents are pulled straight from the @people array
+
+	 			# test filers
+	 			tax_return.filers.each do |filer|
+	 				# should be identified
+	 				assert_not_nil filer.person_id
+
+	 				# should be linked to people on the application
+	 				assert_not_nil @people.find { |p| p.person_id == filer.person_id }
+	 			end
+
+	 			# test dependents
+	 			tax_return.dependents.each do |dependent|
+	 				# should all have ids
+	 				assert_not_nil dependent.person_id 
+
+	 				# should be linked to people on the application
+	 				assert_not_nil @people.find { |p| p.person_id == dependent.person_id }
+
+	 				# TODO: Confirm they're being linked to their filer properly
+	 			end
+
+	 			# test income
+	 			# TODO: Test that tax return items are being parsed properly
+	 			# TODO: Test that the result matches what's in the json_application
+	 		end
+
+	 		teardown_app app 
+	 	end
+
+
 
 	 	test "handles inputs from applicationvariables model properly #{app[:name]}" do 
 	 		setup_app app 
