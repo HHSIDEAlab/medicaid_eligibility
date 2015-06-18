@@ -89,32 +89,44 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 	 	test "sets people and applicants properly #{app[:name]}" do 
 	 		setup_app app
 
+	 		# some variable definition
+			# KNOWN ISSUE: Application currently not setting US Citizen Indicator despite it being marked as required!
+			required_inputs = ApplicationVariables::PERSON_INPUTS.select { |i| i[:required] && i[:name] != "US Citizen Indicator" }
+			person_inputs = ApplicationVariables::PERSON_INPUTS.select { |i| i[:group] == :person }
+			applicant_inputs = ApplicationVariables::PERSON_INPUTS.select { |i| i[:group] == :applicant }
+
 	 		# all people on an app get put in the people array; only applicants get put into the applicant array
 	 		# check that everyone makes it to the right array
 	 		assert_equal @people.count, @json_application['People'].count
 			assert_equal @applicants.count, @json_application['People'].select { |p| p['Is Applicant'] == 'Y'}.count
 
+
+
+
 			# check that the people on the app initialize as the proper objects
 			@applicants.each do |applicant|
 				assert_kind_of Applicant, applicant
-			end
 
-			# KNOWN ISSUE: Application currently not setting US Citizen Indicator despite it being marked as required!
-			required_inputs = ApplicationVariables::PERSON_INPUTS.select { |i| i[:required] && i[:name] != "US Citizen Indicator"}
-			person_inputs = ApplicationVariables::PERSON_INPUTS.select { |i| i[:group] == :person }
-			applicant_inputs = ApplicationVariables::PERSON_INPUTS.select { |i| i[:group] == :applicant }
+
+				applicant_inputs.each do |input|
+
+				end
+			end
 
 			@people.each do |person|
 				assert_kind_of Person, person
 
-				# p person.person_attributes
-
 				# confirm that required person inputs are all there 
 				required_inputs.each do |input|
-					# p input
-					# p person.person_attributes[input[:name]]
 					refute_nil person.person_attributes[input[:name]]
+
+
 				end
+
+				# for non-applicants, should skip applicant inputs
+				applicant_inputs.each do |input|
+					assert_nil person.person_attributes[input[:name]]
+				end unless @applicants.find { |a| a.person_id == person.person_id }
 
 				# person_inputs.each do |input|
 
