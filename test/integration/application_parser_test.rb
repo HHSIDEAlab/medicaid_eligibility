@@ -127,8 +127,6 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 				applicant_inputs.each do |input|
 					assert_nil person.person_attributes[input[:name]]
 				end unless @applicants.find { |a| a.person_id == person.person_id }
-
-				# TODO: 
 			end
 
 			# TODO should test unimplemented groups
