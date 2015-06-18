@@ -153,6 +153,17 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 			teardown_app app
 	 	end
 
+	 	test "get and process relationships properly #{app[:name]}" do 
+	 		setup_app app 
+
+	 		# TODO
+	 		# test that relationship makes it over
+	 		# test that relationship inverse properly sets
+	 		# test that there are relationships for everyone on the application
+
+	 		teardown_app app 
+	 	end
+
 	 	test "get and processes tax returns properly #{app[:name]}" do 
 	 		setup_app app 
 
@@ -189,8 +200,6 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 
 	 		teardown_app app 
 	 	end
-
-
 
 	 	test "handles inputs from applicationvariables model properly #{app[:name]}" do 
 	 		setup_app app 
