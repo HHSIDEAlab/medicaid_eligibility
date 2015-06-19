@@ -115,28 +115,26 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 
 					# test required applicant inputs
 					applicant_inputs.select { |r_i| r_i[:required_if] == input[:name] }.each do |req_input|
-						# this is a little sloppy
-
-
 						# confirm that required_if values are set (or not set!)
 						# many of these are tested in the pregnant_fostercare_woman fixture
 						if req_input[:required_if_value] == applicant.applicant_attributes[input[:name]]
 							assert_not_nil applicant.applicant_attributes[req_input[:name]]
+
+							# if a required_if field is not set, raise an error
+							assert_raises RuntimeError do 								
+								@json_application['People'].find { |a| a['Person ID'] = applicant.person_id }[req_input[:name]] = nil 
+								read_json!
+							end
+							@json_application['People'].find { |a| a['Person ID'] = applicant.person_id }[req_input[:name]] = applicant.applicant_attributes[req_input[:name]].to_s
+							read_json!
 						else 
 							# if it doesn't have the required_if_value, confirm that it's nil
 							assert_nil applicant.applicant_attributes[req_input[:name]]
 						end
-
-						# assert_raises RuntimeError do 
-							# raise RuntimeError
-							# TODO: nuke a required_if value and read_json, and confirm that it throws a flag
-						# end
-
-						# p applicant.applicant_attributes[req_input[:name]]
-						# p req_input[:name]
 					end
-
 				end
+
+				teardown_app app 
 			end
 
 			@people.each do |person|
