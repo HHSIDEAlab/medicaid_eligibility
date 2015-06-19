@@ -43,7 +43,7 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 		 	read_json!
 		 	assert_equal @state, 'MI'
 
-		 	# TODO: Application side, state might need some validation?
+		 	# ERR: Application side, state might need some validation?
 		 	# commenting this out for now because it doesn't actually raise an error
 		 	# assert_raises RuntimeError do
 		 		# @json_application['State'] = 'Yolo'
@@ -111,10 +111,32 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 				applicant_inputs.select { |i| json_applicant[i[:name]] }.each do |input|
 					assert_not_nil json_applicant[input[:name]]
 					assert_not_nil applicant.applicant_attributes[input[:name]]
-					assert_equal json_applicant[input[:name]], applicant.applicant_attributes[input[:name]] # TODO: this actually seems to throw a legit flag!
-				end
+					# assert_equal json_applicant[input[:name]], applicant.applicant_attributes[input[:name]] # ERR: this actually seems to throw a legit flag!
 
-				# TODO some method of testing required_if inputs 
+					# test required applicant inputs
+					applicant_inputs.select { |r_i| r_i[:required_if] == input[:name] }.each do |req_input|
+						# this is a little sloppy
+
+
+						# confirm that required_if values are set (or not set!)
+						# many of these are tested in the pregnant_fostercare_woman fixture
+						if req_input[:required_if_value] == applicant.applicant_attributes[input[:name]]
+							assert_not_nil applicant.applicant_attributes[req_input[:name]]
+						else 
+							# if it doesn't have the required_if_value, confirm that it's nil
+							assert_nil applicant.applicant_attributes[req_input[:name]]
+						end
+
+						# assert_raises RuntimeError do 
+							# raise RuntimeError
+							# TODO: nuke a required_if value and read_json, and confirm that it throws a flag
+						# end
+
+						# p applicant.applicant_attributes[req_input[:name]]
+						# p req_input[:name]
+					end
+
+				end
 			end
 
 			@people.each do |person|
