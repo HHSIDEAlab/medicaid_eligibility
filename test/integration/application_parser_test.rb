@@ -105,10 +105,13 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 				# check that 'Is Applicant' ensures that you get initialized as an applicant
 				assert_kind_of Applicant, applicant
 
-				# TODO: confirm that all fields from the json object are reflected in the applicant object
-				applicant_inputs.each do |input|
-					json_applicant = @json_application['People'].find { |a| a['Person ID'] = applicant.person_id }
-					# TODO: do thing that compares json_applicant to applicant
+				json_applicant = @json_application['People'].find { |a| a['Person ID'] = applicant.person_id }
+
+				# confirm that all fields from the json object are reflected in the applicant object
+				applicant_inputs.select { |i| json_applicant[i[:name]] }.each do |input|
+					assert_not_nil json_applicant[input[:name]]
+					assert_not_nil applicant.applicant_attributes[input[:name]]
+					assert_equal json_applicant[input[:name]], applicant.applicant_attributes[input[:name]] # TODO: this actually seems to throw a legit flag!
 				end
 
 				# TODO some method of testing required_if inputs 
