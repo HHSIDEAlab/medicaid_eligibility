@@ -122,10 +122,10 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 
 							# if a required_if field is not set, raise an error
 							assert_raises RuntimeError do 								
-								@json_application['People'].find { |a| a['Person ID'] = applicant.person_id }[req_input[:name]] = nil 
+								@json_application['People'].find { |a| a['Person ID'] == applicant.person_id }[req_input[:name]] = nil 
 								read_json!
 							end
-							@json_application['People'].find { |a| a['Person ID'] = applicant.person_id }[req_input[:name]] = applicant.applicant_attributes[req_input[:name]].to_s
+							@json_application['People'].find { |a| a['Person ID'] == applicant.person_id }[req_input[:name]] = applicant.applicant_attributes[req_input[:name]].to_s
 							read_json!
 						else 
 							# if it doesn't have the required_if_value, confirm that it's nil
@@ -150,11 +150,22 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 				applicant_inputs.each do |input|
 					assert_nil person.person_attributes[input[:name]]
 				end unless @applicants.find { |a| a.person_id == person.person_id }
+
+				# should get personal income properly for everyone
+				# this is basically a test of the result of get_json_income person, :personal
+				json_applicant = @json_application['People'].find { |a| a['Person ID'] == person.person_id }
+				assert_equal json_applicant['Income']['Wages, Salaries, Tips'], person.income[:primary_income]
+				ApplicationVariables::INCOME_INPUTS[:personal][:other_income].each do |input|
+					assert_equal json_applicant['Income'][input], person.income[:other_income][input]
+				end
+				ApplicationVariables::INCOME_INPUTS[:personal][:deductions].each do |input|
+					# this is just magi deductions
+					assert_equal json_applicant['Income'][input], person.income[:deductions][input]
+				end
 			end
 
-			# TODO should test unimplemented groups
-
-			# TODO should get income properly 
+			# make sure there are no applicationvariables with a group other than application, relationship, or person
+			assert_equal ApplicationVariables::PERSON_INPUTS.select { |i| i[:group] != :applicant && i[:group] != :person && i[:group] != :relationship }.count, 0 
 
 			# nuking a required variable should raise an error
 			assert_raises RuntimeError do 
@@ -165,7 +176,7 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 			read_json! 
 
 			# if you set a conflicting datatype, it should raise an error 
-			# KNOWN ISSUE: Doesn't do this 
+			# ERR: Doesn't do this, at least for applicant age? But seems to for required_if applicant inputs
 			# assert_raises RuntimeError do 
 				# @json_application['People'][0]['Applicant Age'] = 'Yolo'
 				# read_json!
