@@ -191,6 +191,31 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 	 		setup_app app 
 
 	 		# TODO
+	 		@people.each do |person|
+	 			json_person = @json_application['People'].find { |a| a['Person ID'] == person.person_id }
+	 			
+	 			assert_equal person.relationships.count, @people.count - 1
+
+	 			# every person in the json blob should show up in person.relationships
+ 				json_person['Relationships'].each do |j_p|
+ 					refute_nil person.relationships.find { |rel| rel.person.person_id == j_p['Other ID']} 
+ 				end
+
+	 				
+	 				# make sure relationships match from what's in the inputs file
+	 				# p json_person['Relationships']
+	 				# assert_equal json_person['']
+
+	 				# make sure nothing is nil
+
+	 				# check relationship attributes
+
+
+	 				# assert_equal 
+	 				# p rel.relationship_type
+	 			# assert_not_nil person
+	 		end
+
 	 		# test that relationship makes it over
 	 		# test that relationship inverse properly sets
 	 		# test that there are relationships for everyone on the application
