@@ -237,6 +237,9 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 	 		assert_equal @tax_returns.count, @json_application['Tax Returns'].count
 
 	 		@tax_returns.each do |tax_return|
+	 			# is a tax return object
+	 			assert_kind_of TaxReturn, tax_return
+
 	 			# test filers
 	 			tax_return.filers.each do |filer|
 	 				# should be identified
@@ -260,10 +263,27 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 	 	test "get and process physical households properly #{app[:name]}" do 
 	 		setup_app app 
 
-	 		# TODO 
-	 		# test that household counts match
-	 		# test that all households have IDs
-	 		# test that every person is in a household object
+	 		# household count should match what's in the json 
+	 		assert_equal @json_application['Physical Households'].count, @physical_households.count
+
+	 		@physical_households.each do |house|
+	 			# is a household object
+	 			assert_kind_of Household, house
+
+	 			# all households should have ids 
+	 			refute_nil house.household_id 
+
+	 			# household ids should pull from json application
+	 			refute_nil @json_application['Physical Households'].find { |h| h['Household ID'] == house.household_id }
+	 		end
+
+	 		# all people should be in a household
+	 		# (sloppy function to count up people in households)
+	 		household_people_cnt = 0 
+	 		@physical_households.each do |h|
+	 			household_people_cnt += h.people.count
+	 		end
+ 			assert_equal @people.count, household_people_cnt
 
 			teardown_app app 
 	 	end
