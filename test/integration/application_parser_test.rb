@@ -230,35 +230,28 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 	 	test "get and processes tax returns properly #{app[:name]}" do 
 	 		setup_app app 
 
+	 		# NOTE: It looks like there's logic to parse tax returns but none of the apps generated with the angular use it?
+	 		# as such I'm not really writing tests for the get_json_income method here
+
 	 		# tax returns counts should match
 	 		assert_equal @tax_returns.count, @json_application['Tax Returns'].count
 
 	 		@tax_returns.each do |tax_return|
-	 			# filers and dependents are pulled straight from the @people array
-
 	 			# test filers
 	 			tax_return.filers.each do |filer|
 	 				# should be identified
 	 				assert_not_nil filer.person_id
-
 	 				# should be linked to people on the application
 	 				assert_not_nil @people.find { |p| p.person_id == filer.person_id }
 	 			end
 
 	 			# test dependents
 	 			tax_return.dependents.each do |dependent|
-	 				# should all have ids
+	 				# should all have ids /  be real people
 	 				assert_not_nil dependent.person_id 
-
 	 				# should be linked to people on the application
 	 				assert_not_nil @people.find { |p| p.person_id == dependent.person_id }
-
-	 				# TODO: Confirm they're being linked to their filer properly
 	 			end
-
-	 			# test income
-	 			# TODO: Test that tax return items are being parsed properly
-	 			# TODO: Test that the result matches what's in the json_application
 	 		end
 
 	 		teardown_app app 
