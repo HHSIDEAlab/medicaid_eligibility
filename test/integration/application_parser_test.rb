@@ -287,5 +287,29 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 
 			teardown_app app 
 	 	end
+
+	 	test "read configs #{app[:name]}" do 
+	 		setup_app app # system configs are located in /config/state_config.json and /config/system_config.json
+	 		read_configs!
+
+	 		config_json = MedicaidEligibilityApi::Application.options
+
+	 		# read_configs should spit out a config variable
+	 		assert_not_nil @config 
+
+	 		# @config should match the merged hashes of these three 
+	 		assert_equal @config, config_json[:state_config][:default].merge(config_json[:state_config][@state]).merge(config_json[:system_config])
+
+			# ERR? doesn't raise an error if you give it a fake state
+			# assert_raises RuntimeError do 
+				# @state = "Yolo"
+		 		# read_configs!
+			# end 
+			
+	 		# should be cool if there's no state 
+	 		@state = nil
+	 		read_configs!
+			assert_equal @config, config_json[:state_config][:default].merge(config_json[:system_config])	
+	 	end
 	end
 end
