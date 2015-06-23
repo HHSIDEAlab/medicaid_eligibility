@@ -190,35 +190,39 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 	 	test "get and process relationships properly #{app[:name]}" do 
 	 		setup_app app 
 
-	 		# TODO
 	 		@people.each do |person|
 	 			json_person = @json_application['People'].find { |a| a['Person ID'] == person.person_id }
 	 			
 	 			assert_equal person.relationships.count, @people.count - 1
 
-	 			# every person in the json blob should show up in person.relationships
  				json_person['Relationships'].each do |j_p|
- 					refute_nil person.relationships.find { |rel| rel.person.person_id == j_p['Other ID']} 
+ 					# every person in the json blob should show up in person.relationships
+ 					refute_nil person.relationships.find { |rel| rel.person.person_id == j_p['Other ID'] } 
  				end
 
-	 				
-	 				# make sure relationships match from what's in the inputs file
-	 				# p json_person['Relationships']
-	 				# assert_equal json_person['']
+				# TODO: Test relationship code setting from ApplicationVariables
 
-	 				# make sure nothing is nil
-
-	 				# check relationship attributes
-
-
-	 				# assert_equal 
-	 				# p rel.relationship_type
-	 			# assert_not_nil person
+ 				person.relationships.each do |rel|
+ 					other_person = @people.find { |p| p.person_id == rel.person.person_id }.relationships.find { |p| p.person.person_id == person.person_id }
+ 					# super clunky way to test relationship inverses
+ 					assert_equal ApplicationVariables::RELATIONSHIP_INVERSE[rel.relationship_type], other_person.relationship_type
+ 					refute_nil rel.relationship_attributes # every one should have 'attest primary responsibility'
+ 				end
 	 		end
 
-	 		# test that relationship makes it over
-	 		# test that relationship inverse properly sets
-	 		# test that there are relationships for everyone on the application
+	 		# ERR: this should raise an error, right? 
+	 		# should reject no relationship codes
+	 		# assert_raises RuntimeError do 
+		 		# @json_application['People'][0]['Relationships'][0]['Relationship Code'] = nil 
+		 		# read_json!
+		 	# end if @json_application['People'][0]['Relationships'][0]
+
+		 	# ERR: Should probably raise an error also? 
+	 		# should reject fake relationship codes
+	 		# assert_raises RuntimeError do 
+		 		# @json_application['People'][0]['Relationships'][0]['Relationship Code'] = "999" 
+		 		# read_json!
+		 	# end if @json_application['People'][0]['Relationships'][0]
 
 	 		teardown_app app 
 	 	end
