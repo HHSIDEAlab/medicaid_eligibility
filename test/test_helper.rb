@@ -18,3 +18,16 @@ class ActiveSupport::TestCase
     @@fixtures << {name: file.gsub(/\.json/,'').gsub(/#{Rails.root.to_s}\/test\/fixtures\//,''), application: JSON.parse(json), application_raw: json, response: JSON.parse(response)}
   end
 end
+
+class MagiFixture
+	include ApplicationComponents
+	attr_accessor :magi, :test_sets
+
+	def magi
+		@magi = ""
+	end
+
+	def test_sets
+		test_sets = []
+	end
+end
