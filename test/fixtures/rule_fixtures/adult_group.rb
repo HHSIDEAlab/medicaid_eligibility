@@ -121,27 +121,5 @@ class AdultGroupFixture < MagiFixture
 			}
 		]
 	end
-
-
-
-		# 	"State": "TX", 
-		# 	"Inputs": {
-		# 		"Application Year": 2015,
-		# 		"Name": "Demo 1",
-		# 		"People": "Billy Everyteen",
-
-		# 		"Medicare Entitlement Indicator": "Y", 
-		# 		"Applicant Pregnancy Category Indicator": "N", 
-		# 		"Applicant Age": 13
-		# 	}, 
-		# 	"Configs": {
-		# 		"Option Adult Group": "N"
-		# 	},
-		# 	"Expected Outputs": {
-		# 		"Applicant Adult Group Category Indicator": "X",
-		# 		"Adult Group Category Ineligibility Reason": 555
-		# 	}
-		# }
-
 end
 

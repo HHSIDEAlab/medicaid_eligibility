@@ -1,5 +1,7 @@
 require 'test_helper'
-require_relative Rails.root + 'test/fixtures/rule_fixtures/adult_group.rb'
+Dir.glob(Rails.root + 'test/fixtures/rule_fixtures/*.rb').each do |fixture|
+	require_relative fixture
+end
 
 class MagiRulesTest < ActionDispatch::IntegrationTest
 	include ApplicationProcessor
