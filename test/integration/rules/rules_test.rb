@@ -1,38 +1,29 @@
 require 'test_helper'
+require_relative Rails.root + 'test/fixtures/rule_fixtures/adult_group.rb'
 
 class MagiRulesTest < ActionDispatch::IntegrationTest
 	include ApplicationProcessor
 	include ApplicationParser
 
-	# test 'adult_group' do 
-	@json = JSON.parse(File.read(Rails.root + 'test/fixtures/rule_fixtures/test_fixture.json'))
+	@fixture = AdultGroupFixture.new
 
-	@json['Test Sets'].each do |fixture|
-		test "#{@json['Magi']} - #{fixture["Test Name"]}" do 
-			if fixture['Test Name'] =~ /Bad Info/
+	@fixture.test_sets.each do |set|
+		test "#{@fixture.magi} - #{set[:test_name]}" do 
+			if set[:test_name] =~ /Bad Info/
 				assert_raises RuleContext::MissingVariableError do 
-					# should throw an error when trying to run the inputs through the rule
-					@state = fixture['State']
-					read_configs!
-					context = RuleContext.new @config, fixture['Inputs'], Time.now.yesterday
-
+					context = RuleContext.new set[:configs], set[:inputs], Time.now.yesterday
 					@result = MAGI::AdultGroup.new.run context
+
+					set[:expected_outputs].each_key do |out|
+						assert_equal @result.output[out], set[:expected_outputs][out]
+					end
 				end
 			else
-				# set configs
-				@state = fixture['State']
-				read_configs!
-
-				context = RuleContext.new fixture['Configs'], fixture['Inputs'], Time.now.yesterday
-
-				# do it via applicant object instead of just raw json
-				# @applicant = Applicant.new 'Fixture', fixture['Inputs'], 'Fixture', fixture['Inputs'], 10
-				# context = RuleContext.new @config, @applicant.applicant_attributes, Time.now.yesterday # also works with this 
-
+				context = RuleContext.new set[:configs], set[:inputs], Time.now.yesterday
 				@result = MAGI::AdultGroup.new.run context
 
-				fixture['Expected Outputs'].each_key do |out|
-					assert_equal @result.output[out], fixture['Expected Outputs'][out]
+				set[:expected_outputs].each_key do |out|
+					assert_equal @result.output[out], set[:expected_outputs][out]
 				end
 			end
 		end
