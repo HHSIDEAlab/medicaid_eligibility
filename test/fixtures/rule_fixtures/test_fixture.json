@@ -1,0 +1,107 @@
+{
+	"Magi": "AdultGroup", 
+	"Test Sets": [
+		{
+			"Test Name": "No Option Adult Group",
+			"State": "TX", 
+			"Inputs": {
+				"Application Year": 2015,
+				"Name": "Demo 1",
+				"People": "Billy Everyteen",
+	
+				"Medicare Entitlement Indicator": "Y", 
+				"Applicant Pregnancy Category Indicator": "N", 
+				"Applicant Age": 13
+			}, 
+			"Expected Outputs": {
+				"Applicant Adult Group Category Indicator": "X",
+				"Adult Group Category Ineligibility Reason": 555
+			}
+		}, 
+		{
+			"Test Name": "Applicant Age Under 19 or Above 65",
+			"State": "MD", 
+			"Inputs": {
+				"Application Year": 2015,
+				"Name": "Demo 1",
+				"People": "Billy Everyteen",
+	
+				"Medicare Entitlement Indicator": "Y", 
+				"Applicant Pregnancy Category Indicator": "N", 
+				"Applicant Age": 13
+			}, 
+			"Expected Outputs": {
+				"Applicant Adult Group Category Indicator": "N",
+				"Adult Group Category Ineligibility Reason": 123
+			}
+		}, 
+		{
+			"Test Name": "Application Pregnancy Category Indicator Is Yes",
+			"State": "MD", 
+			"Inputs": {
+				"Application Year": 2015,
+				"Name": "Demo 1",
+				"People": "Billy Everyteen",
+	
+				"Medicare Entitlement Indicator": "Y", 
+				"Applicant Pregnancy Category Indicator": "Y", 
+				"Applicant Age": 25
+			}, 
+			"Expected Outputs": {
+				"Applicant Adult Group Category Indicator": "N",
+				"Adult Group Category Ineligibility Reason": 122
+			}
+		}, 
+		{
+			"Test Name": "Medicare Entitlement Indicator is Yes",
+			"State": "MD", 
+			"Inputs": {
+				"Application Year": 2015,
+				"Name": "Demo 1",
+				"People": "Billy Everyteen",
+	
+				"Medicare Entitlement Indicator": "Y", 
+				"Applicant Pregnancy Category Indicator": "N", 
+				"Applicant Age": 25
+			}, 
+			"Expected Outputs": {
+				"Applicant Adult Group Category Indicator": "N",
+				"Adult Group Category Ineligibility Reason": 117
+			}
+		}, 
+		{
+			"Test Name": "Fallback Determination",
+			"State": "MD", 
+			"Inputs": {
+				"Application Year": 2015,
+				"Name": "Demo 1",
+				"People": "Billy Everyteen",
+	
+				"Medicare Entitlement Indicator": "N", 
+				"Applicant Pregnancy Category Indicator": "N", 
+				"Applicant Age": 25
+			}, 
+			"Expected Outputs": {
+				"Applicant Adult Group Category Indicator": "Y",
+				"Adult Group Category Ineligibility Reason": 999
+			}
+		},
+		{
+			"Test Name": "Bad Info",
+			"State": "MD", 
+			"Inputs": {
+				"Application Year": 2015,
+				"Name": "Demo 1",
+				"People": "Billy Everyteen",
+	
+				// "Medicare Entitlement Indicator": "N", 
+				// "Applicant Pregnancy Category Indicator": "N", 
+				"Applicant Age": 25
+			}, 
+			"Expected Outputs": {
+				"Applicant Adult Group Category Indicator": "Y",
+				"Adult Group Category Ineligibility Reason": 999
+			}
+		}
+	]
+}
