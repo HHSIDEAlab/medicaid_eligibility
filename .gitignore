@@ -24,6 +24,7 @@
 *.json
 !bower.json
 !/test/fixtures/*.json
+!/test/fixtures/rule_fixtures.json
 *.xml
 
 .idea
