@@ -23,7 +23,7 @@ class MagiRulesTest < ActionDispatch::IntegrationTest
 				@state = fixture['State']
 				read_configs!
 
-				context = RuleContext.new @config, fixture['Inputs'], Time.now.yesterday
+				context = RuleContext.new fixture['Configs'], fixture['Inputs'], Time.now.yesterday
 
 				# do it via applicant object instead of just raw json
 				# @applicant = Applicant.new 'Fixture', fixture['Inputs'], 'Fixture', fixture['Inputs'], 10

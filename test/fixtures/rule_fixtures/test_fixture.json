@@ -13,6 +13,9 @@
 				"Applicant Pregnancy Category Indicator": "N", 
 				"Applicant Age": 13
 			}, 
+			"Configs": {
+				"Option Adult Group": "N"
+			},
 			"Expected Outputs": {
 				"Applicant Adult Group Category Indicator": "X",
 				"Adult Group Category Ineligibility Reason": 555
@@ -30,6 +33,9 @@
 				"Applicant Pregnancy Category Indicator": "N", 
 				"Applicant Age": 13
 			}, 
+			"Configs": {
+				"Option Adult Group": "Y"
+			},
 			"Expected Outputs": {
 				"Applicant Adult Group Category Indicator": "N",
 				"Adult Group Category Ineligibility Reason": 123
@@ -47,6 +53,9 @@
 				"Applicant Pregnancy Category Indicator": "Y", 
 				"Applicant Age": 25
 			}, 
+			"Configs": {
+				"Option Adult Group": "Y"
+			},
 			"Expected Outputs": {
 				"Applicant Adult Group Category Indicator": "N",
 				"Adult Group Category Ineligibility Reason": 122
@@ -64,6 +73,9 @@
 				"Applicant Pregnancy Category Indicator": "N", 
 				"Applicant Age": 25
 			}, 
+			"Configs": {
+				"Option Adult Group": "Y"
+			},
 			"Expected Outputs": {
 				"Applicant Adult Group Category Indicator": "N",
 				"Adult Group Category Ineligibility Reason": 117
@@ -81,6 +93,9 @@
 				"Applicant Pregnancy Category Indicator": "N", 
 				"Applicant Age": 25
 			}, 
+			"Configs": {
+				"Option Adult Group": "Y"
+			},
 			"Expected Outputs": {
 				"Applicant Adult Group Category Indicator": "Y",
 				"Adult Group Category Ineligibility Reason": 999
@@ -98,6 +113,9 @@
 				// "Applicant Pregnancy Category Indicator": "N", 
 				"Applicant Age": 25
 			}, 
+			"Configs": {
+				"Option Adult Group": "Y"
+			},
 			"Expected Outputs": {
 				"Applicant Adult Group Category Indicator": "Y",
 				"Adult Group Category Ineligibility Reason": 999
