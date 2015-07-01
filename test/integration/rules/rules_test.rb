@@ -4,28 +4,37 @@ class MagiRulesTest < ActionDispatch::IntegrationTest
 	include ApplicationProcessor
 	include ApplicationParser
 
-	test 'adult_group' do 
-		@json = JSON.parse(File.read(Rails.root + 'test/fixtures/rule_fixtures/test_fixture.json')).to_hash
+	# test 'adult_group' do 
+	@json = JSON.parse(File.read(Rails.root + 'test/fixtures/rule_fixtures/test_fixture.json'))
 
-		# set configs
-		@state = @json["State"]
-		read_configs!
+	@json['Test Sets'].each do |fixture|
+		test "#{@json['Magi']} - #{fixture["Test Name"]}" do 
+			if fixture['Test Name'] =~ /Bad Info/
+				assert_raises RuleContext::MissingVariableError do 
+					# should throw an error when trying to run the inputs through the rule
+					@state = fixture['State']
+					read_configs!
+					context = RuleContext.new @config, fixture['Inputs'], Time.now.yesterday
 
-		context = RuleContext.new @config, @json['Inputs'], Time.now.yesterday
+					@result = MAGI::AdultGroup.new.run context
+				end
+			else
+				# set configs
+				@state = fixture['State']
+				read_configs!
 
-		# do it via applicant object instead of just raw json
-		# @applicant = Applicant.new 'Fixture', @json['Inputs'], 'Fixture', @json['Inputs'], 10
-		# context = RuleContext.new @config, @applicant.applicant_attributes, Time.now.yesterday # also works with this 
+				context = RuleContext.new @config, fixture['Inputs'], Time.now.yesterday
 
-		@result = MAGI::AdultGroup.new.run context
+				# do it via applicant object instead of just raw json
+				# @applicant = Applicant.new 'Fixture', fixture['Inputs'], 'Fixture', fixture['Inputs'], 10
+				# context = RuleContext.new @config, @applicant.applicant_attributes, Time.now.yesterday # also works with this 
 
-		@json['Expected Outputs'].each_key do |out|
-			assert_equal @result.output[out], @json['Expected Outputs'][out]
+				@result = MAGI::AdultGroup.new.run context
+
+				fixture['Expected Outputs'].each_key do |out|
+					assert_equal @result.output[out], fixture['Expected Outputs'][out]
+				end
+			end
 		end
-
-		# assert_equal @result.output['Thing'], @json['Expected Outputs']['Thing']
-
-		# p @result.output
-
 	end
 end
