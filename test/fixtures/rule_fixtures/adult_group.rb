@@ -8,10 +8,6 @@ class AdultGroupFixture < MagiFixture
 			{
 				test_name: "No Option Adult Group",
 				inputs: {
-					"Application Year" => 2015,
-					"Name" => "Demo 1",
-					"People" => "Billy Everyteen",
-		
 					"Medicare Entitlement Indicator" => "Y", 
 					"rake tApplicant Pregnancy Category Indicator" => "N", 
 					"Applicant Age" => 13
@@ -27,10 +23,6 @@ class AdultGroupFixture < MagiFixture
 			{
 				test_name: "Applicant Age Under 19 or Above 65",
 				inputs: {
-					"Application Year" => 2015,
-					"Name" => "Demo 1",
-					"People" => "Billy Everyteen",
-		
 					"Medicare Entitlement Indicator" => "Y", 
 					"Applicant Pregnancy Category Indicator" => "N", 
 					"Applicant Age" => 13
@@ -46,10 +38,6 @@ class AdultGroupFixture < MagiFixture
 			{
 				test_name: "Application Pregnancy Category Indicator is Yes",
 				inputs: {
-					"Application Year" => 2015,
-					"Name" => "Demo 1",
-					"People" => "Billy Everyteen",
-		
 					"Medicare Entitlement Indicator" => "Y", 
 					"Applicant Pregnancy Category Indicator" => "Y", 
 					"Applicant Age" => 25
@@ -65,10 +53,6 @@ class AdultGroupFixture < MagiFixture
 			{
 				test_name: "Medicare Entitlement Indicator is Yes",
 				inputs: {
-					"Application Year" => 2015,
-					"Name" => "Demo 1",
-					"People" => "Billy Everyteen",
-		
 					"Medicare Entitlement Indicator" => "Y", 
 					"Applicant Pregnancy Category Indicator" => "N", 
 					"Applicant Age" => 25
@@ -84,10 +68,6 @@ class AdultGroupFixture < MagiFixture
 			{
 				test_name: "Fallback Determination",
 				inputs: {
-					"Application Year" => 2015,
-					"Name" => "Demo 1",
-					"People" => "Billy Everyteen",
-		
 					"Medicare Entitlement Indicator" => "N", 
 					"Applicant Pregnancy Category Indicator" => "N", 
 					"Applicant Age" => 25
@@ -103,10 +83,6 @@ class AdultGroupFixture < MagiFixture
 			{
 				test_name: "Bad Info",
 				inputs: {
-					"Application Year" => 2015,
-					"Name" => "Demo 1",
-					"People" => "Billy Everyteen",
-		
 					# "Medicare Entitlement Indicator" => "N", 
 					# "Applicant Pregnancy Category Indicator" => "N", 
 					"Applicant Age" => 25
