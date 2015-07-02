@@ -1,16 +1,15 @@
 class AdultGroupFixture < MagiFixture 
-	attr_accessor :magi, :test_sets, :output_codes
+	attr_accessor :magi, :test_sets
 
 	def initialize 
 		super 
-		@magi = "AdultGroup"
-		@output_codes = %w(999 117 122 123)
+		@magi = "Adult Group"
 		@test_sets = [
 			{
 				test_name: "No Option Adult Group",
 				inputs: {
 					"Medicare Entitlement Indicator" => "Y", 
-					"rake tApplicant Pregnancy Category Indicator" => "N", 
+					"Applicant Pregnancy Category Indicator" => "N", 
 					"Applicant Age" => 13
 				}, 
 				configs: {

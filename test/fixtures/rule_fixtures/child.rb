@@ -1,10 +1,9 @@
 class ChildFixture < MagiFixture 
-	attr_accessor :magi, :test_sets, :output_codes
+	attr_accessor :magi, :test_sets
 
 	def initialize 
 		super 
 		@magi = "Child"
-		@output_codes = %w(999 115 394)
 		@test_sets = [
 			{
 				test_name: "Child is Under 19 Years Old",
@@ -82,7 +81,7 @@ class ChildFixture < MagiFixture
 					"Applicant Child Category Indicator" => "N",
 					"#{@magi} Category Ineligibility Reason" => 394
 				}
-			},
+			}
 		]
 	end
 end

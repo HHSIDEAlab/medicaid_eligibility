@@ -28,6 +28,6 @@ class MagiFixture
 	end
 
 	def test_sets
-		test_sets = []
+		@test_sets = []
 	end
 end
