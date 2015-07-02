@@ -1,9 +1,10 @@
 class ChildFixture < MagiFixture 
-	attr_accessor :magi, :test_sets
+	attr_accessor :magi, :test_sets, :output_codes
 
 	def initialize 
 		super 
 		@magi = "Child"
+		@output_codes = %w(999 115 394)
 		@test_sets = [
 			{
 				test_name: "Child is Under 19 Years Old",

@@ -1,9 +1,10 @@
 class AdultGroupFixture < MagiFixture 
-	attr_accessor :magi, :test_sets
+	attr_accessor :magi, :test_sets, :output_codes
 
 	def initialize 
 		super 
 		@magi = "AdultGroup"
+		@output_codes = %w(999 117 122 123)
 		@test_sets = [
 			{
 				test_name: "No Option Adult Group",
@@ -95,7 +96,7 @@ class AdultGroupFixture < MagiFixture
 					"Adult Group Category Ineligibility Reason" => 999
 				}
 			}
-		]
+		] 
 	end
 end
 
