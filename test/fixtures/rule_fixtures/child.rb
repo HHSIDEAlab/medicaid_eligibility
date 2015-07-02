@@ -66,7 +66,7 @@ class ChildFixture < MagiFixture
 				}
 			},
 			{
-				test_name: "Bad Info",
+				test_name: "Bad Info - Inputs",
 				inputs: {
 					"People" => "Billy Everyteen"
 
