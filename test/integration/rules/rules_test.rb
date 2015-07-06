@@ -45,6 +45,7 @@ class MagiRulesTest < ActionDispatch::IntegrationTest
 					set[:expected_outputs].each_key do |out|
 						assert_equal result.output[out], set[:expected_outputs][out]
 					end
+					assert_equal set[:expected_outputs].count, result.output.keys.reject { |o| /Determination Date$/i.match o }.count
 				end
 			end
 		end
