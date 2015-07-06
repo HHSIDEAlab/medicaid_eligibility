@@ -56,7 +56,6 @@ class OptionalTargetedLowIncomeChildrenFixture < MagiFixture
 			}
 		]
 
-
 		[{ name: "below", age: 9 }, { name: "above", age: 40 }].each do |app|
 			@test_sets << {
 				test_name: "Low Income Child Eligibility - Yes group - Applicant Age #{app[:name]} Thresholds",
@@ -75,6 +74,5 @@ class OptionalTargetedLowIncomeChildrenFixture < MagiFixture
 				}
 			}
 		end
-
 	end
 end
