@@ -68,7 +68,39 @@ class CHIPWaitingPeriodFixture < MagiFixture
 					"CHIP Waiting Period Satisfied Ineligibility Reason" => 555
 				}
 			},
-
+			{
+				test_name: "Bad Info - Inputs",
+				inputs: { 
+					# "Applicant CHIP Prelim Indicator" => "N",
+					# "Prior Insurance" => "N",
+					"Prior Insurance End Date" => nil
+				},
+				configs: {
+					"State CHIP Waiting Period" => 0
+				},
+				expected_outputs: {
+					"Applicant CHIP Waiting Period Satisfied Indicator" => "X",
+					"CHIP Waiting Period Satisfied Ineligibility Reason" => 555
+				}
+			}#,			
+			# {
+			# 	test_name: "Bad Info - Configs",
+			# 	inputs: { 
+			# 		"Applicant CHIP Prelim Indicator" => "N",
+			# 		"Prior Insurance" => "N",
+			# 		"Prior Insurance End Date" => nil
+			# 	},
+			# 	configs: {
+			# 		# "State CHIP Waiting Period" => 0
+			# 	},
+			# 	expected_outputs: {
+			# 		"Applicant CHIP Waiting Period Satisfied Indicator" => "X",
+			# 		"CHIP Waiting Period Satisfied Ineligibility Reason" => 555
+			# 	}
+			# }
 		]
 	end
 end
+
+# NOTES
+# Config error here doesn't seem to be raising an error properly, not sure why. - CF, 7/6/2015
