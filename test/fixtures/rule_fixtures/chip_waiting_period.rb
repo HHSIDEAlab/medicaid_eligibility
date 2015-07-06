@@ -79,8 +79,8 @@ class CHIPWaitingPeriodFixture < MagiFixture
 					"State CHIP Waiting Period" => 0
 				},
 				expected_outputs: {
-					"Applicant CHIP Waiting Period Satisfied Indicator" => "X",
-					"CHIP Waiting Period Satisfied Ineligibility Reason" => 555
+					# "Applicant CHIP Waiting Period Satisfied Indicator" => "X",
+					# "CHIP Waiting Period Satisfied Ineligibility Reason" => 555
 				}
 			}#,			
 			# {
