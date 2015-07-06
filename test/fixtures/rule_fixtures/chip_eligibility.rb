@@ -22,7 +22,6 @@ class CHIPEligibilityFixture < MagiFixture
 				expected_outputs: {
 					"Applicant CHIP Indicator" => "N",
 					"CHIP Ineligibility Reason" => 405,
-					"APTC Referral Indicator" => nil
 				}
 			},
 			{
@@ -41,7 +40,6 @@ class CHIPEligibilityFixture < MagiFixture
 				expected_outputs: {
 					"Applicant CHIP Indicator" => "Y",
 					"CHIP Ineligibility Reason" => 999,
-					"APTC Referral Indicator" => nil
 				}
 			},
 			{
@@ -60,7 +58,6 @@ class CHIPEligibilityFixture < MagiFixture
 				expected_outputs: {
 					"Applicant CHIP Indicator" => "Y",
 					"CHIP Ineligibility Reason" => 999,
-					"APTC Referral Indicator" => nil
 				}
 			}, 
 			{
