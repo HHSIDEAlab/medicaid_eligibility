@@ -1,4 +1,4 @@
-##### GENERATED AT 2015-07-06 14:34:35 -0400 ######
+#### GENERATED AT 2015-07-06 14:34:35 -0400 ######
 class FormerFosterCareFixture < MagiFixture
 	attr_accessor :magi, :test_sets
 
@@ -161,7 +161,7 @@ class FormerFosterCareFixture < MagiFixture
 					"Applicant Age" => 22,
 					"Former Foster Care" => "Y",
 					"Age Left Foster Care" => 19,
-					"Had Medicaid During Foster Care" => "N",
+					"Had Medicaid During Foster Care" => "Y",
 					"Foster Care State" => "TN",
 					"State" => "TN"
 				},
@@ -176,6 +176,44 @@ class FormerFosterCareFixture < MagiFixture
 					"Medicaid Prelim Ineligibility Reason" => 999,
 					"Applicant CHIP Prelim Indicator" => "N",
 					"CHIP Prelim Ineligibility Reason" => 380
+				}
+			},
+			{
+				test_name: "Bad Info - Inputs",
+				inputs: {
+					# "Medicaid Residency Indicator" => "Y",
+					# "Applicant Medicaid Citizen Or Immigrant Indicator" => "Y",
+					# "Applicant Age" => 22,
+					# "Former Foster Care" => "Y",
+					# "Age Left Foster Care" => 19,
+					# "Had Medicaid During Foster Care" => "N",
+					# "Foster Care State" => "TN",
+					"State" => "TN"
+				},
+				configs: {
+					"Foster Care Age Threshold" => 18,
+					"In-State Foster Care Required" => "Y"
+				},
+				expected_outputs: {
+				}
+			},
+			{
+				test_name: "Bad Info - Configs",
+				inputs: {
+					"Medicaid Residency Indicator" => "Y",
+					"Applicant Medicaid Citizen Or Immigrant Indicator" => "Y",
+					"Applicant Age" => 22,
+					"Former Foster Care" => "Y",
+					"Age Left Foster Care" => 19,
+					"Had Medicaid During Foster Care" => "N",
+					"Foster Care State" => "TN",
+					"State" => "TN"
+				},
+				configs: {
+					# "Foster Care Age Threshold" => 18,
+					# "In-State Foster Care Required" => "Y"
+				},
+				expected_outputs: {
 				}
 			}
 		]
