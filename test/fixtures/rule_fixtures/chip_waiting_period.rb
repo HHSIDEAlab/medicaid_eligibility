@@ -78,7 +78,7 @@ class CHIPWaitingPeriodFixture < MagiFixture
 				},
 				expected_outputs: {
 				}
-			}#,			
+			},			
 			# {
 			# 	test_name: "Bad Info - Configs",
 			# 	inputs: { 
@@ -87,7 +87,7 @@ class CHIPWaitingPeriodFixture < MagiFixture
 			# 		"Prior Insurance End Date" => nil
 			# 	},
 			# 	configs: {
-			# 		# "State CHIP Waiting Period" => 0
+			# 		# "State CHIP Waiting Period" => "A BILLION"
 			# 	},
 			# 	expected_outputs: {
 			# 		"Applicant CHIP Waiting Period Satisfied Indicator" => "X",
