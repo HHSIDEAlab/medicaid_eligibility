@@ -19,7 +19,7 @@ class MagiRulesTest < ActionDispatch::IntegrationTest
 		# generate tests based on fixture.test_sets
 		magi_fixture.test_sets.each do |set|
 			test "#{magi_fixture.magi} - #{set[:test_name]}" do 
-				p "#{magi_fixture.magi} - #{set[:test_name]}" # debug line
+				# p "#{magi_fixture.magi} - #{set[:test_name]}" # debug line
 
 				# should raise a MissingVariableError if it's missing an input
 				if set[:test_name] =~ /Bad Info - Inputs/
