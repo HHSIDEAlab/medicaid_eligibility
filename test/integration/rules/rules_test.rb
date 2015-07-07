@@ -43,7 +43,7 @@ class MagiRulesTest < ActionDispatch::IntegrationTest
 					result = eval "MAGI::#{fixture}.new.run context"
 
 					set[:expected_outputs].each_key do |out|
-						assert_equal result.output[out], set[:expected_outputs][out]
+						assert_equal set[:expected_outputs][out], result.output[out]
 					end
 
 					# skip this test for immigration since it has so many moving parts
