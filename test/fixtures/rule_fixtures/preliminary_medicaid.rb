@@ -67,7 +67,19 @@ class PreliminaryMedicaidFixture < MagiFixture
 					"Applicant Emergency Medicaid Indicator" => "Y", 
 					"Emergency Medicaid Ineligibility Reason" => 999
 				}
+			},
+			{
+				test_name: "Bad Info - Inputs",
+				inputs: {
+					"Applicant Income Medicaid Eligible Indicator" => "Y"
+				},
+				configs: {
+					# none
+				},
+				expected_outputs: {
+				}
 			}
+
 		]
 	end
 end

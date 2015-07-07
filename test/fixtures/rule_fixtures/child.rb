@@ -69,8 +69,6 @@ class ChildFixture < MagiFixture
 				test_name: "Bad Info - Inputs",
 				inputs: {
 					"People" => "Billy Everyteen"
-
-					# "Applicant Age" => 22
 				}, 
 				configs: {
 					"Child Age Threshold" => 19,
@@ -78,10 +76,19 @@ class ChildFixture < MagiFixture
 					"Young Adult Age Threshold" => 21
 				},
 				expected_outputs: {
-					# "Applicant Child Category Indicator" => "N",
-					# "#{@magi} Category Ineligibility Reason" => 394
 				}
-			}
+			},
+			{
+				test_name: "Bad Info - Configs",
+				inputs: {
+					"Applicant Age" => 22
+				}, 
+				configs: {
+					"Young Adult Age Threshold" => 21
+				},
+				expected_outputs: {
+				}
+			},
 		]
 	end
 end

@@ -107,6 +107,21 @@ class ReferralTypeFixture < MagiFixture
 					"Applicant Medicaid Non-MAGI Referral Indicator" => "N",
 					"Medicaid Non-MAGI Referral Ineligibility Reason" => 108
 				}
+			},
+			{
+				test_name: "Bad Info - Inputs",
+				inputs: {
+					# "Applicant Age" => 40,
+					# "Applicant Attest Blind or Disabled" => "N",
+					# "Applicant Attest Long Term Care" => "N",
+					# "Medicare Entitlement Indicator" => "N",
+					"Receives SSI" => "N"
+				},
+				configs: {
+					# none
+				},
+				expected_outputs: {
+				}
 			}
 		]
 	end

@@ -55,8 +55,18 @@ class IncomeOverrideFixture < MagiFixture
 					"CHIP Ineligibility Reason" => 340,
 					"APTC Referral Indicator" => "Y"
 				}
+			},
+			{
+				test_name: "Bad Info - Inputs",
+				inputs: {
+					"FPL" => 10
+				},
+				configs: {
+					# none
+				},
+				expected_outputs: {
+				}
 			}
-
 		]
 
 		# for work quarters indicator Y or X

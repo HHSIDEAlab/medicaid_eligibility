@@ -101,20 +101,12 @@ class CHIPEligibilityFixture < MagiFixture
 			{
 				test_name: "Bad Info - Inputs",
 				inputs: {
-					# "Incarceration Status" => "N",
-					# "Applicant CHIP Prelim Indicator" => "Y",
-					# "Applicant Unborn Child Indicator" => "N",
-					# "Applicant State Health Benefits CHIP Indicator" => "N",
-					# "Applicant CHIP Waiting Period Satisfied Indicator" => "N",
 					"Applicant CHIP Targeted Low Income Child Indicator" => "N" 
 				},
 				configs: {
 					# none
 				},
 				expected_outputs: {
-					# "Applicant CHIP Indicator" => "N",
-					# "CHIP Ineligibility Reason" => 107,
-					# "APTC Referral Indicator" => "Y"
 				}
 			}
 		]

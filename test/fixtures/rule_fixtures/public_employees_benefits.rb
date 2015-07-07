@@ -125,6 +125,34 @@ class PublicEmployeesBenefitsFixture < MagiFixture
 					"State Health Benefits CHIP Ineligibility Reason" => 999
 				}
 			},
+			{
+				test_name: "Bad Info - Inputs",
+				inputs: {
+					"Applicant Medicaid Prelim Indicator" => "N"
+				},
+				configs: {
+					"CHIP for State Health Benefits" => "04",
+					"State Health Benefits FPL Standard" => 10
+				},
+				expected_outputs: {
+				}
+			},
+			{
+				test_name: "Bad Info - Configs",
+				inputs: {
+					"State Health Benefits Through Public Employee" => "Y",
+					"Calculated Income" => 0,
+					"FPL" => 10,
+					"Applicant Medicaid Prelim Indicator" => "N"
+				},
+				configs: {
+					"State Health Benefits FPL Standard" => 10
+				},
+				expected_outputs: {
+					"Applicant State Health Benefits CHIP Indicator" => "Y",
+					"State Health Benefits CHIP Ineligibility Reason" => 999
+				}
+			}
 			# {
 			# 	test_name: "Public Employee - Invalid CHIP Value - Should raise error",
 			# 	inputs: {

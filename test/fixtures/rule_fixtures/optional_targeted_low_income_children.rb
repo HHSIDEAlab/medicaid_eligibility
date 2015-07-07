@@ -53,6 +53,31 @@ class OptionalTargetedLowIncomeChildrenFixture < MagiFixture
 					"Applicant Optional Targeted Low Income Child Indicator" => "Y",
 					"Optional Targeted Low Income Child Ineligibility Reason" => 999
 				}
+			},
+			{
+				test_name: "Bad Info - Inputs",
+				inputs: {
+					"Has Insurance" => "N"
+				},
+				configs: {
+					"Optional Targeted Low Income Child Group" => "Y",
+					"Optional Targeted Low Income Child Age Low Threshold" => 10,
+					"Optional Targeted Low Income Child Age High Threshold" => 19
+				},
+				expected_outputs: {
+				}
+			},
+			{
+				test_name: "Bad Info - Configs",
+				inputs: {
+					"Applicant Age" => 18,
+					"Has Insurance" => "N"
+				},
+				configs: {
+					"Optional Targeted Low Income Child Age High Threshold" => 19
+				},
+				expected_outputs: {
+				}
 			}
 		]
 

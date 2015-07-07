@@ -77,17 +77,12 @@ class EmergencyMedicaidFixture < MagiFixture
 			{
 				test_name: "Bad Info - Inputs",
 				inputs: {
-					# "Medicaid Residency Indicator" => "Y",
-					# "Applicant Medicaid Citizen Or Immigrant Indicator" => "N",
-					# "Applicant Income Medicaid Eligible Indicator" => "Y",
 					"Applicant Former Foster Care Category Indicator" => "N"
 				},
 				configs: {
 					# none
 				},
 				expected_outputs: {
-					# "Applicant Emergency Medicaid Indicator" => "N",
-					# "Emergency Medicaid Ineligibility Reason" => 109
 				}
 			}
 		]

@@ -112,14 +112,6 @@ class DependentChildCoveredFixture < MagiFixture
 			{
 				test_name: "Bad Info - Inputs",
 				inputs: {
-					# "Applicant List" => [
-						# Applicant.new("Parent Caretaker", {"Has Insurance" => "N"}, 'Parent Caretaker', '','')
-					# ],
-					# "Person List" => [
-						# Person.new("Parent Caretaker", {"Has Insurance" => "N"}, 'Parent Caretaker'),
-						# Person.new("Billy", {"Has Insurance" => "N"}, 'Billy')
-					# ],
-					# "Applicant Adult Group Category Indicator" => "Y",
 					"Qualified Children List" => [
 						{'Person ID' => 'Billy'}
 					]
@@ -128,8 +120,6 @@ class DependentChildCoveredFixture < MagiFixture
 					# none 
 				},
 				expected_outputs: {
-					# "Applicant Dependent Child Covered Indicator" => "N",
-					# "Dependent Child Covered Ineligibility Reason" => 128
 				}
 			}
 		]

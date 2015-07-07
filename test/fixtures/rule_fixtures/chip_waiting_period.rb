@@ -71,16 +71,12 @@ class CHIPWaitingPeriodFixture < MagiFixture
 			{
 				test_name: "Bad Info - Inputs",
 				inputs: { 
-					# "Applicant CHIP Prelim Indicator" => "N",
-					# "Prior Insurance" => "N",
 					"Prior Insurance End Date" => nil
 				},
 				configs: {
 					"State CHIP Waiting Period" => 0
 				},
 				expected_outputs: {
-					# "Applicant CHIP Waiting Period Satisfied Indicator" => "X",
-					# "CHIP Waiting Period Satisfied Ineligibility Reason" => 555
 				}
 			}#,			
 			# {

@@ -43,6 +43,33 @@ class OptionalUnbornChildFixture < MagiFixture
 					"Applicant Unborn Child Indicator" => "N",
 					"Unborn Child Ineligibility Reason" => 408
 				}
+			},
+			{
+				test_name: "Bad Info - Inputs",
+				inputs: {
+					"FPL" => 10
+				},
+				configs: {
+					"Percent FPL Unborn Child" => 10,
+					"Option Cover Unborn Child" => "Y"
+				},
+				expected_outputs: {
+				}
+			},
+			{
+				test_name: "Bad Info - Configs",
+				inputs: {
+					"Applicant Pregnant Indicator" => "Y",
+					"Applicant Medicaid Prelim Indicator" => "N",
+					"Applicant CHIP Prelim Indicator" => "N",
+					"Calculated Income" => 1000000,
+					"FPL" => 10
+				},
+				configs: {
+					"Option Cover Unborn Child" => "Y"
+				},
+				expected_outputs: {
+				}
 			}
 		]
 

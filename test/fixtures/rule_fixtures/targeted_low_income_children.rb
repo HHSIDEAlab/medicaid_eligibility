@@ -85,6 +85,34 @@ class TargetedLowIncomeChildrenFixture < MagiFixture
 					"Applicant CHIP Targeted Low Income Child Indicator" => "Y",
 					"CHIP Targeted Low Income Child Ineligibility Reason" => 999
 				}
+			},
+			{
+				test_name: "Bad Info - Inputs",
+				inputs: {
+					# "Applicant Age" => 12,
+					"Has Insurance" => "Y"
+				},
+				configs: {
+					"CHIP Targeted Low Income Child Group" => "Y",
+					"CHIP Targeted Low Income Child Age Low Threshold" => 10,
+					"CHIP Targeted Low Income Child Age High Threshold" => 19
+				},
+				expected_outputs: {
+				}
+			},
+			{
+				test_name: "Bad Info - Configs",
+				inputs: {
+					"Applicant Age" => 12,
+					"Has Insurance" => "Y"
+				},
+				configs: {
+					# "CHIP Targeted Low Income Child Group" => "Y",
+					# "CHIP Targeted Low Income Child Age Low Threshold" => 10,
+					"CHIP Targeted Low Income Child Age High Threshold" => 19
+				},
+				expected_outputs: {
+				}
 			}
 		]
 	end

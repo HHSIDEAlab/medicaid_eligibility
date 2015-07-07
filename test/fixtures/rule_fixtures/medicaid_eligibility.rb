@@ -39,6 +39,17 @@ class MedicaidEligibilityFixture < MagiFixture
 					"Medicaid Ineligibility Reason" => 106,
 					"APTC Referral Indicator" => "Y"
 				}
+			},
+			{
+				test_name: "Bad Info - Inputs",
+				inputs: {
+					"Applicant Income Medicaid Eligible Indicator" => "N"
+				},
+				configs: {
+					# none
+				},
+				expected_outputs: {
+				}
 			}
 		]
 

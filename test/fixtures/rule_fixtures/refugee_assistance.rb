@@ -28,6 +28,36 @@ class RefugeeAssistanceFixture < MagiFixture
 			# 		"APTC Referral Ineligibility Reason" => ?
 			# 	}
 			# }
+
+			{
+				test_name: "Bad Info - Inputs",
+				inputs: {
+					"FPL" => 0
+				},
+				configs: {
+					"State Offers Refugee Medical Assistance" => "N",
+					"Refugee Medical Assistance Income Requirement" => 100,
+					"Refugee Medical Assistance Threshold" => 100
+				},
+				expected_outputs: {
+				}
+			},
+			{
+				test_name: "Bad Info - Configs",
+				inputs: {
+					"Refugee Status" => "N",
+					"Refugee Medical Assistance Start Date" => Time.now.yesterday,
+					"Medicaid Residency Indicator" => "N",
+					"Calculated Income" => 0,
+					"FPL" => 10
+				},
+				configs: {
+					"Refugee Medical Assistance Threshold" => 10
+				},
+				expected_outputs: {
+				}
+			}
+
 		]
 	end
 end

@@ -181,13 +181,6 @@ class FormerFosterCareFixture < MagiFixture
 			{
 				test_name: "Bad Info - Inputs",
 				inputs: {
-					# "Medicaid Residency Indicator" => "Y",
-					# "Applicant Medicaid Citizen Or Immigrant Indicator" => "Y",
-					# "Applicant Age" => 22,
-					# "Former Foster Care" => "Y",
-					# "Age Left Foster Care" => 19,
-					# "Had Medicaid During Foster Care" => "N",
-					# "Foster Care State" => "TN",
 					"State" => "TN"
 				},
 				configs: {
@@ -210,8 +203,7 @@ class FormerFosterCareFixture < MagiFixture
 					"State" => "TN"
 				},
 				configs: {
-					# "Foster Care Age Threshold" => 18,
-					# "In-State Foster Care Required" => "Y"
+					"In-State Foster Care Required" => "Y"
 				},
 				expected_outputs: {
 				}

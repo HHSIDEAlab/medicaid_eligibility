@@ -28,6 +28,36 @@ class ResidencyFixture < MagiFixture
 			# 		"Medicaid Residency Indicator Ineligibility Reason" => ?
 			# 	}
 			# }
+
+			{
+				test_name: "Bad Info - Inputs",
+				inputs: {
+					"Tax Returns" => []
+				},
+				configs: {
+					"Option Deny Residency to Temporary Resident Students" => "N"
+				},
+				expected_outputs: {
+				}
+			},
+			{
+				test_name: "Bad Info - Configs",
+				inputs: {
+					"Lives In State" => "Y",
+					"No Fixed Address" => "N",
+					"Temporarily Out of State" => "N",
+					"Medicaid Household" => "N",
+					"Claimed as Dependent by Person Not on Application" => "N",
+					"Claimer Is Out of State" => "N",
+					"Student Indicator" => "N",
+					"Person ID" => "N",
+					"Tax Returns" => []
+				},
+				configs: {
+				},
+				expected_outputs: {
+				}
+			}
 		]
 	end
 end

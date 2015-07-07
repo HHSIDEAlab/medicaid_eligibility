@@ -83,16 +83,12 @@ class AdultGroupFixture < MagiFixture
 			{
 				test_name: "Bad Info - Inputs",
 				inputs: {
-					# "Medicare Entitlement Indicator" => "N", 
-					# "Applicant Pregnancy Category Indicator" => "N", 
 					"Applicant Age" => 25
 				}, 
 				configs: {
 					"Option Adult Group" => "Y"
 				},
 				expected_outputs: {
-					# "Applicant Adult Group Category Indicator" => "Y",
-					# "Adult Group Category Ineligibility Reason" => 999
 				}
 			},
 			{
@@ -106,8 +102,6 @@ class AdultGroupFixture < MagiFixture
 					# "Option Adult Group" => "Y"
 				},
 				expected_outputs: {
-					# "Applicant Adult Group Category Indicator" => "Y",
-					# "Adult Group Category Ineligibility Reason" => 999
 				}
 			}
 		] 

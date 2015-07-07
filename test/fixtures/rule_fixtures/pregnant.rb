@@ -47,6 +47,17 @@ class PregnantFixture < MagiFixture
 					"Applicant Pregnancy Category Indicator" => "N",
 					"Pregnancy Category Ineligibility Reason" => 124
 				}
+			},
+			{
+				test_name: "Bad Info - Inputs",
+				inputs: {
+					"Applicant Post Partum Period Indicator" => "N"
+				},
+				configs: {
+					# none
+				},
+				expected_outputs: {
+				}
 			}
 		]
 	end

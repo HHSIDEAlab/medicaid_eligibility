@@ -69,6 +69,17 @@ class PreliminaryCHIPFixture < MagiFixture
 					"Applicant CHIP Prelim Indicator" => "N",
 					"CHIP Prelim Ineligibility Reason" => 107
 				}
+			},
+			{
+				test_name: "Bad Info - Inputs",
+				inputs: {
+					"Has Insurance" => "Y"
+				},
+				configs: {
+					# none
+				},
+				expected_outputs: {
+				}
 			}
 		]
 	end
