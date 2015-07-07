@@ -6,26 +6,47 @@ class ParentCaretakerRelativeSpouseFixture < MagiFixture
 		super
 		@magi = 'ParentCaretakerRelativeSpouse'
 		@test_sets = [
-			# {
-			# 	test_name: "FILL_IN_WITH_TEST_NAME",
-			# 	inputs: {
-			# 		"Applicant Relationships" => "",
-			# 		"Physical Household" => ?,
-			# 		"Applicant Parent Caretaker Category Indicator" => ?
-			# 	},
-			# 	configs: {
-			# 		"Option Caretaker Relative Relationship" => "00"
-			# 	},
-			# 	expected_outputs: {
-			# 		"Applicant Parent Caretaker Category Indicator" => ?,
-			# 		"Parent Caretaker Category Determination Date" => ?,
-			# 		"Parent Caretaker Category Ineligibility Reason" => ?
-			# 	}
-			# }
+
+			{
+				test_name: "ParentCaretakerRelativeSpouse - ",
+				inputs: {
+					"Applicant Relationships" => [],
+					"Physical Household" => [],
+					"Applicant Parent Caretaker Category Indicator" => "N"
+				},
+				configs: {
+					"Option Caretaker Relative Relationship" => "00"
+				},
+				expected_outputs: {
+					# should be none for this 
+				}
+			},
+
+
+			{
+				test_name: "ParentCaretakerRelativeSpouse - No Relationships Fallback",
+				inputs: {
+					"Applicant Relationships" => [],
+					"Physical Household" => [],
+					"Applicant Parent Caretaker Category Indicator" => "N"
+				},
+				configs: {
+					"Option Caretaker Relative Relationship" => "00"
+				},
+				expected_outputs: {
+					# should be none for this 
+				}
+			}
 		]
 	end
 end
 
+
+
+# expected_outputs					
+# "Applicant Parent Caretaker Category Indicator" => ?,
+# "Parent Caretaker Category Determination Date" => ?,
+# "Parent Caretaker Category Ineligibility Reason" => ?
 
 
 # def initialize(person, relationship_type, relationship_attributes) relationships
