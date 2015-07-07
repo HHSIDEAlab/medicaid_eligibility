@@ -652,25 +652,277 @@ class ImmigrationFixture < MagiFixture
 					"Title II Work Quarters Met Ineligibility Reason" => 104
 				}
 			},
+			{
+				test_name: "Immigration - Medicaid Citizen or Immigrant - CHIPRA 214 Yes",
+				inputs: {
+					"US Citizen Indicator" => "N",
+					"Lawful Presence Attested" => "Y",
+					"Immigration Status" => "01",
+					"Amerasian Immigrant" => "N",
+					"Applicant Age" => 18,
+					"Applicant Pregnancy Category Indicator" => "N",
+					"Victim of Trafficking" => "N",
+					"Seven Year Limit Start Date" => Time.now.yesterday,
+					"Five Year Bar Applies" => "N",
+					"Five Year Bar Met" => "N",
+					"Veteran Status" => "N",
+					"Applicant Has 40 Title II Work Quarters" => "N"
+				},
+				configs: {
+					"Option CHIPRA 214 Applicable Program" => "01",
+					"Option CHIPRA 214 Child Age Threshold" => 21,
+					"Option CHIPRA 214 Applies To" => "01",
+					"Option CHIPRA 214 CHIP Applies To" => "03",
+					"State Applies Seven Year Limit" => "N",
+					"Option Require Work Quarters" => "N"
+				},
+				expected_outputs: {
+					# CHIPRA 214
+					"Applicant Medicaid Citizen Or Immigrant Indicator" => "Y",
+					"Medicaid Citizen Or Immigrant Ineligibility Reason" => 999
+				}
+			},
+			{
+				test_name: "Immigration - Medicaid Citizen or Immigrant - Trafficking Victim Yes",
+				inputs: {
+					"US Citizen Indicator" => "N",
+					"Lawful Presence Attested" => "Y",
+					"Immigration Status" => "01",
+					"Amerasian Immigrant" => "N",
+					"Applicant Age" => 25,
+					"Applicant Pregnancy Category Indicator" => "N",
+					"Victim of Trafficking" => "Y",
+					"Seven Year Limit Start Date" => Time.now.yesterday,
+					"Five Year Bar Applies" => "N",
+					"Five Year Bar Met" => "N",
+					"Veteran Status" => "N",
+					"Applicant Has 40 Title II Work Quarters" => "N"
+				},
+				configs: {
+					"Option CHIPRA 214 Applicable Program" => "03",
+					"Option CHIPRA 214 Child Age Threshold" => 21,
+					"Option CHIPRA 214 Applies To" => "03",
+					"Option CHIPRA 214 CHIP Applies To" => "03",
+					"State Applies Seven Year Limit" => "N",
+					"Option Require Work Quarters" => "N"
+				},
+				expected_outputs: {
+					# CHIPRA 214
+					"Applicant Medicaid Citizen Or Immigrant Indicator" => "Y",
+					"Medicaid Citizen Or Immigrant Ineligibility Reason" => 999
+				}
+			},
+			{
+				test_name: "Immigration - Medicaid Citizen or Immigrant - Seven Year Limit Yes",
+				inputs: {
+					"US Citizen Indicator" => "N",
+					"Lawful Presence Attested" => "Y",
+					"Immigration Status" => "01",
+					"Amerasian Immigrant" => "Y",
+					"Applicant Age" => 25,
+					"Applicant Pregnancy Category Indicator" => "N",
+					"Victim of Trafficking" => "N",
+					"Seven Year Limit Start Date" => Time.now.yesterday,
+					"Five Year Bar Applies" => "N",
+					"Five Year Bar Met" => "N",
+					"Veteran Status" => "N",
+					"Applicant Has 40 Title II Work Quarters" => "N"
+				},
+				configs: {
+					"Option CHIPRA 214 Applicable Program" => "03",
+					"Option CHIPRA 214 Child Age Threshold" => 21,
+					"Option CHIPRA 214 Applies To" => "03",
+					"Option CHIPRA 214 CHIP Applies To" => "03",
+					"State Applies Seven Year Limit" => "Y",
+					"Option Require Work Quarters" => "N"
+				},
+				expected_outputs: {
+					# CHIPRA 214
+					"Applicant Medicaid Citizen Or Immigrant Indicator" => "Y",
+					"Medicaid Citizen Or Immigrant Ineligibility Reason" => 999
+				}
+			},
 
+			{ # skeptical about this one
+				test_name: "Immigration - Medicaid Citizen or Immigrant - Five Year Bar and Title II Yes",
+				inputs: {
+					"US Citizen Indicator" => "N",
+					"Lawful Presence Attested" => "Y",
+					"Immigration Status" => "01",
+					"Amerasian Immigrant" => "N",
+					"Applicant Age" => 25,
+					"Applicant Pregnancy Category Indicator" => "N",
+					"Victim of Trafficking" => "N",
+					"Seven Year Limit Start Date" => 8.years.ago,
+					"Five Year Bar Applies" => "Y",
+					"Five Year Bar Met" => "Y",
+					"Veteran Status" => "N",
+					"Applicant Has 40 Title II Work Quarters" => "N"
+				},
+				configs: {
+					"Option CHIPRA 214 Applicable Program" => "03",
+					"Option CHIPRA 214 Child Age Threshold" => 21,
+					"Option CHIPRA 214 Applies To" => "03",
+					"Option CHIPRA 214 CHIP Applies To" => "03",
+					"State Applies Seven Year Limit" => "N",
+					"Option Require Work Quarters" => "N"
+				},
+				expected_outputs: {
+					"Applicant Medicaid Citizen Or Immigrant Indicator" => "Y",
+					"Medicaid Citizen Or Immigrant Ineligibility Reason" => 999
+				}
+			},
 
-
-
-
-        # if v("Veteran Status") == 'Y'
-        #   determination_na "Five Year Bar"
-        #   determination_na "Title II Work Quarters Met"
-        # else
-        #   if v("Five Year Bar Applies") == 'Y'
-        #     if v("Five Year Bar Met") == 'Y'
-        #       determination_y "Five Year Bar"
-        #     else
-        #       determination_n "Five Year Bar", 143
-        #     end
-        #   else
-        #     determination_na "Five Year Bar"
-        #   end
-
+			{
+				test_name: "Immigration - Medicaid Citizen or Immigrant - Fallback",
+				inputs: {
+					"US Citizen Indicator" => "N",
+					"Lawful Presence Attested" => "Y",
+					"Immigration Status" => "01",
+					"Amerasian Immigrant" => "N",
+					"Applicant Age" => 25,
+					"Applicant Pregnancy Category Indicator" => "N",
+					"Victim of Trafficking" => "N",
+					"Seven Year Limit Start Date" => Time.now.yesterday,
+					"Five Year Bar Applies" => "Y",
+					"Five Year Bar Met" => "N",
+					"Veteran Status" => "N",
+					"Applicant Has 40 Title II Work Quarters" => "N"
+				},
+				configs: {
+					"Option CHIPRA 214 Applicable Program" => "01",
+					"Option CHIPRA 214 Child Age Threshold" => 21,
+					"Option CHIPRA 214 Applies To" => "03",
+					"Option CHIPRA 214 CHIP Applies To" => "03",
+					"State Applies Seven Year Limit" => "N",
+					"Option Require Work Quarters" => "N"
+				},
+				expected_outputs: {
+					# CHIPRA 214
+					"Applicant Medicaid Citizen Or Immigrant Indicator" => "N",
+					"Medicaid Citizen Or Immigrant Ineligibility Reason" => 101
+				}
+			},
+			{
+				test_name: "Immigration - CHIP Citizen - CHIPRA Yes",
+				inputs: {
+					"US Citizen Indicator" => "N",
+					"Lawful Presence Attested" => "Y",
+					"Immigration Status" => "01",
+					"Amerasian Immigrant" => "N",
+					"Applicant Age" => 18,
+					"Applicant Pregnancy Category Indicator" => "N",
+					"Victim of Trafficking" => "N",
+					"Seven Year Limit Start Date" => Time.now.yesterday,
+					"Five Year Bar Applies" => "N",
+					"Five Year Bar Met" => "N",
+					"Veteran Status" => "N",
+					"Applicant Has 40 Title II Work Quarters" => "N"
+				},
+				configs: {
+					"Option CHIPRA 214 Applicable Program" => "01",
+					"Option CHIPRA 214 Child Age Threshold" => 21,
+					"Option CHIPRA 214 Applies To" => "01",
+					"Option CHIPRA 214 CHIP Applies To" => "03",
+					"State Applies Seven Year Limit" => "N",
+					"Option Require Work Quarters" => "N"
+				},
+				expected_outputs: {
+					# CHIPRA 214
+					"Applicant CHIP Citizen Or Immigrant Indicator" => "Y",
+					"CHIP Citizen Or Immigrant Ineligibility Reason" => 999
+				}
+			},
+			{
+				test_name: "Immigration - CHIP Citizen - Trafficking Victim Yes",
+				inputs: {
+					"US Citizen Indicator" => "N",
+					"Lawful Presence Attested" => "Y",
+					"Immigration Status" => "01",
+					"Amerasian Immigrant" => "N",
+					"Applicant Age" => 18,
+					"Applicant Pregnancy Category Indicator" => "N",
+					"Victim of Trafficking" => "Y",
+					"Seven Year Limit Start Date" => Time.now.yesterday,
+					"Five Year Bar Applies" => "N",
+					"Five Year Bar Met" => "N",
+					"Veteran Status" => "N",
+					"Applicant Has 40 Title II Work Quarters" => "N"
+				},
+				configs: {
+					"Option CHIPRA 214 Applicable Program" => "01",
+					"Option CHIPRA 214 Child Age Threshold" => 21,
+					"Option CHIPRA 214 Applies To" => "01",
+					"Option CHIPRA 214 CHIP Applies To" => "03",
+					"State Applies Seven Year Limit" => "N",
+					"Option Require Work Quarters" => "N"
+				},
+				expected_outputs: {
+					# CHIPRA 214
+					"Applicant CHIP Citizen Or Immigrant Indicator" => "Y",
+					"CHIP Citizen Or Immigrant Ineligibility Reason" => 999
+				}
+			},
+			{
+				test_name: "Immigration - CHIP Citizen - Five Year Bar Yes",
+				inputs: {
+					"US Citizen Indicator" => "N",
+					"Lawful Presence Attested" => "Y",
+					"Immigration Status" => "01",
+					"Amerasian Immigrant" => "N",
+					"Applicant Age" => 18,
+					"Applicant Pregnancy Category Indicator" => "N",
+					"Victim of Trafficking" => "N",
+					"Seven Year Limit Start Date" => Time.now.yesterday,
+					"Five Year Bar Applies" => "Y",
+					"Five Year Bar Met" => "Y",
+					"Veteran Status" => "N",
+					"Applicant Has 40 Title II Work Quarters" => "N"
+				},
+				configs: {
+					"Option CHIPRA 214 Applicable Program" => "01",
+					"Option CHIPRA 214 Child Age Threshold" => 21,
+					"Option CHIPRA 214 Applies To" => "01",
+					"Option CHIPRA 214 CHIP Applies To" => "03",
+					"State Applies Seven Year Limit" => "N",
+					"Option Require Work Quarters" => "N"
+				},
+				expected_outputs: {
+					# CHIPRA 214
+					"Applicant CHIP Citizen Or Immigrant Indicator" => "Y",
+					"CHIP Citizen Or Immigrant Ineligibility Reason" => 999
+				}
+			},
+			{
+				test_name: "Immigration - CHIP Citizen - Fallback",
+				inputs: {
+					"US Citizen Indicator" => "N",
+					"Lawful Presence Attested" => "Y",
+					"Immigration Status" => "01",
+					"Amerasian Immigrant" => "N",
+					"Applicant Age" => 18,
+					"Applicant Pregnancy Category Indicator" => "N",
+					"Victim of Trafficking" => "N",
+					"Seven Year Limit Start Date" => Time.now.yesterday,
+					"Five Year Bar Applies" => "N",
+					"Five Year Bar Met" => "N",
+					"Veteran Status" => "N",
+					"Applicant Has 40 Title II Work Quarters" => "N"
+				},
+				configs: {
+					"Option CHIPRA 214 Applicable Program" => "01",
+					"Option CHIPRA 214 Child Age Threshold" => 21,
+					"Option CHIPRA 214 Applies To" => "01",
+					"Option CHIPRA 214 CHIP Applies To" => "03",
+					"State Applies Seven Year Limit" => "N",
+					"Option Require Work Quarters" => "N"
+				},
+				expected_outputs: {
+					# CHIPRA 214
+					"Applicant CHIP Citizen Or Immigrant Indicator" => "Y",
+					"CHIP Citizen Or Immigrant Ineligibility Reason" => 999
+				}
+			},
 
 
 			{
@@ -810,6 +1062,7 @@ class ImmigrationFixture < MagiFixture
 			}
 		end
 
+		# Title II Work Quarters for non-01 immigration statuses
 		['02', '03', '04', '05', '06', '07', '08', '09', '10', '99'].each do |im_st|
 			@test_sets << {
 				test_name: "Immigration - Five Year Bar / T2 Work - Veteran Status No - Immigration Status #{im_st} - Title II Work Quarters NA",
@@ -847,5 +1100,3 @@ end
 
 # NOTES
 # This fixture is way more rigid than it should be but it's an okay first draft. 
-# The variety of indicators etc make me think this could really benefit from some code generation. 
-# Coming back to this after the rest of them are stubbed. -CF 7/6/2015
