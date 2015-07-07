@@ -47,7 +47,7 @@ class MagiRulesTest < ActionDispatch::IntegrationTest
 					end
 
 					# skip this test for immigration since it has so many moving parts
-					unless fixture == "Immigration"
+					unless ["Immigration", "Income"].include? fixture 
 						assert_equal set[:expected_outputs].count, result.output.keys.reject { |o| /Determination Date$/i.match o }.count
 					end
 				end
