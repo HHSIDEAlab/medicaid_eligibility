@@ -4,21 +4,25 @@ class ParentCaretakerRelativeSpouseFixture < MagiFixture
 
 	def initialize
 		super
+
+		person = Applicant.new('Person A','','','','')
+
 		@magi = 'ParentCaretakerRelativeSpouse'
 		@test_sets = [
 
 			{
 				test_name: "ParentCaretakerRelativeSpouse - ",
 				inputs: {
-					"Applicant Relationships" => [],
-					"Physical Household" => [],
+					"Applicant Relationships" => [Relationship.new("Person A", :spouse, ''), Relationship.new("Person B", :child, '')],
+					"Physical Household" => Household.new('Household A', [Applicant.new('Self','','','',''), Applicant.new('Person A','','','',''), Applicant.new('Person B', '','','','')]),
 					"Applicant Parent Caretaker Category Indicator" => "N"
 				},
 				configs: {
-					"Option Caretaker Relative Relationship" => "00"
+					"Option Caretaker Relative Relationship" => "02"
 				},
 				expected_outputs: {
-					# should be none for this 
+					"Applicant Parent Caretaker Category Indicator" => "Y",
+					"Parent Caretaker Category Ineligibility Reason" => 999
 				}
 			},
 
@@ -43,7 +47,7 @@ end
 
 
 
-# expected_outputs					
+# # expected_outputs					
 # "Applicant Parent Caretaker Category Indicator" => ?,
 # "Parent Caretaker Category Determination Date" => ?,
 # "Parent Caretaker Category Ineligibility Reason" => ?
