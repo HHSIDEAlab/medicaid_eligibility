@@ -6,36 +6,35 @@ class QualifiedChildFixture < MagiFixture
 		super
 		@magi = 'QualifiedChild'
 		@test_sets = [
-		# 	{
-		# 		test_name: "FILL_IN_WITH_TEST_NAME",
-		# 		inputs: {
-		# 			"Caretaker Age" => ?,
-		# 			"Child Age" => ?,
-		# 			"Child Parents" => ?,
-		# 			"Physical Household" => ?,
-		# 			"Relationship Type" => ?,
-		# 			"Student Indicator" => ?
-		# 		},
-		# 		configs: {
-		# 			"Child Age Threshold" => ?,
-		# 			"Dependent Age Threshold" => ?,
-		# 			"Option Dependent Student" => ?,
-		# 			"Deprivation Requirement Retained" => ?,
-		# 			"Option Caretaker Relative Relationship" => ?,
-		# 			"State Unemployed Standard" => ?
-		# 		},
-		# 		expected_outputs: {
-		# 			"Child of Caretaker Dependent Age Indicator" => ?,
-		# 			"Child of Caretaker Dependent Age Determination Date" => ?,
-		# 			"Child of Caretaker Dependent Age Ineligibility Reason" => ?,
-		# 			"Child of Caretaker Deprived Child Indicator" => ?,
-		# 			"Child of Caretaker Deprived Child Determination Date" => ?,
-		# 			"Child of Caretaker Deprived Child Ineligibility Reason" => ?,
-		# 			"Child of Caretaker Relationship Indicator" => ?,
-		# 			"Child of Caretaker Relationship Determination Date" => ?,
-		# 			"Child of Caretaker Relationship Ineligibility Reason" => ?
-		# 		}
-		# 	}
+			
+			# {
+			# 	test_name: "FILL_IN_WITH_TEST_NAME",
+			# 	inputs: {
+			# 		"Caretaker Age" => 40,
+			# 		"Child Age" => 15,
+			# 		"Child Parents" => [],
+			# 		"Physical Household" => Household.new('Household A', [Applicant.new('Parent','','','',''), Applicant.new('Child','','','','')] ),
+			# 		"Relationship Type" => :parent,
+			# 		"Student Indicator" => "Y"
+			# 	},
+			# 	configs: {
+			# 		"Child Age Threshold" => 19,
+			# 		"Dependent Age Threshold" => 18,
+			# 		"Option Dependent Student" => "Y",
+			# 		"Deprivation Requirement Retained" => "N",
+			# 		"Option Caretaker Relative Relationship" => "N",
+			# 		"State Unemployed Standard" => 100
+			# 	},
+			# 	expected_outputs: {
+			# 		"Child of Caretaker Dependent Age Indicator" => "Y",
+			# 		"Child of Caretaker Dependent Age Ineligibility Reason" => 999,
+			# 		"Child of Caretaker Deprived Child Indicator" => "Y",
+			# 		"Child of Caretaker Deprived Child Ineligibility Reason" => 999,
+			# 		"Child of Caretaker Relationship Indicator" => "Y",
+			# 		"Child of Caretaker Relationship Ineligibility Reason" => 999
+			# 	}
+			# },
+
 
 			{
 				test_name: "Bad Info - Inputs",
