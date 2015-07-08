@@ -36,6 +36,39 @@ class QualifiedChildFixture < MagiFixture
 		# 			"Child of Caretaker Relationship Ineligibility Reason" => ?
 		# 		}
 		# 	}
+
+			{
+				test_name: "Bad Info - Inputs",
+				inputs: {
+					"Student Indicator" => "N"
+				},
+				configs: {
+					"Child Age Threshold" => 19,
+					"Dependent Age Threshold" => 18,
+					"Option Dependent Student" => "N",
+					"Deprivation Requirement Retained" => "N",
+					"Option Caretaker Relative Relationship" => 00,
+					"State Unemployed Standard" => 100
+				},
+				expected_outputs: {
+				}
+			},
+			{
+				test_name: "Bad Info - Configs",
+				inputs: {
+					"Caretaker Age" => 23,
+					"Child Age" => 19,
+					"Child Parents" => [],
+					"Physical Household" => Household.new('',''),
+					"Relationship Type" => :child,
+					"Student Indicator" => "N"
+				},
+				configs: {
+					"State Unemployed Standard" => 100
+				},
+				expected_outputs: {
+				}
+			}
 		]
 	end
 end

@@ -33,6 +33,44 @@ class IncomeFixture < MagiFixture
 			# 		"Percentage for CHIP Category Used" => 0
 			# 	}
 			# }
+
+
+			{
+				test_name: "Bad Info - Inputs",
+				inputs: {
+					"Applicant Age" => 20
+				},
+				configs: {
+					"Base FPL" => 10,
+					"FPL Per Person" => 10,
+					"FPL" => { "2015" => { "Base FPL" => 11770, "FPL Per Person" => 4160 } },
+					"Option CHIP Pregnancy Category" => "N",
+					"Medicaid Thresholds" => { "Adult Group Category" => { "percentage" => "Y", "method" => "standard", "threshold" => 100 } },
+					"CHIP Thresholds" => { "Pregnancy Category" => { "percentage" => "Y", "method" => "standard", "threshold" => 133 } }
+				},
+				expected_outputs: {
+				}
+			},
+			{
+				test_name: "Bad Info - Configs",
+				inputs: {
+					"Application Year" => 2015,
+					"Applicant Adult Group Category Indicator" => "Y",
+					"Applicant Pregnancy Category Indicator" => "N",
+					"Applicant Parent Caretaker Category Indicator" => "N",
+					"Applicant Child Category Indicator" => "N",
+					"Applicant Optional Targeted Low Income Child Indicator" => "N",
+					"Applicant CHIP Targeted Low Income Child Indicator" => "N",
+					"Calculated Income" => 0,
+					"Medicaid Household" => MedicaidHousehold.new("house", '', '', '', 3),
+					"Applicant Age" => 20
+				},
+				configs: {
+					"CHIP Thresholds" => { "Pregnancy Category" => { "percentage" => "Y", "method" => "standard", "threshold" => 133 } }
+				},
+				expected_outputs: {
+				}
+			}			
 		]
 	end
 end

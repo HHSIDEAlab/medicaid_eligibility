@@ -54,6 +54,39 @@ class ParentCaretakerRelativeFixture < MagiFixture
 			# 		"Qualified Children List" => []
 			# 	}
 			# }
+
+			{
+				test_name: "Bad Info - Inputs",
+				inputs: {
+					"Applicant Relationships" => []
+				},
+				configs: {
+					"Child Age Threshold" => 19,
+					"Dependent Age Threshold" => 19,
+					"Option Dependent Student" => "N",
+					"Deprivation Requirement Retained" => "N",
+					"Option Caretaker Relative Relationship" => "00",
+					"State Unemployed Standard" => 100
+				},
+				expected_outputs: {
+				}
+			},
+			{
+				test_name: "Bad Info - Configs",
+				inputs: {
+					"Person ID" => 1,
+					"Person List" => [],
+					"Physical Household" => [],
+					"Tax Returns" => [],
+					"Applicant Age" => 25,
+					"Applicant Relationships" => []
+				},
+				configs: {
+					"State Unemployed Standard" => 100
+				},
+				expected_outputs: {
+				}
+			}
 		]
 	end
 end
