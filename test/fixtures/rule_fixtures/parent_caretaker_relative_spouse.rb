@@ -1,74 +1,91 @@
 ##### GENERATED AT 2015-07-07 11:07:02 -0400 ######
 class ParentCaretakerRelativeSpouseFixture < MagiFixture
-	attr_accessor :magi, :test_sets
+  attr_accessor :magi, :test_sets
 
-	def initialize
-		super
+  def initialize
+    super
 
-		# have to hard set this due to the fixture requiring some certain outputs
-		spouse = Applicant.new('Person A','','','','')
-		spouse.outputs["Applicant Parent Caretaker Category Indicator"] = "Y"
+    # have to hard set this due to the fixture requiring some certain outputs
+    spouse = Applicant.new('Person A','','','','')
+    spouse.outputs["Applicant Parent Caretaker Category Indicator"] = "Y"
 
-		@magi = 'ParentCaretakerRelativeSpouse'
-		@test_sets = [
+    myself = Applicant.new('Self','','','','')
 
-			# BROKEN TEST
-			{
-				test_name: "ParentCaretakerRelativeSpouse - ",
-				inputs: {
-					"Applicant Relationships" => [Relationship.new('Self', :self,''), Relationship.new("Person A", :spouse, ''), Relationship.new("Person B", :child, '')],
-					"Physical Household" => Household.new('Household A', ["Self",'Person A',"Person B"]),
-					"Applicant Parent Caretaker Category Indicator" => "N"
-				},
-				configs: {
-					"Option Caretaker Relative Relationship" => "02"
-				},
-				expected_outputs: {
-					# "Applicant Parent Caretaker Category Indicator" => "Y",
-					# "Parent Caretaker Category Ineligibility Reason" => 999
-				}
-			},
+    @magi = 'ParentCaretakerRelativeSpouse'
+    @test_sets = [
+
+      # BROKEN TEST
+      {
+        test_name: "ParentCaretakerRelativeSpouse - Lives With Partner, Meets Criteria",
+        inputs: {
+          "Applicant Relationships" => [Relationship.new(myself, :self,{}), Relationship.new(spouse, :spouse, {})],
+          "Physical Household" => Household.new('Household A', [myself,spouse]),
+          "Applicant Parent Caretaker Category Indicator" => "N"
+        },
+        configs: {
+          "Option Caretaker Relative Relationship" => "02"
+        },
+        expected_outputs: {
+          "Applicant Parent Caretaker Category Indicator" => "Y",
+          "Parent Caretaker Category Ineligibility Reason" => 999
+        }
+      },
 
 
-			{
-				test_name: "ParentCaretakerRelativeSpouse - No Relationships Fallback",
-				inputs: {
-					"Applicant Relationships" => [],
-					"Physical Household" => [],
-					"Applicant Parent Caretaker Category Indicator" => "N"
-				},
-				configs: {
-					"Option Caretaker Relative Relationship" => "00"
-				},
-				expected_outputs: {
-					# should be none for this 
-				}
-			},
-			{
-				test_name: "Bad Info - Inputs",
-				inputs: {
-					"Applicant Parent Caretaker Category Indicator" => "N"
-				},
-				configs: {
-					"Option Caretaker Relative Relationship" => "00"
-				},
-				expected_outputs: {
-				}
-			},	
-			# {
-			# 	test_name: "Bad Info - Configs",
-			# 	inputs: {
-			# 		"Applicant Relationships" => [],
-			# 		"Physical Household" => [],
-			# 		"Applicant Parent Caretaker Category Indicator" => "N"
-			# 	},
-			# 	configs: {
-			# 	},
-			# 	expected_outputs: {
-			# 	}
-			# }	
-		]
-	end
+      {
+        test_name: "ParentCaretakerRelativeSpouse - Lives With Partner, Caretaker Indicator Yes",
+        inputs: {
+          "Applicant Relationships" => [Relationship.new(myself, :self,{}), Relationship.new(spouse, :spouse, {})],
+          "Physical Household" => Household.new('Household A', [myself,spouse]),
+          "Applicant Parent Caretaker Category Indicator" => "Y"
+        },
+        configs: {
+          "Option Caretaker Relative Relationship" => "01"
+        },
+        expected_outputs: {
+          # "Applicant Parent Caretaker Category Indicator" => "Y",
+          # "Parent Caretaker Category Ineligibility Reason" => 999
+        }
+      },
+      {
+        test_name: "ParentCaretakerRelativeSpouse - No Relationships Fallback",
+        inputs: {
+          "Applicant Relationships" => [],
+          "Physical Household" => [],
+          "Applicant Parent Caretaker Category Indicator" => "N"
+        },
+        configs: {
+          "Option Caretaker Relative Relationship" => "00"
+        },
+        expected_outputs: {
+          # should be none for this 
+        }
+      },
+      {
+        test_name: "Bad Info - Inputs",
+        inputs: {
+          "Applicant Parent Caretaker Category Indicator" => "N"
+        },
+        configs: {
+          "Option Caretaker Relative Relationship" => "00"
+        },
+        expected_outputs: {
+        }
+      },  
+      # {
+      #   test_name: "Bad Info - Configs",
+      #   inputs: {
+      #     "Applicant Relationships" => [],
+      #     "Physical Household" => [],
+      #     "Applicant Parent Caretaker Category Indicator" => "N"
+      #   },
+      #   configs: {
+      #   },
+      #   expected_outputs: {
+      #   }
+      # } 
+    ]
+  end
 end
 
 # NOTES
