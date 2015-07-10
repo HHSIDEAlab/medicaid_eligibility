@@ -173,6 +173,7 @@ DEPENDENCIES
   rails (= 3.2.12)
   rails-api
   rails_12factor
+  rake
   spring
   sqlite3
   uglifier
