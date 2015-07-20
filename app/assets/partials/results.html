@@ -2,7 +2,7 @@
   
   <div class="head">
     
-    <h3>{{ application.getApplicantByUid(applicant["Person ID"]).uid }}</h3>
+    <h3>Applicant {{ application.getApplicantByUid(applicant["Person ID"]).uid }}</h3>
     <br>
     <div class="eligibility-div">
       <span eligibility data-program='Medicaid' data-value='{{applicant["Medicaid Eligible"]}}'></span>

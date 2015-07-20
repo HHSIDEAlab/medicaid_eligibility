@@ -2,6 +2,7 @@
 
 module MAGI
   class Immigration < Ruleset
+    input "Person ID", "Application", "Integer"
     input "US Citizen Indicator", "Application", "Char(1)", %w(Y N)
     input "Lawful Presence Attested", "Application", "Char(1)", %w(Y N)
     input "Immigration Status", "Application", "Char(2)", %w(01 02 03 04 05 06 07 08 09 10 99)
@@ -46,7 +47,7 @@ module MAGI
         if v("Seven Year Limit Start Date")
           v("Seven Year Limit Start Date") + 7.years
         else
-          raise "Applicant #{v("Applicant ID")} is missing Seven Year Limit Start Date"
+          raise "Applicant #{v("Person ID")} is missing Seven Year Limit Start Date"
         end
       else
         nil
