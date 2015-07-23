@@ -15,7 +15,7 @@ class CHIPWaitingPeriodFixture < MagiFixture
         },
         configs: {
           "State CHIP Waiting Period" => 1
-          # should calculate a state chip wedding period end date of: 1 month ago
+          # should calculate a state chip waiting period end date of: 1 month ago
         },
         expected_outputs: {
           "Applicant CHIP Waiting Period Satisfied Indicator" => "Y",
@@ -31,7 +31,7 @@ class CHIPWaitingPeriodFixture < MagiFixture
         },
         configs: {
           "State CHIP Waiting Period" => 5
-          # should calculate a state chip wedding period end date of: 3 months from now
+          # should calculate a state chip waiting period end date of: 3 months from now
         },
         expected_outputs: {
           "Applicant CHIP Waiting Period Satisfied Indicator" => "N",

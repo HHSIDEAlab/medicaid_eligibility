@@ -125,8 +125,3 @@ class DependentChildCoveredFixture < MagiFixture
     ]
   end
 end
-
-# NOTES: 
-# Qualified children list seems to be expecting a hash for kids and not a person object. 
-# I can get the test to pass but it's kind of weird behavior since everything else is looking for person objects. 
-# - CF, 7/6/2015
