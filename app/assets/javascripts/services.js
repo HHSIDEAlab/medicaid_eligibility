@@ -131,7 +131,7 @@ angular.module('MAGI.services',[]).
 
     Application.prototype.addApplicant = function(applicantName){
       var applicant = new Applicant();
-      applicant.id = applicantName;
+      applicant.rawId = applicantName;
 
       applicant_ids++;
       applicant.uid = applicant_ids;
@@ -218,6 +218,8 @@ angular.module('MAGI.services',[]).
       this.applicants.splice(removeIndex,1);
 
       me.cleanHouseholds();
+
+      applicant_ids--;
 
       if( this.applicants.length === 0 ){
         this.addApplicant("Applicant 1");
