@@ -17,7 +17,7 @@ module MAGI
       if v("Applicant Age") >= 65 || v("Applicant Attest Blind or Disabled") == 'Y' || v("Applicant Attest Long Term Care") == 'Y' || v("Medicare Entitlement Indicator") == 'Y' || v("Receives SSI") == 'Y'
         o["Applicant Medicaid Non-MAGI Referral Indicator"] = 'Y'
         o["Medicaid Non-MAGI Referral Determination Date"] = current_date
-        o["Medicaid Non-Magi Referral Ineligibility Reason"] = 999
+        o["Medicaid Non-MAGI Referral Ineligibility Reason"] = 999
       else
         o["Applicant Medicaid Non-MAGI Referral Indicator"] = 'N'
         o["Medicaid Non-MAGI Referral Determination Date"] = current_date

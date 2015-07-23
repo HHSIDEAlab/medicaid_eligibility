@@ -62,3 +62,16 @@ def reload_fixture(fixture_name)
   end
   return fixture 
 end
+
+class MagiFixture
+	include ApplicationComponents
+	attr_accessor :magi, :test_sets
+
+	def magi
+		@magi = ""
+	end
+
+	def test_sets
+		@test_sets = []
+	end
+end
