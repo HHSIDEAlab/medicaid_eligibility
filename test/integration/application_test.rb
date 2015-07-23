@@ -2,17 +2,17 @@ require 'test_helper'
 
 class ApplicationTest < ActionDispatch::IntegrationTest
 
-	@fixtures = load_fixtures
+  @fixtures = load_fixtures
 
-	def setup
-		@fixture = reload_fixture '4_person_family'
-		# @fixtures = 
-	end
+  def setup
+    @fixture = reload_fixture '4_person_family'
+    # @fixtures = 
+  end
 
   # for each fixture, check this stuff
   @fixtures.each do |app|
     test "the response should contain major fields like determination date and applicants #{app[:name]}" do
-    	# determination date is set to today
+      # determination date is set to today
       assert_equal Time.now.strftime('%Y-%m-%d'), app[:response]["Determination Date"]
     end
 
@@ -23,9 +23,9 @@ class ApplicationTest < ActionDispatch::IntegrationTest
 
     test "the response should contain a yes or no determination for medicaid and CHIP #{app[:name]}" do
       app[:response]['Applicants'].each do |applicant|
-    		# check for yes-no on medicaid for each applicant
+        # check for yes-no on medicaid for each applicant
         assert %w(Y N).include? applicant['Medicaid Eligible']
-    		# check for yes-no on chip for each applicant
+        # check for yes-no on chip for each applicant
         assert %w(Y N).include? applicant['CHIP Eligible']
       end
     end
