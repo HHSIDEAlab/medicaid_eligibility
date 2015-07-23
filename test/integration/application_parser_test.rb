@@ -165,7 +165,7 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
       end
 
       # make sure there are no applicationvariables with a group other than application, relationship, or person
-      assert_equal ApplicationVariables::PERSON_INPUTS.select { |i| i[:group] != :applicant && i[:group] != :person && i[:group] != :relationship }.count, 0 
+      assert ApplicationVariables::PERSON_INPUTS.all? { |i| [:applicant, :person, :relationship, :special].include? i[:group]}
 
       # nuking a required variable should raise an error
       assert_raises RuntimeError do 
