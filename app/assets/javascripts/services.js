@@ -211,7 +211,6 @@ angular.module('MAGI.services',[]).
       angular.forEach(me.applicants, function(appl, idx){
         if (idx > removeIndex && appl.uid == (idx + 1)) {
           appl.uid = idx;
-          appl.id = "Applicant ".concat(idx.toString());
         }
       });
 
