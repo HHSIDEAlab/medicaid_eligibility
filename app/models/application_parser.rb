@@ -27,6 +27,9 @@ module ApplicationParser
     @applicants = []
     for json_person in @json_application["People"]
       person_id = json_person["Person ID"]
+      unless person_id.is_a?(Integer) && person_id >= 1 && person_id <= 100
+        raise "Person ID #{person_id} is invalid -- Person ID should be a number between 1 and 100"
+      end
       person_attributes = {}
       applicant_id = json_person["Applicant ID"]
       applicant_attributes = {}
@@ -65,6 +68,10 @@ module ApplicationParser
         person = Person.new(person_id, person_attributes, income)
       end
       @people << person
+    end
+
+    unless @people.map{|p| p.person_id}.length == @people.map{|p| p.person_id}.uniq.length
+      raise "Invalid Person IDs -- each person should have a unique Person ID"
     end
 
     # get relationships

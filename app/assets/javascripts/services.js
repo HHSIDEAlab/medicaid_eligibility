@@ -131,10 +131,10 @@ angular.module('MAGI.services',[]).
 
     Application.prototype.addApplicant = function(applicantName){
       var applicant = new Applicant();
-      applicant.id = applicantName;
+      applicant.rawId = applicantName;
 
       applicant_ids++;
-      applicant.uid = "Applicant ".concat(applicant_ids.toString());
+      applicant.uid = applicant_ids;
 
       angular.forEach(this.applicants, function(other){
         other.addRelationship(applicant);
@@ -209,8 +209,8 @@ angular.module('MAGI.services',[]).
       var removeIndex = this.applicants.indexOf(applicant);
 
       angular.forEach(me.applicants, function(appl, idx){
-        if (idx > removeIndex && appl.id == "Applicant ".concat(idx + 1)) {
-          appl.id = "Applicant ".concat(idx);
+        if (idx > removeIndex && appl.uid == (idx + 1)) {
+          appl.uid = idx;
         }
       });
 
@@ -218,8 +218,10 @@ angular.module('MAGI.services',[]).
 
       me.cleanHouseholds();
 
+      applicant_ids--;
+
       if( this.applicants.length === 0 ){
-        this.addApplicant('Applicant 1');
+        this.addApplicant("Applicant 1");
       }
     };
 
@@ -233,6 +235,10 @@ angular.module('MAGI.services',[]).
                     return rc.opposite == me.code;
             }).code;
     };
+
+    Applicant.prototype.getName = function(){
+      return "Applicant ".concat(this.uid.toString());
+    }
 
     Applicant.prototype.fields = [
       {app: 'isApplicant', api: 'Is Applicant', type: 'checkbox'},
@@ -420,11 +426,11 @@ angular.module('MAGI.services',[]).
     };
 
 
-    Applicant.prototype.deserialize = function(person){
+    Applicant.prototype.deserialize = function(person, idx){
       var me = this;
 
-      me.uid = person["Person ID"];
-      me.id = person["Person ID"];
+      me.uid = idx + 1;
+      me.rawId = person["Person ID"];
 
       angular.forEach(this.fields, function(field){
         me[field.app] = deserializeField(field, person);
@@ -482,9 +488,9 @@ angular.module('MAGI.services',[]).
       return this;
     };
 
-    Application.prototype.getApplicantById = function(id){
+    Application.prototype.getApplicantByRawId = function(id){
       return _.find(this.applicants, function(appl){
-        return appl.id == id;
+        return appl.rawId == id;
       });
     };
 
@@ -504,10 +510,10 @@ angular.module('MAGI.services',[]).
 
     TaxReturn.prototype.serialize = function(){
       return {
-        "Filers": _.chain(this.filers).filter(function(pers){return pers && pers.uid && pers.uid.length;}).map(function(pers){
+        "Filers": _.chain(this.filers).filter(function(pers){return pers && pers.uid;}).map(function(pers){
           return {"Person ID": pers.uid};
         }).value(),
-        "Dependents": _.chain(this.dependents).filter(function(pers){ return pers.uid && pers.uid.length;}).map(function(pers){
+        "Dependents": _.chain(this.dependents).filter(function(pers){ return pers.uid;}).map(function(pers){
           return {"Person ID": pers.uid};
         }).value()
       };
@@ -516,10 +522,10 @@ angular.module('MAGI.services',[]).
     TaxReturn.prototype.deserialize = function(application, obj){
       var me = this;
       this.filers = _.map(obj["Filers"], function(obj){
-        return application.getApplicantByUid(obj["Person ID"]);
+        return application.getApplicantByRawId(obj["Person ID"]);
       });
       this.dependents = _.map(obj["Dependents"], function(obj){
-        return application.getApplicantByUid(obj["Person ID"]);
+        return application.getApplicantByRawId(obj["Person ID"]);
       });
 
       return this;
@@ -554,9 +560,15 @@ angular.module('MAGI.services',[]).
     Application.prototype.deserialize = function(application){
       // Load applicants sans-relationships
       var me = this;
-      this.applicants = _.map(application["People"], function(person){
-        return new Applicant().deserialize(person);
+
+      this.applicants = []
+      angular.forEach(application["People"], function(person, idx){
+        this.applicants.push(new Applicant().deserialize(person, idx));
       });
+
+      //this.applicants = _.map(application["People"], function(person){
+      //  return new Applicant().deserialize(person);
+      //});
 
       this.taxReturns = _.map(application["Tax Returns"], function(taxReturn){
         var tr = new TaxReturn().deserialize(me, taxReturn);
@@ -565,7 +577,7 @@ angular.module('MAGI.services',[]).
 
       this.households = _.map(application["Physical Households"], function(hh){
         return _.map(hh["People"], function(person){
-          return me.getApplicantByUid(person["Person ID"]);
+          return me.getApplicantByRawId(person["Person ID"]);
         });
       });
 
@@ -579,9 +591,9 @@ angular.module('MAGI.services',[]).
       }
 
       angular.forEach(application["People"], function(person){
-        var pers = me.getApplicantByUid(person["Person ID"]);
+        var pers = me.getApplicantByRawId(person["Person ID"]);
         pers.relationships = _.map(person["Relationships"], function(rel){
-          return new Relationship(pers, me.getApplicantByUid(rel["Other ID"]), rel['Relationship Code'], (rel['Attest Primary Responsibility'] == 'Y'));
+          return new Relationship(pers, me.getApplicantByRawId(rel["Other ID"]), rel['Relationship Code'], (rel['Attest Primary Responsibility'] == 'Y'));
         });
       });
 

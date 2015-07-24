@@ -9,7 +9,7 @@ module MAGI
     input "Claimed as Dependent by Person Not on Application", "Application", "Char(1)", %w(Y N)
     input "Claimer Is Out of State", "Application", "Char(1)", %w(Y N)
     input "Student Indicator", "Application", "Char(1)", %w(Y N)
-    input "Person ID", "Application", "String"
+    input "Person ID", "Application", "Integer"
     input "Tax Returns", "Application", "List"
 
     config "Option Deny Residency to Temporary Resident Students", "State Configuration", "Char(1)", %w(Y N)

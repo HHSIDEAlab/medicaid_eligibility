@@ -4,6 +4,7 @@ include IncomeThreshold
 
 module MAGI
   class RefugeeAssistance < Ruleset
+    input "Person ID", "Application", "Integer"
     input "Refugee Status", "Application", "Char(1)", %w(Y N)
     input "Refugee Medical Assistance Start Date", "Application", "Date"
     input "Medicaid Residency Indicator", "From Residency Logic", "Char(1)", %w(Y N)
@@ -24,7 +25,7 @@ module MAGI
         if v("Refugee Medical Assistance Start Date")
           v("Refugee Medical Assistance Start Date") + 8.months
         else
-          raise "Applicant #{v("Applicant ID")} is missing Refugee Medical Assistance Start Date"
+          raise "Applicant #{v("Person ID")} is missing Refugee Medical Assistance Start Date"
         end
       else
         nil
