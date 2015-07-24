@@ -231,8 +231,6 @@ class IncomeFixture < MagiFixture
         }
       },
 
-
-
       {
         test_name: "Bad Info - Inputs",
         inputs: {
@@ -272,61 +270,3 @@ class IncomeFixture < MagiFixture
     ]
   end
 end
-
-# NOTES
-# This is very deeply confusing due to max eligible medicaid category. Punting. -CF 7/6/2015
-
-
-
-# expected_outputs: {
-#   "Percentage for Medicaid Category Used" => 0,
-#   "Percentage for CHIP Category Used" => 0,
-#   "FPL" => 0,
-#   "FPL * Percentage Medicaid" => 0,
-#   "FPL * Percentage CHIP" => 0,
-#   "Category Used to Calculate Medicaid Income" => 0,
-#   "Category Used to Calculate CHIP Income" => 0,
-#   "Applicant Income Medicaid Eligible Indicator" => 0,
-#   "Income Medicaid Eligible Ineligibility Reason" => 0,
-#   "Applicant Income CHIP Eligible Indicator" => 0,
-#   "Income CHIP Eligible Ineligibility Reason" => 0
-# }
-
-
-# config thresholds; 
-# "Medicaid Thresholds": { "Adult Group Category": { "percentage": "Y", "method": "standard", "threshold": 100 }
-#   "Parent Caretaker Category": {
-#     "percentage": "Y",
-#     "method": "standard",
-#     "threshold": 100
-#   },
-#   "Pregnancy Category": {
-#     "percentage": "Y",
-#     "method": "standard",
-#     "threshold": 100
-#   },
-#   "Child Category": {
-#     "percentage": "Y",
-#     "method": "standard",
-#     "threshold": 100
-#   },
-#   "Optional Targeted Low Income Child": {
-#     "percentage": "Y",
-#     "method": "standard",
-#     "threshold": 100
-#   }
-# },
-
-# "CHIP Thresholds": {
-# "Pregnancy Category": { "percentage": "Y", "method": "standard", "threshold": 133 },
-#   "Child Category": {
-#     "percentage": "Y",
-#     "method": "standard",
-#     "threshold": 100
-#   },
-#   "CHIP Targeted Low Income Child": {
-#     "percentage": "Y",
-#     "method": "standard",
-#     "threshold": 100
-#   }
-# }
