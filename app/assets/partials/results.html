@@ -2,7 +2,7 @@
   
   <div class="head">
     
-    <h3>Applicant {{ application.getApplicantByUid(applicant["Person ID"]).uid }}</h3>
+    <h3>{{ application.getApplicantByUid(applicant["Person ID"]).getName() }}</h3>
     <br>
     <div class="eligibility-div">
       <span eligibility data-program='Medicaid' data-value='{{applicant["Medicaid Eligible"]}}'></span>
@@ -37,7 +37,7 @@
   <div class="details">
     <h4>HOUSEHOLD:
       <span ng-repeat="person in applicant['Medicaid Household']['People']">
-        {{ application.getApplicantByUid(person).id }}
+        {{ application.getApplicantByUid(person).getName() }}
         <span ng-show=" ! $last ">, </span>
       </span>
     </h4>

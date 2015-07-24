@@ -36,10 +36,10 @@
     <span class="splash-emphasis">Please do <u>not</u> enter any personally identifying information in the form below.</span>
   </div>
   <fieldset ng-form name="applicantForm" ng-repeat="applicant in applicants" ng-controller="ApplicantController">
-    <legend>Applicant <span class="applicant-number">{{$index+1}}</span></legend>
+    <legend><span class="applicant-number">{{ applicant.getName() }}</span></legend>
     <div class="applicant-relationship-fields" ng-repeat="relationship in applicant.relationships">
       <div class="form-row" >
-        <label>Relationship to {{relationship.otherApplicant.id}}</label>
+        <label>Relationship to {{relationship.otherApplicant.getName()}}</label>
         <select selector ng-model="relationship.code" ng-options="rc.code as rc.label for rc in relationshipCodes" ng-change="updateRelationship(relationship)">
         </select>
       </div>
@@ -67,7 +67,7 @@
         </div>
         <div class="form-row" ng-show="applicant.nonParentResponsibility">
           <label for="applicant_{{ $index }}_nonParentResponsibilityPerson">Who?</label>
-          <select id="applicant_{{ $index }}_nonParentResponsibilityPerson" selector ng-model="applicant.nonParentResponsibilityPerson" ng-options="appl.id for appl in applicants | filter:notMe" ng-change="updateResponsibility(applicant)">
+          <select id="applicant_{{ $index }}_nonParentResponsibilityPerson" selector ng-model="applicant.nonParentResponsibilityPerson" ng-options="appl.getName() for appl in applicants | filter:notMe" ng-change="updateResponsibility(applicant)">
           <option value="">Not on this application</option>
           </select>
 
@@ -277,12 +277,12 @@
       <h3>Filers</h3>
       <div class="form-row" ng-repeat="filer in taxReturn.filers">
         <label for="filer_{$index}">Filer</label>
-        <select id="filer_{$index}" selector ng-model="taxReturn.filers[$index]" ng-options="applicant.id for applicant in applicants"></select>
+        <select id="filer_{$index}" selector ng-model="taxReturn.filers[$index]" ng-options="applicant.getName() for applicant in applicants"></select>
         <button type="button" class="remove-filer" ng-click="removeFiler(filer)" tabindex="-1"></button>
       </div>
       <div class="form-row" ng-show="canAddFiler()">
         <label for="filer_{$index}">Filer</label>
-        <select id="filer_{$index}" selector ng-model="inputs.newFiler" ng-options="applicant.id for applicant in applicants"></select>
+        <select id="filer_{$index}" selector ng-model="inputs.newFiler" ng-options="applicant.getName() for applicant in applicants"></select>
       </div>
     </div>
 
@@ -290,12 +290,12 @@
       <h3>Dependents</h3>
       <div class="form-row" ng-repeat="dependent in taxReturn.dependents">
         <label for="dependent_{$index}">Dependent</label>
-        <select id="dependent_{$index}" selector ng-model="taxReturn.dependents[$index]" ng-options="applicant.id for  applicant in applicants"></select>
+        <select id="dependent_{$index}" selector ng-model="taxReturn.dependents[$index]" ng-options="applicant.getName() for  applicant in applicants"></select>
         <button type="button" class="remove-filer" ng-click="removeDependent(dependent)" tabindex="-1"></button>
       </div>
       <div class="form-row" ng-show="canAddDependent()">
         <label for="newdependent_{$index}">Dependent</label>
-        <select id="newdependent_{$index}" selector ng-model="inputs.newDependent" ng-options="applicant.id for applicant in applicants"></select>
+        <select id="newdependent_{$index}" selector ng-model="inputs.newDependent" ng-options="applicant.getName() for applicant in applicants"></select>
       </div>
     </div>
 
@@ -308,11 +308,11 @@
     <legend>Physical Households</legend>
 
     <div class="householdbucket" ng-repeat="household in application.households" btf-dragon="person in household">
-      <div class="householdperson">{{person.id}}</div>
+      <div class="householdperson">{{person.getName()}}</div>
     </div>
     <div class="newHouseholdBucketWrapper" ng-show="showNewHousehold()">
       <div class="newHouseholdBucket" btf-dragon="person in newHousehold">
-            <div>{{person.id}}</div>
+            <div>{{person.getName()}}</div>
       </div>
       <span class="newHouseholdBucketLabel">Drag a person here to add a new physical household</span>
 

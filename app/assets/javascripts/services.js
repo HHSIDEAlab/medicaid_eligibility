@@ -237,6 +237,10 @@ angular.module('MAGI.services',[]).
             }).code;
     };
 
+    Applicant.prototype.getName = function(){
+      return "Applicant ".concat(this.uid.toString());
+    }
+
     Applicant.prototype.fields = [
       {app: 'isApplicant', api: 'Is Applicant', type: 'checkbox'},
       {app: 'disabled', api: 'Applicant Attest Blind or Disabled', type: 'checkbox'},
@@ -427,7 +431,7 @@ angular.module('MAGI.services',[]).
       var me = this;
 
       me.uid = idx + 1;
-      me.id = person["Person ID"];
+      me.rawId = person["Person ID"];
 
       angular.forEach(this.fields, function(field){
         me[field.app] = deserializeField(field, person);
@@ -485,9 +489,9 @@ angular.module('MAGI.services',[]).
       return this;
     };
 
-    Application.prototype.getApplicantById = function(id){
+    Application.prototype.getApplicantByRawId = function(id){
       return _.find(this.applicants, function(appl){
-        return appl.id == id;
+        return appl.rawId == id;
       });
     };
 
@@ -519,10 +523,10 @@ angular.module('MAGI.services',[]).
     TaxReturn.prototype.deserialize = function(application, obj){
       var me = this;
       this.filers = _.map(obj["Filers"], function(obj){
-        return application.getApplicantById(obj["Person ID"]);
+        return application.getApplicantByRawId(obj["Person ID"]);
       });
       this.dependents = _.map(obj["Dependents"], function(obj){
-        return application.getApplicantById(obj["Person ID"]);
+        return application.getApplicantByRawId(obj["Person ID"]);
       });
 
       return this;
@@ -574,7 +578,7 @@ angular.module('MAGI.services',[]).
 
       this.households = _.map(application["Physical Households"], function(hh){
         return _.map(hh["People"], function(person){
-          return me.getApplicantById(person["Person ID"]);
+          return me.getApplicantByRawId(person["Person ID"]);
         });
       });
 
@@ -588,9 +592,9 @@ angular.module('MAGI.services',[]).
       }
 
       angular.forEach(application["People"], function(person){
-        var pers = me.getApplicantById(person["Person ID"]);
+        var pers = me.getApplicantByRawId(person["Person ID"]);
         pers.relationships = _.map(person["Relationships"], function(rel){
-          return new Relationship(pers, me.getApplicantById(rel["Other ID"]), rel['Relationship Code'], (rel['Attest Primary Responsibility'] == 'Y'));
+          return new Relationship(pers, me.getApplicantByRawId(rel["Other ID"]), rel['Relationship Code'], (rel['Attest Primary Responsibility'] == 'Y'));
         });
       });
 
