@@ -20,7 +20,7 @@
       "Former Foster Care": "N",
       "Required to File Taxes": "N",
       "US Citizen Indicator": "Y",
-      "Person ID": "Mom",
+      "Person ID": 1,
       "Applicant Age": 40,
       "Hours Worked Per Week": 40,
       "Number of Children Expected": 2,
@@ -40,17 +40,17 @@
       },
       "Relationships": [
         {
-          "Other ID": "Dad",
+          "Other ID": 2,
           "Relationship Code": "02",
           "Attest Primary Responsibility": "N"
         },
         {
-          "Other ID": "Son",
+          "Other ID": 3,
           "Relationship Code": "03",
           "Attest Primary Responsibility": "N"
         },
         {
-          "Other ID": "Daughter",
+          "Other ID": 4,
           "Relationship Code": "03",
           "Attest Primary Responsibility": "N"
         }
@@ -73,7 +73,7 @@
       "Former Foster Care": "N",
       "Required to File Taxes": "N",
       "US Citizen Indicator": "Y",
-      "Person ID": "Dad",
+      "Person ID": 2,
       "Applicant Age": 40,
       "Hours Worked Per Week": 30,
       "Income": {
@@ -92,17 +92,17 @@
       },
       "Relationships": [
         {
-          "Other ID": "Mom",
+          "Other ID": 1,
           "Relationship Code": "02",
           "Attest Primary Responsibility": "N"
         },
         {
-          "Other ID": "Son",
+          "Other ID": 3,
           "Relationship Code": "03",
           "Attest Primary Responsibility": "N"
         },
         {
-          "Other ID": "Daughter",
+          "Other ID": 4,
           "Relationship Code": "12",
           "Attest Primary Responsibility": "N"
         }
@@ -125,7 +125,7 @@
       "Former Foster Care": "N",
       "Required to File Taxes": "N",
       "US Citizen Indicator": "Y",
-      "Person ID": "Son",
+      "Person ID": 3,
       "Applicant Age": 4,
       "Hours Worked Per Week": 0,
       "Income": {
@@ -144,17 +144,17 @@
       },
       "Relationships": [
         {
-          "Other ID": "Mom",
+          "Other ID": 1,
           "Relationship Code": "04",
           "Attest Primary Responsibility": "N"
         },
         {
-          "Other ID": "Dad",
+          "Other ID": 2,
           "Relationship Code": "04",
           "Attest Primary Responsibility": "N"
         },
         {
-          "Other ID": "Daughter",
+          "Other ID": 4,
           "Relationship Code": "07",
           "Attest Primary Responsibility": "N"
         }
@@ -177,7 +177,7 @@
       "Former Foster Care": "N",
       "Required to File Taxes": "N",
       "US Citizen Indicator": "Y",
-      "Person ID": "Daughter",
+      "Person ID": 4,
       "Applicant Age": 14,
       "Hours Worked Per Week": 0,
       "Income": {
@@ -196,17 +196,17 @@
       },
       "Relationships": [
         {
-          "Other ID": "Mom",
+          "Other ID": 1,
           "Relationship Code": "04",
           "Attest Primary Responsibility": "N"
         },
         {
-          "Other ID": "Dad",
+          "Other ID": 2,
           "Relationship Code": "05",
           "Attest Primary Responsibility": "N"
         },
         {
-          "Other ID": "Son",
+          "Other ID": 3,
           "Relationship Code": "07",
           "Attest Primary Responsibility": "N"
         }
@@ -218,13 +218,13 @@
       "Household ID": "Household1",
       "People": [
         {
-          "Person ID": "Mom"
+          "Person ID": 1
         },
         {
-          "Person ID": "Son"
+          "Person ID": 3
         },
         {
-          "Person ID": "Daughter"
+          "Person ID": 4
         }
       ]
     },
@@ -232,7 +232,7 @@
       "Household ID": "Household2",
       "People": [
         {
-          "Person ID": "Dad"
+          "Person ID": 2
         }
       ]
     }
@@ -241,24 +241,24 @@
     {
       "Filers": [
         {
-          "Person ID": "Mom"
+          "Person ID": 1
         }
       ],
       "Dependents": [
         {
-          "Person ID": "Daughter"
+          "Person ID": 4
         }
       ]
     },
     {
       "Filers": [
         {
-          "Person ID": "Dad"
+          "Person ID": 2
         }
       ],
       "Dependents": [
         {
-          "Person ID": "Son"
+          "Person ID": 3
         }
       ]
     }

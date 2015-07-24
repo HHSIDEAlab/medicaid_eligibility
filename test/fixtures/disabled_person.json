@@ -22,7 +22,7 @@
       "US Citizen Indicator": "Y",
       "Applicant Age": 30,
       "Hours Worked Per Week": 0,
-      "Person ID": "Applicant 1",
+      "Person ID": 1,
       "Prior Insurance End Date": "2014-08-01",
       "Income": {
         "Monthly Income": 0,
@@ -46,7 +46,7 @@
       "Household ID": "Household1",
       "People": [
         {
-          "Person ID": "Applicant 1"
+          "Person ID": 1
         }
       ]
     }
@@ -55,7 +55,7 @@
     {
       "Filers": [
         {
-          "Person ID": "Applicant 1"
+          "Person ID": 1
         }
       ],
       "Dependents": []

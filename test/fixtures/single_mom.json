@@ -22,7 +22,7 @@
       "US Citizen Indicator": "Y",
       "Applicant Age": 40,
       "Hours Worked Per Week": 20,
-      "Person ID": "Applicant 1",
+      "Person ID": 1,
       "Income": {
         "Monthly Income": 0,
         "Wages, Salaries, Tips": 14965,
@@ -39,7 +39,7 @@
       },
       "Relationships": [
         {
-          "Other ID": "Applicant 2",
+          "Other ID": 2,
           "Relationship Code": "03",
           "Attest Primary Responsibility": "N"
         }
@@ -64,7 +64,7 @@
       "US Citizen Indicator": "Y",
       "Applicant Age": 3,
       "Hours Worked Per Week": 0,
-      "Person ID": "Applicant 2",
+      "Person ID": 2,
       "Income": {
         "Monthly Income": 0,
         "Wages, Salaries, Tips": 0,
@@ -81,7 +81,7 @@
       },
       "Relationships": [
         {
-          "Other ID": "Applicant 1",
+          "Other ID": 1,
           "Relationship Code": "04",
           "Attest Primary Responsibility": "N"
         }
@@ -93,10 +93,10 @@
       "Household ID": "Household1",
       "People": [
         {
-          "Person ID": "Applicant 1"
+          "Person ID": 1
         },
         {
-          "Person ID": "Applicant 2"
+          "Person ID": 2
         }
       ]
     }
@@ -105,12 +105,12 @@
     {
       "Filers": [
         {
-          "Person ID": "Applicant 1"
+          "Person ID": 1
         }
       ],
       "Dependents": [
         {
-          "Person ID": "Applicant 2"
+          "Person ID": 2
         }
       ]
     }

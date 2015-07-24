@@ -23,7 +23,7 @@
       "Applicant Age": 40,
       "Applicant Age >= 90": "N",
       "Hours Worked Per Week": 20,
-      "Person ID": "Applicant 1",
+      "Person ID": 1,
       "Prior Insurance End Date": "2012-10-12",
       "Number of Children Expected": 2,
       "Had Medicaid During Foster Care": "N",
@@ -51,7 +51,7 @@
       "Household ID": "Household1",
       "People": [
         {
-          "Person ID": "Applicant 1"
+          "Person ID": 1
         }
       ]
     }
@@ -60,7 +60,7 @@
     {
       "Filers": [
         {
-          "Person ID": "Applicant 1"
+          "Person ID": 1
         }
       ],
       "Dependents": []

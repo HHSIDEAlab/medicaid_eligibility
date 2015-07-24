@@ -22,7 +22,7 @@
       "US Citizen Indicator": "Y",
       "Applicant Age": 40,
       "Hours Worked Per Week": 20,
-      "Person ID": "Applicant 1",
+      "Person ID": 1,
       "Income": {
         "Monthly Income": 0,
         "Wages, Salaries, Tips": 20000,
@@ -45,7 +45,7 @@
       "Household ID": "Household1",
       "People": [
         {
-          "Person ID": "Applicant 1"
+          "Person ID": 1
         }
       ]
     }
@@ -54,7 +54,7 @@
     {
       "Filers": [
         {
-          "Person ID": "Applicant 1"
+          "Person ID": 1
         }
       ],
       "Dependents": []

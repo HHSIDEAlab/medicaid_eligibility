@@ -23,7 +23,7 @@
       "Applicant Age": 40,
       "Applicant Age >= 90": "N",
       "Hours Worked Per Week": 30,
-      "Person ID": "Applicant 1",
+      "Person ID": 1,
       "Income": {
         "Monthly Income": 0,
         "Wages, Salaries, Tips": 24000,
@@ -40,7 +40,7 @@
       },
       "Relationships": [
         {
-          "Other ID": "Applicant 2",
+          "Other ID": 2,
           "Relationship Code": "02",
           "Attest Primary Responsibility": "N"
         }
@@ -66,7 +66,7 @@
       "Applicant Age": 33,
       "Applicant Age >= 90": "N",
       "Hours Worked Per Week": 0,
-      "Person ID": "Applicant 2",
+      "Person ID": 2,
       "Income": {
         "Monthly Income": 0,
         "Wages, Salaries, Tips": 24000,
@@ -83,7 +83,7 @@
       },
       "Relationships": [
         {
-          "Other ID": "Applicant 1",
+          "Other ID": 1,
           "Relationship Code": "02",
           "Attest Primary Responsibility": "N"
         }
@@ -95,10 +95,10 @@
       "Household ID": "Household1",
       "People": [
         {
-          "Person ID": "Applicant 1"
+          "Person ID": 1
         },
         {
-          "Person ID": "Applicant 2"
+          "Person ID": 2
         }
       ]
     }
