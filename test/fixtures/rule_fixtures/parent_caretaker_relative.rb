@@ -6,19 +6,19 @@ class ParentCaretakerRelativeFixture < MagiFixture
     super
     @magi = 'ParentCaretakerRelative'
 
-    @parent = Applicant.new("Parent", '','','','')
-    @child = Applicant.new("Child", '','','','')
+    @parent = Applicant.new("Parent", {'Applicant Age' => 25 },'','','')
+    @child = Applicant.new("Child", {'Applicant Age' => 6 },'','','')
     @household = Household.new('Household', [ @parent, @child ] )
-    @tax_return = TaxReturn.new(@parent, @child, '')
+    @tax_return = TaxReturn.new( [@parent], [@child], {} )
 
     @test_sets = [
       {
-        test_name: "Parent Caretaker - Applicant Child List is Empty", #something in this is fucked up 
+        test_name: "Parent Caretaker - Applicant Child List is Empty", 
         inputs: {
           "Person ID" => "Parent",
           "Person List" => @parent,
           "Physical Household" => Household.new('Solo Household', [@parent]),
-          "Tax Returns" => [TaxReturn.new([@parent], nil,nil) ],
+          "Tax Returns" => [TaxReturn.new([@parent], [],nil) ],
           "Applicant Age" => 25,
           "Applicant Relationships" => [Relationship.new(@parent, :self, '')]
         },
@@ -37,14 +37,14 @@ class ParentCaretakerRelativeFixture < MagiFixture
         }
       },
       {
-        test_name: "Parent Caretaker - Some Children Qualify",
+        test_name: "Parent Caretaker - Child Qualifies",
         inputs: {
-          "Person ID" => "Person A",
+          "Person ID" => "Parent",
           "Person List" => [@parent, @child],
           "Physical Household" => @household,
-          "Tax Returns" => [],
+          "Tax Returns" => [ @tax_return ],
           "Applicant Age" => 25,
-          "Applicant Relationships" => []
+          "Applicant Relationships" => [Relationship.new(@parent, :self, ''), Relationship.new(@child, :child, '')]
         },
         configs: {
           "Child Age Threshold" => 19,
@@ -55,8 +55,8 @@ class ParentCaretakerRelativeFixture < MagiFixture
           "State Unemployed Standard" => 100
         },
         expected_outputs: {
-          "Applicant Parent Caretaker Category Indicator" => "Y",
-          "Parent Caretaker Category Ineligibility Reason" => 999,
+          "Applicant Parent Caretaker Category Indicator" => "N",
+          "Parent Caretaker Category Ineligibility Reason" => 146,
           "Qualified Children List" => []
         }
       },
