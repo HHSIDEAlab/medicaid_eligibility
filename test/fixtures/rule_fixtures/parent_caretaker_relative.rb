@@ -6,10 +6,13 @@ class ParentCaretakerRelativeFixture < MagiFixture
     super
     @magi = 'ParentCaretakerRelative'
 
-    @parent = Applicant.new("Parent", {'Applicant Age' => 25 },'','','')
+    @parent = Applicant.new("Parent", {'Applicant Age' => 25, 'Hours Worked Per Week' => 40},'','','')
+    @parent.relationships = [Relationship.new(@parent, :self, ''), Relationship.new(@child, :child, '')]
     @child = Applicant.new("Child", {'Applicant Age' => 6 },'','','')
+    @child.relationships = [Relationship.new(@child, :self, ''), Relationship.new(@parent, :parent, '')]
     @household = Household.new('Household', [ @parent, @child ] )
     @tax_return = TaxReturn.new( [@parent], [@child], {} )
+    @qualified_child_resp = 
 
     @test_sets = [
       {
@@ -55,9 +58,9 @@ class ParentCaretakerRelativeFixture < MagiFixture
           "State Unemployed Standard" => 100
         },
         expected_outputs: {
-          "Applicant Parent Caretaker Category Indicator" => "N",
-          "Parent Caretaker Category Ineligibility Reason" => 146,
-          "Qualified Children List" => []
+          "Applicant Parent Caretaker Category Indicator" => "Y",
+          "Parent Caretaker Category Ineligibility Reason" => 999,
+          "Qualified Children List" => [ 'Child' ]
         }
       },
 
