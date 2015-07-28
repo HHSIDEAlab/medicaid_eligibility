@@ -162,7 +162,6 @@ class ParentCaretakerRelativeFixture < MagiFixture
           "Qualified Children List" => [ 'Child 1' ]
         }
       },
-
       {
         test_name: "Parent Caretaker - Set 4 - Two Kids Neither Qualifies",
         inputs: {
