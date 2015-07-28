@@ -5,21 +5,21 @@ class ParentCaretakerRelativeSpouseFixture < MagiFixture
   def initialize
     super
 
-    # have to hard set this due to the fixture requiring some certain outputs
-    spouse = Applicant.new('Person A','','','','')
-    spouse.outputs["Applicant Parent Caretaker Category Indicator"] = "Y"
+    @spouse = Applicant.new('Spouse','','','','')
+    @spouse.outputs["Applicant Parent Caretaker Category Indicator"] = "Y"
+    @person = Applicant.new('Self','','','','')
 
-    myself = Applicant.new('Self','','','','')
+    @spouse_not_caretaker = Applicant.new('Spouse', '','','','')
+    @spouse_not_caretaker.outputs["Applicant Parent Caretaker Category Indicator"] = "N"
+    @nonapplicant = Person.new('Spouse', '','')
 
     @magi = 'ParentCaretakerRelativeSpouse'
     @test_sets = [
-
-      # BROKEN TEST
       {
-        test_name: "ParentCaretakerRelativeSpouse - Lives With Partner, Meets Criteria",
+        test_name: "ParentCaretakerRelativeSpouse - Lives With Spouse, Meets Criteria",
         inputs: {
-          "Applicant Relationships" => [Relationship.new(myself, :self,{}), Relationship.new(spouse, :spouse, {})],
-          "Physical Household" => Household.new('Household A', [myself,spouse]),
+          "Applicant Relationships" => [Relationship.new(@person, :self, {}), Relationship.new(@spouse, :spouse, {})],
+          "Physical Household" => Household.new('Household A', [@person,@spouse]),
           "Applicant Parent Caretaker Category Indicator" => "N"
         },
         configs: {
@@ -30,21 +30,69 @@ class ParentCaretakerRelativeSpouseFixture < MagiFixture
           "Parent Caretaker Category Ineligibility Reason" => 999
         }
       },
-
-
       {
-        test_name: "ParentCaretakerRelativeSpouse - Lives With Partner, Caretaker Indicator Yes",
+        test_name: "ParentCaretakerRelativeSpouse - Does Not Live With Spouse, Meets Criteria",
         inputs: {
-          "Applicant Relationships" => [Relationship.new(myself, :self,{}), Relationship.new(spouse, :spouse, {})],
-          "Physical Household" => Household.new('Household A', [myself,spouse]),
+          "Applicant Relationships" => [Relationship.new(@person, :self, {}), Relationship.new(@spouse, :spouse, {})],
+          "Physical Household" => Household.new('Household A', [@person]),
+          "Applicant Parent Caretaker Category Indicator" => "N"
+        },
+        configs: {
+          "Option Caretaker Relative Relationship" => "02"
+        },
+        expected_outputs: {
+        }
+      },
+      {
+        test_name: "ParentCaretakerRelativeSpouse - Spouse not an Applicant, Meets Criteria",
+        inputs: {
+          "Applicant Relationships" => [Relationship.new(@person, :self, {}), Relationship.new(@nonapplicant, :spouse, {})],
+          "Physical Household" => Household.new('Household A', [@person, @nonapplicant]),
+          "Applicant Parent Caretaker Category Indicator" => "N"
+        },
+        configs: {
+          "Option Caretaker Relative Relationship" => "02"
+        },
+        expected_outputs: {
+        }
+      },
+      {
+        test_name: "ParentCaretakerRelativeSpouse - No Spouse, Meets Criteria",
+        inputs: {
+          "Applicant Relationships" => [Relationship.new(@person, :self, {}), Relationship.new(@spouse, :sibling, {})],
+          "Physical Household" => Household.new('Household A', [@person,@spouse]),
+          "Applicant Parent Caretaker Category Indicator" => "N"
+        },
+        configs: {
+          "Option Caretaker Relative Relationship" => "02"
+        },
+        expected_outputs: {
+        }
+      },
+      {
+        test_name: "ParentCaretakerRelativeSpouse - Parent Caretaker Category Y, Meets Criteria",
+        inputs: {
+          "Applicant Relationships" => [Relationship.new(@person, :self, {}), Relationship.new(@spouse, :spouse, {})],
+          "Physical Household" => Household.new('Household A', [@person,@spouse]),
           "Applicant Parent Caretaker Category Indicator" => "Y"
         },
         configs: {
-          "Option Caretaker Relative Relationship" => "01"
+          "Option Caretaker Relative Relationship" => "02"
         },
         expected_outputs: {
-          # "Applicant Parent Caretaker Category Indicator" => "Y",
-          # "Parent Caretaker Category Ineligibility Reason" => 999
+        }
+      },
+      {
+        test_name: "ParentCaretakerRelativeSpouse - Spouse Caretaker Category N, Meets Criteria",
+        inputs: {
+          "Applicant Relationships" => [Relationship.new(@person, :self, {}), Relationship.new(@spouse_not_caretaker, :spouse, {})],
+          "Physical Household" => Household.new('Household A', [@person,@spouse_not_caretaker]),
+          "Applicant Parent Caretaker Category Indicator" => "N"
+        },
+        configs: {
+          "Option Caretaker Relative Relationship" => "02"
+        },
+        expected_outputs: {
         }
       },
       {
@@ -85,12 +133,42 @@ class ParentCaretakerRelativeSpouseFixture < MagiFixture
       #   }
       # } 
     ]
+
+    ['02','03'].each do |eligible_option|
+      @test_sets << {
+        test_name: "ParentCaretakerRelativeSpouse - Domestic Partner in Ineligible State Option #{eligible_option}, Meets Criteria",
+        inputs: {
+          "Applicant Relationships" => [Relationship.new(@person, :self, {}), Relationship.new(@spouse, :domestic_partner, {})],
+          "Physical Household" => Household.new('Household A', [@person,@spouse]),
+          "Applicant Parent Caretaker Category Indicator" => "N"
+        },
+        configs: {
+          "Option Caretaker Relative Relationship" => eligible_option
+        },
+        expected_outputs: {
+          "Applicant Parent Caretaker Category Indicator" => "Y",
+          "Parent Caretaker Category Ineligibility Reason" => 999
+        }
+      }
+    end
+
+    ['00', '01', '04'].each do |ineligible_option|
+      @test_sets << { 
+        test_name: "ParentCaretakerRelativeSpouse - Domestic Partner in Ineligible State Option #{ineligible_option}, Meets Criteria",
+        inputs: {
+          "Applicant Relationships" => [Relationship.new(@person, :self, {}), Relationship.new(@spouse, :domestic_partner, {})],
+          "Physical Household" => Household.new('Household A', [@person,@spouse]),
+          "Applicant Parent Caretaker Category Indicator" => "N"
+        },
+        configs: {
+          "Option Caretaker Relative Relationship" => ineligible_option
+        },
+        expected_outputs: {
+        }
+      }
+    end
   end
 end
 
 # NOTES
 # Bad Info Configs doesn't work in this fixture. 
-
-# I can't get the positive test here to work -- the household people list is looking for a person id but needs to be an applicant object to respond to outputs, and can't find the person id if there's an object. 
-# This in turn means that you can either have it respond to :outputs or have 'lives with spouse/domestic partner' set to yes, but not both.
-# So as it's set up now I couldn't figure out a combination that would work.
