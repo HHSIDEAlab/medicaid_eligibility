@@ -136,7 +136,7 @@ class ParentCaretakerRelativeSpouseFixture < MagiFixture
 
     ['02','03'].each do |eligible_option|
       @test_sets << {
-        test_name: "ParentCaretakerRelativeSpouse - Domestic Partner in Ineligible State Option #{eligible_option}, Meets Criteria",
+        test_name: "ParentCaretakerRelativeSpouse - Domestic Partner in Eligible State Option #{eligible_option}, Meets Criteria",
         inputs: {
           "Applicant Relationships" => [Relationship.new(@person, :self, {}), Relationship.new(@spouse, :domestic_partner, {})],
           "Physical Household" => Household.new('Household A', [@person,@spouse]),
