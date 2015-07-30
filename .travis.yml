@@ -1,0 +1,7 @@
+language: ruby
+rvm:
+- 2.0.0
+
+# notifications:
+  # slack:
+    # secure: slack_generated_code_goes_here

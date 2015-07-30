@@ -19,7 +19,7 @@
 # Ignore all emacs backup files
 *~
 
-/config/database.yml
+# /config/database.yml
 
 *.json
 !bower.json
