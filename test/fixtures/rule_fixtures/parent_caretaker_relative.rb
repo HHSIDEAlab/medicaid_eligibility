@@ -54,13 +54,13 @@ class ParentCaretakerRelativeFixture < MagiFixture
     @household_5 = Household.new('Household', [ @parent_5, @child_5a, @child_5b ] )
     @tax_return_5 = TaxReturn.new( [@parent_5], [@child_5a, @child_5b], {} )
 
-    # set 6: Parent is other relative instead of blood relative, neither qualify
+    # set 6: Guardian is not a blood relative, neither qualify
     @parent_6 = Applicant.new("Parent", {'Applicant Age' => 25, 'Hours Worked Per Week' => 40},'','','')
     @parent_6.relationships = [Relationship.new(@parent_6, :self, ''), Relationship.new(@child_6a, :other, ''), Relationship.new(@child_6b, :other, '')]
     @child_6a = Applicant.new("Child 1", {'Applicant Age' => 6 },'','','')
-    @child_6a.relationships = [Relationship.new(@child_6a, :self, ''), Relationship.new(@parent_6, :other_relative, ''), Relationship.new(@child_6b, :sibling, '')]
+    @child_6a.relationships = [Relationship.new(@child_6a, :self, ''), Relationship.new(@parent_6, :other, ''), Relationship.new(@child_6b, :sibling, '')]
     @child_6b = Applicant.new("Child 2", {'Applicant Age' => 6 },'','','')
-    @child_6b.relationships = [Relationship.new(@child_6b, :self, ''), Relationship.new(@parent_6, :other_relative, ''), Relationship.new(@child_6a, :sibling, '')]
+    @child_6b.relationships = [Relationship.new(@child_6b, :self, ''), Relationship.new(@parent_6, :other, ''), Relationship.new(@child_6a, :sibling, '')]
     @household_6 = Household.new('Household', [ @parent_6, @child_6a, @child_6b ] )
     @tax_return_6 = TaxReturn.new( [@parent_6], [@child_6a, @child_6b], {} )
 
@@ -211,7 +211,7 @@ class ParentCaretakerRelativeFixture < MagiFixture
         }
       },
       {
-        test_name: "Parent Caretaker - Set 6 - Parent is Other Relative",
+        test_name: "Parent Caretaker - Set 6 - Parent is Not Related",
         inputs: {
           "Person ID" => "Parent",
           "Person List" => [@parent_6, @child_6a, @child_6b],
