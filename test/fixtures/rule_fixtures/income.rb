@@ -58,8 +58,8 @@ class IncomeFixture < MagiFixture
         },
         expected_outputs: {
           "FPL" => 20090,
-          "FPL * Percentage Medicaid" => 21094.5, # not sure how the math for this works out
-          "FPL * Percentage CHIP" => 27724.2, # not sure how the math for this works out either 
+          "FPL * Percentage Medicaid" => 21094.5, 
+          "FPL * Percentage CHIP" => 27724.2, 
           "Category Used to Calculate Medicaid Income" => 'Adult Group Category',
           "Category Used to Calculate CHIP Income" => 'Pregnancy Category'
         }
