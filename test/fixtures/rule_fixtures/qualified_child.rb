@@ -5,37 +5,389 @@ class QualifiedChildFixture < MagiFixture
   def initialize
     super
     @magi = 'QualifiedChild'
+
+    @parent = Applicant.new('Parent',{'Hours Worked Per Week' => 40 },'','','')
+    @parent_2 = Applicant.new('Parent 2',{'Hours Worked Per Week' => 40 },'','','')
+    @parent_underemployed = Applicant.new('Parent',{'Hours Worked Per Week' => 10 },'','','')
+    @parent_underemployed_2 = Applicant.new('Parent 2',{'Hours Worked Per Week' => 10 },'','','')
+    @child = Applicant.new('Child','','','','')
+
     @test_sets = [
-      
-      # {
-      #   test_name: "FILL_IN_WITH_TEST_NAME",
-      #   inputs: {
-      #     "Caretaker Age" => 40,
-      #     "Child Age" => 15,
-      #     "Child Parents" => [],
-      #     "Physical Household" => Household.new('Household A', [Applicant.new('Parent','','','',''), Applicant.new('Child','','','','')] ),
-      #     "Relationship Type" => :parent,
-      #     "Student Indicator" => "Y"
-      #   },
-      #   configs: {
-      #     "Child Age Threshold" => 19,
-      #     "Dependent Age Threshold" => 18,
-      #     "Option Dependent Student" => "Y",
-      #     "Deprivation Requirement Retained" => "N",
-      #     "Option Caretaker Relative Relationship" => "N",
-      #     "State Unemployed Standard" => 100
-      #   },
-      #   expected_outputs: {
-      #     "Child of Caretaker Dependent Age Indicator" => "Y",
-      #     "Child of Caretaker Dependent Age Ineligibility Reason" => 999,
-      #     "Child of Caretaker Deprived Child Indicator" => "Y",
-      #     "Child of Caretaker Deprived Child Ineligibility Reason" => 999,
-      #     "Child of Caretaker Relationship Indicator" => "Y",
-      #     "Child of Caretaker Relationship Ineligibility Reason" => 999
-      #   }
-      # },
+      # dependent child age logic tests
+      {
+        test_name: "Child Under Dependent Age",
+        inputs: {
+          "Caretaker Age" => 40,
+          "Child Age" => 15,
+          "Child Parents" => [@parent],
+          "Physical Household" => Household.new( 'Household A', [@parent, @child] ),
+          "Relationship Type" => :parent,
+          "Student Indicator" => "Y"
+        },
+        configs: {
+          "Child Age Threshold" => 19,
+          "Dependent Age Threshold" => 18,
+          "Option Dependent Student" => "Y",
+          "Deprivation Requirement Retained" => "N",
+          "Option Caretaker Relative Relationship" => "00",
+          "State Unemployed Standard" => 100
+        },
+        expected_outputs: {
+          "Child of Caretaker Dependent Age Indicator" => "Y",
+          "Child of Caretaker Dependent Age Ineligibility Reason" => 999
+        }
+      },
+      {
+        test_name: "Child Over Dependent Age",
+        inputs: {
+          "Caretaker Age" => 40,
+          "Child Age" => 40,
+          "Child Parents" => [@parent],
+          "Physical Household" => Household.new( 'Household A', [@parent, @child] ),
+          "Relationship Type" => :parent,
+          "Student Indicator" => "Y"
+        },
+        configs: {
+          "Child Age Threshold" => 19,
+          "Dependent Age Threshold" => 18,
+          "Option Dependent Student" => "Y",
+          "Deprivation Requirement Retained" => "N",
+          "Option Caretaker Relative Relationship" => "00",
+          "State Unemployed Standard" => 100
+        },
+        expected_outputs: {
+          "Child of Caretaker Dependent Age Indicator" => "N",
+          "Child of Caretaker Dependent Age Ineligibility Reason" => 147
+        }
+      },
+      {
+        test_name: "Child Equal to Dependent Age and a Student",
+        inputs: {
+          "Caretaker Age" => 40,
+          "Child Age" => 18,
+          "Child Parents" => [@parent],
+          "Physical Household" => Household.new( 'Household A', [@parent, @child] ),
+          "Relationship Type" => :parent,
+          "Student Indicator" => "Y"
+        },
+        configs: {
+          "Child Age Threshold" => 19,
+          "Dependent Age Threshold" => 18,
+          "Option Dependent Student" => "Y",
+          "Deprivation Requirement Retained" => "N",
+          "Option Caretaker Relative Relationship" => "00",
+          "State Unemployed Standard" => 100
+        },
+        expected_outputs: {
+          "Child of Caretaker Dependent Age Indicator" => "Y",
+          "Child of Caretaker Dependent Age Ineligibility Reason" => 999
+        }
+      },
+      {
+        test_name: "Child Equal to Dependent Age but Not a Student",
+        inputs: {
+          "Caretaker Age" => 40,
+          "Child Age" => 18,
+          "Child Parents" => [@parent],
+          "Physical Household" => Household.new( 'Household A', [@parent, @child] ),
+          "Relationship Type" => :parent,
+          "Student Indicator" => "N"
+        },
+        configs: {
+          "Child Age Threshold" => 19,
+          "Dependent Age Threshold" => 18,
+          "Option Dependent Student" => "Y",
+          "Deprivation Requirement Retained" => "N",
+          "Option Caretaker Relative Relationship" => "00",
+          "State Unemployed Standard" => 100
+        },
+        expected_outputs: {
+          "Child of Caretaker Dependent Age Indicator" => "N",
+          "Child of Caretaker Dependent Age Ineligibility Reason" => 137
+        }
+      },
 
+      # dependent deprived of parental support tests
+      {
+        test_name: "Dependent Deprived of Parental Support - Deprivation Req N",
+        inputs: {
+          "Caretaker Age" => 40,
+          "Child Age" => 15,
+          "Child Parents" => [@parent],
+          "Physical Household" => Household.new( 'Household A', [@parent, @child] ),
+          "Relationship Type" => :parent,
+          "Student Indicator" => "Y"
+        },
+        configs: {
+          "Child Age Threshold" => 19,
+          "Dependent Age Threshold" => 18,
+          "Option Dependent Student" => "Y",
+          "Deprivation Requirement Retained" => "N",
+          "Option Caretaker Relative Relationship" => "00",
+          "State Unemployed Standard" => 100
+        },
+        expected_outputs: {
+          "Child of Caretaker Deprived Child Indicator" => "X",
+          "Child of Caretaker Deprived Child Ineligibility Reason" => 555
+        }
+      },
+      {
+        test_name: "Dependent Deprived of Parental Support - Deprivation Req Y - Single Parent",
+        inputs: {
+          "Caretaker Age" => 40,
+          "Child Age" => 15,
+          "Child Parents" => [@parent],
+          "Physical Household" => Household.new( 'Household A', [@parent, @child] ),
+          "Relationship Type" => :parent,
+          "Student Indicator" => "Y"
+        },
+        configs: {
+          "Child Age Threshold" => 19,
+          "Dependent Age Threshold" => 18,
+          "Option Dependent Student" => "Y",
+          "Deprivation Requirement Retained" => "Y",
+          "Option Caretaker Relative Relationship" => "00",
+          "State Unemployed Standard" => 100
+        },
+        expected_outputs: {
+          "Child of Caretaker Deprived Child Indicator" => "Y",
+          "Child of Caretaker Deprived Child Ineligibility Reason" => 999
+        }
+      },
+      {
+        test_name: "Dependent Deprived of Parental Support - Deprivation Req Y - Underemployed Parents",
+        inputs: {
+          "Caretaker Age" => 18,
+          "Child Age" => 15,
+          "Child Parents" => [@parent_underemployed, @parent_underemployed_2],
+          "Physical Household" => Household.new( 'Household A', [@parent_underemployed, @parent_underemployed_2, @child] ),
+          "Relationship Type" => :parent,
+          "Student Indicator" => "Y"
+        },
+        configs: {
+          "Child Age Threshold" => 18,
+          "Dependent Age Threshold" => 18,
+          "Option Dependent Student" => "Y",
+          "Deprivation Requirement Retained" => "Y",
+          "Option Caretaker Relative Relationship" => "00",
+          "State Unemployed Standard" => 100
+        },
+        expected_outputs: {
+          "Child of Caretaker Deprived Child Indicator" => "Y",
+          "Child of Caretaker Deprived Child Ineligibility Reason" => 999
+        }
+      },
+      {
+        test_name: "Dependent Deprived of Parental Support - Deprivation Req Y - Fallback",
+        inputs: {
+          "Caretaker Age" => 40,
+          "Child Age" => 15,
+          "Child Parents" => [@parent, @parent_2],
+          "Physical Household" => Household.new( 'Household A', [@parent, @parent_2, @child] ),
+          "Relationship Type" => :parent,
+          "Student Indicator" => "Y"
+        },
+        configs: {
+          "Child Age Threshold" => 18,
+          "Dependent Age Threshold" => 18,
+          "Option Dependent Student" => "Y",
+          "Deprivation Requirement Retained" => "Y",
+          "Option Caretaker Relative Relationship" => "00",
+          "State Unemployed Standard" => 100
+        },
+        expected_outputs: {
+          "Child of Caretaker Deprived Child Indicator" => "N",
+          "Child of Caretaker Deprived Child Ineligibility Reason" => 129
+        }
+      },
 
+      # relationship rule
+      {
+        test_name: "Relationship Requirements - Caretaker Relationship 04 - Caretaker Over Threshold",
+        inputs: {
+          "Caretaker Age" => 40,
+          "Child Age" => 15,
+          "Child Parents" => [@parent, @parent_2],
+          "Physical Household" => Household.new( 'Household A', [@parent, @parent_2, @child] ),
+          "Relationship Type" => :parent,
+          "Student Indicator" => "Y"
+        },
+        configs: {
+          "Child Age Threshold" => 19,
+          "Dependent Age Threshold" => 11,
+          "Option Dependent Student" => "Y",
+          "Deprivation Requirement Retained" => "Y",
+          "Option Caretaker Relative Relationship" => "04",
+          "State Unemployed Standard" => 100
+        },
+        expected_outputs: {
+          "Child of Caretaker Relationship Indicator" => "Y",
+          "Child of Caretaker Relationship Ineligibility Reason" => 999
+        }
+      },
+      {
+        test_name: "Relationship Requirements - Caretaker Relationship 04 - Caretaker Under Threshold",
+        inputs: {
+          "Caretaker Age" => 17,
+          "Child Age" => 4,
+          "Child Parents" => [@parent, @parent_2],
+          "Physical Household" => Household.new( 'Household A', [@parent, @parent_2, @child] ),
+          "Relationship Type" => :parent,
+          "Student Indicator" => "Y"
+        },
+        configs: {
+          "Child Age Threshold" => 19,
+          "Dependent Age Threshold" => 18,
+          "Option Dependent Student" => "Y",
+          "Deprivation Requirement Retained" => "Y",
+          "Option Caretaker Relative Relationship" => "04",
+          "State Unemployed Standard" => 100
+        },
+        expected_outputs: {
+          "Child of Caretaker Relationship Indicator" => "N",
+          "Child of Caretaker Relationship Ineligibility Reason" => 130
+        }
+      },
+      {
+        test_name: "Relationship Requirements - Valid Relationship - Scenario 1",
+        inputs: {
+          "Caretaker Age" => 40,
+          "Child Age" => 11,
+          "Child Parents" => [@parent, @parent_2],
+          "Physical Household" => Household.new( 'Household A', [@parent, @parent_2, @child] ),
+          "Relationship Type" => :parent,
+          "Student Indicator" => "Y"
+        },
+        configs: {
+          "Child Age Threshold" => 19,
+          "Dependent Age Threshold" => 18,
+          "Option Dependent Student" => "Y",
+          "Deprivation Requirement Retained" => "Y",
+          "Option Caretaker Relative Relationship" => "02",
+          "State Unemployed Standard" => 100
+        },
+        expected_outputs: {
+          "Child of Caretaker Relationship Indicator" => "Y",
+          "Child of Caretaker Relationship Ineligibility Reason" => 999
+        }
+      },
+      {
+        test_name: "Relationship Requirements - Valid Relationship - Scenario 2",
+        inputs: {
+          "Caretaker Age" => 40,
+          "Child Age" => 11,
+          "Child Parents" => [@parent, @parent_2],
+          "Physical Household" => Household.new( 'Household A', [@parent, @parent_2, @child] ),
+          "Relationship Type" => :former_spouse,
+          "Student Indicator" => "Y"
+        },
+        configs: {
+          "Child Age Threshold" => 19,
+          "Dependent Age Threshold" => 18,
+          "Option Dependent Student" => "Y",
+          "Deprivation Requirement Retained" => "Y",
+          "Option Caretaker Relative Relationship" => "01",
+          "State Unemployed Standard" => 100
+        },
+        expected_outputs: {
+          "Child of Caretaker Relationship Indicator" => "Y",
+          "Child of Caretaker Relationship Ineligibility Reason" => 999
+        }
+      },
+      {
+        test_name: "Relationship Requirements - Valid Relationship - Scenario 3",
+        inputs: {
+          "Caretaker Age" => 40,
+          "Child Age" => 11,
+          "Child Parents" => [@parent, @parent_2],
+          "Physical Household" => Household.new( 'Household A', [@parent, @parent_2, @child] ),
+          "Relationship Type" => :parents_domestic_partner,
+          "Student Indicator" => "Y"
+        },
+        configs: {
+          "Child Age Threshold" => 19,
+          "Dependent Age Threshold" => 18,
+          "Option Dependent Student" => "Y",
+          "Deprivation Requirement Retained" => "Y",
+          "Option Caretaker Relative Relationship" => "03",
+          "State Unemployed Standard" => 100
+        },
+        expected_outputs: {
+          "Child of Caretaker Relationship Indicator" => "Y",
+          "Child of Caretaker Relationship Ineligibility Reason" => 999
+        }
+      },
+      {
+        test_name: "Relationship Requirements - Invalid Relationship - Caretaker Relationship 00",
+        inputs: {
+          "Caretaker Age" => 40,
+          "Child Age" => 11,
+          "Child Parents" => [@parent, @parent_2],
+          "Physical Household" => Household.new( 'Household A', [@parent, @parent_2, @child] ),
+          "Relationship Type" => :parents_domestic_partner,
+          "Student Indicator" => "Y"
+        },
+        configs: {
+          "Child Age Threshold" => 19,
+          "Dependent Age Threshold" => 18,
+          "Option Dependent Student" => "Y",
+          "Deprivation Requirement Retained" => "Y",
+          "Option Caretaker Relative Relationship" => "00",
+          "State Unemployed Standard" => 100
+        },
+        expected_outputs: {
+          "Child of Caretaker Relationship Indicator" => "N",
+          "Child of Caretaker Relationship Ineligibility Reason" => 132
+        }
+      },
+      {
+        test_name: "Relationship Requirements - Invalid Relationship - Caretaker Relationship 01",
+        inputs: {
+          "Caretaker Age" => 40,
+          "Child Age" => 11,
+          "Child Parents" => [@parent, @parent_2],
+          "Physical Household" => Household.new( 'Household A', [@parent, @parent_2, @child] ),
+          "Relationship Type" => :other,
+          "Student Indicator" => "Y"
+        },
+        configs: {
+          "Child Age Threshold" => 19,
+          "Dependent Age Threshold" => 18,
+          "Option Dependent Student" => "Y",
+          "Deprivation Requirement Retained" => "Y",
+          "Option Caretaker Relative Relationship" => "01",
+          "State Unemployed Standard" => 100
+        },
+        expected_outputs: {
+          "Child of Caretaker Relationship Indicator" => "N",
+          "Child of Caretaker Relationship Ineligibility Reason" => 131
+        }
+      },
+      {
+        test_name: "Relationship Requirements - Invalid Relationship - Fallback",
+        inputs: {
+          "Caretaker Age" => 40,
+          "Child Age" => 11,
+          "Child Parents" => [@parent, @parent_2],
+          "Physical Household" => Household.new( 'Household A', [@parent, @parent_2, @child] ),
+          "Relationship Type" => :other,
+          "Student Indicator" => "Y"
+        },
+        configs: {
+          "Child Age Threshold" => 19,
+          "Dependent Age Threshold" => 18,
+          "Option Dependent Student" => "Y",
+          "Deprivation Requirement Retained" => "Y",
+          "Option Caretaker Relative Relationship" => "02",
+          "State Unemployed Standard" => 100
+        },
+        expected_outputs: {
+          "Child of Caretaker Relationship Indicator" => "N",
+          "Child of Caretaker Relationship Ineligibility Reason" => 389
+        }
+      },
+
+      # fallbacks
       {
         test_name: "Bad Info - Inputs",
         inputs: {
@@ -71,6 +423,3 @@ class QualifiedChildFixture < MagiFixture
     ]
   end
 end
-
-# NOTES
-# no. -CF 7/7/2015
