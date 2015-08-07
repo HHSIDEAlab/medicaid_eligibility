@@ -31,6 +31,9 @@ gem "rails_12factor"
 # Deploy with Capistrano
 gem 'capistrano', :group => :development
 
+# for to hit mitc-configs
+gem 'httparty'
+
 group :development, :test do
   gem 'jasmine'
   gem 'spring'
