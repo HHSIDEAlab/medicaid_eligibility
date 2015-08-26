@@ -690,7 +690,7 @@ angular.module('MAGI.services',[]).
             {abbr: 'CO', name: 'Colorado'},
             {abbr: 'CT', name: 'Connecticut'},
             {abbr: 'DE', name: 'Delaware', inApp: true},
-            {abbr: 'DC', name: 'District Of Columbia'},
+            {abbr: 'DC', name: 'District Of Columbia', inApp: true},
             {abbr: 'FL', name: 'Florida', inApp: true},
             {abbr: 'GA', name: 'Georgia', inApp: true},
             {abbr: 'GU', name: 'Guam'},
