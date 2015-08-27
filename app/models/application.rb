@@ -45,6 +45,7 @@ class Application
       compute_values!
       process_rules!
     rescue Exception => e
+      Rails.logger.error e
       @error = e
     end
   end
