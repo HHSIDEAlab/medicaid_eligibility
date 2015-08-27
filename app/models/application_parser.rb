@@ -27,7 +27,7 @@ module ApplicationParser
     @applicants = []
     for json_person in @json_application["People"]
       person_id = json_person["Person ID"]
-      unless person_id.is_a?(Integer) && person_id >= 1 #&& person_id <= 100
+      unless (Integer(person_id) >= 1 rescue false) #person_id.is_a?(Integer) && person_id >= 1 && person_id <= 100
         #raise "Person ID #{person_id} is invalid -- Person ID should be a number between 1 and 100"
         raise "Person ID #{person_id} is invalid -- Person ID should be a number"
       end
