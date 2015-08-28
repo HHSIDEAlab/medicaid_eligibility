@@ -22,6 +22,7 @@ gem "font-awesome-rails"
 gem "uglifier"
 
 gem "gon"
+gem "httparty"
 
 gem "rails_12factor"
 
