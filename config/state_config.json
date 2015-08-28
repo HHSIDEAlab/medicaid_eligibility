@@ -2965,7 +2965,7 @@
       "Parent Caretaker Category": {
         "percentage": "Y",
         "method": "standard",
-        "threshold": 105
+        "threshold": 104
       },
       "Pregnancy Category": {
         "percentage": "Y",
