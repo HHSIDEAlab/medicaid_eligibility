@@ -300,6 +300,60 @@
       }
     }
   },
+
+  "DC": {
+    "Option Householding Minor Student": "N",
+    "Count Unborn Children for Household": "01",
+    "Option Deny Residency to Temporary Resident Students": "N",
+    "Option Require Work Quarters": "N",
+    "State Applies Seven Year Limit": "N",
+
+    "Option CHIPRA 214 Applicable Program": "02",
+    "Option CHIPRA 214 Child Age Threshold": 20,
+    "Option CHIPRA 214 Applies To": "01",
+
+    "Deprivation Requirement Retained": "N",
+    "Option Caretaker Relative Relationship": "01",
+    "Option Dependent Student": "Y",
+
+    "Option Adult Group": "Y",
+    "Option Young Adults": "Y",
+    "Young Adult Age Threshold": 21,
+    "Foster Care Age Threshold": 18,
+    "In-State Foster Care Required": "Y",
+    "State Offers Refugee Medical Assistance": "N",
+
+    "CHIP for Pregnant Women": "N",
+    "Option Cover Unborn Child": "N",
+    "CHIP for State Health Benefits": "01",
+
+    "Optional Targeted Low Income Child Group": "N",
+    "CHIP Targeted Low Income Child Group": "N",
+
+    "Medicaid Thresholds": {
+      "Adult Group Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 210
+      },
+      "Parent Caretaker Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 216
+      },
+      "Pregnancy Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 319
+      },
+      "Child Category": {
+        "percentage": "Y",
+        "method": "standard",
+        "threshold": 319
+      }
+    },
+    "CHIP Thresholds": {}
+  },
   "MT": {
     "Option Householding Minor Student": "N",
     "Count Unborn Children for Household": "03",
