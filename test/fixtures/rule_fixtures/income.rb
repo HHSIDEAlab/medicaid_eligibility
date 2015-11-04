@@ -22,8 +22,6 @@ class IncomeFixture < MagiFixture
           "Applicant Age" => 20
         },
         configs: {
-          "Base FPL" => 10,
-          "FPL Per Person" => 10,
           "FPL" => { "2015" => { "Base FPL" => 11770, "FPL Per Person" => 4160 } },
           "Option CHIP Pregnancy Category" => "N",
           "Medicaid Thresholds" => { "Adult Group Category" => { "percentage" => "Y", "method" => "standard", "threshold" => 100 } },
@@ -49,8 +47,6 @@ class IncomeFixture < MagiFixture
           "Applicant Age" => 20
         },
         configs: {
-          "Base FPL" => 11770,
-          "FPL Per Person" => 4160,
           "FPL" => { "2015" => { "Base FPL" => 11770, "FPL Per Person" => 4160 } },
           "Option CHIP Pregnancy Category" => "N",
           "Medicaid Thresholds" => { "Adult Group Category" => { "percentage" => "Y", "method" => "standard", "threshold" => 100 } },
@@ -62,6 +58,31 @@ class IncomeFixture < MagiFixture
           "FPL * Percentage CHIP" => 27724.2, 
           "Category Used to Calculate Medicaid Income" => 'Adult Group Category',
           "Category Used to Calculate CHIP Income" => 'Pregnancy Category'
+        }
+      },
+      {
+        test_name: "Income - Set Calculated Income as Percentage of FPL",
+        inputs: {
+          "Application Year" => 2015,
+          "Applicant Adult Group Category Indicator" => "Y",
+          "Applicant Pregnancy Category Indicator" => "Y",
+          "Applicant Parent Caretaker Category Indicator" => "N",
+          "Applicant Child Category Indicator" => "N",
+          "Applicant Optional Targeted Low Income Child Indicator" => "N",
+          "Applicant CHIP Targeted Low Income Child Indicator" => "N",
+          "Calculated Income" => 24042,
+          "Medicaid Household" => MedicaidHousehold.new("house", '', '', '', 3),
+          "Applicant Age" => 20
+        },
+        configs: {
+          "FPL" => { "2015" => { "Base FPL" => 11770, "FPL Per Person" => 4160 } },
+          "Option CHIP Pregnancy Category" => "N",
+          "Medicaid Thresholds" => { "Adult Group Category" => { "percentage" => "Y", "method" => "standard", "threshold" => 100 } },
+          "CHIP Thresholds" => { "Pregnancy Category" => { "percentage" => "Y", "method" => "standard", "threshold" => 133 } }
+        },
+        expected_outputs: {
+          "FPL" => 20090,
+          "Calculated Income as Percentage of FPL" => 119
         }
       },
 
@@ -81,8 +102,6 @@ class IncomeFixture < MagiFixture
           "Applicant Age" => 20
         },
         configs: {
-          "Base FPL" => 11770,
-          "FPL Per Person" => 4160,
           "FPL" => { "2015" => { "Base FPL" => 11770, "FPL Per Person" => 4160 } },
           "Option CHIP Pregnancy Category" => "N",
           "Medicaid Thresholds" => { "Adult Group Category" => { "percentage" => "Y", "method" => "standard", "threshold" => 100 } },
@@ -108,8 +127,6 @@ class IncomeFixture < MagiFixture
           "Applicant Age" => 20
         },
         configs: {
-          "Base FPL" => 11770,
-          "FPL Per Person" => 4160,
           "FPL" => { "2015" => { "Base FPL" => 11770, "FPL Per Person" => 4160 } },
           "Option CHIP Pregnancy Category" => "N",
           "Medicaid Thresholds" => { "Adult Group Category" => { "percentage" => "Y", "method" => "standard", "threshold" => 100 } },
@@ -135,8 +152,6 @@ class IncomeFixture < MagiFixture
           "Applicant Age" => 20
         },
         configs: {
-          "Base FPL" => 11770,
-          "FPL Per Person" => 4160,
           "FPL" => { "2015" => { "Base FPL" => 11770, "FPL Per Person" => 4160 } },
           "Option CHIP Pregnancy Category" => "N",
           "Medicaid Thresholds" => { "Adult Group Category" => { "percentage" => "Y", "method" => "standard", "threshold" => 100 } },
@@ -164,8 +179,6 @@ class IncomeFixture < MagiFixture
           "Applicant Age" => 20
         },
         configs: {
-          "Base FPL" => 11770,
-          "FPL Per Person" => 4160,
           "FPL" => { "2015" => { "Base FPL" => 11770, "FPL Per Person" => 4160 } },
           "Option CHIP Pregnancy Category" => "Y",
           "Medicaid Thresholds" => { "Adult Group Category" => { "percentage" => "Y", "method" => "standard", "threshold" => 100 } },
@@ -191,8 +204,6 @@ class IncomeFixture < MagiFixture
           "Applicant Age" => 20
         },
         configs: {
-          "Base FPL" => 11770,
-          "FPL Per Person" => 4160,
           "FPL" => { "2015" => { "Base FPL" => 11770, "FPL Per Person" => 4160 } },
           "Option CHIP Pregnancy Category" => "Y",
           "Medicaid Thresholds" => { "Adult Group Category" => { "percentage" => "Y", "method" => "standard", "threshold" => 100 } },
@@ -218,8 +229,6 @@ class IncomeFixture < MagiFixture
           "Applicant Age" => 20
         },
         configs: {
-          "Base FPL" => 11770,
-          "FPL Per Person" => 4160,
           "FPL" => { "2015" => { "Base FPL" => 11770, "FPL Per Person" => 4160 } },
           "Option CHIP Pregnancy Category" => "Y",
           "Medicaid Thresholds" => { "Adult Group Category" => { "percentage" => "Y", "method" => "standard", "threshold" => 100 } },
@@ -237,8 +246,6 @@ class IncomeFixture < MagiFixture
           "Applicant Age" => 20
         },
         configs: {
-          "Base FPL" => 10,
-          "FPL Per Person" => 10,
           "FPL" => { "2015" => { "Base FPL" => 11770, "FPL Per Person" => 4160 } },
           "Option CHIP Pregnancy Category" => "N",
           "Medicaid Thresholds" => { "Adult Group Category" => { "percentage" => "Y", "method" => "standard", "threshold" => 100 } },
