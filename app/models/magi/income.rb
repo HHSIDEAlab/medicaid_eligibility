@@ -15,8 +15,6 @@ module MAGI
     input "Medicaid Household", "Householding Logic", "Array"
     input "Applicant Age", "From application", "Integer"
 
-    config "Base FPL", "State Configuration", "Integer"
-    config "FPL Per Person", "State Configuration", "Integer"
     config "FPL", "State Configuration", "Hash"
     config "Option CHIP Pregnancy Category", "State Configuration", "Char(1)", %w(Y N)
     config "Medicaid Thresholds", "State Configuration", "Hash"
