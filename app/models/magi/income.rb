@@ -15,8 +15,6 @@ module MAGI
     input "Medicaid Household", "Householding Logic", "Array"
     input "Applicant Age", "From application", "Integer"
 
-    config "Base FPL", "State Configuration", "Integer"
-    config "FPL Per Person", "State Configuration", "Integer"
     config "FPL", "State Configuration", "Hash"
     config "Option CHIP Pregnancy Category", "State Configuration", "Char(1)", %w(Y N)
     config "Medicaid Thresholds", "State Configuration", "Hash"
@@ -31,6 +29,7 @@ module MAGI
     indicator "Applicant Income CHIP Eligible Indicator", %w(Y N)
     date      "Income CHIP Eligible Determination Date"
     code      "Income CHIP Eligible Ineligibility Reason", %w(999 401 402)
+    output    "Calculated Income as Percentage of FPL", "Integer"
 
     def run(context)
       context.extend IncomeThreshold
@@ -87,6 +86,10 @@ module MAGI
       o["FPL * Percentage CHIP"] = v("Max Eligible CHIP Income")
       o["Category Used to Calculate Medicaid Income"] = v("Max Eligible Medicaid Category")
       o["Category Used to Calculate CHIP Income"] = v("Max Eligible CHIP Category")
+    end
+
+    rule "Set Income as Percent FPL" do
+      o["Calculated Income as Percentage of FPL"] = (Float(v("Calculated Income")) / Float(v("FPL")) * 100.0).floor
     end
 
     rule "Determine Income Eligibility" do

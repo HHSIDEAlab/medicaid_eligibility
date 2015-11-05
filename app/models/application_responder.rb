@@ -13,6 +13,7 @@ module ApplicationResponder
       app_json["Medicaid Household"] = {}
       app_json["Medicaid Household"]["People"] = app.medicaid_household.people.map{|p| p.person_id}
       app_json["Medicaid Household"]["MAGI"] = app.medicaid_household.income
+      app_json["Medicaid Household"]["MAGI as Percentage of FPL"] = app.outputs["Calculated Income as Percentage of FPL"]
       app_json["Medicaid Household"]["Size"] = app.medicaid_household.household_size
 
       app_json["Medicaid Eligible"] = app.outputs["Applicant Medicaid Indicator"]
