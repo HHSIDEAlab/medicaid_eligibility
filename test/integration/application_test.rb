@@ -6,7 +6,6 @@ class ApplicationTest < ActionDispatch::IntegrationTest
 
   def setup
     @fixture = reload_fixture '4_person_family'
-    # @fixtures = 
   end
 
   # for each fixture, check this stuff
@@ -64,5 +63,19 @@ class ApplicationTest < ActionDispatch::IntegrationTest
     new_app = Application.new(@fixture[:application_raw], nil)
     refute_nil new_app.error
     assert_match /Missing content type/, new_app.error.to_s
+  end
+
+  test 'every person on an application should have a physical household' do
+    fixture = reload_fixture 'invalid/missing_physical_household', run_fixture=false
+    new_app = Application.new(fixture[:application_raw], 'application/json')
+    refute_nil new_app.error
+    assert_match /Person 2 is not in any physical household--every person must be in exactly one physical household/, new_app.error.to_s
+  end
+
+  test 'no person should have more than one physical household' do
+    fixture = reload_fixture 'invalid/duplicate_physical_household', run_fixture=false
+    new_app = Application.new(fixture[:application_raw], 'application/json')
+    refute_nil new_app.error
+    assert_match /Person 2 is in multiple physical households--every person must be in exactly one physical household/, new_app.error.to_s, new_app.error.to_s
   end
 end

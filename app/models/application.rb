@@ -46,6 +46,7 @@ class Application
       process_rules!
     rescue Exception => e
       Rails.logger.error e
+      Rails.logger.error e.backtrace.join("\n")
       @error = e
     end
   end
