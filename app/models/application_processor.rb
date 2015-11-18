@@ -8,6 +8,7 @@ module ApplicationProcessor
     compute_relationships!
     validate_relationships!
     validate_tax_returns
+    validate_physical_households
     build_medicaid_households!
   end
 
@@ -146,6 +147,18 @@ module ApplicationProcessor
       raise "Invalid tax returns: Tax return has more than two filers"
     elsif @tax_returns.any?{|tr| tr.filers.count == 2 && tr.filers[0].get_relationship(:spouse) != tr.filers[1]}
       raise "Invalid tax returns: Tax return has joint filers who are not married"
+    end
+  end
+
+  def validate_physical_households
+    for person in @people
+      households = @physical_households.select{|hh| hh.people.include?(person)}
+      if households.count == 0
+        raise "Person #{person.person_id} is not in any physical household--every person must be in exactly one physical household"
+      end
+      if households.count > 1
+        raise "Person #{person.person_id} is in multiple physical households--every person must be in exactly one physical household"
+      end
     end
   end
 
