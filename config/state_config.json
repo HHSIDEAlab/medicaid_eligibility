@@ -348,8 +348,18 @@
       },
       "Child Category": {
         "percentage": "Y",
-        "method": "standard",
-        "threshold": 319
+        "method": "age",
+        "age": [
+          {
+            "minimum": 0,
+            "maximum": 18,
+            "threshold": 319
+          },{
+            "minimum": 19,
+            "maximum": 20,
+            "threshold": 216
+          }
+        ]
       }
     },
     "CHIP Thresholds": {}
