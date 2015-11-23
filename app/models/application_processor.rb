@@ -258,16 +258,22 @@ module ApplicationProcessor
       persons_unborn_children = 0
     end
 
-    if @config["Count Unborn Children for Household"] == "03"
-      return med_household_members.count + 
-        med_household_members.inject(0){|sum, p| sum + 
+    # If option 01, count the number of children expected for each pregnanct woman
+    if @config["Count Unborn Children for Household"] == "01"
+      return med_household_members.count +
+        med_household_members.inject(0){|sum, p| sum +
           (p.person_attributes["Applicant Pregnant Indicator"] == 'Y' ? 
             p.person_attributes["Number of Children Expected"] : 0)
         }
+    # If option 02, count 1 extra for each pregnant woman
+    # But always count unborn children in the pregnant woman's household
     elsif @config["Count Unborn Children for Household"] == "02"
-      return med_household_members.count + 
-        med_household_members.count{|p| p.person_attributes["Applicant Pregnant Indicator"] == 'Y'} + (persons_unborn_children == 0 ? 0 : persons_unborn_children - 1)
-    elsif @config["Count Unborn Children for Household"] == "01"
+      return med_household_members.count +
+        med_household_members.count{|p| p.person_attributes["Applicant Pregnant Indicator"] == 'Y'} +
+        (persons_unborn_children == 0 ? 0 : persons_unborn_children - 1)
+    # If option 03, don't count unborn children
+    # But always count unborn children in the pregnant woman's household
+    elsif @config["Count Unborn Children for Household"] == "03"
       return med_household_members.count + persons_unborn_children
     else
       raise "Invalid or missing state configuration Count Unborn Children for Household"
