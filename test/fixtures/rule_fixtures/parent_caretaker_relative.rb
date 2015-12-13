@@ -12,7 +12,7 @@ class ParentCaretakerRelativeFixture < MagiFixture
     @child = Applicant.new("Child", {'Applicant Age' => 6 },'','','')
     @child.relationships = [Relationship.new(@child, :self, ''), Relationship.new(@parent, :parent, '')]
     @household = Household.new('Household', [ @parent, @child ] )
-    @tax_return = TaxReturn.new( [@parent], [@child], {} )
+    @tax_return = TaxReturn.new( [@parent], [@child] )
     
     # set 2: Two kids, both qualify
     @parent_2 = Applicant.new("Parent", {'Applicant Age' => 25, 'Hours Worked Per Week' => 40},'','','')
@@ -22,7 +22,7 @@ class ParentCaretakerRelativeFixture < MagiFixture
     @child_2b = Applicant.new("Child 2", {'Applicant Age' => 6 },'','','')
     @child_2b.relationships = [Relationship.new(@child_2b, :self, ''), Relationship.new(@parent_2, :parent, ''), Relationship.new(@child_2a, :sibling, '')]
     @household_2 = Household.new('Household', [ @parent_2, @child_2a, @child_2b ] )
-    @tax_return_2 = TaxReturn.new( [@parent_2], [@child_2a, @child_2b], {} )
+    @tax_return_2 = TaxReturn.new( [@parent_2], [@child_2a, @child_2b])
 
     # set 3: Two kids, one qualifies
     @parent_3 = Applicant.new("Parent", {'Applicant Age' => 40, 'Hours Worked Per Week' => 40},'','','')
@@ -32,7 +32,7 @@ class ParentCaretakerRelativeFixture < MagiFixture
     @child_3b = Applicant.new("Child 2", {'Applicant Age' => 20 },'','','')
     @child_3b.relationships = [Relationship.new(@child_3b, :self, ''), Relationship.new(@parent_3, :parent, ''), Relationship.new(@child_3a, :sibling, '')]
     @household_3 = Household.new('Household', [ @parent_3, @child_3a, @child_3b ] )
-    @tax_return_3 = TaxReturn.new( [@parent_3], [@child_3a, @child_3b], {} )
+    @tax_return_3 = TaxReturn.new( [@parent_3], [@child_3a, @child_3b])
 
     # set 4: Two kids, neither qualify
     @parent_4 = Applicant.new("Parent", {'Applicant Age' => 40, 'Hours Worked Per Week' => 40},'','','')
@@ -42,7 +42,7 @@ class ParentCaretakerRelativeFixture < MagiFixture
     @child_4b = Applicant.new("Child 2", {'Applicant Age' => 20 },'','','')
     @child_4b.relationships = [Relationship.new(@child_4b, :self, ''), Relationship.new(@parent_4, :parent, ''), Relationship.new(@child_4a, :sibling, '')]
     @household_4 = Household.new('Household', [ @parent_4, @child_4a, @child_4b ] )
-    @tax_return_4 = TaxReturn.new( [@parent_4], [@child_4a, @child_4b], {} )
+    @tax_return_4 = TaxReturn.new( [@parent_4], [@child_4a, @child_4b])
 
     # set 5: Stepchildren, both qualify
     @parent_5 = Applicant.new("Parent", {'Applicant Age' => 25, 'Hours Worked Per Week' => 40},'','','')
@@ -52,7 +52,7 @@ class ParentCaretakerRelativeFixture < MagiFixture
     @child_5b = Applicant.new("Child 2", {'Applicant Age' => 6 },'','','')
     @child_5b.relationships = [Relationship.new(@child_5b, :self, ''), Relationship.new(@parent_5, :parent, ''), Relationship.new(@child_5a, :sibling, '')]
     @household_5 = Household.new('Household', [ @parent_5, @child_5a, @child_5b ] )
-    @tax_return_5 = TaxReturn.new( [@parent_5], [@child_5a, @child_5b], {} )
+    @tax_return_5 = TaxReturn.new( [@parent_5], [@child_5a, @child_5b])
 
     # set 6: Guardian is not a blood relative, neither qualify
     @parent_6 = Applicant.new("Parent", {'Applicant Age' => 25, 'Hours Worked Per Week' => 40},'','','')
@@ -62,7 +62,7 @@ class ParentCaretakerRelativeFixture < MagiFixture
     @child_6b = Applicant.new("Child 2", {'Applicant Age' => 6 },'','','')
     @child_6b.relationships = [Relationship.new(@child_6b, :self, ''), Relationship.new(@parent_6, :other, ''), Relationship.new(@child_6a, :sibling, '')]
     @household_6 = Household.new('Household', [ @parent_6, @child_6a, @child_6b ] )
-    @tax_return_6 = TaxReturn.new( [@parent_6], [@child_6a, @child_6b], {} )
+    @tax_return_6 = TaxReturn.new( [@parent_6], [@child_6a, @child_6b])
 
 
     @test_sets = [
@@ -72,7 +72,7 @@ class ParentCaretakerRelativeFixture < MagiFixture
           "Person ID" => "Parent",
           "Person List" => [@parent],
           "Physical Household" => Household.new('Solo Household', [@parent]),
-          "Tax Returns" => [TaxReturn.new([@parent], [],nil) ],
+          "Tax Returns" => [TaxReturn.new([@parent], []) ],
           "Applicant Age" => 25,
           "Applicant Relationships" => [Relationship.new(@parent, :self, '')]
         },

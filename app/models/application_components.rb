@@ -63,12 +63,11 @@ module ApplicationComponents
   end
 
   class TaxReturn
-    attr_reader :filers, :dependents, :income
+    attr_reader :filers, :dependents
 
-    def initialize(filers, dependents, income)
+    def initialize(filers, dependents)
       @filers = filers
       @dependents = dependents
-      @income = income
     end
   end
 end

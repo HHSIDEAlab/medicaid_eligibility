@@ -369,40 +369,21 @@ module ApplicationVariables
   ].freeze
 
   INCOME_INPUTS = {
-    :tax_return => {
-      :primary_income => "AGI",
-      :other_income => [ 
-        "Deductible Part of Self-Employment Tax",
-        "IRA Deduction",
-        "Student Loan Interest Deduction",
-        "Tuition and Fees",
-        "Tax-Exempt Interest",
-        "Other MAGI-Eligible Income"
-      ],
-      :deductions => [
-        "Social Security Benefits Taxable Amount",
-        "Lump Sum Payments",
-        "Educational Scholarships, Fellowship Grants, and Awards",
-        "AIAN Income"
-      ]
-    },
-    :personal => {
-      :primary_income => "Wages, Salaries, Tips",
-      :other_income => [
-        "Taxable Interest",
-        "Tax-Exempt Interest",
-        "Taxable Refunds, Credits, or Offsets of State and Local Income Taxes",
-        "Alimony",
-        "Capital Gain or Loss",
-        "Pensions and Annuities Taxable Amount",
-        "Farm Income or Loss",
-        "Unemployment Compensation",
-        "Other Income"
-      ],
-      :deductions => [
-        "MAGI Deductions"
-      ]
-    }
+    :primary_income => "Wages, Salaries, Tips",
+    :other_income => [
+      "Taxable Interest",
+      "Tax-Exempt Interest",
+      "Taxable Refunds, Credits, or Offsets of State and Local Income Taxes",
+      "Alimony",
+      "Capital Gain or Loss",
+      "Pensions and Annuities Taxable Amount",
+      "Farm Income or Loss",
+      "Unemployment Compensation",
+      "Other Income"
+    ],
+    :deductions => [
+      "MAGI Deductions"
+    ]
   }.freeze
 
   CHILD_OUTPUTS = [

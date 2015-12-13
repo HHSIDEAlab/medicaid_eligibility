@@ -155,10 +155,10 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
         # this is basically a test of the result of get_json_income person, :personal
         json_applicant = @json_application['People'].find { |a| a['Person ID'] == person.person_id }
         assert_equal json_applicant['Income']['Wages, Salaries, Tips'], person.income[:primary_income]
-        ApplicationVariables::INCOME_INPUTS[:personal][:other_income].each do |input|
+        ApplicationVariables::INCOME_INPUTS[:other_income].each do |input|
           assert_equal json_applicant['Income'][input], person.income[:other_income][input]
         end
-        ApplicationVariables::INCOME_INPUTS[:personal][:deductions].each do |input|
+        ApplicationVariables::INCOME_INPUTS[:deductions].each do |input|
           # this is just magi deductions
           assert_equal json_applicant['Income'][input], person.income[:deductions][input]
         end

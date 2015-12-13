@@ -60,7 +60,7 @@ module ApplicationParser
       end
 
       # get income
-      income = get_json_income(json_person["Income"], :personal)
+      income = get_json_income(json_person["Income"])
 
       if is_applicant
         person = Applicant.new(person_id, person_attributes, applicant_id, applicant_attributes, income)
@@ -108,9 +108,7 @@ module ApplicationParser
         @people.find{|p| p.person_id == jd["Person ID"]}
       }
 
-      income = get_json_income(json_return["Income"], :tax_return)
-
-      @tax_returns << TaxReturn.new(filers, dependents, income)
+      @tax_returns << TaxReturn.new(filers, dependents)
     end
 
     # get physical households
@@ -235,9 +233,9 @@ module ApplicationParser
     get_variable(json_object[input[:name]], input, attributes)
   end
 
-  def get_json_income(json_income, income_type)
+  def get_json_income(json_income)
     income = {}
-    income_calculation = ApplicationVariables::INCOME_INPUTS[income_type]
+    income_calculation = ApplicationVariables::INCOME_INPUTS
     if json_income && json_income[income_calculation[:primary_income]]
       income[:primary_income] = json_income[income_calculation[:primary_income]].to_i
       income[:other_income] = {}

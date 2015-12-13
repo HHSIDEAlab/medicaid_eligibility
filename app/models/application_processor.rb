@@ -281,21 +281,10 @@ module ApplicationProcessor
   end
 
   def calculate_household_income(people, income_people)
-    non_tax_return_people = []
-    tax_returns = []
-    for person in income_people
-      tax_return = @tax_returns.find{|tr| tr.filers.include?(person)}
-      if tax_return && tax_return.income
-        tax_returns << tax_return
-      elsif person.income
-        non_tax_return_people << person
-      end
-    end
-    incomes = (tax_returns.uniq + non_tax_return_people).map{|obj| 
+    income_people.map{|obj|
       obj.income[:primary_income] + 
       obj.income[:other_income].inject(0){|sum, (name, amt)| sum + amt} - 
       obj.income[:deductions].inject(0){|sum, (name, amt)| sum + amt}
-    }
-    return incomes.sum
+    }.sum
   end
 end
