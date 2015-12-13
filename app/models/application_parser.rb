@@ -234,11 +234,10 @@ module ApplicationParser
   end
 
   def get_json_income(json_income)
-    income = {}
     income_fields = ApplicationVariables::INCOME_INPUTS
-    if json_income
-      income = {incomes: {}, deductions: {}}
+    income = {incomes: {}, deductions: {}}
 
+    if json_income
       for income_field in income_fields[:incomes]
         income[:incomes][income_field] = get_json_income_field(json_income[income_field], income_field, :positive)
       end
@@ -252,11 +251,7 @@ module ApplicationParser
       end
     end
 
-    if income.empty? || (income[:incomes].empty? && income[:deductions].empty?)
-      nil
-    else
-      income
-    end
+    income
   end
 
   def get_json_income_field(amount, income_field, income_type)
