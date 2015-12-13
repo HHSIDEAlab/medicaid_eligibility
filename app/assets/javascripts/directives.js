@@ -89,7 +89,6 @@ angular.module('MAGI.directives',[]).
       replace: true,
       link: function(scope, element, attrs, ngModelCtrl){
 
-
         var monthlyLabel = angular.element(element[0].children[0].children[0]);
         var annualLabel = angular.element(element[0].children[1].children[0]);
         var monthly = angular.element(element[0].children[0].children[1]);
@@ -99,11 +98,21 @@ angular.module('MAGI.directives',[]).
         annualLabel.text(attrs['annuallabel']);
 
         ngModelCtrl.$render = function() {
-          annual.val(ngModelCtrl.$viewValue);
+          var annualVal = ngModelCtrl.$viewValue;
+
+          // Set annual to the rounded, calculated value if necessary
+          // (This prevents turning "12.0" into "12")
+          if ((annual.val() != annualVal) || annual.val().search(/^\-?[0-9]+\.[0-9]{5,}$/) != -1) {
+            annual.val(annualVal);
+          }
+
           if (annual.val() == '') {
             monthly.val('');
           } else {
-            monthly.val(Math.floor(ngModelCtrl.$viewValue / 12));
+            monthlyVal = Math.round(annualVal / 12.0 * 100.0) / 100.0;
+            if (monthly.val() != monthlyVal || monthly.val().search(/^\-?[0-9]+\.[0-9]{5,}$/) != -1) {
+              monthly.val(monthlyVal);
+            }
           }
         };
 
@@ -116,20 +125,23 @@ angular.module('MAGI.directives',[]).
         });
 
         function updateViaMonthly(){
-          if (monthly.val() * 12 != annual.val()) {
-            if (monthly.val().search(/^\-?[0-9]+$/) != -1) {
-              ngModelCtrl.$setViewValue(monthly.val() * 12);
-              ngModelCtrl.$render();
-            }
+          // Check that this is a valid amount
+          if (monthly.val().search(/^\-?[0-9]+(\.[0-9]+)?$/) != -1) {
+            // Throw out everything after two decimals
+            var monthlyVal = Math.floor(monthly.val() * 100.0) / 100.0;
+            // Set annual amount to 12 times the monthly amount, rounded to two decimals
+            ngModelCtrl.$setViewValue(Math.round(monthlyVal * 12.0 * 100.0) / 100.0);
+            ngModelCtrl.$render();
           }
         }
 
         function updateViaAnnual(){
-          if (monthly.val() * 12 != annual.val()) {
-            if (annual.val().search(/^\-?[0-9]+$/) != -1) {
-              ngModelCtrl.$setViewValue(annual.val() * 1);
-              ngModelCtrl.$render();
-            }
+          // Check that this is a valid amount
+          if (annual.val().search(/^\-?[0-9]+(\.[0-9]+)?$/) != -1) {
+            // Throw out everything after two decimals
+            var annualVal = Math.floor(annual.val() * 100.0) / 100.0;
+            ngModelCtrl.$setViewValue(annualVal);
+            ngModelCtrl.$render();
           }
         }
       }
