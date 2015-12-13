@@ -54,7 +54,6 @@ angular.module('MAGI.services',[]).
     }
 
     IncomeTaxes.prototype.fields = [
-        {app: 'monthly',            api:'Monthly Income'},
         {app: 'wages',              api:'Wages, Salaries, Tips'},
         {app: 'taxableInterest',    api: 'Taxable Interest'},
         {app: 'taxExemptInterest',  api:'Tax-Exempt Interest'},
