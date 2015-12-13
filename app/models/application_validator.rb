@@ -59,8 +59,4 @@ module ApplicationValidator
       raise "Person #{person.person_id} is in multiple physical households--every person must be in exactly one physical household"
     end
   end
-
-  def validate_incomes(person)
-    true
-  end
 end

@@ -11,7 +11,6 @@ module ApplicationProcessor
     for person in @people
       validate_relationships! person
       validate_physical_households person, @physical_households
-      validate_incomes person
     end
     validate_tax_returns @people, @tax_returns
 
@@ -223,10 +222,9 @@ module ApplicationProcessor
   end
 
   def calculate_household_income(people, income_people)
-    income_people.map{|obj|
-      obj.income[:primary_income] + 
-      obj.income[:other_income].inject(0){|sum, (name, amt)| sum + amt} - 
-      obj.income[:deductions].inject(0){|sum, (name, amt)| sum + amt}
+    income_people.select{|p| p.income}.map{|p|
+      p.income[:incomes].inject(0){|sum, (name, amt)| sum + amt} - 
+      p.income[:deductions].inject(0){|sum, (name, amt)| sum + amt}
     }.sum
   end
 end

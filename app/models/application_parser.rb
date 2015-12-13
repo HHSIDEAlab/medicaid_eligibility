@@ -235,24 +235,36 @@ module ApplicationParser
 
   def get_json_income(json_income)
     income = {}
-    income_calculation = ApplicationVariables::INCOME_INPUTS
-    if json_income && json_income[income_calculation[:primary_income]]
-      income[:primary_income] = json_income[income_calculation[:primary_income]].to_i
-      income[:other_income] = {}
-      for other_income in income_calculation[:other_income]
-        income[:other_income][other_income] = (json_income[other_income] || 0).to_i
+    income_fields = ApplicationVariables::INCOME_INPUTS
+    if json_income
+      income = {incomes: {}, deductions: {}}
+
+      for income_field in income_fields[:incomes]
+        income[:incomes][income_field] = get_json_income_field(json_income[income_field], income_field, :positive)
       end
-      income[:deductions] = {}
-      for deduction in income_calculation[:deductions]
-        income[:deductions][deduction] = (json_income[deduction] || 0).to_i
+
+      for income_field in income_fields[:gains_losses]
+        income[:incomes][income_field] = get_json_income_field(json_income[income_field], income_field, :either)
+      end
+
+      for income_field in income_fields[:deductions]
+        income[:deductions][income_field] = get_json_income_field(json_income[income_field], income_field, :positive)
       end
     end
-    
-    if income.empty?
+
+    if income.empty? || (income[:incomes].empty? && income[:deductions].empty?)
       nil
     else
       income
     end
+  end
+
+  def get_json_income_field(amount, income_field, income_type)
+    if income_type == :positive && amount.to_i < 0
+      raise "Invalid income: #{income_field} cannot be negative"
+    end
+
+    amount.to_i
   end
 
   def get_xml_variable(node, input, attributes)

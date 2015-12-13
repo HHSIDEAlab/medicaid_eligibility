@@ -369,16 +369,18 @@ module ApplicationVariables
   ].freeze
 
   INCOME_INPUTS = {
-    :primary_income => "Wages, Salaries, Tips",
-    :other_income => [
+    :incomes => [
+      "Wages, Salaries, Tips",
       "Taxable Interest",
       "Tax-Exempt Interest",
       "Taxable Refunds, Credits, or Offsets of State and Local Income Taxes",
+      "Pensions and Annuities Taxable Amount",
+      "Unemployment Compensation"
+    ],
+    :gains_losses => [
       "Alimony",
       "Capital Gain or Loss",
-      "Pensions and Annuities Taxable Amount",
       "Farm Income or Loss",
-      "Unemployment Compensation",
       "Other Income"
     ],
     :deductions => [
