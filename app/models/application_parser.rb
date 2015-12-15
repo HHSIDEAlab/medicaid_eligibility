@@ -255,11 +255,11 @@ module ApplicationParser
   end
 
   def get_json_income_field(amount, income_field, income_type)
-    if income_type == :positive && amount.to_f < 0
+    if income_type == :positive && amount.to_i < 0
       raise "Invalid income: #{income_field} cannot be negative"
     end
 
-    amount.to_f
+    amount.to_i
   end
 
   def get_xml_variable(node, input, attributes)
