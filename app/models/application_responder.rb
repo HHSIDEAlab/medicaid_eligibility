@@ -13,7 +13,7 @@ module ApplicationResponder
       app_json["Medicaid Household"] = {}
       app_json["Medicaid Household"]["People"] = app.medicaid_household.people.map{|p| p.person_id}
       app_json["Medicaid Household"]["MAGI"] = app.medicaid_household.income
-      app_json["Medicaid Household"]["MAGI as Percentage of FPL"] = app.outputs["Calculated Income as Percentage of FPL"].round(2)
+      app_json["Medicaid Household"]["MAGI as Percentage of FPL"] = app.outputs["Calculated Income as Percentage of FPL"]
       app_json["Medicaid Household"]["Size"] = app.medicaid_household.household_size
 
       app_json["Medicaid Eligible"] = app.outputs["Applicant Medicaid Indicator"]
@@ -71,10 +71,10 @@ module ApplicationResponder
       
       app_json["Category"] = app.outputs["Category Used to Calculate Medicaid Income"]
       unless ["None"].include?(app.outputs["Category Used to Calculate Medicaid Income"])
-        app_json["Category Threshold"] = app.outputs["FPL * Percentage Medicaid"]
+        app_json["Category Threshold"] = app.outputs["FPL * Percentage Medicaid"].to_i
       end
       app_json["CHIP Category"] = app.outputs["Category Used to Calculate CHIP Income"]
-      app_json["CHIP Category Threshold"] = app.outputs["FPL * Percentage CHIP"]
+      app_json["CHIP Category Threshold"] = app.outputs["FPL * Percentage CHIP"].to_i
 
       app_json["Determinations"] = {}
 
