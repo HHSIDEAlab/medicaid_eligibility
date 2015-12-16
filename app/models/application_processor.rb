@@ -137,7 +137,7 @@ module ApplicationProcessor
         is_minor?(person) &&
         (
           parents.any?{|parent| live_together?(person, parent) && !(dependent_tax_return.filers.include?(parent))} ||
-          parents.any?{|parent| !(live_together?(person, parent)) && dependent_tax_return.filers.include?(parent)}
+          (parents.any?{|parent| !(live_together?(person, parent)) && dependent_tax_return.filers.include?(parent)} && @state != 'DC')
         )
       )
 
