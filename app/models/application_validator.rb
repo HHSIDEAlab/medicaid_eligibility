@@ -1,7 +1,4 @@
 module ApplicationValidator
-  class RelationshipError < StandardError
-  end
-
   def validate_relationships!(person)
     if person.get_relationship(:self)
       raise RelationshipError, "#{person.person_id} has a \"Self\" relationship"

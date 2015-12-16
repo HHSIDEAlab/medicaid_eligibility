@@ -11,7 +11,7 @@ module MAGI
     input "Applicant Child Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
     input "Applicant Optional Targeted Low Income Child Indicator", "From MAGI Part I", "Char(1)", %w(Y N X)
     input "Applicant CHIP Targeted Low Income Child Indicator", "From MAGI Part I", "Char(1)", %w(Y N X)
-    input "Calculated Income", "Medicaid Household Income Logic", "Integer"
+    input "Calculated Income", "Medicaid Household Income Logic", "Number"
     input "Medicaid Household", "Householding Logic", "Array"
     input "Applicant Age", "From application", "Integer"
 
@@ -29,7 +29,7 @@ module MAGI
     indicator "Applicant Income CHIP Eligible Indicator", %w(Y N)
     date      "Income CHIP Eligible Determination Date"
     code      "Income CHIP Eligible Ineligibility Reason", %w(999 401 402)
-    output    "Calculated Income as Percentage of FPL", "Integer"
+    output    "Calculated Income as Percentage of FPL", "Number"
 
     def run(context)
       context.extend IncomeThreshold
@@ -89,7 +89,7 @@ module MAGI
     end
 
     rule "Set Income as Percent FPL" do
-      o["Calculated Income as Percentage of FPL"] = (Float(v("Calculated Income")) / Float(v("FPL")) * 100.0).floor
+      o["Calculated Income as Percentage of FPL"] = Float(v("Calculated Income")) / Float(v("FPL")) * 100.0
     end
 
     rule "Determine Income Eligibility" do
