@@ -2,9 +2,6 @@ module ApplicationProcessor
   include ApplicationComponents
   include ApplicationValidator
 
-  class RelationshipError < StandardError
-  end
-
   def compute_values!
     compute_relationships!
 
