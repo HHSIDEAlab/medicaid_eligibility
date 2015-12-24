@@ -140,7 +140,7 @@ module ApplicationVariables
       :name       => "Student Indicator",
       :type       => :flag,
       :values     => %w(Y N),
-      :group      => :applicant,
+      :group      => :person,
       :xpath      => "hix-ee:InsuranceApplicantStudentIndicator"
     },
     {
