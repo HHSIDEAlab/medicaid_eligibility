@@ -68,7 +68,7 @@ module MAGI
           "Child Parents"      => child.relationships.select{|r| r.relationship_type == :parent}.map{|r| r.person},
           "Physical Household" => v("Physical Household"),
           "Relationship Type"  => child.relationships.find{|r| r.person.person_id == v("Person ID")}.relationship_type,
-          "Student Indicator"  => child.person_attributes["Applicant Age"]
+          "Student Indicator"  => child.person_attributes["Student Indicator"]
         }
         
         context = RuleContext.new(config, child_input, current_date)
