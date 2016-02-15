@@ -21,6 +21,7 @@ module ApplicationProcessor
       MAGI::ParentCaretakerRelativeSpouse,
       MAGI::Pregnant,
       MAGI::Child,
+      MAGI::DependentChildCovered,
       MAGI::AdultGroup,
       MAGI::OptionalTargetedLowIncomeChildren,
       MAGI::TargetedLowIncomeChildren,
@@ -35,7 +36,6 @@ module ApplicationProcessor
       MAGI::PublicEmployeesBenefits,
       MAGI::CHIPWaitingPeriod,
       MAGI::CHIPEligibility,
-      MAGI::DependentChildCovered,
       MAGI::MedicaidEligibility,
       MAGI::EmergencyMedicaid,
       MAGI::RefugeeAssistance

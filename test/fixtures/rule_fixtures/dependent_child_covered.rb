@@ -24,22 +24,6 @@ class DependentChildCoveredFixture < MagiFixture
         }
       },
       {
-        test_name: "Determine Eligibility - Applicant Adult Category Set to N",
-        inputs: {
-          "Applicant List" => [],
-          "Person List" => [],
-          "Applicant Adult Group Category Indicator" => "N",
-          "Qualified Children List" => ['LIST NOT EMPTY']
-        },
-        configs: {
-          # none 
-        },
-        expected_outputs: {
-          "Applicant Dependent Child Covered Indicator" => "X",
-          "Dependent Child Covered Ineligibility Reason" => 555
-        }
-      },
-      {
         test_name: "Determine Eligibility - All Children Eligible for Coverage - Child in Applicant List",
         inputs: {
           "Applicant List" => [

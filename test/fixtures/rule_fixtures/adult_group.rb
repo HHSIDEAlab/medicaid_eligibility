@@ -10,7 +10,8 @@ class AdultGroupFixture < MagiFixture
         inputs: {
           "Medicare Entitlement Indicator" => "Y", 
           "Applicant Pregnancy Category Indicator" => "N", 
-          "Applicant Age" => 13
+          "Applicant Age" => 13,
+          "Applicant Dependent Child Covered Indicator" => "Y"
         }, 
         configs: {
           "Option Adult Group" => "N"
@@ -25,7 +26,8 @@ class AdultGroupFixture < MagiFixture
         inputs: {
           "Medicare Entitlement Indicator" => "Y", 
           "Applicant Pregnancy Category Indicator" => "N", 
-          "Applicant Age" => 13
+          "Applicant Age" => 13,
+          "Applicant Dependent Child Covered Indicator" => "Y"
         }, 
         configs: {
           "Option Adult Group" => "Y"
@@ -40,7 +42,8 @@ class AdultGroupFixture < MagiFixture
         inputs: {
           "Medicare Entitlement Indicator" => "Y", 
           "Applicant Pregnancy Category Indicator" => "Y", 
-          "Applicant Age" => 25
+          "Applicant Age" => 25,
+          "Applicant Dependent Child Covered Indicator" => "Y"
         }, 
         configs: {
           "Option Adult Group" => "Y"
@@ -55,7 +58,8 @@ class AdultGroupFixture < MagiFixture
         inputs: {
           "Medicare Entitlement Indicator" => "Y", 
           "Applicant Pregnancy Category Indicator" => "N", 
-          "Applicant Age" => 25
+          "Applicant Age" => 25,
+          "Applicant Dependent Child Covered Indicator" => "Y"
         }, 
         configs: {
           "Option Adult Group" => "Y"
@@ -66,11 +70,28 @@ class AdultGroupFixture < MagiFixture
         }
       },
       {
+        test_name: "Dependent Child is not covered",
+        inputs: {
+          "Medicare Entitlement Indicator" => "N",
+          "Applicant Pregnancy Category Indicator" => "N",
+          "Applicant Age" => 25,
+          "Applicant Dependent Child Covered Indicator" => "N"
+        },
+        configs: {
+          "Option Adult Group" => "Y"
+        },
+        expected_outputs: {
+          "Applicant Adult Group Category Indicator" => "N",
+          "Adult Group Category Ineligibility Reason" => 411
+        }
+      },
+      {
         test_name: "Fallback Determination",
         inputs: {
           "Medicare Entitlement Indicator" => "N", 
           "Applicant Pregnancy Category Indicator" => "N", 
-          "Applicant Age" => 25
+          "Applicant Age" => 25,
+          "Applicant Dependent Child Covered Indicator" => "Y"
         }, 
         configs: {
           "Option Adult Group" => "Y"
@@ -96,7 +117,8 @@ class AdultGroupFixture < MagiFixture
         inputs: {
           "Medicare Entitlement Indicator" => "N", 
           "Applicant Pregnancy Category Indicator" => "N", 
-          "Applicant Age" => 25
+          "Applicant Age" => 25,
+          "Applicant Dependent Child Covered Indicator" => "Y"
         }, 
         configs: {
           # "Option Adult Group" => "Y"
