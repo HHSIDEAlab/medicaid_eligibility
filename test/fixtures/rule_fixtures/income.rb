@@ -85,6 +85,31 @@ class IncomeFixture < MagiFixture
           "Calculated Income as Percentage of FPL" => 119
         }
       },
+      {
+        test_name: "Income - Calculate 2016 FPL Correctly",
+        inputs: {
+          "Application Year" => 2016,
+          "Applicant Adult Group Category Indicator" => "Y",
+          "Applicant Pregnancy Category Indicator" => "Y",
+          "Applicant Parent Caretaker Category Indicator" => "N",
+          "Applicant Child Category Indicator" => "N",
+          "Applicant Optional Targeted Low Income Child Indicator" => "N",
+          "Applicant CHIP Targeted Low Income Child Indicator" => "N",
+          "Calculated Income" => 25000,
+          "Medicaid Household" => MedicaidHousehold.new("house", '', '', '', 3),
+          "Applicant Age" => 20
+        },
+        configs: {
+          "FPL" => { "2016" => { "FPL By Age" => [11880,16020,20160,24300,28440,32580,36730,40890], "FPL Per Extra Person" => 4160 } },
+          "Option CHIP Pregnancy Category" => "N",
+          "Medicaid Thresholds" => { "Adult Group Category" => { "percentage" => "Y", "method" => "standard", "threshold" => 100 } },
+          "CHIP Thresholds" => { "Pregnancy Category" => { "percentage" => "Y", "method" => "standard", "threshold" => 133 } }
+        },
+        expected_outputs: {
+          "FPL" => 20160,
+          "Calculated Income as Percentage of FPL" => 124
+        }
+      },
 
       # determine income eligibility rule - Medicaid
       {
