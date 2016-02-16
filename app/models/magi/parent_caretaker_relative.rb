@@ -33,11 +33,15 @@ module MAGI
       # responsibility for the child (other than this applicant)
       children.delete_if{|child| v("Person List").any?{|p| p.person_id != v("Person ID") && p.person_attributes["Applicant Age"] >= c("Child Age Threshold") && p.relationships.any?{|rel| rel.person == child && rel.relationship_attributes["Attest Primary Responsibility"] == 'Y'}}}
 
+      Rails.logger.info "1: #{children.count}"
+
       # Case 2: Tax filer claims child as dependent and lives with child
       if tax_return
         dependents = tax_return.dependents
         children += dependents.select{|child| v("Physical Household").people.include?(child)}
       end
+
+      Rails.logger.info "2: #{children.count}"
 
       # Case 3: Adult applicant attests to primary responsibility for child # under the primary responsibility age limit
       if v("Applicant Age") >= c("Child Age Threshold")
@@ -53,8 +57,12 @@ module MAGI
         # child on a tax return
         responsible_children.delete_if{|child| v("Tax Returns").any?{|tr| tr.dependents.include?(child) && tr != tax_return && tr.filers.any?{|filer| v("Physical Household").people.include?(filer)}}}
 
+        Rails.logger.info "responsible: #{responsible_children.count}"
+
         children += responsible_children
       end
+
+      Rails.logger.info "3: #{children.count}"
 
       children.uniq!
 
@@ -77,6 +85,7 @@ module MAGI
         child_list << {"Person ID" => child.person_id}.merge(context.output)
       end
 
+      Rails.logger.info "#{child_list}"
       child_list
     end
 
