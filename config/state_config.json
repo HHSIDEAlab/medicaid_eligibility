@@ -595,6 +595,26 @@
             2316
           ],
           "additional person": 195
+        },
+        "2016": {
+          "percentage": "N",
+          "monthly": "Y",
+          "includes_disregard": "Y",
+          "method": "household_size",
+          "household_size": [
+            0,
+            517,
+            694,
+            871,
+            1048,
+            1226,
+            1403,
+            1580,
+            1757,
+            1934,
+            2111
+          ],
+          "additional person": 178
         }
       },
       "Pregnancy Category": {
