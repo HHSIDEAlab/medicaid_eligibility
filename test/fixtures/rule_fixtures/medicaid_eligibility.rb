@@ -7,29 +7,9 @@ class MedicaidEligibilityFixture < MagiFixture
     @magi = 'MedicaidEligibility'
     @test_sets = [
       {
-        test_name: "Final Eligibility - Prelim Yes, Dependent Child Covered No",
-        inputs: {
-          "Applicant Medicaid Prelim Indicator" => "Y",
-          "Applicant Dependent Child Covered Indicator" => "N",
-          "Medicaid Residency Indicator" => "N",
-          "Applicant Income Medicaid Eligible Indicator" => "N"
-        },
-        configs: {
-          # none
-        },
-        expected_outputs: {
-          "Applicant Medicaid Indicator" => "N",
-          "Medicaid Ineligibility Reason" => 128,
-          "APTC Referral Indicator" => "Y"
-        }
-      },
-      {
         test_name: "Final Eligibility - Prelim No",
         inputs: {
-          "Applicant Medicaid Prelim Indicator" => "N",
-          "Applicant Dependent Child Covered Indicator" => "N",
-          "Medicaid Residency Indicator" => "N",
-          "Applicant Income Medicaid Eligible Indicator" => "N"
+          "Applicant Medicaid Prelim Indicator" => "N"
         },
         configs: {
           # none
@@ -41,26 +21,9 @@ class MedicaidEligibilityFixture < MagiFixture
         }
       },
       {
-        test_name: "Bad Info - Inputs",
+        test_name: "Final Eligibility - Prelim Yes",
         inputs: {
-          "Applicant Income Medicaid Eligible Indicator" => "N"
-        },
-        configs: {
-          # none
-        },
-        expected_outputs: {
-        }
-      }
-    ]
-
-    ["Y","X"].each do |ind|
-      @test_sets << {
-        test_name: "Final Eligibility - Prelim Yes, Dependent Child Covered #{ind}",
-        inputs: {
-          "Applicant Medicaid Prelim Indicator" => "Y",
-          "Applicant Dependent Child Covered Indicator" => "Y",
-          "Medicaid Residency Indicator" => "N",
-          "Applicant Income Medicaid Eligible Indicator" => "N"
+          "Applicant Medicaid Prelim Indicator" => "Y"
         },
         configs: {
           # none
@@ -71,8 +34,19 @@ class MedicaidEligibilityFixture < MagiFixture
           "APTC Referral Indicator" => "N",
           "APTC Referral Ineligibility Reason" => 406
         }
+      },
+      {
+        test_name: "Bad Info - Inputs",
+        inputs: {
+          # none
+        },
+        configs: {
+          # none
+        },
+        expected_outputs: {
+        }
       }
-    end
+    ]
   end
 end
 

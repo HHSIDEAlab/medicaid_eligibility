@@ -12,6 +12,19 @@
       "2015": {
         "Base FPL": 11770,
         "FPL Per Person": 4160
+      },
+      "2016": {
+        "FPL By Age": [
+          11880,
+          16020,
+          20160,
+          24300,
+          28440,
+          32580,
+          36730,
+          40890
+        ],
+        "FPL Per Extra Person": 4160
       }
     },
 
@@ -204,6 +217,19 @@
       "2015": {
         "Base FPL": 13550,
         "FPL Per Person": 4780
+      },
+      "2016": {
+        "FPL By Age": [
+          13670,
+          18430,
+          23190,
+          27950,
+          32710,
+          37470,
+          42230,
+          47010
+        ],
+        "FPL Per Extra Person": 4780
       }
     }
   },
@@ -569,6 +595,26 @@
             2316
           ],
           "additional person": 195
+        },
+        "2016": {
+          "percentage": "N",
+          "monthly": "Y",
+          "includes_disregard": "Y",
+          "method": "household_size",
+          "household_size": [
+            0,
+            517,
+            694,
+            871,
+            1048,
+            1226,
+            1403,
+            1580,
+            1757,
+            1934,
+            2111
+          ],
+          "additional person": 178
         }
       },
       "Pregnancy Category": {
@@ -703,6 +749,19 @@
       "2015": {
         "Base FPL": 14720,
         "FPL Per Person": 5200
+      },
+      "2016": {
+        "FPL By Age": [
+          14840,
+          20020,
+          25200,
+          30380,
+          35560,
+          40740,
+          45920,
+          51120
+        ],
+        "FPL Per Extra Person": 5200
       }
     },
 
