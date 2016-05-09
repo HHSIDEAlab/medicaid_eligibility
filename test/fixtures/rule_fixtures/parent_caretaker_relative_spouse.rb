@@ -5,11 +5,11 @@ class ParentCaretakerRelativeSpouseFixture < MagiFixture
   def initialize
     super
 
-    @spouse = Applicant.new('Spouse','','','','')
+    @spouse = Person.new('Spouse','','','','')
     @spouse.outputs["Applicant Parent Caretaker Category Indicator"] = "Y"
-    @person = Applicant.new('Self','','','','')
+    @person = Person.new('Self','','','','')
 
-    @spouse_not_caretaker = Applicant.new('Spouse', '','','','')
+    @spouse_not_caretaker = Person.new('Spouse', '','','','')
     @spouse_not_caretaker.outputs["Applicant Parent Caretaker Category Indicator"] = "N"
     @nonapplicant = Person.new('Spouse', '','')
 

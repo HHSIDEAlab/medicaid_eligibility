@@ -42,10 +42,10 @@ module ApplicationProcessor
     ].map{|ruleset_class| ruleset_class.new()}
 
     for ruleset in rulesets
-      for applicant in @applicants
-        context = to_context(ruleset, applicant)
+      for person in @people
+        context = to_context(ruleset, person)
         ruleset.run(context)
-        from_context!(applicant, context)
+        from_context!(person, context)
       end
     end
   end

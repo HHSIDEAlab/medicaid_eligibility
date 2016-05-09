@@ -6,11 +6,11 @@ class QualifiedChildFixture < MagiFixture
     super
     @magi = 'QualifiedChild'
 
-    @parent = Applicant.new('Parent',{'Hours Worked Per Week' => 40 },'','','')
-    @parent_2 = Applicant.new('Parent 2',{'Hours Worked Per Week' => 40 },'','','')
-    @parent_underemployed = Applicant.new('Parent',{'Hours Worked Per Week' => 10 },'','','')
-    @parent_underemployed_2 = Applicant.new('Parent 2',{'Hours Worked Per Week' => 10 },'','','')
-    @child = Applicant.new('Child','','','','')
+    @parent = Person.new('Parent',{'Hours Worked Per Week' => 40 },'','','')
+    @parent_2 = Person.new('Parent 2',{'Hours Worked Per Week' => 40 },'','','')
+    @parent_underemployed = Person.new('Parent',{'Hours Worked Per Week' => 10 },'','','')
+    @parent_underemployed_2 = Person.new('Parent 2',{'Hours Worked Per Week' => 10 },'','','')
+    @child = Person.new('Child','','','','')
 
     @test_sets = [
       # dependent child age logic tests

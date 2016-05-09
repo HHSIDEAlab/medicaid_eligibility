@@ -7,59 +7,59 @@ class ParentCaretakerRelativeFixture < MagiFixture
     @magi = 'ParentCaretakerRelative'
 
     # set 1: One kid, qualifies
-    @parent = Applicant.new("Parent", {'Applicant Age' => 25, 'Hours Worked Per Week' => 40},'','','')
+    @parent = Person.new("Parent", {'Applicant Age' => 25, 'Hours Worked Per Week' => 40},'','','')
     @parent.relationships = [Relationship.new(@parent, :self, ''), Relationship.new(@child, :child, '')]
-    @child = Applicant.new("Child", {'Applicant Age' => 6 },'','','')
+    @child = Person.new("Child", {'Applicant Age' => 6 },'','','')
     @child.relationships = [Relationship.new(@child, :self, ''), Relationship.new(@parent, :parent, '')]
     @household = Household.new('Household', [ @parent, @child ] )
     @tax_return = TaxReturn.new( [@parent], [@child] )
     
     # set 2: Two kids, both qualify
-    @parent_2 = Applicant.new("Parent", {'Applicant Age' => 25, 'Hours Worked Per Week' => 40},'','','')
+    @parent_2 = Person.new("Parent", {'Applicant Age' => 25, 'Hours Worked Per Week' => 40},'','','')
     @parent_2.relationships = [Relationship.new(@parent_2, :self, ''), Relationship.new(@child_2a, :child, ''), Relationship.new(@child_2b, :child, '')]
-    @child_2a = Applicant.new("Child 1", {'Applicant Age' => 6 },'','','')
+    @child_2a = Person.new("Child 1", {'Applicant Age' => 6 },'','','')
     @child_2a.relationships = [Relationship.new(@child_2a, :self, ''), Relationship.new(@parent_2, :parent, ''), Relationship.new(@child_2b, :sibling, '')]
-    @child_2b = Applicant.new("Child 2", {'Applicant Age' => 6 },'','','')
+    @child_2b = Person.new("Child 2", {'Applicant Age' => 6 },'','','')
     @child_2b.relationships = [Relationship.new(@child_2b, :self, ''), Relationship.new(@parent_2, :parent, ''), Relationship.new(@child_2a, :sibling, '')]
     @household_2 = Household.new('Household', [ @parent_2, @child_2a, @child_2b ] )
     @tax_return_2 = TaxReturn.new( [@parent_2], [@child_2a, @child_2b])
 
     # set 3: Two kids, one qualifies
-    @parent_3 = Applicant.new("Parent", {'Applicant Age' => 40, 'Hours Worked Per Week' => 40},'','','')
+    @parent_3 = Person.new("Parent", {'Applicant Age' => 40, 'Hours Worked Per Week' => 40},'','','')
     @parent_3.relationships = [Relationship.new(@parent_3, :self, ''), Relationship.new(@child_3a, :child, ''), Relationship.new(@child_3b, :child, '')]
-    @child_3a = Applicant.new("Child 1", {'Applicant Age' => 6 },'','','')
+    @child_3a = Person.new("Child 1", {'Applicant Age' => 6 },'','','')
     @child_3a.relationships = [Relationship.new(@child_3a, :self, ''), Relationship.new(@parent_3, :parent, ''), Relationship.new(@child_3b, :sibling, '')]
-    @child_3b = Applicant.new("Child 2", {'Applicant Age' => 20 },'','','')
+    @child_3b = Person.new("Child 2", {'Applicant Age' => 20 },'','','')
     @child_3b.relationships = [Relationship.new(@child_3b, :self, ''), Relationship.new(@parent_3, :parent, ''), Relationship.new(@child_3a, :sibling, '')]
     @household_3 = Household.new('Household', [ @parent_3, @child_3a, @child_3b ] )
     @tax_return_3 = TaxReturn.new( [@parent_3], [@child_3a, @child_3b])
 
     # set 4: Two kids, neither qualify
-    @parent_4 = Applicant.new("Parent", {'Applicant Age' => 40, 'Hours Worked Per Week' => 40},'','','')
+    @parent_4 = Person.new("Parent", {'Applicant Age' => 40, 'Hours Worked Per Week' => 40},'','','')
     @parent_4.relationships = [Relationship.new(@parent_4, :self, ''), Relationship.new(@child_4a, :child, ''), Relationship.new(@child_4b, :child, '')]
-    @child_4a = Applicant.new("Child 1", {'Applicant Age' => 26 },'','','')
+    @child_4a = Person.new("Child 1", {'Applicant Age' => 26 },'','','')
     @child_4a.relationships = [Relationship.new(@child_4a, :self, ''), Relationship.new(@parent_4, :parent, ''), Relationship.new(@child_4b, :sibling, '')]
-    @child_4b = Applicant.new("Child 2", {'Applicant Age' => 20 },'','','')
+    @child_4b = Person.new("Child 2", {'Applicant Age' => 20 },'','','')
     @child_4b.relationships = [Relationship.new(@child_4b, :self, ''), Relationship.new(@parent_4, :parent, ''), Relationship.new(@child_4a, :sibling, '')]
     @household_4 = Household.new('Household', [ @parent_4, @child_4a, @child_4b ] )
     @tax_return_4 = TaxReturn.new( [@parent_4], [@child_4a, @child_4b])
 
     # set 5: Stepchildren, both qualify
-    @parent_5 = Applicant.new("Parent", {'Applicant Age' => 25, 'Hours Worked Per Week' => 40},'','','')
+    @parent_5 = Person.new("Parent", {'Applicant Age' => 25, 'Hours Worked Per Week' => 40},'','','')
     @parent_5.relationships = [Relationship.new(@parent_5, :self, ''), Relationship.new(@child_5a, :stepchild, ''), Relationship.new(@child_5b, :child, '')]
-    @child_5a = Applicant.new("Child 1", {'Applicant Age' => 6 },'','','')
+    @child_5a = Person.new("Child 1", {'Applicant Age' => 6 },'','','')
     @child_5a.relationships = [Relationship.new(@child_5a, :self, ''), Relationship.new(@parent_5, :parent, ''), Relationship.new(@child_5b, :sibling, '')]
-    @child_5b = Applicant.new("Child 2", {'Applicant Age' => 6 },'','','')
+    @child_5b = Person.new("Child 2", {'Applicant Age' => 6 },'','','')
     @child_5b.relationships = [Relationship.new(@child_5b, :self, ''), Relationship.new(@parent_5, :parent, ''), Relationship.new(@child_5a, :sibling, '')]
     @household_5 = Household.new('Household', [ @parent_5, @child_5a, @child_5b ] )
     @tax_return_5 = TaxReturn.new( [@parent_5], [@child_5a, @child_5b])
 
     # set 6: Guardian is not a blood relative, neither qualify
-    @parent_6 = Applicant.new("Parent", {'Applicant Age' => 25, 'Hours Worked Per Week' => 40},'','','')
+    @parent_6 = Person.new("Parent", {'Applicant Age' => 25, 'Hours Worked Per Week' => 40},'','','')
     @parent_6.relationships = [Relationship.new(@parent_6, :self, ''), Relationship.new(@child_6a, :other, ''), Relationship.new(@child_6b, :other, '')]
-    @child_6a = Applicant.new("Child 1", {'Applicant Age' => 6 },'','','')
+    @child_6a = Person.new("Child 1", {'Applicant Age' => 6 },'','','')
     @child_6a.relationships = [Relationship.new(@child_6a, :self, ''), Relationship.new(@parent_6, :other, ''), Relationship.new(@child_6b, :sibling, '')]
-    @child_6b = Applicant.new("Child 2", {'Applicant Age' => 6 },'','','')
+    @child_6b = Person.new("Child 2", {'Applicant Age' => 6 },'','','')
     @child_6b.relationships = [Relationship.new(@child_6b, :self, ''), Relationship.new(@parent_6, :other, ''), Relationship.new(@child_6a, :sibling, '')]
     @household_6 = Household.new('Household', [ @parent_6, @child_6a, @child_6b ] )
     @tax_return_6 = TaxReturn.new( [@parent_6], [@child_6a, @child_6b])

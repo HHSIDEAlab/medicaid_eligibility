@@ -102,9 +102,6 @@ class ApplicationParserTest < ActionDispatch::IntegrationTest
 
       # TODO: I don't really trust the method of checking inputs. Check with Curtis on a good way to do this 
       @applicants.each do |applicant|
-        # check that 'Is Applicant' ensures that you get initialized as an applicant
-        assert_kind_of Applicant, applicant
-
         json_applicant = @json_application['People'].find { |a| a['Person ID'] = applicant.person_id }
 
         # confirm that all fields from the json object are reflected in the applicant object

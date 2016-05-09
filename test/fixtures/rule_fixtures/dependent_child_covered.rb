@@ -27,8 +27,8 @@ class DependentChildCoveredFixture < MagiFixture
         test_name: "Determine Eligibility - All Children Eligible for Coverage - Child in Applicant List",
         inputs: {
           "Applicant List" => [
-            Applicant.new("Parent Caretaker", {"Has Insurance" => "Y"}, 'Parent Caretaker', '',''),
-            Applicant.new("Billy", {"Has Insurance" => "Y"}, 'Billy', '','')
+            Person.new("Parent Caretaker", {"Has Insurance" => "Y"}, 'Parent Caretaker', '',''),
+            Person.new("Billy", {"Has Insurance" => "Y"}, 'Billy', '','')
           ],
           "Person List" => [
             Person.new("Parent Caretaker", {"Has Insurance" => "N"}, 'Parent Caretaker'),
@@ -51,7 +51,7 @@ class DependentChildCoveredFixture < MagiFixture
         test_name: "Determine Eligibility - All Children Eligible for Coverage - Child Has Separate Insurance",
         inputs: {
           "Applicant List" => [
-            Applicant.new("Parent Caretaker", {"Has Insurance" => "N"}, 'Parent Caretaker', '','')
+            Person.new("Parent Caretaker", {"Has Insurance" => "N"}, 'Parent Caretaker', '','')
           ],
           "Person List" => [
             Person.new("Parent Caretaker", {"Has Insurance" => "N"}, 'Parent Caretaker'),
@@ -74,7 +74,7 @@ class DependentChildCoveredFixture < MagiFixture
         test_name: "Determine Eligibility - Child Not Covered Scenario (Fallback Determination)",
         inputs: {
           "Applicant List" => [
-            Applicant.new("Parent Caretaker", {"Has Insurance" => "N"}, 'Parent Caretaker', '','')
+            Person.new("Parent Caretaker", {"Has Insurance" => "N"}, 'Parent Caretaker', '','')
           ],
           "Person List" => [
             Person.new("Parent Caretaker", {"Has Insurance" => "N"}, 'Parent Caretaker'),

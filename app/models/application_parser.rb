@@ -37,7 +37,7 @@ module ApplicationParser
       is_applicant = json_person["Is Applicant"] == 'Y'
       
       for input in ApplicationVariables::PERSON_INPUTS
-        if [:relationship, :special].include? input[:group] || (!(is_applicant) && input[:group] == :applicant)
+        if [:relationship, :special].include? input[:group]
           next
         elsif input[:group] == :person
           person_attributes[input[:name]] = get_json_variable(json_person, input, person_attributes.merge(applicant_attributes))
@@ -61,12 +61,9 @@ module ApplicationParser
 
       # get income
       income = get_json_income(json_person["Income"])
-
+      person = Person.new(person_id, person_attributes, income, applicant_id, applicant_attributes)
       if is_applicant
-        person = Applicant.new(person_id, person_attributes, applicant_id, applicant_attributes, income)
         @applicants << person
-      else
-        person = Person.new(person_id, person_attributes, income)
       end
       @people << person
     end
