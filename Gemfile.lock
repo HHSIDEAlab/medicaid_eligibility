@@ -95,6 +95,7 @@ GEM
     pg (0.18.1)
     phantomjs (1.9.8.0)
     polyglot (0.3.5)
+    power_assert (0.2.6)
     powerbar (1.0.12)
       ansi (~> 1.5.0)
       hashie (>= 1.1.0)
@@ -144,6 +145,8 @@ GEM
       colorize (>= 0.7.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    test-unit (3.1.5)
+      power_assert
     thor (0.19.1)
     tilt (1.4.1)
     treetop (1.4.15)
@@ -181,5 +184,12 @@ DEPENDENCIES
   rake
   spring
   sqlite3
+  test-unit
   uglifier
   unicorn
+
+RUBY VERSION
+   ruby 2.3.1p112
+
+BUNDLED WITH
+   1.13.2

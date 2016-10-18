@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-ruby '2.0.0'
+ruby '2.3.1'
 
 gem 'rails', '3.2.12'
 
@@ -49,3 +49,4 @@ end
 
 # travis
 gem 'rake', group: :test
+gem 'test-unit'

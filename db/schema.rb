@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(:version => 0) do
 
   create_table "schema_info", :id => false, :force => true do |t|
-  	t.integer 'dummy'
+  	t.integer 'version'
   end
 
 end
