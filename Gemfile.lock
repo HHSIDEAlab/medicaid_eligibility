@@ -39,7 +39,13 @@ GEM
       i18n
       rake (>= 10.0.0)
       sshkit (~> 1.3)
+    ci_reporter (2.0.0)
+      builder (>= 2.1.2)
+    ci_reporter_rspec (1.0.0)
+      ci_reporter (~> 2.0)
+      rspec (>= 2.14, < 4)
     colorize (0.7.7)
+    diff-lcs (1.2.5)
     erubis (2.7.0)
     execjs (2.5.2)
     faker (1.4.3)
@@ -92,7 +98,6 @@ GEM
     newrelic_rpm (3.12.0.288)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
-    pg (0.18.1)
     phantomjs (1.9.8.0)
     polyglot (0.3.5)
     powerbar (1.0.12)
@@ -133,6 +138,27 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     request_store (1.1.0)
+    rspec (3.4.0)
+      rspec-core (~> 3.4.0)
+      rspec-expectations (~> 3.4.0)
+      rspec-mocks (~> 3.4.0)
+    rspec-core (3.4.4)
+      rspec-support (~> 3.4.0)
+    rspec-expectations (3.4.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-mocks (3.4.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-rails (3.4.2)
+      actionpack (>= 3.0, < 4.3)
+      activesupport (>= 3.0, < 4.3)
+      railties (>= 3.0, < 4.3)
+      rspec-core (~> 3.4.0)
+      rspec-expectations (~> 3.4.0)
+      rspec-mocks (~> 3.4.0)
+      rspec-support (~> 3.4.0)
+    rspec-support (3.4.1)
     spring (1.3.6)
     sprockets (2.2.3)
       hike (~> 1.2)
@@ -165,6 +191,7 @@ DEPENDENCIES
   active_model_serializers
   activerecord-nulldb-adapter
   capistrano
+  ci_reporter_rspec
   faker
   font-awesome-rails
   gon
@@ -174,12 +201,18 @@ DEPENDENCIES
   minitest-reporters
   newrelic_rpm
   nokogiri
-  pg
   rails (= 3.2.12)
   rails-api
   rails_12factor
   rake
+  rspec-rails (~> 3.4)
   spring
   sqlite3
   uglifier
   unicorn
+
+RUBY VERSION
+   ruby 2.0.0p648
+
+BUNDLED WITH
+   1.12.5

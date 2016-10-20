@@ -11,7 +11,7 @@ gem 'newrelic_rpm'
 gem 'rails-api'
 
 gem 'activerecord-nulldb-adapter'
-gem 'pg'
+#gem 'pg'
 
 gem "active_model_serializers"
 
@@ -23,7 +23,7 @@ gem "uglifier"
 
 gem "gon"
 gem "httparty"
-
+gem 'ci_reporter_rspec'
 gem "rails_12factor"
 
 # Use unicorn as the app server
@@ -35,6 +35,7 @@ gem 'capistrano', :group => :development
 group :development, :test do
   gem 'jasmine'
   gem 'spring'
+  gem 'rspec-rails', '~> 3.4'
 end
 
 group :test do 
@@ -49,3 +50,4 @@ end
 
 # travis
 gem 'rake', group: :test
+
