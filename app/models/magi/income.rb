@@ -101,7 +101,7 @@ module MAGI
     end
 
     rule "Set Income as Percent FPL" do
-      o["Calculated Income as Percentage of FPL"] = (Float(v("Calculated Income")) / Float(v("FPL")) * 100.0).floor
+      o["Calculated Income as Percentage of FPL"] = (Float(v("Calculated Income")) / Float(v("FPL")) * 100.0).round(2)
     end
 
     rule "Determine Income Eligibility" do
