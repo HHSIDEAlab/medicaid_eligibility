@@ -25,9 +25,16 @@ module MAGI
       children.select!{|child| v("Physical Household").people.include?(child)}
 
       # Case 1 exception 1: Exclude if an adult person in the household 
-      # claims the child as a tax dependent (other than this applicant's
-      # tax return)
-      children.delete_if{|child| v("Tax Returns").any?{|tr| tr.dependents.include?(child) && tr != tax_return && tr.filers.any?{|filer| filer.person_attributes["Applicant Age"] >= c("Child Age Threshold") && v("Physical Household").people.include?(filer)}}}
+      # claims the child as a tax dependent 
+      # (unless that is the child's other parent [for purpose of unmarried couples living with the child])
+      children.delete_if{|child| 
+        v("Tax Returns").any?{|tr| 
+          tr.dependents.include?(child) && 
+          tr != tax_return && 
+          !(tr.filers.any?{|filer| child.parents_stepparents.include?(filer)}) &&
+          tr.filers.any?{|filer| filer.person_attributes["Applicant Age"] >= c("Child Age Threshold") && v("Physical Household").people.include?(filer)}
+        }
+      }
 
       # Case 1 exception 2: Exclude if an adult person claims primary
       # responsibility for the child (other than this applicant)
@@ -39,7 +46,7 @@ module MAGI
         children += dependents.select{|child| v("Physical Household").people.include?(child)}
       end
 
-      # Case 3: Adult applicant attests to primary responsibility for child # under the primary responsibility age limit
+      # Case 3: Adult applicant attests to primary responsibility for child under the primary responsibility age limit
       if v("Applicant Age") >= c("Child Age Threshold")
         responsible_children = v("Applicant Relationships").select{|rel| 
           rel.relationship_attributes["Attest Primary Responsibility"] == 'Y' && 

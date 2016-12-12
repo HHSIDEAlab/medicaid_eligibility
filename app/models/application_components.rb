@@ -20,6 +20,10 @@ module ApplicationComponents
     def get_relationship(relationship_type)
       get_relationships(relationship_type).first
     end
+
+    def parents_stepparents()
+      get_relationships(:parent) + get_relationships(:stepparent)
+    end
   end
 
   class Relationship
