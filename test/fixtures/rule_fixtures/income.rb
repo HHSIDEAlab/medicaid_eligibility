@@ -82,7 +82,7 @@ class IncomeFixture < MagiFixture
         },
         expected_outputs: {
           "FPL" => 20090,
-          "Calculated Income as Percentage of FPL" => 119
+          "Calculated Income as Percentage of FPL" => 119.67
         }
       },
       {
@@ -107,7 +107,7 @@ class IncomeFixture < MagiFixture
         },
         expected_outputs: {
           "FPL" => 20160,
-          "Calculated Income as Percentage of FPL" => 124
+          "Calculated Income as Percentage of FPL" => 124.01
         }
       },
 
