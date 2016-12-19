@@ -58,7 +58,9 @@ def reload_fixture(fixture_name, run_fixture=true)
     json = File.read(file).to_s
     fixture = {name: file.gsub(/\.json/,'').gsub(/#{Rails.root.to_s}\/test\/fixtures\//,''), application: JSON.parse(json), application_raw: json}
     if run_fixture
-      response = Application.new(json, 'application/json').to_json
+      result = Application.new(json, 'application/json')
+      fixture[:result] = result
+      response = result.to_json
       fixture[:response] = JSON.parse(response)
     end
   end

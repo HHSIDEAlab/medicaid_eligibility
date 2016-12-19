@@ -101,8 +101,16 @@ module ApplicationProcessor
   end
 
   def build_medicaid_households!
+    # First, build all Medicaid households
     for person in @people
       person.medicaid_household = determine_household(person)
+    end
+
+    # Then calculate income for all Medicaid households
+    for person in @people
+      mh = person.medicaid_household
+      mh.income_people = count_income_people(person)
+      mh.income = calculate_household_income(mh.income_people)
     end
   end
 
@@ -162,31 +170,9 @@ module ApplicationProcessor
     med_household_members << person
     med_household_members.uniq!
 
-    income_people = count_income_people(med_household_members)
-    income = calculate_household_income(med_household_members, income_people)
     household_size = calculate_household_size(person, med_household_members)
 
-    return MedicaidHousehold.new(nil, med_household_members, income_people, income, household_size)
-  end
-
-  def count_income_people(people)
-    income_people = []
-    for person in people
-      dependent_tax_return = @tax_returns.find{|tr| tr.dependents.include?(person)}
-      parents_stepparents = person.get_relationships(:parent) + person.get_relationships(:stepparent)
-
-      # Your income is NOT counted if you are claimed as a tax dependent
-      # on some tax return or if you are a minor and you have a parent/stepparent 
-      # Your income IS counted (overriding the above) if you are 
-      # required to file taxes.
-      if !dependent_tax_return &&
-         !(is_minor?(person) &&
-           parents_stepparents.any?{|parent| people.include?(parent)}) ||
-         person.person_attributes["Required to File Taxes"] == 'Y'
-        income_people << person
-      end
-    end
-    return income_people
+    return MedicaidHousehold.new(nil, med_household_members, nil, nil, household_size)
   end
 
   def calculate_household_size(person, med_household_members)
@@ -218,7 +204,33 @@ module ApplicationProcessor
     end
   end
 
-  def calculate_household_income(people, income_people)
+  def count_income_people(household_owner)
+    income_people = []
+    for person in household_owner.medicaid_household.people
+      parents_stepparents = person.parents_stepparents
+      dependent_tax_return = @tax_returns.find{|tr| tr.dependents.include?(person)}
+
+      if person.person_attributes["Required to File Taxes"] == 'Y' ||
+         !(
+          # Your income is NOT counted if you are in the Medicaid household of a
+          # parent/stepparent (in any household)
+          parents_stepparents.any?{|parent| parent.medicaid_household.people.include?(person)} ||
+          # Your income is NOT counted in the household of a non-parent/stepparent
+          # who claims you as a dependent (only in the household of the tax filer)
+          (
+            dependent_tax_return &&
+            dependent_tax_return.filers.include?(household_owner) &&
+            !(parents_stepparents.include?(household_owner))
+          )
+         )
+        income_people << person
+      end
+    end
+
+    return income_people
+  end
+
+  def calculate_household_income(income_people)
     income_people.select{|p| p.income}.map{|p|
       p.income[:incomes].inject(0){|sum, (name, amt)| sum + amt} - 
       p.income[:deductions].inject(0){|sum, (name, amt)| sum + amt}
