@@ -101,8 +101,16 @@ module ApplicationProcessor
   end
 
   def build_medicaid_households!
+    # First, build all Medicaid households
     for person in @people
       person.medicaid_household = determine_household(person)
+    end
+
+    # Then calculate income for all Medicaid households
+    for person in @people
+      mh = person.medicaid_household
+      mh.income_people = count_income_people(person, mh, @people)
+      mh.income = calculate_household_income(mh.people, mh.income_people)
     end
   end
 
@@ -162,32 +170,31 @@ module ApplicationProcessor
     med_household_members << person
     med_household_members.uniq!
 
-    income_people = count_income_people(med_household_members)
-    income = calculate_household_income(med_household_members, income_people)
     household_size = calculate_household_size(person, med_household_members)
 
-    return MedicaidHousehold.new(nil, med_household_members, income_people, income, household_size)
+    return MedicaidHousehold.new(nil, med_household_members, nil, nil, household_size)
   end
 
-  def count_income_people(people)
-    income_people = []
-    for person in people
-      dependent_tax_return = @tax_returns.find{|tr| tr.dependents.include?(person)}
-      parents_stepparents = person.get_relationships(:parent) + person.get_relationships(:stepparent)
+  # def count_income_people(people)
+  #   income_people = []
+  #   for person in people
+  #     dependent_tax_return = @tax_returns.find{|tr| tr.dependents.include?(person)}
+  #     parents_stepparents = person.get_relationships(:parent) + person.get_relationships(:stepparent)
 
-      # Your income is NOT counted if you are claimed as a tax dependent
-      # on some tax return or if you are a minor and you have a parent/stepparent 
-      # Your income IS counted (overriding the above) if you are 
-      # required to file taxes.
-      if !dependent_tax_return &&
-         !(is_minor?(person) &&
-           parents_stepparents.any?{|parent| people.include?(parent)}) ||
-         person.person_attributes["Required to File Taxes"] == 'Y'
-        income_people << person
-      end
-    end
-    return income_people
-  end
+  #     # Your income is NOT counted if you are in your parent/stepparent's household
+  #     # Your income is NOT counted in the household of the person who claims you
+  #     # as a dependent
+  #     # Your income IS counted (overriding the above) if you are 
+  #     # required to file taxes.
+  #     if !dependent_tax_return &&
+  #        !(is_minor?(person) &&
+  #          parents_stepparents.any?{|parent| people.include?(parent)}) ||
+  #        person.person_attributes["Required to File Taxes"] == 'Y'
+  #       income_people << person
+  #     end
+  #   end
+  #   return income_people
+  # end
 
   def calculate_household_size(person, med_household_members)
     if person.person_attributes["Applicant Pregnant Indicator"] == 'Y'
@@ -216,6 +223,10 @@ module ApplicationProcessor
     else
       raise "Invalid or missing state configuration Count Unborn Children for Household"
     end
+  end
+
+  def count_income_people(person, medicaid_household, all_people)
+    return medicaid_household.people
   end
 
   def calculate_household_income(people, income_people)

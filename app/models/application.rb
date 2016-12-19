@@ -11,6 +11,7 @@ class Application
   end
 
   attr_reader :error
+  attr_reader :state, :people, :tax_returns
 
   XML_NAMESPACES = {
     "exch"     => "http://at.dsh.cms.gov/exchange/1.0",
