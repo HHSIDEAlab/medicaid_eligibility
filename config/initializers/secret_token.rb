@@ -16,4 +16,3 @@
 # Using secret_token for rails3 compatibility. Change to secret_key_base
 # to avoid deprecation warning.
 # Can be safely removed in a rails3 api-only application.
-MedicaidEligibilityApi::Application.config.secret_token = '36199fb256c5f24eecf8f54f1dd000899202f5f13071882a494c707b59fad708e39479983a140d8f9d61194da758a53ecd2ecb957a61c725c786d43b1836994b'
