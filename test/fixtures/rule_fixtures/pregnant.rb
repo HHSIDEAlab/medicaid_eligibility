@@ -7,51 +7,51 @@ class PregnantFixture < MagiFixture
     @magi = 'Pregnant'
     @test_sets = [
       {
-        test_name: "Pregnant - Applicant Pregnant",
+        test_name: 'Pregnant - Applicant Pregnant',
         inputs: {
-          "Applicant Pregnant Indicator" => "Y",
-          "Applicant Post Partum Period Indicator" => "N"
+          'Applicant Pregnant Indicator' => 'Y',
+          'Applicant Post Partum Period Indicator' => 'N'
         },
         configs: {
           # none
         },
         expected_outputs: {
-          "Applicant Pregnancy Category Indicator" => "Y",
-          "Pregnancy Category Ineligibility Reason" => 999
+          'Applicant Pregnancy Category Indicator' => 'Y',
+          'Pregnancy Category Ineligibility Reason' => 999
         }
       },
       {
-        test_name: "Pregnant - Applicant Postpartum",
+        test_name: 'Pregnant - Applicant Postpartum',
         inputs: {
-          "Applicant Pregnant Indicator" => "N",
-          "Applicant Post Partum Period Indicator" => "Y"
+          'Applicant Pregnant Indicator' => 'N',
+          'Applicant Post Partum Period Indicator' => 'Y'
         },
         configs: {
           # none
         },
         expected_outputs: {
-          "Applicant Pregnancy Category Indicator" => "Y",
-          "Pregnancy Category Ineligibility Reason" => 999
+          'Applicant Pregnancy Category Indicator' => 'Y',
+          'Pregnancy Category Ineligibility Reason' => 999
         }
       },
       {
-        test_name: "Pregnant - Applicant Not Pregnant or Postpartum",
+        test_name: 'Pregnant - Applicant Not Pregnant or Postpartum',
         inputs: {
-          "Applicant Pregnant Indicator" => "N",
-          "Applicant Post Partum Period Indicator" => "N"
+          'Applicant Pregnant Indicator' => 'N',
+          'Applicant Post Partum Period Indicator' => 'N'
         },
         configs: {
           # none
         },
         expected_outputs: {
-          "Applicant Pregnancy Category Indicator" => "N",
-          "Pregnancy Category Ineligibility Reason" => 124
+          'Applicant Pregnancy Category Indicator' => 'N',
+          'Pregnancy Category Ineligibility Reason' => 124
         }
       },
       {
-        test_name: "Bad Info - Inputs",
+        test_name: 'Bad Info - Inputs',
         inputs: {
-          "Applicant Post Partum Period Indicator" => "N"
+          'Applicant Post Partum Period Indicator' => 'N'
         },
         configs: {
           # none

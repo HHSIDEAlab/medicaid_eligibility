@@ -51,11 +51,11 @@ class Ruleset
     end
 
     def rule(rule_name, &blk)
-      self.rules << Rule.new(rule_name, blk)
+      rules << Rule.new(rule_name, blk)
     end
 
     def calculated(variable, &blk)
-      self.calculateds << CalculatedVariable.new(variable, blk)
+      calculateds << CalculatedVariable.new(variable, blk)
     end
 
     def name(text)
@@ -83,84 +83,72 @@ class Ruleset
     end
 
     def assumption(text)
-      self.assumptions << text
+      assumptions << text
     end
 
     def special_instruction(text)
-      self.special_instructions << text
+      special_instructions << text
     end
 
-    def input(name, source, type, possible_values=nil, options={})
+    def input(name, source, type, possible_values = nil, _options = {})
       # options may include the type of element for list inputs
-      self.inputs[name] = {
-        :name   => name,
-        :source => source,
-        :type   => type
+      inputs[name] = {
+        name: name,
+        source: source,
+        type: type
       }
 
-      if possible_values
-        self.inputs[name][:possible_values] = possible_values
-      end
+      inputs[name][:possible_values] = possible_values if possible_values
     end
 
-    def config(name, source, type, possible_values=nil, default=nil)
-      self.configs[name] = {
-        :name   => name,
-        :source => source,
-        :type   => type
+    def config(name, source, type, possible_values = nil, default = nil)
+      configs[name] = {
+        name: name,
+        source: source,
+        type: type
       }
-      
-      if possible_values
-        self.configs[name][:possible_values] = possible_values
-      end
-      if default
-        self.configs[name][:default] = default
-      end
+
+      configs[name][:possible_values] = possible_values if possible_values
+      configs[name][:default] = default if default
     end
 
-    def indicator(name, possible_values=nil)
-      self.outputs[name] = {
-        :name => name,
-        :type => "Indicator"
+    def indicator(name, possible_values = nil)
+      outputs[name] = {
+        name: name,
+        type: 'Indicator'
       }
 
-      if possible_values
-        self.outputs[name][:possible_values] = possible_values
-      end
+      outputs[name][:possible_values] = possible_values if possible_values
     end
 
     def date(name)
-      self.outputs[name] = {
-        :name => name,
-        :type => "Date"
+      outputs[name] = {
+        name: name,
+        type: 'Date'
       }
     end
 
-    def code(name, possible_values=nil)
-      self.outputs[name] = {
-        :name => name,
-        :type => "Code"
+    def code(name, possible_values = nil)
+      outputs[name] = {
+        name: name,
+        type: 'Code'
       }
 
-      if possible_values
-        self.outputs[name][:possible_values] = possible_values
-      end
+      outputs[name][:possible_values] = possible_values if possible_values
     end
 
-    def determination(name, possible_values=nil, ineligibility_codes = nil)
-      self.outputs[name] = {}
+    def determination(name, _possible_values = nil, _ineligibility_codes = nil)
+      outputs[name] = {}
     end
 
-    def output(name, type, possible_values=nil, options={})
+    def output(name, type, possible_values = nil, _options = {})
       # options may include the type of element for list outputs
-      self.outputs[name] = {
-        :name => name,
-        :type => type
+      outputs[name] = {
+        name: name,
+        type: type
       }
 
-      if possible_values
-        self.outputs[name][:possible_values] = possible_values
-      end
+      outputs[name][:possible_values] = possible_values if possible_values
     end
   end
 

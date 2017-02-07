@@ -7,109 +7,109 @@ class TargetedLowIncomeChildrenFixture < MagiFixture
     @magi = 'TargetedLowIncomeChildren'
     @test_sets = [
       {
-        test_name: "CHIP Targeted Low Income - Not In LIC Group",
+        test_name: 'CHIP Targeted Low Income - Not In LIC Group',
         inputs: {
-          "Applicant Age" => 5,
-          "Has Insurance" => "N"
+          'Applicant Age' => 5,
+          'Has Insurance' => 'N'
         },
         configs: {
-          "CHIP Targeted Low Income Child Group" => "N",
-          "CHIP Targeted Low Income Child Age Low Threshold" => 10,
-          "CHIP Targeted Low Income Child Age High Threshold" => 19
+          'CHIP Targeted Low Income Child Group' => 'N',
+          'CHIP Targeted Low Income Child Age Low Threshold' => 10,
+          'CHIP Targeted Low Income Child Age High Threshold' => 19
         },
         expected_outputs: {
-          "Applicant CHIP Targeted Low Income Child Indicator" => "X",
-          "CHIP Targeted Low Income Child Ineligibility Reason" => 555
+          'Applicant CHIP Targeted Low Income Child Indicator' => 'X',
+          'CHIP Targeted Low Income Child Ineligibility Reason' => 555
         }
       },
       {
-        test_name: "CHIP Targeted Low Income - Under Age Threshold",
+        test_name: 'CHIP Targeted Low Income - Under Age Threshold',
         inputs: {
-          "Applicant Age" => 5,
-          "Has Insurance" => "N"
+          'Applicant Age' => 5,
+          'Has Insurance' => 'N'
         },
         configs: {
-          "CHIP Targeted Low Income Child Group" => "Y",
-          "CHIP Targeted Low Income Child Age Low Threshold" => 10,
-          "CHIP Targeted Low Income Child Age High Threshold" => 19
+          'CHIP Targeted Low Income Child Group' => 'Y',
+          'CHIP Targeted Low Income Child Age Low Threshold' => 10,
+          'CHIP Targeted Low Income Child Age High Threshold' => 19
         },
         expected_outputs: {
-          "Applicant CHIP Targeted Low Income Child Indicator" => "N",
-          "CHIP Targeted Low Income Child Ineligibility Reason" => 127
+          'Applicant CHIP Targeted Low Income Child Indicator' => 'N',
+          'CHIP Targeted Low Income Child Ineligibility Reason' => 127
         }
       },
       {
-        test_name: "CHIP Targeted Low Income - Over Age Threshold",
+        test_name: 'CHIP Targeted Low Income - Over Age Threshold',
         inputs: {
-          "Applicant Age" => 50,
-          "Has Insurance" => "N"
+          'Applicant Age' => 50,
+          'Has Insurance' => 'N'
         },
         configs: {
-          "CHIP Targeted Low Income Child Group" => "Y",
-          "CHIP Targeted Low Income Child Age Low Threshold" => 10,
-          "CHIP Targeted Low Income Child Age High Threshold" => 19
+          'CHIP Targeted Low Income Child Group' => 'Y',
+          'CHIP Targeted Low Income Child Age Low Threshold' => 10,
+          'CHIP Targeted Low Income Child Age High Threshold' => 19
         },
         expected_outputs: {
-          "Applicant CHIP Targeted Low Income Child Indicator" => "N",
-          "CHIP Targeted Low Income Child Ineligibility Reason" => 127
+          'Applicant CHIP Targeted Low Income Child Indicator' => 'N',
+          'CHIP Targeted Low Income Child Ineligibility Reason' => 127
         }
       },
       {
-        test_name: "CHIP Targeted Low Income - Already Has Insurance",
+        test_name: 'CHIP Targeted Low Income - Already Has Insurance',
         inputs: {
-          "Applicant Age" => 12,
-          "Has Insurance" => "Y"
+          'Applicant Age' => 12,
+          'Has Insurance' => 'Y'
         },
         configs: {
-          "CHIP Targeted Low Income Child Group" => "Y",
-          "CHIP Targeted Low Income Child Age Low Threshold" => 10,
-          "CHIP Targeted Low Income Child Age High Threshold" => 19
+          'CHIP Targeted Low Income Child Group' => 'Y',
+          'CHIP Targeted Low Income Child Age Low Threshold' => 10,
+          'CHIP Targeted Low Income Child Age High Threshold' => 19
         },
         expected_outputs: {
-          "Applicant CHIP Targeted Low Income Child Indicator" => "N",
-          "CHIP Targeted Low Income Child Ineligibility Reason" => 114
+          'Applicant CHIP Targeted Low Income Child Indicator' => 'N',
+          'CHIP Targeted Low Income Child Ineligibility Reason' => 114
         }
       },
       {
-        test_name: "CHIP Targeted Low Income - Fallback - Eligible",
+        test_name: 'CHIP Targeted Low Income - Fallback - Eligible',
         inputs: {
-          "Applicant Age" => 12,
-          "Has Insurance" => "N"
+          'Applicant Age' => 12,
+          'Has Insurance' => 'N'
         },
         configs: {
-          "CHIP Targeted Low Income Child Group" => "Y",
-          "CHIP Targeted Low Income Child Age Low Threshold" => 10,
-          "CHIP Targeted Low Income Child Age High Threshold" => 19
+          'CHIP Targeted Low Income Child Group' => 'Y',
+          'CHIP Targeted Low Income Child Age Low Threshold' => 10,
+          'CHIP Targeted Low Income Child Age High Threshold' => 19
         },
         expected_outputs: {
-          "Applicant CHIP Targeted Low Income Child Indicator" => "Y",
-          "CHIP Targeted Low Income Child Ineligibility Reason" => 999
+          'Applicant CHIP Targeted Low Income Child Indicator' => 'Y',
+          'CHIP Targeted Low Income Child Ineligibility Reason' => 999
         }
       },
       {
-        test_name: "Bad Info - Inputs",
+        test_name: 'Bad Info - Inputs',
         inputs: {
           # "Applicant Age" => 12,
-          "Has Insurance" => "Y"
+          'Has Insurance' => 'Y'
         },
         configs: {
-          "CHIP Targeted Low Income Child Group" => "Y",
-          "CHIP Targeted Low Income Child Age Low Threshold" => 10,
-          "CHIP Targeted Low Income Child Age High Threshold" => 19
+          'CHIP Targeted Low Income Child Group' => 'Y',
+          'CHIP Targeted Low Income Child Age Low Threshold' => 10,
+          'CHIP Targeted Low Income Child Age High Threshold' => 19
         },
         expected_outputs: {
         }
       },
       {
-        test_name: "Bad Info - Configs",
+        test_name: 'Bad Info - Configs',
         inputs: {
-          "Applicant Age" => 12,
-          "Has Insurance" => "Y"
+          'Applicant Age' => 12,
+          'Has Insurance' => 'Y'
         },
         configs: {
           # "CHIP Targeted Low Income Child Group" => "Y",
           # "CHIP Targeted Low Income Child Age Low Threshold" => 10,
-          "CHIP Targeted Low Income Child Age High Threshold" => 19
+          'CHIP Targeted Low Income Child Age High Threshold' => 19
         },
         expected_outputs: {
         }

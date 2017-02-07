@@ -7,170 +7,170 @@ class RefugeeAssistanceFixture < MagiFixture
     @magi = 'RefugeeAssistance'
     @test_sets = [
       {
-        test_name: "Not a refugee",
+        test_name: 'Not a refugee',
         inputs: {
-          "Refugee Status" => "N",
-          "Refugee Medical Assistance Start Date" => 2.months.ago,
-          "Medicaid Residency Indicator" => "N",
-          "Calculated Income" => 1000,
-          "FPL" => 20
+          'Refugee Status' => 'N',
+          'Refugee Medical Assistance Start Date' => 2.months.ago,
+          'Medicaid Residency Indicator' => 'N',
+          'Calculated Income' => 1000,
+          'FPL' => 20
         },
         configs: {
-          "State Offers Refugee Medical Assistance" => "Y",
-          "Refugee Medical Assistance Income Requirement" => "N",
-          "Refugee Medical Assistance Threshold" => {"percentage" => "Y","method" => "standard","threshold" => 100}
+          'State Offers Refugee Medical Assistance' => 'Y',
+          'Refugee Medical Assistance Income Requirement' => 'N',
+          'Refugee Medical Assistance Threshold' => { 'percentage' => 'Y', 'method' => 'standard', 'threshold' => 100 }
         },
         expected_outputs: {
-          "Applicant Refugee Medical Assistance Indicator" => "X",
-          "Refugee Medical Assistance Ineligibility Reason" => 555
+          'Applicant Refugee Medical Assistance Indicator' => 'X',
+          'Refugee Medical Assistance Ineligibility Reason' => 555
         }
       },
       {
-        test_name: "State does not offer refugee assistance",
+        test_name: 'State does not offer refugee assistance',
         inputs: {
-          "Refugee Status" => "Y",
-          "Refugee Medical Assistance Start Date" => 2.months.ago,
-          "Medicaid Residency Indicator" => "N",
-          "Calculated Income" => 1000,
-          "FPL" => 20
+          'Refugee Status' => 'Y',
+          'Refugee Medical Assistance Start Date' => 2.months.ago,
+          'Medicaid Residency Indicator' => 'N',
+          'Calculated Income' => 1000,
+          'FPL' => 20
         },
         configs: {
-          "State Offers Refugee Medical Assistance" => "N",
-          "Refugee Medical Assistance Income Requirement" => "N",
-          "Refugee Medical Assistance Threshold" => {"percentage" => "Y","method" => "standard","threshold" => 100}
+          'State Offers Refugee Medical Assistance' => 'N',
+          'Refugee Medical Assistance Income Requirement' => 'N',
+          'Refugee Medical Assistance Threshold' => { 'percentage' => 'Y', 'method' => 'standard', 'threshold' => 100 }
         },
         expected_outputs: {
-          "Applicant Refugee Medical Assistance Indicator" => "X",
-          "Refugee Medical Assistance Ineligibility Reason" => 555
+          'Applicant Refugee Medical Assistance Indicator' => 'X',
+          'Refugee Medical Assistance Ineligibility Reason' => 555
         }
       },
       {
-        test_name: "Refugee Assistance End Date has Passed",
+        test_name: 'Refugee Assistance End Date has Passed',
         inputs: {
-          "Refugee Status" => "Y",
-          "Refugee Medical Assistance Start Date" => 2.years.ago,
-          "Medicaid Residency Indicator" => "N",
-          "Calculated Income" => 1000,
-          "FPL" => 20
+          'Refugee Status' => 'Y',
+          'Refugee Medical Assistance Start Date' => 2.years.ago,
+          'Medicaid Residency Indicator' => 'N',
+          'Calculated Income' => 1000,
+          'FPL' => 20
         },
         configs: {
-          "State Offers Refugee Medical Assistance" => "Y",
-          "Refugee Medical Assistance Income Requirement" => "N",
-          "Refugee Medical Assistance Threshold" => {"percentage" => "Y","method" => "standard","threshold" => 100}
+          'State Offers Refugee Medical Assistance' => 'Y',
+          'Refugee Medical Assistance Income Requirement' => 'N',
+          'Refugee Medical Assistance Threshold' => { 'percentage' => 'Y', 'method' => 'standard', 'threshold' => 100 }
         },
         expected_outputs: {
-          "Applicant Refugee Medical Assistance Indicator" => "N",
-          "Refugee Medical Assistance Ineligibility Reason" => 112,
-          "APTC Referral Indicator" => "Y"
+          'Applicant Refugee Medical Assistance Indicator' => 'N',
+          'Refugee Medical Assistance Ineligibility Reason' => 112,
+          'APTC Referral Indicator' => 'Y'
           # "APTC Referral Ineligibility Reason" => ?
         }
       },
       {
-        test_name: "Is Not Medicaid Resident",
+        test_name: 'Is Not Medicaid Resident',
         inputs: {
-          "Refugee Status" => "Y",
-          "Refugee Medical Assistance Start Date" => 2.months.ago,
-          "Medicaid Residency Indicator" => "N",
-          "Calculated Income" => 1000,
-          "FPL" => 20
+          'Refugee Status' => 'Y',
+          'Refugee Medical Assistance Start Date' => 2.months.ago,
+          'Medicaid Residency Indicator' => 'N',
+          'Calculated Income' => 1000,
+          'FPL' => 20
         },
         configs: {
-          "State Offers Refugee Medical Assistance" => "Y",
-          "Refugee Medical Assistance Income Requirement" => "N",
-          "Refugee Medical Assistance Threshold" => {"percentage" => "Y","method" => "standard","threshold" => 100}
+          'State Offers Refugee Medical Assistance' => 'Y',
+          'Refugee Medical Assistance Income Requirement' => 'N',
+          'Refugee Medical Assistance Threshold' => { 'percentage' => 'Y', 'method' => 'standard', 'threshold' => 100 }
         },
         expected_outputs: {
-          "Applicant Refugee Medical Assistance Indicator" => "N",
-          "Refugee Medical Assistance Ineligibility Reason" => 309,
-          "APTC Referral Indicator" => "Y"
+          'Applicant Refugee Medical Assistance Indicator' => 'N',
+          'Refugee Medical Assistance Ineligibility Reason' => 309,
+          'APTC Referral Indicator' => 'Y'
         }
       },
       {
-        test_name: "No Refugee Assistance Income Requirement",
+        test_name: 'No Refugee Assistance Income Requirement',
         inputs: {
-          "Refugee Status" => "Y",
-          "Refugee Medical Assistance Start Date" => 2.months.ago,
-          "Medicaid Residency Indicator" => "Y",
-          "Calculated Income" => 1000,
-          "FPL" => 20
+          'Refugee Status' => 'Y',
+          'Refugee Medical Assistance Start Date' => 2.months.ago,
+          'Medicaid Residency Indicator' => 'Y',
+          'Calculated Income' => 1000,
+          'FPL' => 20
         },
         configs: {
-          "State Offers Refugee Medical Assistance" => "Y",
-          "Refugee Medical Assistance Income Requirement" => "N",
-          "Refugee Medical Assistance Threshold" => {"percentage" => "Y","method" => "standard","threshold" => 100}
+          'State Offers Refugee Medical Assistance' => 'Y',
+          'Refugee Medical Assistance Income Requirement' => 'N',
+          'Refugee Medical Assistance Threshold' => { 'percentage' => 'Y', 'method' => 'standard', 'threshold' => 100 }
         },
         expected_outputs: {
-          "Applicant Refugee Medical Assistance Indicator" => "Y",
-          "Refugee Medical Assistance Ineligibility Reason" => 999,
-          "APTC Referral Indicator" => "N",
-          "APTC Referral Ineligibility Reason" => 407
+          'Applicant Refugee Medical Assistance Indicator' => 'Y',
+          'Refugee Medical Assistance Ineligibility Reason' => 999,
+          'APTC Referral Indicator' => 'N',
+          'APTC Referral Ineligibility Reason' => 407
         }
       },
       {
-        test_name: "Refugee Assistance Income Requirement, Calculated Income Below Threshold",
+        test_name: 'Refugee Assistance Income Requirement, Calculated Income Below Threshold',
         inputs: {
-          "Refugee Status" => "Y",
-          "Refugee Medical Assistance Start Date" => 2.months.ago,
-          "Medicaid Residency Indicator" => "Y",
-          "Calculated Income" => 1000,
-          "FPL" => 20000
+          'Refugee Status' => 'Y',
+          'Refugee Medical Assistance Start Date' => 2.months.ago,
+          'Medicaid Residency Indicator' => 'Y',
+          'Calculated Income' => 1000,
+          'FPL' => 20_000
         },
         configs: {
-          "State Offers Refugee Medical Assistance" => "Y",
-          "Refugee Medical Assistance Income Requirement" => "Y",
-          "Refugee Medical Assistance Threshold" => {"percentage" => "Y","method" => "standard","threshold" => 100}
+          'State Offers Refugee Medical Assistance' => 'Y',
+          'Refugee Medical Assistance Income Requirement' => 'Y',
+          'Refugee Medical Assistance Threshold' => { 'percentage' => 'Y', 'method' => 'standard', 'threshold' => 100 }
         },
         expected_outputs: {
-          "Applicant Refugee Medical Assistance Indicator" => "Y",
-          "Refugee Medical Assistance Ineligibility Reason" => 999,
-          "APTC Referral Indicator" => "N",
-          "APTC Referral Ineligibility Reason" => 407
+          'Applicant Refugee Medical Assistance Indicator' => 'Y',
+          'Refugee Medical Assistance Ineligibility Reason' => 999,
+          'APTC Referral Indicator' => 'N',
+          'APTC Referral Ineligibility Reason' => 407
         }
       },
       {
-        test_name: "Fallback",
+        test_name: 'Fallback',
         inputs: {
-          "Refugee Status" => "Y",
-          "Refugee Medical Assistance Start Date" => 2.months.ago,
-          "Medicaid Residency Indicator" => "Y",
-          "Calculated Income" => 1000,
-          "FPL" => 700
+          'Refugee Status' => 'Y',
+          'Refugee Medical Assistance Start Date' => 2.months.ago,
+          'Medicaid Residency Indicator' => 'Y',
+          'Calculated Income' => 1000,
+          'FPL' => 700
         },
         configs: {
-          "State Offers Refugee Medical Assistance" => "Y",
-          "Refugee Medical Assistance Income Requirement" => "Y",
-          "Refugee Medical Assistance Threshold" => {"percentage" => "Y","method" => "standard","threshold" => 100}
+          'State Offers Refugee Medical Assistance' => 'Y',
+          'Refugee Medical Assistance Income Requirement' => 'Y',
+          'Refugee Medical Assistance Threshold' => { 'percentage' => 'Y', 'method' => 'standard', 'threshold' => 100 }
         },
         expected_outputs: {
-          "Applicant Refugee Medical Assistance Indicator" => "N",
-          "Refugee Medical Assistance Ineligibility Reason" => 373,
-          "APTC Referral Indicator" => "Y"
+          'Applicant Refugee Medical Assistance Indicator' => 'N',
+          'Refugee Medical Assistance Ineligibility Reason' => 373,
+          'APTC Referral Indicator' => 'Y'
         }
       },
       {
-        test_name: "Bad Info - Inputs",
+        test_name: 'Bad Info - Inputs',
         inputs: {
-          "FPL" => 0
+          'FPL' => 0
         },
         configs: {
-          "State Offers Refugee Medical Assistance" => "N",
-          "Refugee Medical Assistance Income Requirement" => 100,
-          "Refugee Medical Assistance Threshold" => 100
+          'State Offers Refugee Medical Assistance' => 'N',
+          'Refugee Medical Assistance Income Requirement' => 100,
+          'Refugee Medical Assistance Threshold' => 100
         },
         expected_outputs: {
         }
       },
       {
-        test_name: "Bad Info - Configs",
+        test_name: 'Bad Info - Configs',
         inputs: {
-          "Refugee Status" => "N",
-          "Refugee Medical Assistance Start Date" => Time.now.yesterday,
-          "Medicaid Residency Indicator" => "N",
-          "Calculated Income" => 0,
-          "FPL" => 10
+          'Refugee Status' => 'N',
+          'Refugee Medical Assistance Start Date' => Time.now.yesterday,
+          'Medicaid Residency Indicator' => 'N',
+          'Calculated Income' => 0,
+          'FPL' => 10
         },
         configs: {
-          "Refugee Medical Assistance Threshold" => 10
+          'Refugee Medical Assistance Threshold' => 10
         },
         expected_outputs: {
         }

@@ -14,15 +14,15 @@ class Application
   attr_reader :state, :people, :tax_returns
 
   XML_NAMESPACES = {
-    "exch"     => "http://at.dsh.cms.gov/exchange/1.0",
-    "s"        => "http://niem.gov/niem/structures/2.0", 
-    "ext"      => "http://at.dsh.cms.gov/extension/1.0",
-    "hix-core" => "http://hix.cms.gov/0.1/hix-core", 
-    "hix-ee"   => "http://hix.cms.gov/0.1/hix-ee",
-    "nc"       => "http://niem.gov/niem/niem-core/2.0", 
-    "hix-pm"   => "http://hix.cms.gov/0.1/hix-pm",
-    "scr"      => "http://niem.gov/niem/domains/screening/2.1"
-  }
+    'exch'     => 'http://at.dsh.cms.gov/exchange/1.0',
+    's'        => 'http://niem.gov/niem/structures/2.0',
+    'ext'      => 'http://at.dsh.cms.gov/extension/1.0',
+    'hix-core' => 'http://hix.cms.gov/0.1/hix-core',
+    'hix-ee'   => 'http://hix.cms.gov/0.1/hix-ee',
+    'nc'       => 'http://niem.gov/niem/niem-core/2.0',
+    'hix-pm'   => 'http://hix.cms.gov/0.1/hix-pm',
+    'scr'      => 'http://niem.gov/niem/domains/screening/2.1'
+  }.freeze
 
   def initialize(raw_application, content_type)
     @determination_date = Date.today
@@ -40,7 +40,7 @@ class Application
       elsif content_type
         raise "Invalid content type #{content_type}"
       else
-        raise "Missing content type"
+        raise 'Missing content type'
       end
       read_configs!
       compute_values!

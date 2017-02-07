@@ -16,3 +16,5 @@ AllCops:
     - vendor/**/*
     - config/**/*
     - bin/**/*
+    - autogen/**/*
+    - config.ru
