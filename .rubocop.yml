@@ -4,6 +4,10 @@ Style/FrozenStringLiteralComment:
 Rails:
   Enabled: true
 
+# shut off because rails 3 uses before_filter
+Rails/ActionFilter:
+  Enabled: false
+
 AllCops:
   Exclude: 
     - db/**/*
