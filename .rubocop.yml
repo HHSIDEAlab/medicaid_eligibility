@@ -1,0 +1,18 @@
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Rails:
+  Enabled: true
+
+AllCops:
+  Exclude: 
+    - db/**/*
+    - bin/**/*
+    - script/**/*
+    - lib/**/*
+    - log/**/*
+    - public/**/*
+    - tmp/**/*
+    - vendor/**/*
+    - config/**/*
+    - bin/**/*
