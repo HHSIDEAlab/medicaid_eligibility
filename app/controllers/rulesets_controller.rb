@@ -1,5 +1,5 @@
 class RulesetsController < ApplicationController
-  rescue_from RuleContext::MissingVariableError, :with => :missing_variable_error
+  rescue_from RuleContext::MissingVariableError, with: :missing_variable_error
 
   def eval
     @context = RuleContext.new(params[:config], params[:inputs], Date.today)
@@ -7,11 +7,18 @@ class RulesetsController < ApplicationController
   end
 
   protected
-    def ruleset
-      @ruleset ||= params[:id].camelize.constantize.new
-    end
 
-    def missing_variable_error(error)
-      render :json => {:error => error.message}, :status => 422
-    end 
+  def ruleset
+    @ruleset ||= load_ruleset(params[:id])
+  end
+
+  def missing_variable_error(error)
+    render json: { error: error.message }, status: 422
+  end
+
+  private
+
+  def load_ruleset(ruleset)
+    MAGI.const_get(ruleset.gsub(/magi\//i, '').camelize).new
+  end
 end
