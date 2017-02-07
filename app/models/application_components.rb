@@ -20,6 +20,10 @@ module ApplicationComponents
     def get_relationship(relationship_type)
       get_relationships(relationship_type).first
     end
+
+    def parents_stepparents()
+      get_relationships(:parent) + get_relationships(:stepparent)
+    end
   end
 
   class Relationship
@@ -43,7 +47,8 @@ module ApplicationComponents
   end
 
   class MedicaidHousehold < Household
-    attr_reader :income_people, :income, :household_size
+    attr_accessor :income_people, :income
+    attr_reader :household_size
 
     def initialize(household_id, people, income_people, income, household_size)
       super household_id, people
