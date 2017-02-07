@@ -18,7 +18,7 @@
     "Option Caretaker Relative Relationship": "<%= row["optionCaretakerRelativeRelationship"] %>",
     "Option Dependent Student": "<%= row["optionDependentStudent"] %>",
     <% if row["deprivationRequirementRetained"] == "Y" %>"State Unemployed Standard": <%= row["stateUnemployedStandard"] || 100 %>,<% end %>
-    
+
     <% if row["percentFPLAdultGroup"] == "0"  %>"Option Adult Group": "N",<% else %>"Option Adult Group": "Y",<% end %>
     "Option Young Adults": "<%= row["optionYoungAdults"] %>",
     <% if row["optionYoungAdults"] == 'Y' %>"Young Adult Age Threshold": <%= row["MedicaidChildCategoryHighAgeThreshold"].to_i + 1 %>,<% end %>
@@ -35,7 +35,7 @@
     },
     <% end %>
     <% end %>
-    
+
     <% if row["percentCHIPFPLPregnantWoman"] == "0" %>"CHIP for Pregnant Women": "N",<% else %>"CHIP for Pregnant Women": "Y",<% end %>
     "Option Cover Unborn Child": "<%= row["optionCoverUnbornChild"] %>",
     "CHIP for State Health Benefits": "<%= row["chipForStateHealthBenefits"] %>",
