@@ -8,4 +8,4 @@ notifications:
 script:
   - bundle exec rake test
   - bundle exec brakeman --exit-on-warn .
-  - bundle exec bundle-audit update && bundle exec bundle-audit check
+  - bundle exec bundle-audit check --update --ignore OSVDB-131677
