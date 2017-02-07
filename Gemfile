@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
-ruby '2.0.0'
+ruby '2.3.3'
 
-gem 'rails', '3.2.12'
+gem 'rails', '3.2.22.5'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -49,3 +49,4 @@ end
 
 # travis
 gem 'rake', group: :test
+gem 'test-unit'
