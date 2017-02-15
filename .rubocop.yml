@@ -1,0 +1,24 @@
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Rails:
+  Enabled: true
+
+# shut off because rails 3 uses before_filter
+Rails/ActionFilter:
+  Enabled: false
+
+AllCops:
+  Exclude: 
+    - db/**/*
+    - bin/**/*
+    - script/**/*
+    - lib/**/*
+    - log/**/*
+    - public/**/*
+    - tmp/**/*
+    - vendor/**/*
+    - config/**/*
+    - bin/**/*
+    - autogen/**/*
+    - config.ru

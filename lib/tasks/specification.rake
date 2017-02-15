@@ -1,6 +1,6 @@
 namespace :specification do
   desc "Generate initial inputs"
-  task :variables => :environment do 
+  task :variables => :environment do
     Dir[Rails.root + 'app/models/**/*.rb'].each do |path|
       require path
     end
@@ -9,7 +9,7 @@ namespace :specification do
 
     base_variables = {
       "State" => {
-        :name => "State", 
+        :name => "State",
         :type => "Char(2)"
       }
     }
@@ -17,7 +17,7 @@ namespace :specification do
     configs = rulesets.inject({}){|h, r| h.merge r.configs}
     outputs = base_variables.merge(rulesets.inject({}){|h, r| h.merge r.outputs})
     inputs = base_variables.merge(rulesets.inject({}){|h, r| h.merge r.inputs}.select{|k,_| !(outputs.member? k)})
-    
+
     configs, outputs, inputs = [configs, outputs, inputs].map{|vars| Hash[*(vars.to_a.sort{|a,b| a.first <=> b.first}.flatten)]}
 
     File.open(Rails.root + 'config/specification/configs.json', 'w') {|f| f.write(JSON.pretty_generate configs)}
@@ -26,14 +26,14 @@ namespace :specification do
   end
 
   task :inputs => :environment do
-    File.open(Rails.root + 'config/specification/input_list.json', 'w') {|f| 
+    File.open(Rails.root + 'config/specification/input_list.json', 'w') {|f|
       inputs = {:person => []}
       for input in ApplicationVariables::PERSON_INPUTS
         if input[:xml_group] == :applicant
-          xpath = "/exch:AccountTransferRequest/hix-ee:InsuranceApplication/hix-ee:InsuranceApplicant/" + input[:xpath] 
+          xpath = "/exch:AccountTransferRequest/hix-ee:InsuranceApplication/hix-ee:InsuranceApplicant/" + input[:xpath]
         elsif input[:xml_group] == :person
           xpath = "/exch:AccountTransferRequest/hix-core:Person/" + input[:xpath]
-        else 
+        else
           xpath = "Undefined"
         end
 

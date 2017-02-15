@@ -41,7 +41,7 @@ class RuleContext
   end
 
   def v(name)
-    unless @input.has_key? name
+    unless @input.key? name
       raise MissingVariableError, "missing input variable #{name}"
     end
     @input[name]

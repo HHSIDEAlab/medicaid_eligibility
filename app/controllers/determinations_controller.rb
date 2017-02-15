@@ -19,7 +19,7 @@ class DeterminationsController < ApplicationController
 
   def restrict_access
     if ENV['REQUIRE_ACCESS_TOKEN'] == 'true'
-      authenticate_or_request_with_http_token do |token, options|
+      authenticate_or_request_with_http_token do |token, _options|
         @@access_tokens.include? token
       end
     end

@@ -8,100 +8,100 @@ class DependentChildCoveredFixture < MagiFixture
     @magi = 'DependentChildCovered'
     @test_sets = [
       {
-        test_name: "Determine Eligibility - No Qualified Children",
+        test_name: 'Determine Eligibility - No Qualified Children',
         inputs: {
-          "Applicant List" => [],
-          "Person List" => [],
-          "Applicant Adult Group Category Indicator" => "Y",
-          "Qualified Children List" => []
+          'Applicant List' => [],
+          'Person List' => [],
+          'Applicant Adult Group Category Indicator' => 'Y',
+          'Qualified Children List' => []
         },
         configs: {
-          # none 
+          # none
         },
         expected_outputs: {
-          "Applicant Dependent Child Covered Indicator" => "X",
-          "Dependent Child Covered Ineligibility Reason" => 555
+          'Applicant Dependent Child Covered Indicator' => 'X',
+          'Dependent Child Covered Ineligibility Reason' => 555
         }
       },
       {
-        test_name: "Determine Eligibility - All Children Eligible for Coverage - Child in Applicant List",
+        test_name: 'Determine Eligibility - All Children Eligible for Coverage - Child in Applicant List',
         inputs: {
-          "Applicant List" => [
-            Person.new("Parent Caretaker", {"Has Insurance" => "Y"}, 'Parent Caretaker', '',''),
-            Person.new("Billy", {"Has Insurance" => "Y"}, 'Billy', '','')
+          'Applicant List' => [
+            Person.new('Parent Caretaker', { 'Has Insurance' => 'Y' }, 'Parent Caretaker', '', ''),
+            Person.new('Billy', { 'Has Insurance' => 'Y' }, 'Billy', '', '')
           ],
-          "Person List" => [
-            Person.new("Parent Caretaker", {"Has Insurance" => "N"}, 'Parent Caretaker'),
-            Person.new("Billy", {"Has Insurance" => "N"}, 'Billy')
+          'Person List' => [
+            Person.new('Parent Caretaker', { 'Has Insurance' => 'N' }, 'Parent Caretaker'),
+            Person.new('Billy', { 'Has Insurance' => 'N' }, 'Billy')
           ],
-          "Applicant Adult Group Category Indicator" => "Y",
-          "Qualified Children List" => [
-            {'Person ID' => 'Billy'}
+          'Applicant Adult Group Category Indicator' => 'Y',
+          'Qualified Children List' => [
+            { 'Person ID' => 'Billy' }
           ]
         },
         configs: {
-          # none 
+          # none
         },
         expected_outputs: {
-          "Applicant Dependent Child Covered Indicator" => "Y",
-          "Dependent Child Covered Ineligibility Reason" => 999
+          'Applicant Dependent Child Covered Indicator' => 'Y',
+          'Dependent Child Covered Ineligibility Reason' => 999
         }
       },
       {
-        test_name: "Determine Eligibility - All Children Eligible for Coverage - Child Has Separate Insurance",
+        test_name: 'Determine Eligibility - All Children Eligible for Coverage - Child Has Separate Insurance',
         inputs: {
-          "Applicant List" => [
-            Person.new("Parent Caretaker", {"Has Insurance" => "N"}, 'Parent Caretaker', '','')
+          'Applicant List' => [
+            Person.new('Parent Caretaker', { 'Has Insurance' => 'N' }, 'Parent Caretaker', '', '')
           ],
-          "Person List" => [
-            Person.new("Parent Caretaker", {"Has Insurance" => "N"}, 'Parent Caretaker'),
-            Person.new("Billy", {"Has Insurance" => "Y"}, 'Billy')
+          'Person List' => [
+            Person.new('Parent Caretaker', { 'Has Insurance' => 'N' }, 'Parent Caretaker'),
+            Person.new('Billy', { 'Has Insurance' => 'Y' }, 'Billy')
           ],
-          "Applicant Adult Group Category Indicator" => "Y",
-          "Qualified Children List" => [
-            {'Person ID' => 'Billy'}
+          'Applicant Adult Group Category Indicator' => 'Y',
+          'Qualified Children List' => [
+            { 'Person ID' => 'Billy' }
           ]
         },
         configs: {
-          # none 
+          # none
         },
         expected_outputs: {
-          "Applicant Dependent Child Covered Indicator" => "Y",
-          "Dependent Child Covered Ineligibility Reason" => 999
+          'Applicant Dependent Child Covered Indicator' => 'Y',
+          'Dependent Child Covered Ineligibility Reason' => 999
         }
       },
       {
-        test_name: "Determine Eligibility - Child Not Covered Scenario (Fallback Determination)",
+        test_name: 'Determine Eligibility - Child Not Covered Scenario (Fallback Determination)',
         inputs: {
-          "Applicant List" => [
-            Person.new("Parent Caretaker", {"Has Insurance" => "N"}, 'Parent Caretaker', '','')
+          'Applicant List' => [
+            Person.new('Parent Caretaker', { 'Has Insurance' => 'N' }, 'Parent Caretaker', '', '')
           ],
-          "Person List" => [
-            Person.new("Parent Caretaker", {"Has Insurance" => "N"}, 'Parent Caretaker'),
-            Person.new("Billy", {"Has Insurance" => "N"}, 'Billy')
+          'Person List' => [
+            Person.new('Parent Caretaker', { 'Has Insurance' => 'N' }, 'Parent Caretaker'),
+            Person.new('Billy', { 'Has Insurance' => 'N' }, 'Billy')
           ],
-          "Applicant Adult Group Category Indicator" => "Y",
-          "Qualified Children List" => [
-            {'Person ID' => 'Billy'}
+          'Applicant Adult Group Category Indicator' => 'Y',
+          'Qualified Children List' => [
+            { 'Person ID' => 'Billy' }
           ]
         },
         configs: {
-          # none 
+          # none
         },
         expected_outputs: {
-          "Applicant Dependent Child Covered Indicator" => "N",
-          "Dependent Child Covered Ineligibility Reason" => 128
+          'Applicant Dependent Child Covered Indicator' => 'N',
+          'Dependent Child Covered Ineligibility Reason' => 128
         }
       },
       {
-        test_name: "Bad Info - Inputs",
+        test_name: 'Bad Info - Inputs',
         inputs: {
-          "Qualified Children List" => [
-            {'Person ID' => 'Billy'}
+          'Qualified Children List' => [
+            { 'Person ID' => 'Billy' }
           ]
         },
         configs: {
-          # none 
+          # none
         },
         expected_outputs: {
         }
