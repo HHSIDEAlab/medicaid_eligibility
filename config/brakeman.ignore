@@ -1,0 +1,24 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Cross-Site Request Forgery",
+      "warning_code": 7,
+      "fingerprint": "3588cce3531e3f5f2c9d35c1f01591000e75c7bdc64bd2355dd643d52815b04d",
+      "message": "'protect_from_forgery' should be called in HomeController",
+      "file": "app/controllers/home_controller.rb",
+      "line": 1,
+      "link": "http://brakemanscanner.org/docs/warning_types/cross-site_request_forgery/",
+      "code": null,
+      "render_path": null,
+      "location": {
+        "type": "controller",
+        "controller": "HomeController"
+      },
+      "user_input": null,
+      "confidence": "High",
+      "note": "overruled by api gem"
+    }
+  ],
+  "updated": "2017-02-07 15:40:50 -0500",
+  "brakeman_version": "3.4.1"
+}

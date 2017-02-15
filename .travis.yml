@@ -5,3 +5,7 @@ sudo: false
 notifications:
   slack:
     secure: k+SyTLq2tB2xnxCXcP2gQzRsDP8U7fq42OyL1mxujITgrhGN71tUrU5Mt+x6/zqiI08x82L+kG2TT8E8kepXZLS29RQ8WVA4B/P1KyH8wGkNtkkbd/gRRwStPi0ASgNCXKm+QmRxyUKIYM4SP4ap1DYYujapQ7+jE/nKafkYyyO9sBdo0P66XtasPgnod9on4kDyF4qD8EMS4VnxLuPZWrWmkGD1LflSE9ZmZTybC+2oPbC820Au8+JQ+10Ad7wt989o/TCzybytlEmlJig5MkAD2+bzZh8bxdh7mJjgdvKUNoYBrBMCAOA5fu36554tyWvJiTL7F7gSeiFK67SibHyQKo5VzXQJFG7G+0dUWPhYMc/kFHqimW5qsYIFsC3w0DSE/2W11FZbdWq/N/mLP2HWhFIcD4ymcvm/ABJoOzuSkyD8vcTojzh08AxSmn8BPV2qk3vDY88h4H9TmZsBPzCJr8jNJC0DVaqAPg+diGf7JgNK96ApvHjXjuBKCZ8fshBlZU5fcTtl8wE5KD9y6e6E5gdN3ONyEMvQgNN8+Wy62ggQCnb1n56suXWRB+M/M41Wz8lWrU058ShWKhPyTHV1pPI7K/6bPTjkuBYpzvclXGBBlFdtIzCtpweewI0PlUHhC/zdt7QBSkyYIMWmVC9usrbQEuI4tun88416kgk=
+script:
+  - bundle exec rake test
+  - bundle exec brakeman --exit-on-warn .
+  - bundle exec bundle-audit check --update --ignore OSVDB-131677
