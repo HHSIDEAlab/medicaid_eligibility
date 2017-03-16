@@ -25,6 +25,18 @@
           40890
         ],
         "FPL Per Extra Person": 4160
+      },
+      "2017": {
+        "Base FPL": 12060,
+        "FPL Per Person": 4180,
+        "Alaska": {
+          "Base FPL": 15060,
+          "FPL Per Person": 5230
+        },
+        "Hawaii": {
+          "Base FPL": 13860,
+          "FPL Per Person": 4810 
+        }        
       }
     },
 
