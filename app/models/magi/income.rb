@@ -38,10 +38,8 @@ module MAGI
 
     calculated "FPL" do
       fpl = c("FPL")[v("Application Year").to_s]
-      if v("Application Year") < 2016
-        fpl["Base FPL"] + (v("Medicaid Household").household_size - 1) * fpl["FPL Per Person"]
-      else
-        # FPL Per Person is not consistent starting in 2016
+      if v("Application Year") == 2016
+        # FPL Per Person is not consistent in 2016
         max_enumerated_household_size = fpl["FPL By Age"].length
         hh_size = v("Medicaid Household").household_size
         if hh_size <= max_enumerated_household_size
@@ -50,6 +48,8 @@ module MAGI
           extra_people = hh_size - max_enumerated_household_size
           fpl["FPL By Age"][max_enumerated_household_size - 1] + extra_people * fpl["FPL Per Extra Person"]
         end
+      else
+        fpl["Base FPL"] + (v("Medicaid Household").household_size - 1) * fpl["FPL Per Person"]
       end
     end
 
