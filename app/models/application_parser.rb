@@ -115,115 +115,6 @@ module ApplicationParser
     end
   end
 
-  def read_xml!
-    @state = get_node("/exch:AccountTransferRequest/ext:TransferHeader/ext:TransferActivity/ext:RecipientTransferActivityStateCode").inner_text
-    @people = []
-    @applicants = []
-    
-    xml_people = get_nodes "/exch:AccountTransferRequest/hix-core:Person"
-    
-    for xml_person in xml_people
-      person_id = xml_person.attribute('id').value
-      person_attributes = {}
-
-      xml_app = get_nodes("/exch:AccountTransferRequest/hix-ee:InsuranceApplication/hix-ee:InsuranceApplicant").find{
-        |x_app| x_app.at_xpath("hix-core:RoleOfPersonReference").attribute('ref').value == person_id
-      }
-      if xml_app
-        applicant_id = xml_app.attribute('id').value
-        applicant_attributes = {}
-      end
-      
-      for input in ApplicationVariables::PERSON_INPUTS
-        if input[:xpath] == :unimplemented
-          raise "Variable #{input[:name]} has unimplemented xpath"
-        end
-
-        if input[:group] == :person
-          node = xml_person.at_xpath(input[:xpath])
-        elsif input[:group] == :applicant
-          unless xml_app
-            next
-          end
-          node = xml_app.at_xpath(input[:xpath])
-        elsif input[:group] == :relationship
-          next
-        else
-          raise "Variable #{input[:name]} has unimplemented xml group #{input[:group]}"
-        end
-
-        attr_value = get_xml_variable(node, input, person_attributes.merge(applicant_attributes))
-        
-        if input[:group] == :person
-          person_attributes[input[:name]] = attr_value
-        elsif input[:group] == :applicant
-          applicant_attributes[input[:name]] = attr_value
-        end
-      end
-
-      if xml_app
-        person = Applicant.new(person_id, person_attributes, applicant_id, applicant_attributes)
-        @applicants << person
-      else
-        person = Person.new(person_id, person_attributes)
-      end
-      @people << person
-    end
-
-    # get relationships
-    for person in @people
-      xml_person = get_nodes("/exch:AccountTransferRequest/hix-core:Person").find{
-        |x_person| x_person.attribute('id').value == person.person_id
-      }
-      relationships = get_nodes("hix-core:PersonAugmentation/hix-core:PersonAssociation", xml_person)
-
-      for relationship in relationships
-        other_id = get_node("nc:PersonReference", relationship).attribute('ref').value
-        
-        other_person = @people.find{|p| p.person_id == other_id}
-        relationship_type = ApplicationVariables::RELATIONSHIP_CODES[get_node("hix-core:FamilyRelationshipCode", relationship).inner_text]
-        relationship_attributes = {}
-        for input in ApplicationVariables::PERSON_INPUTS.select{|i| i[:group] == :relationship}
-          node = get_node(input[:xpath], relationship)
-
-          relationship_attributes[input[:name]] = get_xml_variable(node, input, person_attributes.merge(applicant_attributes))
-        end
-
-        person.relationships << Relationship.new(other_person, relationship_type, relationship_attributes)
-      end
-    end
-
-    # get tax returns
-    @tax_returns = []
-    xml_tax_returns = get_nodes("/exch:AccountTransferRequest/hix-ee:TaxReturn")
-    for xml_return in xml_tax_returns
-      filers = []
-      xml_filers = [
-        get_node("hix-ee:TaxHousehold/hix-ee:PrimaryTaxFiler", xml_return),
-        get_node("hix-ee:TaxHousehold/hix-ee:SpouseTaxFiler", xml_return)
-      ]
-
-      filers = xml_filers.select{|xf| xf}.map{|xf|
-        @people.find{|p| p.person_id == get_node("hix-core:RoleOfPersonReference", xf).attribute('ref').value}
-      }
-      
-      dependents = get_nodes("hix-ee:TaxHousehold/hix-ee:PrimaryTaxFiler/RoleOfPersonReference", xml_return).map{|node|
-        @people.find{|p| p.person_id == node.attribute('ref').value}
-      }
-
-      @tax_returns << TaxReturn.new(filers, dependents)
-    end
-
-    # get physical households
-    @physical_households = []
-    xml_physical_households = get_nodes("/exch:AccountTransferRequest/ext:PhysicalHousehold")
-    for xml_household in xml_physical_households
-      person_references = get_nodes("hix-ee:HouseholdMemberReference", xml_household).map{|node| node.attribute('ref').value}
-
-      @physical_households << Household.new(nil, person_references.map{|ref| @people.find{|p| p.person_id == ref}})
-    end
-  end
-
   private
 
   def get_json_variable(json_object, input, attributes)
@@ -257,14 +148,6 @@ module ApplicationParser
     end
 
     amount.to_i
-  end
-
-  def get_xml_variable(node, input, attributes)
-    unless node
-      get_variable(nil, input, attributes)
-    end
-
-    get_variable(node.inner_text, input, attributes)
   end
 
   def get_variable(value, input, attributes)
@@ -301,13 +184,5 @@ module ApplicationParser
     else
       raise "Variable #{input[:name]} has unimplemented type #{input[:type]}"
     end
-  end
-
-  def get_node(xpath, start_node=@xml_application)
-      start_node.at_xpath(xpath, XML_NAMESPACES)
-    end
-
-  def get_nodes(xpath, start_node=@xml_application)
-    start_node.xpath(xpath, XML_NAMESPACES)
   end
 end

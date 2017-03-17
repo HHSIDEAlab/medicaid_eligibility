@@ -13,17 +13,6 @@ class Application
   attr_reader :error
   attr_reader :state, :people, :tax_returns
 
-  XML_NAMESPACES = {
-    "exch"     => "http://at.dsh.cms.gov/exchange/1.0",
-    "s"        => "http://niem.gov/niem/structures/2.0", 
-    "ext"      => "http://at.dsh.cms.gov/extension/1.0",
-    "hix-core" => "http://hix.cms.gov/0.1/hix-core", 
-    "hix-ee"   => "http://hix.cms.gov/0.1/hix-ee",
-    "nc"       => "http://niem.gov/niem/niem-core/2.0", 
-    "hix-pm"   => "http://hix.cms.gov/0.1/hix-pm",
-    "scr"      => "http://niem.gov/niem/domains/screening/2.1"
-  }
-
   def initialize(raw_application, content_type)
     @determination_date = Date.today
     @error = nil
@@ -33,10 +22,7 @@ class Application
         @json_application = JSON.parse(raw_application)
         read_json!
       elsif content_type == 'application/xml'
-        @xml_application = Nokogiri::XML(raw_application) do |config|
-          config.default_xml.noblanks
-        end
-        read_xml!
+        raise 'XML not supported'
       elsif content_type
         raise "Invalid content type #{content_type}"
       else

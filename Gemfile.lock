@@ -77,7 +77,6 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25.1)
-    mini_portile2 (2.1.0)
     minitest (4.7.5)
     minitest-rails (1.0.1)
       minitest (~> 4.7)
@@ -96,11 +95,8 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (2.9.2)
     newrelic_rpm (3.12.0.288)
-    nokogiri (1.6.8.1)
-      mini_portile2 (~> 2.1.0)
     parser (2.3.3.1)
       ast (~> 2.2)
-    pg (0.18.1)
     phantomjs (1.9.8.0)
     polyglot (0.3.5)
     power_assert (0.3.1)
@@ -206,8 +202,6 @@ DEPENDENCIES
   minitest-rails (~> 1.0)
   minitest-reporters
   newrelic_rpm
-  nokogiri (~> 1.6.8)
-  pg
   rails (= 3.2.22.5)
   rails-api
   rails_12factor
@@ -224,4 +218,4 @@ RUBY VERSION
    ruby 2.3.3p222
 
 BUNDLED WITH
-   1.14.2
+   1.14.6
