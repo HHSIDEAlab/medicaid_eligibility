@@ -97,6 +97,7 @@ GEM
     newrelic_rpm (3.12.0.288)
     parser (2.3.3.1)
       ast (~> 2.2)
+    pg (0.18.1)
     phantomjs (1.9.8.0)
     polyglot (0.3.5)
     power_assert (0.3.1)
@@ -202,6 +203,7 @@ DEPENDENCIES
   minitest-rails (~> 1.0)
   minitest-reporters
   newrelic_rpm
+  pg
   rails (= 3.2.22.5)
   rails-api
   rails_12factor
