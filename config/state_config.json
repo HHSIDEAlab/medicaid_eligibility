@@ -3059,7 +3059,7 @@
 
  "TN": {
     "Option Householding Minor Student": "Y",
-    "Count Unborn Children for Household": "01",
+    "Count Unborn Children for Household": "03",
     "Option Deny Residency to Temporary Resident Students": "Y",
     "Option Require Work Quarters": "N",
     "State Applies Seven Year Limit": "Y",
@@ -3100,7 +3100,7 @@
       "Parent Caretaker Category": {
         "percentage": "Y",
         "method": "standard",
-        "threshold": 103
+        "threshold": 102
       },
       "Pregnancy Category": {
         "percentage": "Y",
