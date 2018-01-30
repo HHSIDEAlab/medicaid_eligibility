@@ -17,6 +17,8 @@ gem 'rails_12factor'
 # Use unicorn as the app server
 gem 'unicorn'
 
+gem 'mail', '>= 2.5.5'
+
 group :development do
   gem 'rails_best_practices', require: false
   gem 'brakeman', require: false
