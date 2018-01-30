@@ -20,7 +20,7 @@ gem 'unicorn'
 group :development do
   gem 'rails_best_practices', require: false
   gem 'brakeman', require: false
-  gem 'rubocop', require: false
+  gem 'rubocop', '>= 0.49.0', require: false
   gem 'bundler-audit', require: false
   # Deploy with Capistrano
   gem 'capistrano'
