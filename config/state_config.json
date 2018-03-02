@@ -3112,7 +3112,7 @@
       "Parent Caretaker Category": {
         "percentage": "Y",
         "method": "standard",
-        "threshold": 102
+        "threshold": 101
       },
       "Pregnancy Category": {
         "percentage": "Y",
