@@ -4,7 +4,7 @@ include IncomeThreshold
 
 module MAGI
   class Income < Ruleset
-    input "Application Year", "From application", "Integer", [2013, 2014, 2015, 2016]
+    input "Application Year", "From application", "Integer", [2013, 2014, 2015, 2016, 2017, 2018]
     input "Applicant Adult Group Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
     input "Applicant Pregnancy Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
     input "Applicant Parent Caretaker Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
@@ -40,13 +40,13 @@ module MAGI
       fpl = c("FPL")[v("Application Year").to_s]
       if v("Application Year") == 2016
         # FPL Per Person is not consistent in 2016
-        max_enumerated_household_size = fpl["FPL By Age"].length
+        max_enumerated_household_size = fpl["FPL By Household Size"].length
         hh_size = v("Medicaid Household").household_size
         if hh_size <= max_enumerated_household_size
-          fpl["FPL By Age"][hh_size - 1]
+          fpl["FPL By Household Size"][hh_size - 1]
         else
           extra_people = hh_size - max_enumerated_household_size
-          fpl["FPL By Age"][max_enumerated_household_size - 1] + extra_people * fpl["FPL Per Extra Person"]
+          fpl["FPL By Household Size"][max_enumerated_household_size - 1] + extra_people * fpl["FPL Per Extra Person"]
         end
       else
         fpl["Base FPL"] + (v("Medicaid Household").household_size - 1) * fpl["FPL Per Person"]

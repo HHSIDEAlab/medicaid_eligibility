@@ -100,7 +100,7 @@ class IncomeFixture < MagiFixture
           "Applicant Age" => 20
         },
         configs: {
-          "FPL" => { "2016" => { "FPL By Age" => [11880,16020,20160,24300,28440,32580,36730,40890], "FPL Per Extra Person" => 4160 } },
+          "FPL" => { "2016" => { "FPL By Household Size" => [11880,16020,20160,24300,28440,32580,36730,40890], "FPL Per Extra Person" => 4160 } },
           "Option CHIP Pregnancy Category" => "N",
           "Medicaid Thresholds" => { "Adult Group Category" => { "percentage" => "Y", "method" => "standard", "threshold" => 100 } },
           "CHIP Thresholds" => { "Pregnancy Category" => { "percentage" => "Y", "method" => "standard", "threshold" => 133 } }

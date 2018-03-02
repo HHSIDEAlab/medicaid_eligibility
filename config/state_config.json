@@ -14,7 +14,7 @@
         "FPL Per Person": 4160
       },
       "2016": {
-        "FPL By Age": [
+        "FPL By Household Size": [
           11880,
           16020,
           20160,
@@ -29,6 +29,10 @@
       "2017": {
         "Base FPL": 12060,
         "FPL Per Person": 4180
+      },
+      "2018": {
+        "Base FPL": 12140,
+        "FPL Per Person": 4320
       }
     },
 
@@ -223,7 +227,7 @@
         "FPL Per Person": 4780
       },
       "2016": {
-        "FPL By Age": [
+        "FPL By Household Size": [
           13670,
           18430,
           23190,
@@ -238,6 +242,10 @@
       "2017": {
         "Base FPL": 13860,
         "FPL Per Person": 4810
+      },
+      "2018": {
+        "Base FPL": 13960,
+        "FPL Per Person": 4970
       }
     }
   },
@@ -759,7 +767,7 @@
         "FPL Per Person": 5200
       },
       "2016": {
-        "FPL By Age": [
+        "FPL By Household Size": [
           14840,
           20020,
           25200,
@@ -774,6 +782,10 @@
       "2017": {
         "Base FPL": 15060,
         "FPL Per Person": 5230
+      },
+      "2018": {
+        "Base FPL": 15180,
+        "FPL Per Person": 5400
       }
     },
 
