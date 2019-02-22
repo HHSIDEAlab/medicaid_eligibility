@@ -735,7 +735,7 @@ angular.module('MAGI.services',[]).
             {abbr: 'WI', name: 'Wisconsin', inApp: true},
             {abbr: 'WY', name: 'Wyoming', inApp: true}
     ]).
-  constant('applicationYears', [2013,2014,2015,2016,2017,2018]).
+  constant('applicationYears', [2013,2014,2015,2016,2017,2018,2019]).
   constant('applicationStatuses', [
     {code: "01", name: "Lawful Permanent Resident (LPR/Green Card Holder)", qnc: true, startDate: "Entry date"},
     {code: "02", name: "Asylee", qnc: true, startDate: "Asylum grant date"},
