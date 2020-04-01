@@ -32,4 +32,4 @@ In the event that this returns a Gem::LoadError or a mysterious error about how 
 
 This project is licensed with a BSD license, open source with attribution. Details in the LICENSE file.
 
-(c) 2013 BlueLabs.
+(c) 2013-2020 BlueLabs.
