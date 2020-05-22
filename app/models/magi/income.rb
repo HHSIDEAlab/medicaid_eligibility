@@ -4,7 +4,7 @@ include IncomeThreshold
 
 module MAGI
   class Income < Ruleset
-    input "Application Year", "From application", "Integer", [2013, 2014, 2015, 2016, 2017, 2018, 2019]
+    input "Application Year", "From application", "Integer", [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020]
     input "Applicant Adult Group Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
     input "Applicant Pregnancy Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)
     input "Applicant Parent Caretaker Category Indicator", "From MAGI Part I", "Char(1)", %w(Y N)

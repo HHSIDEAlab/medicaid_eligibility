@@ -37,6 +37,10 @@
       "2019": {
         "Base FPL": 12490,
         "FPL Per Person": 4420
+      },
+      "2020": {
+        "Base FPL": 12760,
+        "FPL Per Person": 4480
       }
     },
 
@@ -3116,7 +3120,7 @@
       "Parent Caretaker Category": {
         "percentage": "Y",
         "method": "standard",
-        "threshold": 101
+        "threshold": 98
       },
       "Pregnancy Category": {
         "percentage": "Y",
