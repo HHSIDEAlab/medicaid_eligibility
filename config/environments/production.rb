@@ -64,7 +64,7 @@ MedicaidEligibilityApi::Application.configure do
   config.assets.precompile = [ Proc.new{ |path| !File.extname(path).in?(['.map','.js', '.css']) },
                                      /(?:\/|\\|\A)application\.(css|js)$/ ]
 
-  config.assets.js_compressor = :uglifier #Sprockets::LazyCompressor.new { Uglifier.new(:mangle => false) }
+  config.assets.js_compressor = Uglifier.new(:mangle => false)
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
