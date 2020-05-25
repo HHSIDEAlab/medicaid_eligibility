@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
-ruby '2.4.9'
+ruby '~> 2.3.0'
 
-gem 'rails', '3.2.22.5'
+gem 'rails', '~> 4.0'
 gem 'newrelic_rpm'
 gem 'rails-api'
 gem 'activerecord-nulldb-adapter'
 gem 'pg'
-gem 'active_model_serializers'
+gem 'active_model_serializers', '~> 0.8.0'
 gem 'font-awesome-rails'
 gem 'uglifier', '~> 2.7.2'
 gem 'gon'
@@ -34,7 +34,6 @@ group :test do
   gem 'minitest-rails', '~> 1.0'
   gem 'minitest-reporters'
   # gem 'mini_backtrace'
-  gem 'faker'
   gem 'sqlite3'
 end
 
