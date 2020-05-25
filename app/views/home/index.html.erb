@@ -4,7 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta charset="utf-8">
     <title>MAGI in the Cloud</title>
-    <link href="/assets/application.css" rel="stylesheet">
+    <%= stylesheet_link_tag "application", media: "all" %>
     <%= include_gon %>
   </head>
   <body>
@@ -20,6 +20,6 @@
   </script>
   <div ng-view></div>
 
-  <script src="/assets/application.js"></script>
+  <%= javascript_include_tag "application" %>
   </body>
 </html>
