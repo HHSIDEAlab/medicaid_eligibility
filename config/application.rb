@@ -20,6 +20,8 @@ module MedicaidEligibilityApi
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+    config.assets.initialize_on_precompile = false
+
     # Enable escaping HTML in JSON.
     config.active_support.escape_html_entities_in_json = true
 
