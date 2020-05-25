@@ -95,7 +95,6 @@ GEM
     parallel (1.19.1)
     parser (2.7.1.2)
       ast (~> 2.4.0)
-    pg (1.2.3)
     phantomjs (2.1.1.0)
     power_assert (1.2.0)
     powerbar (2.0.1)
@@ -157,7 +156,6 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
-    sqlite3 (1.4.2)
     sshkit (1.21.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
@@ -190,7 +188,6 @@ DEPENDENCIES
   minitest-rails (~> 1.0)
   minitest-reporters
   newrelic_rpm
-  pg
   rails (~> 4.0)
   rails-api
   rails_12factor
@@ -198,7 +195,6 @@ DEPENDENCIES
   rake
   rubocop
   spring
-  sqlite3
   test-unit
   uglifier (~> 2.7.2)
   unicorn
