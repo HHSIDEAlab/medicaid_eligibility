@@ -5,7 +5,6 @@ gem 'rails', '~> 4.0'
 gem 'newrelic_rpm'
 gem 'rails-api'
 gem 'activerecord-nulldb-adapter'
-gem 'pg'
 gem 'active_model_serializers', '~> 0.8.0'
 gem 'font-awesome-rails'
 gem 'uglifier', '~> 2.7.2'
@@ -34,7 +33,6 @@ group :test do
   gem 'minitest-rails', '~> 1.0'
   gem 'minitest-reporters'
   # gem 'mini_backtrace'
-  gem 'sqlite3'
 end
 
 # fixing a few travisCI complaints
