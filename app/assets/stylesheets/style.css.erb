@@ -131,7 +131,7 @@ fieldset, .form-fields-area {
 
 .splash-header {
   text-align: center;
-  font-size: 18px; 
+  font-size: 18px;
 }
 
 .splash-emphasis {
@@ -187,7 +187,7 @@ h2 {
 }
 
 .remove-applicant {
-  background: url('/assets/close.png') no-repeat 0 0;
+  background: url('<%= asset_path "close.png" %>') no-repeat 0 0;
   height: 30px;
   overflow: hidden;
   padding: 0;
@@ -200,7 +200,7 @@ h2 {
 }
 
 .remove-filer {
-  background: url('/assets/close.png') no-repeat 0 0;
+  background: url('<%= asset_path "close.png" %>') no-repeat 0 0;
   background-size: 100%;
   height: 20px;
   width: 20px;
@@ -222,7 +222,7 @@ h2 {
 }
 
 .form-row-expandable-fields:before {
-  background: #fff url('/assets/tail.png') no-repeat 0 0;
+  background: #fff url('<%= asset_path "tail.png" %>') no-repeat 0 0;
   bottom: 100%;
   content: '';
   display: block;
@@ -266,7 +266,7 @@ h2 {
 }
 
 .form-row-expandable-fields2:before {
-  background: #fff url('/assets/tail.png') no-repeat 0 0;
+  background: #fff url('<%= asset_path "tail.png" %>') no-repeat 0 0;
   bottom: 100%;
   content: '';
   display: block;
@@ -377,7 +377,7 @@ div.selector.fixedWidth span {
 }
 
 div.selector span, div.selector.hover span, div.selector.focus span, div.selector.focus.active span {
-  background-image: url('/assets/arrow.png');
+  background-image: url('<%= asset_path "arrow.png" %>');
   background-position: 100% 0;
   background-repeat: no-repeat;
   height: 20px;
@@ -394,7 +394,7 @@ input:focus, div.selector.focus, button.checker:focus {
 
 
 .checked span:before{
-  content: url('/assets/check.png');
+  content: url('<%= asset_path "check.png" %>');
 }
 
 button.checker{
@@ -572,7 +572,7 @@ button.checker input {
   padding: 0;
 }
 
-.determinations li {  
+.determinations li {
   margin-bottom: 6px;
 }
 
@@ -698,7 +698,7 @@ label.toperror {
 }
 
 .householdbucket{
-  padding: 10px;  
+  padding: 10px;
   width: 190px;
   min-height: 190px;
 }

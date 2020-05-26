@@ -1,0 +1,11 @@
+'use strict';
+
+angular.module('MAGI',['btford.dragon-drop','ui.mask','MAGI.filters','MAGI.services',
+             'MAGI.directives','MAGI.controllers']).
+  config(['$routeProvider', function($routeProvider) {
+    $routeProvider.when('/application', {templateUrl: '<%= asset_path "form.html" %>', controller: 'FormController'});
+    $routeProvider.when('/results', {templateUrl: '<%= asset_path "results.html" %>', controller:  'ResultsController'});
+    $routeProvider.when('/exportimport', {templateUrl: '<%= asset_path "exportimport.html" %>', controller: 'ExportImportController'});
+    $routeProvider.when('/exportraw', {templateUrl: '<%= asset_path "exportraw.html" %>', controller: 'ExportRawController'});
+    $routeProvider.otherwise({redirectTo: '/application'});
+  }]);

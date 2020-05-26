@@ -32,3 +32,6 @@
 .ruby-version
 STOUT
 STDOUT
+
+# We don't commit assets
+/public/assets/
