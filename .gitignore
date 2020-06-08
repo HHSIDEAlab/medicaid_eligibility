@@ -35,3 +35,6 @@ STDOUT
 
 # We don't commit assets
 /public/assets/
+
+# Test script token
+/.token

@@ -1,9 +1,13 @@
-version: "2"
+version: "3.2"
 services:
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     command: bin/rails server --port 3000 --binding 0.0.0.0
     ports:
       - "3000:3000"
     volumes:
       - .:/myapp
+      - type: tmpfs
+        target: /myapp/tmp/pids/
