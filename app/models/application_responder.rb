@@ -18,7 +18,7 @@ module ApplicationResponder
 
       app_json["Medicaid Eligible"] = app.outputs["Applicant Medicaid Indicator"]
       app_json["CHIP Eligible"] = app.outputs["Applicant CHIP Indicator"]
-      
+
       # Medicaid ineligibility explanation
       if app.outputs["Applicant Medicaid Indicator"] == 'N'
         ineligibility_reasons = []
@@ -68,7 +68,7 @@ module ApplicationResponder
         end
         app_json["CHIP Ineligibility Reason"] = ineligibility_reasons
       end
-      
+
       app_json["Category"] = app.outputs["Category Used to Calculate Medicaid Income"]
       unless ["None"].include?(app.outputs["Category Used to Calculate Medicaid Income"])
         app_json["Category Threshold"] = app.outputs["FPL * Percentage Medicaid"].to_i
@@ -104,7 +104,7 @@ module ApplicationResponder
           det_json["Ineligibility Reason"] = MedicaidEligibilityApi::Application.options[:ineligibility_reasons][det_json["Ineligibility Code"]]
         end
         app_json["Determinations"]["APTC Referral"] = det_json
-      end  
+      end
 
       app_json["Other Outputs"] = {}
       app_json["Other Outputs"]["Qualified Children List"] = []
@@ -122,6 +122,10 @@ module ApplicationResponder
           child_json["Determinations"][det_name] = det_json
         end
         app_json["Other Outputs"]["Qualified Children List"] << child_json
+      end
+
+      if app.outputs["Previously Denied"]
+        app_json["Other Outputs"]["Previously Denied"] = app.outputs["Previously Denied"]
       end
 
       returned_json["Applicants"] << app_json

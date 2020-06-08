@@ -38,7 +38,8 @@ module ApplicationProcessor
       MAGI::CHIPEligibility,
       MAGI::MedicaidEligibility,
       MAGI::EmergencyMedicaid,
-      MAGI::RefugeeAssistance
+      MAGI::RefugeeAssistance,
+      MAGI::PreviouslyDenied
     ].map{|ruleset_class| ruleset_class.new()}
 
     for ruleset in rulesets
@@ -53,9 +54,9 @@ module ApplicationProcessor
   private
 
   def is_minor?(person)
-    person.person_attributes["Applicant Age"] < @config["Child Age Threshold"] || 
+    person.person_attributes["Applicant Age"] < @config["Child Age Threshold"] ||
     (@config["Option Householding Minor Student"] == "Y" &&
-     person.person_attributes["Student Indicator"] == "Y" && 
+     person.person_attributes["Student Indicator"] == "Y" &&
      person.person_attributes["Applicant Age"] < @config["Student Age Threshold"])
   end
 
@@ -122,20 +123,20 @@ module ApplicationProcessor
 
     # If person files a return and no one claims person as dependent, household consists
     # of filers and dependents on tax return (435.603.f1)
-    if filed_tax_return && !dependent_tax_return && 
+    if filed_tax_return && !dependent_tax_return &&
       person.person_attributes["Claimed as Dependent by Person Not on Application"] != 'Y'
 
       med_household_members = filed_tax_return.filers + filed_tax_return.dependents
     # If spouse claims person as a dependent, household is spouse's household (435.603.f2)
-    elsif dependent_tax_return && 
+    elsif dependent_tax_return &&
       dependent_tax_return.filers.any?{|filer| filer == person.get_relationship(:spouse)}
 
       med_household_members = determine_household(person.get_relationship(:spouse)).people
-    # If parent/stepparent(s) claims person as a dependent, household is household of 
+    # If parent/stepparent(s) claims person as a dependent, household is household of
     # parent/stepparent(s) claiming person (435.603.f2)
-    elsif dependent_tax_return && 
+    elsif dependent_tax_return &&
       dependent_tax_return.filers.any?{|filer| parents_stepparents.include?(filer)} &&
-      # except if the person is a minor (as defined by 435.603.f3.iv) and 
+      # except if the person is a minor (as defined by 435.603.f3.iv) and
       # either the person's parents live together and do not file jointly (435.603.f2.ii)
       # or the claiming parent does not live with the claimed person (435.603.f2.iii)
       !(
@@ -161,11 +162,11 @@ module ApplicationProcessor
 
     # If person lives with a spouse, add the spouse (435.603.f4)
     spouse = person.get_relationship(:spouse)
-    if spouse && 
+    if spouse &&
       (live_together?(person, spouse) || (filed_tax_return && filed_tax_return.filers.include?(spouse)))
       med_household_members << spouse
     end
-    
+
     # Then add the person and dedupe
     med_household_members << person
     med_household_members.uniq!
@@ -186,7 +187,7 @@ module ApplicationProcessor
     if @config["Count Unborn Children for Household"] == "01"
       return med_household_members.count +
         med_household_members.inject(0){|sum, p| sum +
-          (p.person_attributes["Applicant Pregnant Indicator"] == 'Y' ? 
+          (p.person_attributes["Applicant Pregnant Indicator"] == 'Y' ?
             p.person_attributes["Number of Children Expected"] : 0)
         }
     # If option 02, count 1 extra for each pregnant woman
@@ -232,7 +233,7 @@ module ApplicationProcessor
 
   def calculate_household_income(income_people)
     income_people.select{|p| p.income}.map{|p|
-      p.income[:incomes].inject(0){|sum, (name, amt)| sum + amt} - 
+      p.income[:incomes].inject(0){|sum, (name, amt)| sum + amt} -
       p.income[:deductions].inject(0){|sum, (name, amt)| sum + amt}
     }.sum
   end
