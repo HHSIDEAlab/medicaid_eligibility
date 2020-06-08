@@ -106,6 +106,16 @@ module ApplicationResponder
         app_json["Determinations"]["APTC Referral"] = det_json
       end
 
+      if app.outputs["Previously Denied"]
+        det_json = {}
+        det_json["Indicator"] = app.outputs["Previously Denied"]
+        if app.outputs["Previously Denied"] == 'N'
+          det_json["Ineligibility Code"] = "123"
+          det_json["Ineligibility Reason"] = "Not Previously Denied"
+        end
+        app_json["Determinations"]["Previously Denied"] = det_json
+      end
+
       app_json["Other Outputs"] = {}
       app_json["Other Outputs"]["Qualified Children List"] = []
       for qual_child in app.outputs["Qualified Children List"]
@@ -122,10 +132,6 @@ module ApplicationResponder
           child_json["Determinations"][det_name] = det_json
         end
         app_json["Other Outputs"]["Qualified Children List"] << child_json
-      end
-
-      if app.outputs["Previously Denied"]
-        app_json["Other Outputs"]["Previously Denied"] = app.outputs["Previously Denied"]
       end
 
       returned_json["Applicants"] << app_json
