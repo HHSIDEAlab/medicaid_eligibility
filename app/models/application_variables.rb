@@ -99,6 +99,13 @@ module ApplicationVariables
       :xpath      => :unimplemented
     },
     {
+      :name       => "Previously Denied",
+      :type       => :flag,
+      :values     => %w(Y N),
+      :group      => :person,
+      :xpath      => :unimplemented
+    },
+    {
       :name       => "Prior Insurance",
       :type       => :flag,
       :values     => %w(Y N),
@@ -150,7 +157,7 @@ module ApplicationVariables
       :group      => :applicant,
       :xpath      => :unimplemented
     },
-    
+
     # Pregnancy inputs
     {
       :name       => "Applicant Pregnant Indicator",
@@ -211,7 +218,7 @@ module ApplicationVariables
       :required_if => "Former Foster Care",
       :required_if_value => "Y"
     },
-    
+
     # Citizenship and Immigration Status inputs
     {
       :name       => "US Citizen Indicator",
@@ -317,7 +324,7 @@ module ApplicationVariables
       :group      => :applicant,
       :xpath      => :unimplemented
     },
-    
+
     # Relationship inputs
     {
       :name       => "Attest Primary Responsibility",
@@ -340,7 +347,7 @@ module ApplicationVariables
 
     {name: "Income Medicaid Eligible", eligibility: :MAGI},
     {name: "Income CHIP Eligible", eligibility: :CHIP},
-    
+
     {name: "Medicaid CHIPRA 214"},
     {name: "CHIP CHIPRA 214"},
     {name: "Trafficking Victim"},
@@ -349,7 +356,7 @@ module ApplicationVariables
     {name: "Title II Work Quarters Met"},
     {name: "Medicaid Citizen Or Immigrant"},
     {name: "CHIP Citizen Or Immigrant"},
-    
+
     {name: "Former Foster Care Category"},
     {name: "Work Quarters Override Income"},
     {name: "State Health Benefits CHIP"},
@@ -363,7 +370,7 @@ module ApplicationVariables
       date_xpath: "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityDetermination/nc:ActivityDate/nc:DateTime",
       reason_xpath: "hix-ee:MedicaidNonMAGIEligibility/hix-ee:EligibilityReasonText"
     },
-    
+
     {name: "Emergency Medicaid"},
     {name: "Refugee Medical Assistance"}
   ].freeze
