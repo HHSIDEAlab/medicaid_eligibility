@@ -36,6 +36,36 @@ class MedicaidEligibilityFixture < MagiFixture
         }
       },
       {
+        test_name: "Final Eligibility - Prelim Yes - Previously Denied Y",
+        inputs: {
+          "Applicant Medicaid Prelim Indicator" => "Y",
+          "Previously Denied" => "Y"
+        },
+        configs: {
+          # none
+        },
+        expected_outputs: {
+          "Applicant Medicaid Indicator" => "N",
+          "Medicaid Ineligibility Reason" => 123
+        }
+      },
+      {
+        test_name: "Final Eligibility - Prelim Yes - Previously Denied N",
+        inputs: {
+          "Applicant Medicaid Prelim Indicator" => "Y",
+          "Previously Denied" => "N"
+        },
+        configs: {
+          # none
+        },
+        expected_outputs: {
+          "Applicant Medicaid Indicator" => "Y",
+          "Medicaid Ineligibility Reason" => 999,
+          "APTC Referral Indicator" => "N",
+          "APTC Referral Ineligibility Reason" => 406
+        }
+      },
+      {
         test_name: "Bad Info - Inputs",
         inputs: {
           # none

@@ -36,6 +36,9 @@ module ApplicationResponder
         if app.outputs["Applicant Dependent Child Covered Indicator"] == 'N'
           ineligibility_reasons << "Applicant has a dependent child who does not have coverage and is not included on the application"
         end
+        if app.outputs["Previously Denied"]
+          ineligibility_reasons << "Overriden to ineligible because applicant was previously denied"
+        end
         app_json["Ineligibility Reason"] = ineligibility_reasons
         app_json["Non-MAGI Referral"] = app.outputs["Applicant Medicaid Non-MAGI Referral Indicator"]
       end
@@ -65,6 +68,9 @@ module ApplicationResponder
         end
         if app.applicant_attributes["Incarceration Status"] == 'Y'
           ineligibility_reasons << "Applicant is incarcerated"
+        end
+        if app.outputs["Previously Denied"]
+          ineligibility_reasons << "Overriden to ineligible because applicant was previously denied"
         end
         app_json["CHIP Ineligibility Reason"] = ineligibility_reasons
       end
@@ -106,7 +112,7 @@ module ApplicationResponder
         app_json["Determinations"]["APTC Referral"] = det_json
       end
 
-      if app.outputs["Previously Denied"]
+      if app.outputs["Previously Denied"] == 'Y' || app.outputs["Previously Denied"] == 'N'
         det_json = {}
         det_json["Indicator"] = app.outputs["Previously Denied"]
         if app.outputs["Previously Denied"] == 'N'
