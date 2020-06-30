@@ -35,11 +35,11 @@ module ApplicationProcessor
       MAGI::OptionalUnbornChild,
       MAGI::PublicEmployeesBenefits,
       MAGI::CHIPWaitingPeriod,
+      MAGI::PreviouslyDenied,
       MAGI::CHIPEligibility,
       MAGI::MedicaidEligibility,
       MAGI::EmergencyMedicaid,
-      MAGI::RefugeeAssistance,
-      MAGI::PreviouslyDenied
+      MAGI::RefugeeAssistance
     ].map{|ruleset_class| ruleset_class.new()}
 
     for ruleset in rulesets

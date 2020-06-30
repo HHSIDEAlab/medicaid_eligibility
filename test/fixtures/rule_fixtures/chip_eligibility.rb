@@ -32,7 +32,7 @@ class CHIPEligibilityFixture < MagiFixture
           "Applicant Unborn Child Indicator" => "N",
           "Applicant State Health Benefits CHIP Indicator" => "Y",
           "Applicant CHIP Waiting Period Satisfied Indicator" => "X",
-          "Applicant CHIP Targeted Low Income Child Indicator" => "N" 
+          "Applicant CHIP Targeted Low Income Child Indicator" => "N"
         },
         configs: {
           # none
@@ -50,7 +50,7 @@ class CHIPEligibilityFixture < MagiFixture
           "Applicant Unborn Child Indicator" => "Y",
           "Applicant State Health Benefits CHIP Indicator" => "N",
           "Applicant CHIP Waiting Period Satisfied Indicator" => "X",
-          "Applicant CHIP Targeted Low Income Child Indicator" => "N" 
+          "Applicant CHIP Targeted Low Income Child Indicator" => "N"
         },
         configs: {
           # none
@@ -59,7 +59,7 @@ class CHIPEligibilityFixture < MagiFixture
           "Applicant CHIP Indicator" => "Y",
           "CHIP Ineligibility Reason" => 999,
         }
-      }, 
+      },
       {
         test_name: "Fallback Determination - All N",
         inputs: {
@@ -68,7 +68,7 @@ class CHIPEligibilityFixture < MagiFixture
           "Applicant Unborn Child Indicator" => "N",
           "Applicant State Health Benefits CHIP Indicator" => "N",
           "Applicant CHIP Waiting Period Satisfied Indicator" => "N",
-          "Applicant CHIP Targeted Low Income Child Indicator" => "N" 
+          "Applicant CHIP Targeted Low Income Child Indicator" => "N"
         },
         configs: {
           # none
@@ -87,7 +87,7 @@ class CHIPEligibilityFixture < MagiFixture
           "Applicant Unborn Child Indicator" => "N",
           "Applicant State Health Benefits CHIP Indicator" => "N",
           "Applicant CHIP Waiting Period Satisfied Indicator" => "N",
-          "Applicant CHIP Targeted Low Income Child Indicator" => "N" 
+          "Applicant CHIP Targeted Low Income Child Indicator" => "N"
         },
         configs: {
           # none
@@ -101,12 +101,50 @@ class CHIPEligibilityFixture < MagiFixture
       {
         test_name: "Bad Info - Inputs",
         inputs: {
-          "Applicant CHIP Targeted Low Income Child Indicator" => "N" 
+          "Applicant CHIP Targeted Low Income Child Indicator" => "N"
         },
         configs: {
           # none
         },
         expected_outputs: {
+        }
+      },
+      {
+        test_name: "Would pass... but Previously Denied",
+        inputs: {
+          "Incarceration Status" => "N",
+          "Applicant CHIP Prelim Indicator" => "N",
+          "Applicant Unborn Child Indicator" => "Y",
+          "Applicant State Health Benefits CHIP Indicator" => "N",
+          "Applicant CHIP Waiting Period Satisfied Indicator" => "X",
+          "Applicant CHIP Targeted Low Income Child Indicator" => "N",
+          "Previously Denied" => "Y"
+        },
+        configs: {
+          # none
+        },
+        expected_outputs: {
+          "Applicant CHIP Indicator" => "N",
+          "CHIP Ineligibility Reason" => 123
+        }
+      },
+      {
+        test_name: "Still passes... because Previously Denied is N",
+        inputs: {
+          "Incarceration Status" => "N",
+          "Applicant CHIP Prelim Indicator" => "N",
+          "Applicant Unborn Child Indicator" => "Y",
+          "Applicant State Health Benefits CHIP Indicator" => "N",
+          "Applicant CHIP Waiting Period Satisfied Indicator" => "X",
+          "Applicant CHIP Targeted Low Income Child Indicator" => "N",
+          "Previously Denied" => "N"
+        },
+        configs: {
+          # none
+        },
+        expected_outputs: {
+          "Applicant CHIP Indicator" => "Y",
+          "CHIP Ineligibility Reason" => 999,
         }
       }
     ]
