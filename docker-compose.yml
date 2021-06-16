@@ -4,10 +4,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: bin/rails server --port 3000 --binding 0.0.0.0
+    image: mitc:02.2021
+    command: bin/rails server --port 3001 --binding 0.0.0.0
     ports:
-      - "3000:3000"
+      - "3001:3001"
     volumes:
-      - .:/myapp
+      - .:/mitc
       - type: tmpfs
-        target: /myapp/tmp/pids/
+        target: /mitc/tmp/pids/
