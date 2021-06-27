@@ -7,7 +7,9 @@ RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
 ADD Gemfile* $APP_HOME/
-RUN bundle install
 
 ADD . $APP_HOME
 
+ENV RAILS_ENV='production'
+RUN bundle install
+RUN bundle exec rake assets:precompile
