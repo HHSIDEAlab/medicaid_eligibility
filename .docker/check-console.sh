@@ -1,4 +1,4 @@
-if echo 'helper.time_ago_in_words 30.days.ago' | bundle exec rails c | grep -q 'about 1 month'; then
+if echo 'input="hello world"' | bundle exec rails c | grep -q 'hello world'; then
     echo "Console access works"
     exit 0
 else

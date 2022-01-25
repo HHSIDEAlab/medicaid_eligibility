@@ -72,28 +72,9 @@ FROM base as builder
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-ARG NODE_MAJOR=14
-ENV NODE_MAJOR=$NODE_MAJOR
-
-RUN apt-get update -qq \
-    && apt-get install -yq --no-install-recommends \
-      curl \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-    && truncate -s 0 /var/log/*log
-
-# Add NodeJS to sources list
-# Need to add gpg key first re: https://gist.github.com/opi/1dce5be10717183ccc03
-# Seems to be related to the version of Debian (jessie)
-RUN curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - \
-  && curl -fsSL https://deb.nodesource.com/setup_$NODE_MAJOR.x | bash -
-
 RUN apt-get update -qq \
   && apt-get install -yq --no-install-recommends \
     build-essential \
-    git \
-    libxml2-dev \
-    nodejs \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
   && truncate -s 0 /var/log/*log
@@ -103,13 +84,8 @@ RUN apt-get update -qq \
 ########################################################
 FROM builder as prod_gems_and_assets
 
-ARG GEM_OAUTH_TOKEN
-ARG BUNDLE_GITHUB__COM=$GEM_OAUTH_TOKEN
-
 COPY --chown=$USERNAME:$USERNAME ./Gemfile $HOME/Gemfile
 COPY --chown=$USERNAME:$USERNAME ./Gemfile.lock $HOME/Gemfile.lock
-
-# RUN gem install libxml-ruby -v '2.9.0' --source 'https://rubygems.org/'
 
 RUN bundle config set --local without 'development test' \
   && bundle install
