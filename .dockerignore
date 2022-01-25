@@ -1,0 +1,42 @@
+log/*.log
+.git
+.gitignore
+
+.bundle
+node_modules
+
+# Ignore precompiled javascript packs
+/public/packs
+/public/packs-test
+/public/assets
+
+### Rails ###
+*.rbc
+capybara-*.html
+.rspec
+spec
+features
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/public/system
+/coverage/
+/spec/tmp
+rerun.txt
+pickle-email-*.html
+
+### Ruby ###
+*.gem
+/.config
+/InstalledFiles
+/pkg/
+/test/tmp/
+/test/version_tmp/
+/tmp/
+
+### Development ###
+.github
+.semaphore
+.vscode
+ci
+hugo
+jenkins

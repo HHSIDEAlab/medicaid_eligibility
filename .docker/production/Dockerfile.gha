@@ -1,0 +1,139 @@
+############################################
+### Base image ###
+############################################
+
+# https://github.com/docker-library/ruby/blob/09c6a1602c111cf0cc83bf1df3186a85314ce398/2.3/slim/Dockerfile
+FROM ruby:2.3.4-slim as base
+LABEL author="IdeaCrew"
+
+ENV USERNAME=medicaid_eligibility
+
+ARG DEBIAN_FRONTEND=noninteractive
+ARG BUNDLER_VERSION=1.17.3
+
+# Must be set as ENV variable to overrride the default
+ENV BUNDLER_VERSION=$BUNDLER_VERSION
+
+ARG NODE_MAJOR=14
+
+RUN apt-get update -qq && \
+    apt-get install -yq --no-install-recommends \
+      curl \
+    # Need to add gpg key first re: https://gist.github.com/opi/1dce5be10717183ccc03
+    # Seems to be related to the version of Debian (jessie)
+    && curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - \
+    && curl -fsSL https://deb.nodesource.com/setup_$NODE_MAJOR.x | bash - \
+    && apt-get update -qq \
+    && apt-get -yq dist-upgrade \
+    && apt-get install -y \
+      nodejs \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+    && truncate -s 0 /var/log/*log
+
+# Configure bundler and PATH, install bundler version
+ENV GEM_HOME=/usr/local/bundle
+ENV BUNDLE_PATH=$GEM_HOME
+ENV BUNDLE_APP_CONFIG=$BUNDLE_PATH
+ENV BUNDLE_BIN=/usr/local/bin
+ENV BUNDLE_JOBS=4
+ENV BUNDLE_RETRY=3
+
+ENV LANG=C.UTF-8
+
+ENV PATH=$HOME/bin:$BUNDLE_BIN:$GEM_HOME/gems/bin:$PATH
+
+RUN gem update --system \
+    && rm -f /usr/local/bin/ruby/gems/*/specifications/default/bundler-*.gemspec \
+    && gem install bundler -v $BUNDLER_VERSION
+
+RUN groupadd --gid 1001 $USERNAME \
+  && useradd --uid 1001 --gid $USERNAME --shell /bin/bash --create-home $USERNAME
+
+ENV HOME=/medicaid_eligibility
+RUN mkdir $HOME \
+  && chown -R $USERNAME:$USERNAME $HOME
+
+# Configure app home directory
+WORKDIR $HOME
+
+ENV EDIDB_DEVISE_SECRET_KEY=4949641a374994854c0529feb329a81885867f044eb6c23102892e38bb32da437a94ee27eb4086b196f7273868d4b06c682948f5ced62385c548ba2d96898e20
+ENV EDIDB_SECRET_KEY_BASE=c8d2b9b204fbac78081a88a2c29b28cfeb82e6ccd3664b3948b813463b5917b315dbbd3040e8dffcb5b68df427099db0ce03e59e2432dfe5d272923b00755b82
+
+ENV RECEIVER_ID=000000001
+
+ENV RAILS_ENV=production
+ENV NODE_ENV=production
+
+###############################################################################
+## Builder. Adds node and Yarn. Not necessary in production. ###
+##############################################################################
+FROM base as builder
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+ARG NODE_MAJOR=14
+ENV NODE_MAJOR=$NODE_MAJOR
+
+RUN apt-get update -qq \
+    && apt-get install -yq --no-install-recommends \
+      curl \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+    && truncate -s 0 /var/log/*log
+
+# Add NodeJS to sources list
+# Need to add gpg key first re: https://gist.github.com/opi/1dce5be10717183ccc03
+# Seems to be related to the version of Debian (jessie)
+RUN curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - \
+  && curl -fsSL https://deb.nodesource.com/setup_$NODE_MAJOR.x | bash -
+
+RUN apt-get update -qq \
+  && apt-get install -yq --no-install-recommends \
+    build-essential \
+    git \
+    libxml2-dev \
+    nodejs \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && truncate -s 0 /var/log/*log
+
+########################################################
+# Node and Bundle for production
+########################################################
+FROM builder as prod_gems_and_assets
+
+ARG GEM_OAUTH_TOKEN
+ARG BUNDLE_GITHUB__COM=$GEM_OAUTH_TOKEN
+
+COPY --chown=$USERNAME:$USERNAME ./Gemfile $HOME/Gemfile
+COPY --chown=$USERNAME:$USERNAME ./Gemfile.lock $HOME/Gemfile.lock
+
+# RUN gem install libxml-ruby -v '2.9.0' --source 'https://rubygems.org/'
+
+RUN bundle config set --local without 'development test' \
+  && bundle install
+
+COPY --chown=$USERNAME:$USERNAME . $HOME
+
+RUN bundle exec rake assets:precompile \
+  # https://github.com/rubygems/rubygems/issues/3225
+  && rm -rf $GEM_HOME/bundle/ruby/*/cache
+
+################################################################
+# Deployable image
+################################################################
+
+FROM base as deploy
+
+# Copy prebuilt gems
+COPY --chown=$USERNAME:$USERNAME --from=prod_gems_and_assets $BUNDLE_PATH $BUNDLE_PATH
+
+# Copy all app code again (sans gems, node_modules, assets)
+COPY --chown=$USERNAME:$USERNAME . $HOME
+
+# Copy prebuilt assets
+COPY --chown=$USERNAME:$USERNAME --from=prod_gems_and_assets $HOME/public $HOME/public
+
+USER $USERNAME
+

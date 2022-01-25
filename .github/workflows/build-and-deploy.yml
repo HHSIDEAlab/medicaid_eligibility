@@ -1,0 +1,147 @@
+name: Build Image and Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "trunk"
+  pull_request:
+    branches:
+      - "trunk"
+
+concurrency:
+  group: docker-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  RABBITMQ_DEFAULT_USER: "guest"
+  RABBITMQ_DEFAULT_PASS: "guest"
+
+jobs:
+  prep:
+    runs-on: ubuntu-latest
+    outputs:
+      taggedImage: ${{ steps.prep.outputs.tagged_image }}
+      tag: ${{ steps.prep.outputs.tag }}
+      registry: ${{ steps.prep.outputs.registry }}
+      shortSha: ${{ steps.prep.outputs.short_sha}}
+      branchName: ${{ steps.prep.outputs.branch_name }}
+      latestTag: ${{ steps.prep.outputs.latest_tag }}
+      repositoryName: ${{ steps.prep.outputs.repository_name }}
+    steps:
+      - name: Git branch name
+        id: git-branch-name
+        uses: EthanSK/git-branch-name-action@v1
+      - name: Prepare info
+        id: prep
+        run: |
+          SHORT_SHA=$(echo $GITHUB_SHA | head -c7)
+          REPO=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')
+          TAG=${{ env.GIT_BRANCH_NAME }}-$(echo $GITHUB_SHA | head -c7)
+          IMAGE=public.ecr.aws/ideacrew/$REPO
+          echo ::set-output name=tagged_image::${IMAGE}:${TAG}
+          echo ::set-output name=tag::${TAG}
+          echo ::set-output name=registry::public.ecr.aws
+          echo ::set-output name=short_sha::$SHORT_SHA
+          echo ::set-output name=branch_name::${{ env.GIT_BRANCH_NAME }}
+          echo ::set-output name=repository_name::$REPO
+          echo ::set-output name=latest_tag::${IMAGE}:latest
+
+  # Uses buildx to build and push the image
+  build-and-upload-image:
+    needs: [prep]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Add git HEAD info to docker image
+        run: git show --quiet HEAD > release.txt
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+        with:
+          install: true
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          # Key is named differently to avoid collision
+          key: ${{ runner.os }}-multi-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-multi-buildx
+
+      # Provide credentials for AWS
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      # Must use docker login in order to specify public registry
+      - name: Login to Public ECR
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ needs.prep.outputs.registry }}
+          username: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Build Image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          builder: ${{ steps.buildx.outputs.name }}
+          file: .docker/production/Dockerfile.gha
+          # Set the desired build target here
+          target: deploy
+          # needed to access mongo and rabbit on GHA machine
+          network: host
+          # send to public registry if not a pull request
+          push: ${{ github.event_name != 'pull_request' }}
+          # create local image (for scanning) if it is a pull request
+          load: ${{ github.event_name == 'pull_request' }}
+          tags: ${{ needs.prep.outputs.taggedImage }}, ${{ needs.prep.outputs.latestTag }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          # Note the mode=max here
+          # More: https://github.com/moby/buildkit#--export-cache-options
+          # And: https://github.com/docker/buildx#--cache-tonametypetypekeyvalue
+          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
+
+      - name: Check Console access
+        run: docker run ${{ needs.prep.outputs.taggedImage }} /bin/bash .docker/check-console.sh
+
+      - name: Scan Docker image
+        if: github.event_name != 'pull_request'
+        id: scan
+        uses: anchore/scan-action@main
+        with:
+          image: ${{ needs.prep.outputs.taggedImage }}
+          acs-report-enable: true
+          fail-build: false
+          severity-cutoff: critical
+
+      - name: upload Anchore scan SARIF report
+        if: github.event_name != 'pull_request'
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: ${{ steps.scan.outputs.sarif }}
+
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+
+  notify-slack:
+    if: github.event_name != 'pull_request'
+    needs: [prep, build-and-upload-image]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post to a Slack channel
+        id: slack
+        uses: slackapi/slack-github-action@v1.16.0
+        with:
+          channel-id: "docker-images-${{ needs.prep.outputs.repositoryName }}"
+          slack-message: "New image pushed: ${{ needs.prep.outputs.taggedImage }} built from <https://github.com/ideacrew/${{ needs.prep.outputs.repositoryName }}/commit/${{ needs.prep.outputs.shortSha }}|${{ needs.prep.outputs.shortSha }}> on `${{ needs.prep.outputs.branchName }}`"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.YELLR_BOT_TOKEN }}
