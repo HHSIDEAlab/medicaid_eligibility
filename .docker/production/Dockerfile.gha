@@ -6,7 +6,7 @@
 FROM ruby:2.3.4-slim as base
 LABEL author="IdeaCrew"
 
-ENV USERNAME=medicaid_eligibility
+ENV USERNAME=mitc
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG BUNDLER_VERSION=1.17.3
@@ -50,7 +50,7 @@ RUN gem update --system \
 RUN groupadd --gid 1001 $USERNAME \
   && useradd --uid 1001 --gid $USERNAME --shell /bin/bash --create-home $USERNAME
 
-ENV HOME=/medicaid_eligibility
+ENV HOME=/mitc
 RUN mkdir $HOME \
   && chown -R $USERNAME:$USERNAME $HOME
 
