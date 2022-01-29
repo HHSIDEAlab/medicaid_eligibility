@@ -283,8 +283,12 @@
             "threshold": 157
           },{
             "minimum": 6,
-            "maximum": 20,
+            "maximum": 18,
             "threshold": 157
+          },{
+            "minimum": 19,
+            "maximum": 20,
+            "threshold": 156
           }
         ]
       }
