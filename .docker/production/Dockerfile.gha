@@ -52,9 +52,7 @@ RUN groupadd --gid 1001 $USERNAME \
 
 ENV HOME=/medicaid_eligibility
 RUN mkdir $HOME \
-  && chown -R $USERNAME:$USERNAME $HOME \
-  && mkdir -p $HOME/log \
-  && chown -R $USERNAME:$USERNAME $HOME/log
+  && chown -R $USERNAME:$USERNAME $HOME
 
 # Configure app home directory
 WORKDIR $HOME
