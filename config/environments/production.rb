@@ -61,9 +61,7 @@ MedicaidEligibilityApi::Application.configure do
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
   # config.assets.precompile += %w( search.js )
 
-  config.assets.precompile = [ Proc.new{ |path| !File.extname(path).in?(['.map','.js', '.css']) },
-                                     /(?:\/|\\|\A)application\.(css|js)$/ ]
-
+  config.assets.precompile = ["*.map", "*.js", "*.css"]
   config.assets.js_compressor = Uglifier.new(:mangle => false)
 
   # Ignore bad email addresses and do not raise email delivery errors.
