@@ -3,7 +3,6 @@ ruby '~> 2.7.5'
 
 gem 'rails', '~> 6'
 gem 'newrelic_rpm'
-gem 'rails-api'
 gem 'activerecord-nulldb-adapter'
 gem 'active_model_serializers', '~> 0.8.0'
 gem 'font-awesome-rails'
@@ -23,18 +22,3 @@ group :development do
   # Deploy with Capistrano
   gem 'capistrano'
 end
-
-group :development, :test do
-  gem 'jasmine'
-  gem 'spring'
-end
-
-group :test do
-  gem 'minitest-rails', '~> 6.0'
-  gem 'minitest-reporters'
-  # gem 'mini_backtrace'
-end
-
-# fixing a few travisCI complaints
-gem 'rake', group: :test
-gem 'test-unit'
