@@ -2,7 +2,7 @@ class DeterminationsController < ApplicationController
   include ActionController::MimeResponds
   include ActionController::HttpAuthentication::Token::ControllerMethods
 
-  before_filter :restrict_access
+  before_action :restrict_access
 
   @@access_tokens ||= ENV['ACCESS_TOKENS'] ? ENV['ACCESS_TOKENS'].split(';') : []
 
