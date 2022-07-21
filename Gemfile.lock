@@ -163,7 +163,7 @@ GEM
       power_assert
     thor (0.20.3)
     thread_safe (0.3.6)
-    tzinfo (0.3.57)
+    tzinfo (0.3.61)
     uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
