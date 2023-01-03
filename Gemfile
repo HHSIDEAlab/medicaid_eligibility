@@ -9,7 +9,7 @@ gem 'active_model_serializers', '~> 0.8.0'
 gem 'font-awesome-rails'
 gem 'uglifier', '~> 2.7.2'
 gem 'gon'
-gem 'httparty', '~> 0.10.0'
+gem 'httparty', '~> 0.21.0'
 gem 'rails_12factor'
 
 # Use unicorn as the app server
