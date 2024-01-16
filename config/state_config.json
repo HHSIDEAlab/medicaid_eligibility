@@ -45,6 +45,18 @@
       "2021": {
         "Base FPL": 12880,
         "FPL Per Person": 4540
+      },
+      "2022": {
+        "Base FPL": 13590,
+        "FPL Per Person": 4720 
+      },
+      "2023": {
+        "Base FPL": 14580,
+        "FPL Per Person": 5140
+      },
+      "2024": {
+        "Base FPL": 15060,
+        "FPL Per Person": 5380
       }
     },
 
@@ -258,7 +270,31 @@
       "2018": {
         "Base FPL": 13960,
         "FPL Per Person": 4970
-      }
+      },
+      "2019": {
+        "Base FPL": 14380,
+        "FPL Per Extra Person": 5080
+      },
+      "2020": {
+        "Base FPL": 14680,
+        "FPL Per Extra Person": 5150
+      },
+      "2021": {
+        "Base FPL": 14820,
+        "FPL Per Extra Person": 5220
+      },
+      "2022": {
+        "Base FPL": 15630,
+        "FPL Per Extra Person": 5430
+      },
+      "2023": {
+        "Base FPL": 16770,
+        "FPL Per Extra Person": 5910
+      },
+      "2024": {
+        "Base FPL": 17310,
+        "FPL Per Extra Person": 6190
+      },
     }
   },
   "MD": {
@@ -798,6 +834,30 @@
       "2018": {
         "Base FPL": 15180,
         "FPL Per Person": 5400
+      },
+      "2019": {
+        "Base FPL": 15600,
+        "FPL Per Person": 5530 
+      },
+      "2020": {
+        "Base FPL": 15950,
+        "FPL Per Person": 5600 
+      },
+      "2021": {
+        "Base FPL": 16090,
+        "FPL Per Person": 5680 
+      },
+      "2022": {
+        "Base FPL": 16990,
+        "FPL Per Person": 5900 
+      },
+      "2023": {
+        "Base FPL": 18210,
+        "FPL Per Person": 6430 
+      },
+      "2024": {
+        "Base FPL": 18810,
+        "FPL Per Person": 6730 
       }
     },
 
